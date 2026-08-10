@@ -1,15 +1,28 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+import Header from "@/components/ui/Header";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
 });
 
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
-  title: "Safe Showcase",
-  description: "Premium security solutions.",
+  title: "Safe Security",
+  description:
+    "Сейфове, трезорни решения и системи за сигурност.",
 };
 
 export default function RootLayout({
@@ -18,8 +31,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body className="font-sans antialiased">{children}</body>
+    <html
+      lang="bg"
+      className={cn(
+        "h-full",
+        "antialiased",
+        geistSans.variable,
+        geistMono.variable,
+        inter.variable,
+        "font-sans"
+      )}
+    >
+      <body className="min-h-full bg-white text-black">
+        <Header />
+
+        {children}
+      </body>
     </html>
   );
 }
