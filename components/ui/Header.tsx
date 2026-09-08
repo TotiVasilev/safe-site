@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -21,73 +22,86 @@ export default function Header() {
     };
   }, []);
 
-  const closeMenu = () => {
+  function closeMenu() {
     setMenuOpen(false);
-  };
+  }
 
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "border-b border-black/10 bg-white/85 shadow-sm backdrop-blur-xl"
-          : "bg-transparent"
+          ? "border-b border-black/10 bg-white/90 shadow-sm backdrop-blur-xl"
+          : "bg-white/80 backdrop-blur-md"
       }`}
     >
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-12">
-        {/* Logo */}
+        {/* LOGO */}
         <Link
           href="/"
           onClick={closeMenu}
-          className="group flex items-center"
+          className="flex items-center gap-3"
         >
-          <span className="text-xl font-semibold tracking-[0.18em]">
-            SAFE
-          </span>
+          <Image
+            src="/branding/tetraedar-logo.png"
+            alt="Tetraedar"
+            width={48}
+            height={48}
+            priority
+            className="h-11 w-auto object-contain"
+          />
 
-          <span className="ml-1 text-xl font-light tracking-[0.18em] text-black/50">
-            SECURITY
+          <span
+            className="
+              text-[24px]
+              font-medium
+              tracking-[0.01em]
+              text-[#3f7edb]
+              sm:text-[28px]
+            "
+          >
+            TETRAEDAR
           </span>
         </Link>
 
-        {/* Desktop navigation */}
+        {/* DESKTOP NAVIGATION */}
         <nav className="hidden items-center gap-10 md:flex">
           <Link
             href="/"
-            className="text-sm text-black/60 transition-colors hover:text-black"
+            className="text-sm text-black/55 transition-colors hover:text-black"
           >
             Начало
           </Link>
 
           <Link
             href="/produkti"
-            className="text-sm text-black/60 transition-colors hover:text-black"
+            className="text-sm text-black/55 transition-colors hover:text-black"
           >
             Продукти
           </Link>
 
           <Link
             href="/uslugi"
-            className="text-sm text-black/60 transition-colors hover:text-black"
+            className="text-sm text-black/55 transition-colors hover:text-black"
           >
             Услуги и Сервиз
           </Link>
 
-          <span className="ml-2 h-5 w-px bg-black/10" />
+          <span className="h-5 w-px bg-black/10" />
 
           <button
             type="button"
-            className="text-xs font-medium tracking-[0.15em] text-black/50 transition-colors hover:text-black"
+            className="text-xs font-medium tracking-[0.15em] text-black/45 transition-colors hover:text-black"
           >
             EN
           </button>
         </nav>
 
-        {/* Mobile menu button */}
+        {/* MOBILE BUTTON */}
         <button
           type="button"
           aria-label={menuOpen ? "Затвори менюто" : "Отвори менюто"}
           aria-expanded={menuOpen}
-          onClick={() => setMenuOpen(!menuOpen)}
+          onClick={() => setMenuOpen((open) => !open)}
           className="relative z-50 flex h-10 w-10 items-center justify-center md:hidden"
         >
           <div className="flex w-5 flex-col gap-1.5">
@@ -106,7 +120,7 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Mobile menu */}
+      {/* MOBILE MENU */}
       <div
         className={`overflow-hidden transition-all duration-500 md:hidden ${
           menuOpen ? "max-h-[400px]" : "max-h-0"
@@ -140,7 +154,7 @@ export default function Header() {
 
             <button
               type="button"
-              className="self-start pt-6 text-xs font-medium tracking-[0.2em] text-black/50"
+              className="self-start pt-6 text-xs font-medium tracking-[0.2em] text-black/45"
             >
               ENGLISH
             </button>
