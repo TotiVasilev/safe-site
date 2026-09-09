@@ -46,39 +46,31 @@ export default function ServicesExperience() {
   const sceneLayouts = [
     {
       safeLeft: "53%",
-      safeWidth: "47%",
       textClass: "left-[21%]",
       textFromLeft: true,
     },
     {
       safeLeft: "6%",
-      safeWidth: "47%",
       textClass: "right-[8%]",
       textFromLeft: false,
     },
     {
-      // Прекодиране — give the lock zoom extra space
-      safeLeft: "59%",
-      safeWidth: "39%",
-      textClass: "left-[17%]",
-      textFromLeft: true,
-    },
-    {
-      safeLeft: "6%",
-      safeWidth: "47%",
-      textClass: "right-[8%]",
-      textFromLeft: false,
-    },
-    {
-      // Аварийно отваряне — extra room for the fully opened door
-      safeLeft: "58%",
-      safeWidth: "40%",
+      safeLeft: "57%",
       textClass: "left-[16%]",
       textFromLeft: true,
     },
     {
       safeLeft: "6%",
-      safeWidth: "47%",
+      textClass: "right-[8%]",
+      textFromLeft: false,
+    },
+    {
+      safeLeft: "59%",
+      textClass: "left-[15%]",
+      textFromLeft: true,
+    },
+    {
+      safeLeft: "6%",
       textClass: "right-[8%]",
       textFromLeft: false,
     },
@@ -162,16 +154,16 @@ export default function ServicesExperience() {
       <div className="relative mx-auto h-[calc(100vh-5rem)] max-w-[1600px] px-12">
         {/* SAFE */}
         <motion.div
-        animate={{
+          animate={{
             left: currentLayout.safeLeft,
-        }}
-        transition={{
+          }}
+          transition={{
             duration: 0.9,
             ease: [0.22, 1, 0.36, 1],
-        }}
-        className="absolute bottom-[5%] top-[5%] z-10 w-[47%]"
+          }}
+          className="absolute bottom-[5%] top-[5%] z-10 w-[47%]"
         >
-        <SafeScene activeIndex={activeIndex} />
+          <SafeScene activeIndex={activeIndex} />
         </motion.div>
 
         {/* SERVICE CONTENT */}
@@ -234,49 +226,6 @@ export default function ServicesExperience() {
             </div>
           </motion.section>
         </AnimatePresence>
-
-        {/* NEXT CONTROL */}
-        <button
-          type="button"
-          onClick={(event) => {
-            event.stopPropagation();
-            goToNextService();
-          }}
-          className="absolute right-10 top-1/2 z-30 flex -translate-y-1/2 flex-col items-center gap-4"
-        >
-          <span className="flex h-16 w-16 items-center justify-center rounded-full border border-black/20 text-3xl font-light transition-all duration-300 hover:scale-110 hover:border-black">
-            ›
-          </span>
-
-          <span className="max-w-[130px] text-center text-[10px] uppercase leading-5 tracking-[0.32em] text-black/40">
-            Следваща услуга
-          </span>
-        </button>
-
-        {/* CLICK INSTRUCTION */}
-        <div className="pointer-events-none absolute bottom-8 left-1/2 z-30 -translate-x-1/2 text-center">
-          <div className="mx-auto flex h-9 w-6 items-center justify-center rounded-full border border-black/25">
-            <div className="h-1.5 w-1.5 rounded-full bg-[#3f7edb]" />
-          </div>
-
-          <p className="mt-3 text-[9px] uppercase tracking-[0.38em] text-black/35">
-            Кликнете навсякъде, за да продължите
-          </p>
-        </div>
-
-        {/* SIMPLE PROGRESS */}
-        <div className="pointer-events-none absolute bottom-10 right-10 z-30 flex gap-2">
-          {services.map((service, index) => (
-            <span
-              key={service.title}
-              className={`h-[3px] rounded-full transition-all duration-500 ${
-                activeIndex === index
-                  ? "w-10 bg-[#3f7edb]"
-                  : "w-7 bg-black/15"
-              }`}
-            />
-          ))}
-        </div>
       </div>
     </main>
   );
