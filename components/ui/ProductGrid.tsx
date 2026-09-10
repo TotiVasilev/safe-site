@@ -66,7 +66,7 @@ export default function ProductGrid({
           }}
         >
           <Link
-            href={`/produkti#${category.slug}`}
+            href={`/produkti#category-${category.slug}`}
             className="group block h-full rounded-2xl border border-black/10 p-8 transition-all duration-300 hover:-translate-y-1 hover:border-black/20 hover:shadow-xl"
           >
             <div className="flex items-start justify-between gap-6">
