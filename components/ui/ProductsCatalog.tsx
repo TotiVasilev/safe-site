@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   AnimatePresence,
   LayoutGroup,
@@ -28,6 +28,18 @@ export default function ProductsCatalog({
   const [selected, setSelected] =
     useState<SelectedProduct | null>(null);
 
+  const [activeCategory, setActiveCategory] = useState(
+    categories[0]?.slug ?? ""
+  );
+
+  const [activeSubcategory, setActiveSubcategory] =
+    useState<string | null>(null);
+
+  const [floatingMenu, setFloatingMenu] = useState(false);
+  const [menuHovered, setMenuHovered] = useState(false);
+
+  const navigationMarkerRef = useRef<HTMLDivElement | null>(null);
+
   /*
   |--------------------------------------------------------------------------
   | Disable background scrolling while product is expanded
@@ -48,7 +60,7 @@ export default function ProductsCatalog({
 
   /*
   |--------------------------------------------------------------------------
-  | Close with ESC
+  | Close expanded product with ESC
   |--------------------------------------------------------------------------
   */
 
@@ -66,11 +78,182 @@ export default function ProductsCatalog({
     };
   }, []);
 
+  /*
+  |--------------------------------------------------------------------------
+  | Normal navigation -> floating navigation
+  |--------------------------------------------------------------------------
+  */
+
+  useEffect(() => {
+    function updateFloatingMenu() {
+      const marker = navigationMarkerRef.current;
+
+      if (!marker) return;
+
+      const rect = marker.getBoundingClientRect();
+
+      setFloatingMenu(rect.bottom < 80);
+    }
+
+    updateFloatingMenu();
+
+    window.addEventListener("scroll", updateFloatingMenu, {
+      passive: true,
+    });
+
+    window.addEventListener("resize", updateFloatingMenu);
+
+    return () => {
+      window.removeEventListener("scroll", updateFloatingMenu);
+      window.removeEventListener("resize", updateFloatingMenu);
+    };
+  }, []);
+
+  /*
+  |--------------------------------------------------------------------------
+  | Detect active category + subcategory
+  |--------------------------------------------------------------------------
+  */
+
+  useEffect(() => {
+    function updateActiveSection() {
+      const detectionLine = 170;
+
+      let currentCategory = categories[0]?.slug ?? "";
+      let currentSubcategory: string | null = null;
+
+      for (const category of categories) {
+        const categoryElement = document.getElementById(
+          `category-${category.slug}`
+        );
+
+        if (!categoryElement) continue;
+
+        const categoryRect =
+          categoryElement.getBoundingClientRect();
+
+        if (categoryRect.top <= detectionLine) {
+          currentCategory = category.slug;
+          currentSubcategory = null;
+
+          if (category.subcategories) {
+            for (const subcategory of category.subcategories) {
+              const subcategoryElement = document.getElementById(
+                `subcategory-${category.slug}-${subcategory.id}`
+              );
+
+              if (!subcategoryElement) continue;
+
+              const subcategoryRect =
+                subcategoryElement.getBoundingClientRect();
+
+              if (subcategoryRect.top <= detectionLine) {
+                currentSubcategory = subcategory.id;
+              }
+            }
+          }
+        }
+      }
+
+      /*
+       * Fix for the final category / final subcategory.
+       * The final heading sometimes cannot physically reach the detection
+       * line because the page ends first.
+       */
+      const atBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 8;
+
+      if (atBottom && categories.length > 0) {
+        const lastCategory = categories[categories.length - 1];
+
+        currentCategory = lastCategory.slug;
+
+        if (
+          lastCategory.subcategories &&
+          lastCategory.subcategories.length > 0
+        ) {
+          currentSubcategory =
+            lastCategory.subcategories[
+              lastCategory.subcategories.length - 1
+            ].id;
+        } else {
+          currentSubcategory = null;
+        }
+      }
+
+      setActiveCategory(currentCategory);
+      setActiveSubcategory(currentSubcategory);
+    }
+
+    updateActiveSection();
+
+    window.addEventListener("scroll", updateActiveSection, {
+      passive: true,
+    });
+
+    window.addEventListener("resize", updateActiveSection);
+
+    return () => {
+      window.removeEventListener("scroll", updateActiveSection);
+      window.removeEventListener("resize", updateActiveSection);
+    };
+  }, [categories]);
+
+  /*
+  |--------------------------------------------------------------------------
+  | Instant navigation
+  |--------------------------------------------------------------------------
+  */
+
+  function jumpToElement(elementId: string) {
+    const element = document.getElementById(elementId);
+
+    if (!element) return;
+
+    const headerOffset = 105;
+
+    const top =
+      element.getBoundingClientRect().top +
+      window.scrollY -
+      headerOffset;
+
+    window.scrollTo({
+      top,
+      behavior: "auto",
+    });
+  }
+
+  function jumpToCategory(slug: string) {
+    setActiveCategory(slug);
+    setActiveSubcategory(null);
+
+    jumpToElement(`category-${slug}`);
+  }
+
+  function jumpToSubcategory(
+    categorySlug: string,
+    subcategoryId: string
+  ) {
+    setActiveCategory(categorySlug);
+    setActiveSubcategory(subcategoryId);
+
+    jumpToElement(
+      `subcategory-${categorySlug}-${subcategoryId}`
+    );
+  }
+
   return (
     <LayoutGroup>
-      {/* MAIN CATALOG */}
+      {/* =========================================================
+          MAIN CATALOG
+      ========================================================= */}
+
       <div className="mx-auto max-w-7xl px-6 pb-32 pt-32 lg:px-12">
-        {/* PAGE HEADER */}
+        {/* =======================================================
+            PAGE HEADER
+        ======================================================= */}
+
         <motion.header
           initial={{
             opacity: 0,
@@ -100,46 +283,86 @@ export default function ProductsCatalog({
           </p>
         </motion.header>
 
-        {/* CATEGORY NAVIGATION */}
-        <motion.nav
-          initial={{
-            opacity: 0,
-            y: 20,
-          }}
+        {/* =======================================================
+            ORIGINAL CATEGORY NAVIGATION
+        ======================================================= */}
+
+        <div ref={navigationMarkerRef}>
+          <motion.nav
+            initial={{
+              opacity: 0,
+              y: 20,
+            }}
+            animate={{
+              opacity: floatingMenu ? 0 : 1,
+              y: 0,
+            }}
+            transition={{
+              delay: 0.15,
+              duration: 0.6,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="mt-16 border-y border-black/10 py-4"
+          >
+            <div className="flex flex-wrap gap-x-8 gap-y-3">
+              {categories.map((category) => {
+                const active =
+                  activeCategory === category.slug;
+
+                return (
+                  <button
+                    key={category.id}
+                    type="button"
+                    onClick={() =>
+                      jumpToCategory(category.slug)
+                    }
+                    className={`relative py-1 text-sm transition-colors duration-200 ${
+                      active
+                        ? "text-[#3f7edb]"
+                        : "text-black/45 hover:text-black"
+                    }`}
+                  >
+                    {category.name}
+
+                    {active && (
+                      <motion.span
+                        layoutId="top-category-indicator"
+                        className="absolute -bottom-[17px] left-0 right-0 h-[2px] bg-[#3f7edb]"
+                        transition={{
+                          duration: 0.25,
+                          ease: [0.22, 1, 0.36, 1],
+                        }}
+                      />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </motion.nav>
+        </div>
+
+        {/* =======================================================
+            CATEGORIES
+
+            IMPORTANT:
+            When the floating menu appears, the catalog shifts right.
+            This keeps the menu from covering product cards/headings.
+        ======================================================= */}
+
+        <motion.div
           animate={{
-            opacity: 1,
-            y: 0,
+            paddingLeft: floatingMenu ? 150 : 0,
           }}
           transition={{
-            delay: 0.15,
-            duration: 0.8,
+            duration: 0.35,
             ease: [0.22, 1, 0.36, 1],
           }}
-          className="mt-16 overflow-x-auto border-y border-black/10 py-4"
+          className="mt-24 space-y-32"
         >
-          <div className="flex min-w-max gap-6">
-            {categories.map((category, index) => (
-              <a
-                key={category.id}
-                href={`#${category.slug}`}
-                className="text-sm text-black/50 transition-colors hover:text-black"
-              >
-                <span className="mr-2 text-xs text-black/25">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-
-                {category.name}
-              </a>
-            ))}
-          </div>
-        </motion.nav>
-
-        {/* CATEGORIES */}
-        <div className="mt-24 space-y-32">
-          {categories.map((category, categoryIndex) => (
+          {categories.map((category) => (
             <motion.section
               key={category.id}
-              id={category.slug}
+              id={`category-${category.slug}`}
               initial={{
                 opacity: 0,
                 y: 35,
@@ -156,14 +379,13 @@ export default function ProductsCatalog({
                 duration: 0.75,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="scroll-mt-28"
             >
               {/* CATEGORY HEADER */}
+
               <div className="flex items-end justify-between border-b border-black/10 pb-6">
                 <div>
                   <p className="mb-3 text-xs uppercase tracking-[0.25em] text-black/30">
-                    Категория{" "}
-                    {String(categoryIndex + 1).padStart(2, "0")}
+                    Категория
                   </p>
 
                   <h2 className="text-3xl font-medium tracking-tight sm:text-4xl">
@@ -179,18 +401,16 @@ export default function ProductsCatalog({
               </div>
 
               {/* SUBCATEGORIES */}
+
               {category.subcategories && (
                 <div className="mt-12 space-y-20">
                   {category.subcategories.map(
-                    (subcategory, subcategoryIndex) => (
-                      <div key={subcategory.id}>
+                    (subcategory) => (
+                      <div
+                        key={subcategory.id}
+                        id={`subcategory-${category.slug}-${subcategory.id}`}
+                      >
                         <div className="mb-7 flex items-center gap-4">
-                          <span className="text-xs text-black/25">
-                            {String(
-                              subcategoryIndex + 1
-                            ).padStart(2, "0")}
-                          </span>
-
                           <h3 className="text-xl font-medium tracking-tight">
                             {subcategory.name}
                           </h3>
@@ -208,7 +428,8 @@ export default function ProductsCatalog({
                                 onOpen={() =>
                                   setSelected({
                                     product,
-                                    category: category.name,
+                                    category:
+                                      category.name,
                                     subcategory:
                                       subcategory.name,
                                   })
@@ -224,6 +445,7 @@ export default function ProductsCatalog({
               )}
 
               {/* DIRECT PRODUCTS */}
+
               {category.products && (
                 <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   {category.products.map(
@@ -236,7 +458,8 @@ export default function ProductsCatalog({
                         onOpen={() =>
                           setSelected({
                             product,
-                            category: category.name,
+                            category:
+                              category.name,
                           })
                         }
                       />
@@ -246,14 +469,163 @@ export default function ProductsCatalog({
               )}
             </motion.section>
           ))}
-        </div>
+        </motion.div>
       </div>
 
-      {/* EXPANDED PRODUCT */}
+      {/* =========================================================
+          FLOATING CATEGORY NAVIGATION
+      ========================================================= */}
+
+      <AnimatePresence>
+        {floatingMenu && !selected && (
+          <motion.nav
+            initial={{
+              opacity: 0,
+              x: -30,
+            }}
+            animate={{
+              opacity: 1,
+              x: 0,
+            }}
+            exit={{
+              opacity: 0,
+              x: -30,
+            }}
+            transition={{
+              duration: 0.35,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            onMouseEnter={() => setMenuHovered(true)}
+            onMouseLeave={() => setMenuHovered(false)}
+            className="fixed left-4 top-28 z-40 hidden lg:block"
+          >
+            <motion.div
+              animate={{
+                width: menuHovered ? 245 : 200,
+              }}
+              transition={{
+                duration: 0.3,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="overflow-hidden rounded-2xl border border-black/[0.07] bg-white/95 p-3 shadow-[0_12px_40px_rgba(0,0,0,0.07)] backdrop-blur-xl"
+            >
+              {categories.map((category) => {
+                const categoryActive =
+                  activeCategory === category.slug;
+
+                const showSubcategories =
+                  categoryActive || menuHovered;
+
+                return (
+                  <div key={category.id}>
+                    {/* CATEGORY BUTTON */}
+
+                    <button
+                      type="button"
+                      onClick={() =>
+                        jumpToCategory(category.slug)
+                      }
+                      className="group flex w-full items-center rounded-xl px-3 py-2.5 text-left transition-colors hover:bg-black/[0.025]"
+                    >
+                      <span
+                        className={`mr-3 block shrink-0 rounded-full transition-all duration-300 ${
+                          categoryActive
+                            ? "h-2.5 w-2.5 bg-[#3f7edb] shadow-[0_0_0_4px_rgba(63,126,219,0.10)]"
+                            : "h-1.5 w-1.5 bg-black/20 group-hover:bg-black/45"
+                        }`}
+                      />
+
+                      <span
+                        className={`whitespace-nowrap text-sm transition-colors duration-200 ${
+                          categoryActive
+                            ? "font-medium text-[#3f7edb]"
+                            : "text-black/45 group-hover:text-black/75"
+                        }`}
+                      >
+                        {category.name}
+                      </span>
+                    </button>
+
+                    {/* SUBCATEGORIES */}
+
+                    <AnimatePresence initial={false}>
+                      {category.subcategories &&
+                        category.subcategories.length > 0 &&
+                        showSubcategories && (
+                          <motion.div
+                            initial={{
+                              height: 0,
+                              opacity: 0,
+                            }}
+                            animate={{
+                              height: "auto",
+                              opacity: 1,
+                            }}
+                            exit={{
+                              height: 0,
+                              opacity: 0,
+                            }}
+                            transition={{
+                              duration: 0.28,
+                              ease: [0.22, 1, 0.36, 1],
+                            }}
+                            className="overflow-hidden"
+                          >
+                            <div className="relative mb-2 ml-[19px] mt-1 border-l border-black/10 pl-5">
+                              {category.subcategories.map(
+                                (subcategory) => {
+                                  const subcategoryActive =
+                                    categoryActive &&
+                                    activeSubcategory ===
+                                      subcategory.id;
+
+                                  return (
+                                    <button
+                                      key={subcategory.id}
+                                      type="button"
+                                      onClick={() =>
+                                        jumpToSubcategory(
+                                          category.slug,
+                                          subcategory.id
+                                        )
+                                      }
+                                      className={`relative block w-full py-2 pr-2 text-left text-xs leading-5 transition-colors duration-200 ${
+                                        subcategoryActive
+                                          ? "font-medium text-[#3f7edb]"
+                                          : "text-black/35 hover:text-black/70"
+                                      }`}
+                                    >
+                                      {subcategoryActive && (
+                                        <motion.span
+                                          layoutId="active-subcategory-dot"
+                                          className="absolute -left-[23px] top-[14px] h-[5px] w-[5px] rounded-full bg-[#3f7edb]"
+                                        />
+                                      )}
+
+                                      {subcategory.name}
+                                    </button>
+                                  );
+                                }
+                              )}
+                            </div>
+                          </motion.div>
+                        )}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
+            </motion.div>
+          </motion.nav>
+        )}
+      </AnimatePresence>
+
+      {/* =========================================================
+          EXPANDED PRODUCT
+      ========================================================= */}
+
       <AnimatePresence>
         {selected && (
           <>
-            {/* BACKDROP */}
             <motion.div
               initial={{
                 opacity: 0,
@@ -270,7 +642,6 @@ export default function ProductsCatalog({
               className="fixed inset-0 z-[90] bg-black/25 backdrop-blur-[3px]"
             />
 
-            {/* EXPANDED CARD */}
             <motion.div
               layoutId={`product-${selected.product.id}`}
               transition={{
@@ -346,6 +717,7 @@ function ProductCard({
         className="group block w-full text-left"
       >
         {/* IMAGE */}
+
         <div className="relative aspect-[4/3] overflow-hidden bg-neutral-100">
           <div className="flex h-full items-center justify-center">
             <span className="text-xs uppercase tracking-[0.3em] text-black/20">
@@ -359,6 +731,7 @@ function ProductCard({
         </div>
 
         {/* CONTENT */}
+
         <div className="p-6">
           <p className="text-xs uppercase tracking-[0.2em] text-black/30">
             {subcategory ?? category}
@@ -410,6 +783,7 @@ function ExpandedProduct({
   return (
     <div className="relative min-h-full bg-white">
       {/* CLOSE */}
+
       <motion.button
         type="button"
         onClick={onClose}
@@ -435,8 +809,10 @@ function ExpandedProduct({
 
       <div className="mx-auto max-w-7xl px-6 pb-20 pt-20 sm:pt-24 lg:px-12 lg:pb-28 lg:pt-28">
         {/* PRODUCT HERO */}
+
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-20">
           {/* IMAGE */}
+
           <motion.div
             initial={{
               opacity: 0,
@@ -461,6 +837,7 @@ function ExpandedProduct({
           </motion.div>
 
           {/* INFO */}
+
           <motion.div
             initial={{
               opacity: 0,
@@ -508,6 +885,7 @@ function ExpandedProduct({
         </div>
 
         {/* MODELS */}
+
         {product.models.length > 0 && (
           <motion.section
             initial={{
@@ -573,7 +951,8 @@ function ExpandedProduct({
           </motion.section>
         )}
 
-        {/* CONTACT AREA — SAME IDEA AS OLD PRODUCT PAGE */}
+        {/* CONTACT */}
+
         <motion.section
           initial={{
             opacity: 0,
@@ -599,9 +978,8 @@ function ExpandedProduct({
           </h2>
 
           <p className="mt-5 max-w-xl leading-7 text-white/60">
-            Свържете се с нас за повече информация относно
-            моделите, характеристиките и възможностите за доставка
-            и монтаж.
+            Свържете се с нас за повече информация относно моделите,
+            характеристиките и възможностите за доставка и монтаж.
           </p>
 
           <button
