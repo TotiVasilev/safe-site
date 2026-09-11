@@ -46,12 +46,7 @@ type MobileTextLayout = {
 };
 
 const mobileTextLayouts: MobileTextLayout[] = [
-  /*
-  |--------------------------------------------------------------------------
-  | 1 - ГАРАНЦИОНЕН
-  | Reference position - DO NOT CHANGE
-  |--------------------------------------------------------------------------
-  */
+  /* 1 - ГАРАНЦИОНЕН */
   {
     className: "left-5 right-5 top-7",
     width: "max-w-[340px]",
@@ -59,12 +54,7 @@ const mobileTextLayouts: MobileTextLayout[] = [
     enterY: -30,
   },
 
-  /*
-  |--------------------------------------------------------------------------
-  | 2 - МОНТАЖ
-  | Bottom text moved UP
-  |--------------------------------------------------------------------------
-  */
+  /* 2 - МОНТАЖ */
   {
     className: "bottom-[19%] left-5 right-5",
     width: "max-w-[340px]",
@@ -72,13 +62,7 @@ const mobileTextLayouts: MobileTextLayout[] = [
     enterY: 30,
   },
 
-  /*
-  |--------------------------------------------------------------------------
-  | 3 - ПРЕКОДИРАНЕ
-  | SAME vertical height as scene 1
-  | Same typography
-  |--------------------------------------------------------------------------
-  */
+  /* 3 - ПРЕКОДИРАНЕ */
   {
     className: "left-5 top-7",
     width: "w-[62vw] max-w-[235px]",
@@ -86,13 +70,7 @@ const mobileTextLayouts: MobileTextLayout[] = [
     enterY: 0,
   },
 
-  /*
-  |--------------------------------------------------------------------------
-  | 4 - ПРОФИЛАКТИКА
-  | SAME vertical height as scene 1
-  | Right aligned composition
-  |--------------------------------------------------------------------------
-  */
+  /* 4 - ПРОФИЛАКТИКА */
   {
     className: "right-5 top-7",
     width: "w-[58vw] max-w-[220px]",
@@ -100,12 +78,7 @@ const mobileTextLayouts: MobileTextLayout[] = [
     enterY: 0,
   },
 
-  /*
-  |--------------------------------------------------------------------------
-  | 5 - АВАРИЙНО
-  | Text position already correct
-  |--------------------------------------------------------------------------
-  */
+  /* 5 - АВАРИЙНО */
   {
     className: "left-5 right-5 top-7",
     width: "max-w-[340px]",
@@ -113,12 +86,7 @@ const mobileTextLayouts: MobileTextLayout[] = [
     enterY: -30,
   },
 
-  /*
-  |--------------------------------------------------------------------------
-  | 6 - КОНСУЛТАЦИЯ
-  | Bottom text moved UP
-  |--------------------------------------------------------------------------
-  */
+  /* 6 - КОНСУЛТАЦИЯ */
   {
     className: "bottom-[19%] left-5 right-5",
     width: "max-w-[340px]",
@@ -132,6 +100,10 @@ export default function ServicesExperience() {
 
   const activeService = services[activeIndex];
   const mobileText = mobileTextLayouts[activeIndex];
+
+  /* =========================================================
+     DESKTOP LAYOUTS
+  ========================================================= */
 
   const sceneLayouts = [
     {
@@ -170,7 +142,9 @@ export default function ServicesExperience() {
 
   function goToNextService() {
     setActiveIndex((current) =>
-      current === services.length - 1 ? 0 : current + 1
+      current === services.length - 1
+        ? 0
+        : current + 1
     );
   }
 
@@ -181,9 +155,19 @@ export default function ServicesExperience() {
   return (
     <main
       onClick={goToNextService}
-      className="relative min-h-screen cursor-pointer overflow-hidden bg-white pt-20 text-black"
+      className="
+        relative
+        h-[100svh]
+        overflow-hidden
+        bg-white
+        pt-20
+        text-black
+        lg:h-auto
+        lg:min-h-screen
+      "
     >
       {/* BACKGROUND */}
+
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-1/2 top-[52%] h-[620px] w-[620px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/[0.035] blur-[120px]" />
       </div>
@@ -191,13 +175,27 @@ export default function ServicesExperience() {
       {/* =========================================================
           MOBILE
       ========================================================= */}
-      <div className="relative h-[calc(100svh-5rem)] overflow-hidden lg:hidden">
-        {/* FIXED FULL-SCREEN 3D CANVAS */}
+
+      <div
+        className="
+          relative
+          h-[calc(100svh-5rem)]
+          w-full
+          overflow-hidden
+          lg:hidden
+        "
+      >
+        {/* FIXED 3D STAGE */}
+
         <div className="pointer-events-none absolute inset-0 z-10">
-          <SafeScene activeIndex={activeIndex} mobile />
+          <SafeScene
+            activeIndex={activeIndex}
+            mobile
+          />
         </div>
 
         {/* MOBILE TEXT */}
+
         <AnimatePresence mode="wait">
           <motion.section
             key={`mobile-service-${activeIndex}`}
@@ -227,14 +225,12 @@ export default function ServicesExperience() {
                 Услуги и сервиз
               </p>
 
-              {/* SAME FONT SIZE ON ALL MOBILE SCENES */}
               <h1 className="mt-4 text-[1.95rem] font-light leading-[1.02] tracking-[-0.04em]">
                 {activeService.title}
               </h1>
 
               <div className="mt-5 h-px w-12 bg-[#3f7edb]" />
 
-              {/* SAME BODY SIZE ON ALL MOBILE SCENES */}
               <p className="mt-5 text-[13px] leading-[1.7] text-black/55">
                 {activeService.description}
               </p>
@@ -244,11 +240,16 @@ export default function ServicesExperience() {
       </div>
 
       {/* =========================================================
-          DESKTOP - UNCHANGED
+          DESKTOP
       ========================================================= */}
+
       <div className="hidden lg:block">
+        {/* LEFT SERVICE MENU */}
+
         <nav
-          onClick={(event) => event.stopPropagation()}
+          onClick={(event) =>
+            event.stopPropagation()
+          }
           className="absolute left-10 top-1/2 z-30 hidden -translate-y-1/2 xl:block"
         >
           <div className="mb-10">
@@ -260,40 +261,49 @@ export default function ServicesExperience() {
           <div className="relative flex flex-col gap-9">
             <div className="absolute left-[5px] top-3 h-[calc(100%-24px)] w-px bg-black/15" />
 
-            {services.map((service, index) => {
-              const active = activeIndex === index;
+            {services.map(
+              (service, index) => {
+                const active =
+                  activeIndex === index;
 
-              return (
-                <button
-                  type="button"
-                  key={service.title}
-                  onClick={() => selectService(index)}
-                  className="group relative flex items-start gap-5 text-left"
-                >
-                  <span
-                    className={`relative z-10 mt-1.5 h-[11px] w-[11px] rounded-full border transition-all duration-500 ${
-                      active
-                        ? "scale-125 border-[#3f7edb] bg-[#3f7edb] shadow-[0_0_16px_rgba(63,126,219,0.4)]"
-                        : "border-black/40 bg-white group-hover:border-black"
-                    }`}
-                  />
-
-                  <span
-                    className={`max-w-[185px] text-sm leading-5 transition-all duration-300 ${
-                      active
-                        ? "font-medium text-[#3f7edb]"
-                        : "text-black/45 group-hover:text-black"
-                    }`}
+                return (
+                  <button
+                    type="button"
+                    key={service.title}
+                    onClick={() =>
+                      selectService(index)
+                    }
+                    className="group relative flex items-start gap-5 text-left"
                   >
-                    {service.title}
-                  </span>
-                </button>
-              );
-            })}
+                    <span
+                      className={`relative z-10 mt-1.5 h-[11px] w-[11px] rounded-full border transition-all duration-500 ${
+                        active
+                          ? "scale-125 border-[#3f7edb] bg-[#3f7edb] shadow-[0_0_16px_rgba(63,126,219,0.4)]"
+                          : "border-black/40 bg-white group-hover:border-black"
+                      }`}
+                    />
+
+                    <span
+                      className={`max-w-[185px] text-sm leading-5 transition-all duration-300 ${
+                        active
+                          ? "font-medium text-[#3f7edb]"
+                          : "text-black/45 group-hover:text-black"
+                      }`}
+                    >
+                      {service.title}
+                    </span>
+                  </button>
+                );
+              }
+            )}
           </div>
         </nav>
 
+        {/* DESKTOP STAGE */}
+
         <div className="relative mx-auto h-[calc(100vh-5rem)] max-w-[1600px] px-12">
+          {/* SAFE */}
+
           <motion.div
             animate={{
               left: currentLayout.safeLeft,
@@ -304,15 +314,21 @@ export default function ServicesExperience() {
             }}
             className="absolute bottom-[5%] top-[5%] z-10 w-[47%]"
           >
-            <SafeScene activeIndex={activeIndex} />
+            <SafeScene
+              activeIndex={activeIndex}
+            />
           </motion.div>
+
+          {/* SERVICE CONTENT */}
 
           <AnimatePresence mode="wait">
             <motion.section
               key={activeService.title}
               initial={{
                 opacity: 0,
-                x: currentLayout.textFromLeft ? -90 : 90,
+                x: currentLayout.textFromLeft
+                  ? -90
+                  : 90,
               }}
               animate={{
                 opacity: 1,
@@ -320,7 +336,9 @@ export default function ServicesExperience() {
               }}
               exit={{
                 opacity: 0,
-                x: currentLayout.textFromLeft ? 60 : -60,
+                x: currentLayout.textFromLeft
+                  ? 60
+                  : -60,
               }}
               transition={{
                 duration: 0.65,
@@ -341,6 +359,7 @@ export default function ServicesExperience() {
               <div className="mt-10 grid max-w-xl grid-cols-3 gap-6 border-t border-black/10 pt-8">
                 <div>
                   <div className="mb-3 h-8 w-8 rounded-full border border-black/15" />
+
                   <p className="text-sm font-medium">
                     Професионално обслужване
                   </p>
@@ -348,6 +367,7 @@ export default function ServicesExperience() {
 
                 <div>
                   <div className="mb-3 h-8 w-8 rounded-full border border-black/15" />
+
                   <p className="text-sm font-medium">
                     Бърза реакция
                   </p>
@@ -355,6 +375,7 @@ export default function ServicesExperience() {
 
                 <div>
                   <div className="mb-3 h-8 w-8 rounded-full border border-black/15" />
+
                   <p className="text-sm font-medium">
                     Специализиран екип
                   </p>

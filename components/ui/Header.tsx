@@ -11,6 +11,10 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  /* =========================================================
+     HEADER SCROLL STATE
+  ========================================================= */
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 30);
@@ -18,15 +22,45 @@ export default function Header() {
 
     handleScroll();
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, {
+      passive: true,
+    });
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
+  /* =========================================================
+     ROUTE CHANGE
+
+     Normal pages always start from the top.
+
+     IMPORTANT:
+     Product category links use hashes, so those are allowed
+     to handle their own scrolling.
+  ========================================================= */
+
   useEffect(() => {
     setMenuOpen(false);
+
+    const hash = window.location.hash;
+
+    if (hash) {
+      return;
+    }
+
+    const frame = window.requestAnimationFrame(() => {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "auto",
+      });
+    });
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+    };
   }, [pathname]);
 
   function closeMenu() {
@@ -38,10 +72,8 @@ export default function Header() {
       const next = !open;
 
       /*
-      |--------------------------------------------------------------------------
-      | IF MAIN MENU OPENS:
-      | CLOSE PRODUCT STICKY DROPDOWN
-      |--------------------------------------------------------------------------
+      | When opening the main menu,
+      | close the Products sticky dropdown.
       */
 
       if (next) {
@@ -124,7 +156,7 @@ export default function Header() {
             </span>
           </Link>
 
-          {/* DESKTOP NAVIGATION */}
+          {/* DESKTOP NAV */}
 
           <nav className="hidden items-center gap-2 md:flex">
             <Link
@@ -237,7 +269,7 @@ export default function Header() {
         </div>
       </header>
 
-      {/* CLICK OUTSIDE MAIN MENU */}
+      {/* TAP OUTSIDE TO CLOSE */}
 
       {menuOpen && (
         <button
