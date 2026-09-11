@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import SafeScene from "@/components/ui/services/SafeScene";
 
@@ -46,7 +46,11 @@ type MobileTextLayout = {
 };
 
 const mobileTextLayouts: MobileTextLayout[] = [
-  /* 1 - ГАРАНЦИОНЕН */
+  /*
+  |--------------------------------------------------------------------------
+  | 1 - ГАРАНЦИОНЕН
+  |--------------------------------------------------------------------------
+  */
   {
     className: "left-5 right-5 top-7",
     width: "max-w-[340px]",
@@ -54,7 +58,11 @@ const mobileTextLayouts: MobileTextLayout[] = [
     enterY: -30,
   },
 
-  /* 2 - МОНТАЖ */
+  /*
+  |--------------------------------------------------------------------------
+  | 2 - МОНТАЖ
+  |--------------------------------------------------------------------------
+  */
   {
     className: "bottom-[19%] left-5 right-5",
     width: "max-w-[340px]",
@@ -62,15 +70,32 @@ const mobileTextLayouts: MobileTextLayout[] = [
     enterY: 30,
   },
 
-  /* 3 - ПРЕКОДИРАНЕ */
+  /*
+  |--------------------------------------------------------------------------
+  | 3 - ПРЕКОДИРАНЕ
+  |
+  | IMPORTANT:
+  | Much wider than before.
+  |
+  | Old:
+  | w-[62vw] max-w-[235px]
+  |
+  | New:
+  | w-[78vw] max-w-[330px]
+  |--------------------------------------------------------------------------
+  */
   {
     className: "left-5 top-7",
-    width: "w-[62vw] max-w-[235px]",
+    width: "w-[78vw] max-w-[330px]",
     enterX: -35,
     enterY: 0,
   },
 
-  /* 4 - ПРОФИЛАКТИКА */
+  /*
+  |--------------------------------------------------------------------------
+  | 4 - ПРОФИЛАКТИКА
+  |--------------------------------------------------------------------------
+  */
   {
     className: "right-5 top-7",
     width: "w-[58vw] max-w-[220px]",
@@ -78,7 +103,11 @@ const mobileTextLayouts: MobileTextLayout[] = [
     enterY: 0,
   },
 
-  /* 5 - АВАРИЙНО */
+  /*
+  |--------------------------------------------------------------------------
+  | 5 - АВАРИЙНО
+  |--------------------------------------------------------------------------
+  */
   {
     className: "left-5 right-5 top-7",
     width: "max-w-[340px]",
@@ -86,7 +115,11 @@ const mobileTextLayouts: MobileTextLayout[] = [
     enterY: -30,
   },
 
-  /* 6 - КОНСУЛТАЦИЯ */
+  /*
+  |--------------------------------------------------------------------------
+  | 6 - КОНСУЛТАЦИЯ
+  |--------------------------------------------------------------------------
+  */
   {
     className: "bottom-[19%] left-5 right-5",
     width: "max-w-[340px]",
@@ -101,9 +134,74 @@ export default function ServicesExperience() {
   const activeService = services[activeIndex];
   const mobileText = mobileTextLayouts[activeIndex];
 
-  /* =========================================================
-     DESKTOP LAYOUTS
-  ========================================================= */
+  /*
+  |--------------------------------------------------------------------------
+  | REAL MOBILE VIEWPORT HEIGHT
+  |--------------------------------------------------------------------------
+  |
+  | iOS Safari, Chrome and in-app browsers can all expose slightly
+  | different visible viewport heights because their browser bars are
+  | different.
+  |
+  | visualViewport.height tells us how much space is ACTUALLY visible.
+  |
+  */
+
+  useEffect(() => {
+    function updateViewportHeight() {
+      const viewportHeight =
+        window.visualViewport?.height ??
+        window.innerHeight;
+
+      document.documentElement.style.setProperty(
+        "--tetra-mobile-height",
+        `${Math.floor(viewportHeight)}px`
+      );
+    }
+
+    updateViewportHeight();
+
+    const visualViewport =
+      window.visualViewport;
+
+    visualViewport?.addEventListener(
+      "resize",
+      updateViewportHeight
+    );
+
+    window.addEventListener(
+      "resize",
+      updateViewportHeight
+    );
+
+    window.addEventListener(
+      "orientationchange",
+      updateViewportHeight
+    );
+
+    return () => {
+      visualViewport?.removeEventListener(
+        "resize",
+        updateViewportHeight
+      );
+
+      window.removeEventListener(
+        "resize",
+        updateViewportHeight
+      );
+
+      window.removeEventListener(
+        "orientationchange",
+        updateViewportHeight
+      );
+    };
+  }, []);
+
+  /*
+  |--------------------------------------------------------------------------
+  | DESKTOP LAYOUT
+  |--------------------------------------------------------------------------
+  */
 
   const sceneLayouts = [
     {
@@ -138,7 +236,8 @@ export default function ServicesExperience() {
     },
   ];
 
-  const currentLayout = sceneLayouts[activeIndex];
+  const currentLayout =
+    sceneLayouts[activeIndex];
 
   function goToNextService() {
     setActiveIndex((current) =>
@@ -157,16 +256,16 @@ export default function ServicesExperience() {
       onClick={goToNextService}
       className="
         relative
-        h-[100svh]
         overflow-hidden
         bg-white
         pt-20
         text-black
-        lg:h-auto
         lg:min-h-screen
       "
     >
-      {/* BACKGROUND */}
+      {/* =========================================================
+          BACKGROUND
+      ========================================================= */}
 
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-1/2 top-[52%] h-[620px] w-[620px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/[0.035] blur-[120px]" />
@@ -177,15 +276,15 @@ export default function ServicesExperience() {
       ========================================================= */}
 
       <div
-        className="
-          relative
-          h-[calc(100svh-5rem)]
-          w-full
-          overflow-hidden
-          lg:hidden
-        "
+        className="relative w-full overflow-hidden lg:hidden"
+        style={{
+          height:
+            "calc(var(--tetra-mobile-height, 100svh) - 5rem)",
+        }}
       >
-        {/* FIXED 3D STAGE */}
+        {/* =======================================================
+            3D SAFE
+        ======================================================= */}
 
         <div className="pointer-events-none absolute inset-0 z-10">
           <SafeScene
@@ -194,7 +293,9 @@ export default function ServicesExperience() {
           />
         </div>
 
-        {/* MOBILE TEXT */}
+        {/* =======================================================
+            MOBILE TEXT
+        ======================================================= */}
 
         <AnimatePresence mode="wait">
           <motion.section
@@ -211,16 +312,29 @@ export default function ServicesExperience() {
             }}
             exit={{
               opacity: 0,
-              x: mobileText.enterX * 0.6,
-              y: mobileText.enterY * 0.6,
+              x:
+                mobileText.enterX *
+                0.6,
+              y:
+                mobileText.enterY *
+                0.6,
             }}
             transition={{
               duration: 0.5,
-              ease: [0.22, 1, 0.36, 1],
+              ease: [
+                0.22,
+                1,
+                0.36,
+                1,
+              ],
             }}
             className={`absolute z-30 ${mobileText.className}`}
           >
-            <div className={mobileText.width}>
+            <div
+              className={
+                mobileText.width
+              }
+            >
               <p className="text-[9px] font-medium uppercase tracking-[0.29em] text-[#3f7edb]">
                 Услуги и сервиз
               </p>
@@ -232,7 +346,9 @@ export default function ServicesExperience() {
               <div className="mt-5 h-px w-12 bg-[#3f7edb]" />
 
               <p className="mt-5 text-[13px] leading-[1.7] text-black/55">
-                {activeService.description}
+                {
+                  activeService.description
+                }
               </p>
             </div>
           </motion.section>
@@ -244,7 +360,9 @@ export default function ServicesExperience() {
       ========================================================= */}
 
       <div className="hidden lg:block">
-        {/* LEFT SERVICE MENU */}
+        {/* =======================================================
+            LEFT SERVICE MENU
+        ======================================================= */}
 
         <nav
           onClick={(event) =>
@@ -269,9 +387,13 @@ export default function ServicesExperience() {
                 return (
                   <button
                     type="button"
-                    key={service.title}
+                    key={
+                      service.title
+                    }
                     onClick={() =>
-                      selectService(index)
+                      selectService(
+                        index
+                      )
                     }
                     className="group relative flex items-start gap-5 text-left"
                   >
@@ -290,7 +412,9 @@ export default function ServicesExperience() {
                           : "text-black/45 group-hover:text-black"
                       }`}
                     >
-                      {service.title}
+                      {
+                        service.title
+                      }
                     </span>
                   </button>
                 );
@@ -299,36 +423,49 @@ export default function ServicesExperience() {
           </div>
         </nav>
 
-        {/* DESKTOP STAGE */}
+        {/* =======================================================
+            DESKTOP STAGE
+        ======================================================= */}
 
         <div className="relative mx-auto h-[calc(100vh-5rem)] max-w-[1600px] px-12">
           {/* SAFE */}
 
           <motion.div
             animate={{
-              left: currentLayout.safeLeft,
+              left:
+                currentLayout.safeLeft,
             }}
             transition={{
               duration: 0.9,
-              ease: [0.22, 1, 0.36, 1],
+              ease: [
+                0.22,
+                1,
+                0.36,
+                1,
+              ],
             }}
             className="absolute bottom-[5%] top-[5%] z-10 w-[47%]"
           >
             <SafeScene
-              activeIndex={activeIndex}
+              activeIndex={
+                activeIndex
+              }
             />
           </motion.div>
 
-          {/* SERVICE CONTENT */}
+          {/* TEXT */}
 
           <AnimatePresence mode="wait">
             <motion.section
-              key={activeService.title}
+              key={
+                activeService.title
+              }
               initial={{
                 opacity: 0,
-                x: currentLayout.textFromLeft
-                  ? -90
-                  : 90,
+                x:
+                  currentLayout.textFromLeft
+                    ? -90
+                    : 90,
               }}
               animate={{
                 opacity: 1,
@@ -336,32 +473,45 @@ export default function ServicesExperience() {
               }}
               exit={{
                 opacity: 0,
-                x: currentLayout.textFromLeft
-                  ? 60
-                  : -60,
+                x:
+                  currentLayout.textFromLeft
+                    ? 60
+                    : -60,
               }}
               transition={{
                 duration: 0.65,
-                ease: [0.22, 1, 0.36, 1],
+                ease: [
+                  0.22,
+                  1,
+                  0.36,
+                  1,
+                ],
               }}
               className={`absolute top-1/2 z-20 w-[33%] -translate-y-1/2 ${currentLayout.textClass}`}
             >
               <h1 className="text-[clamp(2.4rem,3.5vw,4.4rem)] font-light leading-[1.02] tracking-[-0.035em]">
-                {activeService.title}
+                {
+                  activeService.title
+                }
               </h1>
 
               <div className="mt-8 h-px w-16 bg-[#3f7edb]" />
 
               <p className="mt-8 max-w-xl text-lg leading-8 text-black/55">
-                {activeService.description}
+                {
+                  activeService.description
+                }
               </p>
+
+              {/* DETAILS */}
 
               <div className="mt-10 grid max-w-xl grid-cols-3 gap-6 border-t border-black/10 pt-8">
                 <div>
                   <div className="mb-3 h-8 w-8 rounded-full border border-black/15" />
 
                   <p className="text-sm font-medium">
-                    Професионално обслужване
+                    Професионално
+                    обслужване
                   </p>
                 </div>
 
@@ -377,7 +527,8 @@ export default function ServicesExperience() {
                   <div className="mb-3 h-8 w-8 rounded-full border border-black/15" />
 
                   <p className="text-sm font-medium">
-                    Специализиран екип
+                    Специализиран
+                    екип
                   </p>
                 </div>
               </div>

@@ -8,8 +8,25 @@ import { useEffect, useState } from "react";
 export default function Header() {
   const pathname = usePathname();
 
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] =
+    useState(false);
+
+  const [menuOpen, setMenuOpen] =
+    useState(false);
+
+  /* =========================================================
+     DISABLE BROWSER AUTOMATIC SCROLL RESTORATION
+  ========================================================= */
+
+  useEffect(() => {
+    if (
+      "scrollRestoration" in
+      window.history
+    ) {
+      window.history.scrollRestoration =
+        "manual";
+    }
+  }, []);
 
   /* =========================================================
      HEADER SCROLL STATE
@@ -17,49 +34,101 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
+      setScrolled(
+        window.scrollY > 30
+      );
     };
 
     handleScroll();
 
-    window.addEventListener("scroll", handleScroll, {
-      passive: true,
-    });
+    window.addEventListener(
+      "scroll",
+      handleScroll,
+      {
+        passive: true,
+      }
+    );
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener(
+        "scroll",
+        handleScroll
+      );
     };
   }, []);
 
   /* =========================================================
-     ROUTE CHANGE
-
-     Normal pages always start from the top.
-
-     IMPORTANT:
-     Product category links use hashes, so those are allowed
-     to handle their own scrolling.
+     ROUTE CHANGE SCROLL RESET
   ========================================================= */
 
   useEffect(() => {
     setMenuOpen(false);
 
-    const hash = window.location.hash;
+    /*
+    | Product category URLs need their hashes.
+    |
+    | Example:
+    | /produkti#category-trezorni-reshenia
+    */
 
-    if (hash) {
+    if (window.location.hash) {
       return;
     }
 
-    const frame = window.requestAnimationFrame(() => {
+    function resetScroll() {
       window.scrollTo({
         top: 0,
         left: 0,
         behavior: "auto",
       });
-    });
+    }
+
+    /*
+    | Immediate.
+    */
+
+    resetScroll();
+
+    /*
+    | Next browser paint.
+    */
+
+    const frame =
+      window.requestAnimationFrame(
+        resetScroll
+      );
+
+    /*
+    | Safari / Chrome can perform their own
+    | restoration slightly later.
+    |
+    | We correct after that as well.
+    */
+
+    const timer1 =
+      window.setTimeout(
+        resetScroll,
+        50
+      );
+
+    const timer2 =
+      window.setTimeout(
+        resetScroll,
+        180
+      );
 
     return () => {
-      window.cancelAnimationFrame(frame);
+      window.cancelAnimationFrame(
+        frame
+      );
+
+      window.clearTimeout(
+        timer1
+      );
+
+      window.clearTimeout(
+        timer2
+      );
     };
   }, [pathname]);
 
@@ -71,14 +140,11 @@ export default function Header() {
     setMenuOpen((open) => {
       const next = !open;
 
-      /*
-      | When opening the main menu,
-      | close the Products sticky dropdown.
-      */
-
       if (next) {
         window.dispatchEvent(
-          new Event("tetraedar:main-menu-open")
+          new Event(
+            "tetraedar:main-menu-open"
+          )
         );
       }
 
@@ -86,16 +152,23 @@ export default function Header() {
     });
   }
 
-  function isActive(path: string) {
+  function isActive(
+    path: string
+  ) {
     if (path === "/") {
       return pathname === "/";
     }
 
-    return pathname.startsWith(path);
+    return pathname.startsWith(
+      path
+    );
   }
 
-  function desktopNavClass(path: string) {
-    const active = isActive(path);
+  function desktopNavClass(
+    path: string
+  ) {
+    const active =
+      isActive(path);
 
     return `
       flex w-[150px] items-center justify-center
@@ -110,8 +183,11 @@ export default function Header() {
     `;
   }
 
-  function mobileNavClass(path: string) {
-    const active = isActive(path);
+  function mobileNavClass(
+    path: string
+  ) {
+    const active =
+      isActive(path);
 
     return `
       rounded-xl px-4 py-4
@@ -156,26 +232,32 @@ export default function Header() {
             </span>
           </Link>
 
-          {/* DESKTOP NAV */}
+          {/* DESKTOP NAVIGATION */}
 
           <nav className="hidden items-center gap-2 md:flex">
             <Link
               href="/"
-              className={desktopNavClass("/")}
+              className={desktopNavClass(
+                "/"
+              )}
             >
               Начало
             </Link>
 
             <Link
               href="/produkti"
-              className={desktopNavClass("/produkti")}
+              className={desktopNavClass(
+                "/produkti"
+              )}
             >
               Продукти
             </Link>
 
             <Link
               href="/uslugi"
-              className={desktopNavClass("/uslugi")}
+              className={desktopNavClass(
+                "/uslugi"
+              )}
             >
               Услуги и Сервиз
             </Link>
@@ -199,7 +281,9 @@ export default function Header() {
                 ? "Затвори менюто"
                 : "Отвори менюто"
             }
-            aria-expanded={menuOpen}
+            aria-expanded={
+              menuOpen
+            }
             onClick={toggleMenu}
             className="relative z-50 flex h-10 w-10 items-center justify-center md:hidden"
           >
@@ -236,24 +320,36 @@ export default function Header() {
             <div className="flex flex-col gap-2">
               <Link
                 href="/"
-                onClick={closeMenu}
-                className={mobileNavClass("/")}
+                onClick={
+                  closeMenu
+                }
+                className={mobileNavClass(
+                  "/"
+                )}
               >
                 Начало
               </Link>
 
               <Link
                 href="/produkti"
-                onClick={closeMenu}
-                className={mobileNavClass("/produkti")}
+                onClick={
+                  closeMenu
+                }
+                className={mobileNavClass(
+                  "/produkti"
+                )}
               >
                 Продукти
               </Link>
 
               <Link
                 href="/uslugi"
-                onClick={closeMenu}
-                className={mobileNavClass("/uslugi")}
+                onClick={
+                  closeMenu
+                }
+                className={mobileNavClass(
+                  "/uslugi"
+                )}
               >
                 Услуги и Сервиз
               </Link>
@@ -269,7 +365,9 @@ export default function Header() {
         </div>
       </header>
 
-      {/* TAP OUTSIDE TO CLOSE */}
+      {/* =========================================================
+          OUTSIDE CLICK AREA
+      ========================================================= */}
 
       {menuOpen && (
         <button
