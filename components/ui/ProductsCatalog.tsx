@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import {
   AnimatePresence,
@@ -62,10 +63,6 @@ export default function ProductsCatalog({
         subcategory.id === activeSubcategory
     ) ?? null;
 
-  /* =========================================================
-     CLOSE PRODUCT MENU WHEN MAIN HEADER MENU OPENS
-  ========================================================= */
-
   useEffect(() => {
     function handleMainMenuOpen() {
       setMobileMenuOpen(false);
@@ -84,10 +81,6 @@ export default function ProductsCatalog({
     };
   }, []);
 
-  /* =========================================================
-     LOCK BODY WHEN PRODUCT IS OPEN
-  ========================================================= */
-
   useEffect(() => {
     if (selected) {
       document.body.style.overflow = "hidden";
@@ -99,10 +92,6 @@ export default function ProductsCatalog({
       document.body.style.overflow = "";
     };
   }, [selected]);
-
-  /* =========================================================
-     ESC CLOSE
-  ========================================================= */
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
@@ -131,13 +120,6 @@ export default function ProductsCatalog({
     };
   }, [selected, mobileMenuOpen]);
 
-  /* =========================================================
-     REAL DOCUMENT TOP
-
-     offsetTop ignores Motion's temporary translateY,
-     unlike getBoundingClientRect().
-  ========================================================= */
-
   function getDocumentTop(element: HTMLElement) {
     let top = 0;
     let current: HTMLElement | null = element;
@@ -149,16 +131,6 @@ export default function ProductsCatalog({
 
     return top;
   }
-
-  /* =========================================================
-     HOMEPAGE HASH NAVIGATION FIX
-
-     Example:
-     /produkti#category-trezorni-reshenia
-
-     Browser may jump too early by itself, so after the catalog
-     mounts we correct the position using the real layout position.
-  ========================================================= */
 
   useEffect(() => {
     const rawHash = window.location.hash;
@@ -184,17 +156,6 @@ export default function ProductsCatalog({
       const isMobile =
         window.innerWidth < 1024;
 
-      /*
-      | MOBILE:
-      | 80px main header
-      | + room for sticky category bar
-      | + small visual breathing space
-      |
-      | DESKTOP:
-      | 80px header
-      | + comfortable gap
-      */
-
       const offset =
         isMobile ? 150 : 120;
 
@@ -208,20 +169,11 @@ export default function ProductsCatalog({
       });
     }
 
-    /*
-    | First correction after layout.
-    */
-
     frame1 = window.requestAnimationFrame(() => {
       frame2 = window.requestAnimationFrame(() => {
         correctHashPosition();
       });
     });
-
-    /*
-    | Second correction after the entrance animations/layout
-    | have had a moment to settle.
-    */
 
     timer = window.setTimeout(() => {
       correctHashPosition();
@@ -233,10 +185,6 @@ export default function ProductsCatalog({
       window.clearTimeout(timer);
     };
   }, [categories]);
-
-  /* =========================================================
-     DESKTOP FLOATING MENU + MOBILE STICKY MENU
-  ========================================================= */
 
   useEffect(() => {
     function updateNavigationState() {
@@ -293,10 +241,6 @@ export default function ProductsCatalog({
       );
     };
   }, []);
-
-  /* =========================================================
-     ACTIVE CATEGORY DETECTION
-  ========================================================= */
 
   useEffect(() => {
     function updateActiveSection() {
@@ -432,10 +376,6 @@ export default function ProductsCatalog({
     };
   }, [categories]);
 
-  /* =========================================================
-     JUMP HELPERS
-  ========================================================= */
-
   function jumpToElement(
     elementId: string
   ) {
@@ -495,10 +435,6 @@ export default function ProductsCatalog({
 
   return (
     <LayoutGroup>
-      {/* =========================================================
-          MAIN CATALOG
-      ========================================================= */}
-
       <div className="mx-auto max-w-7xl px-4 pb-24 pt-28 sm:px-6 sm:pb-32 sm:pt-32 lg:px-12">
         <motion.header
           initial={{
@@ -534,10 +470,6 @@ export default function ProductsCatalog({
           </p>
         </motion.header>
 
-        {/* =======================================================
-            CATEGORY NAVIGATION
-        ======================================================= */}
-
         <div
           ref={navigationMarkerRef}
         >
@@ -564,8 +496,6 @@ export default function ProductsCatalog({
             }}
             className="mt-10 border-y border-black/10 py-3 sm:mt-16 sm:py-4"
           >
-            {/* MOBILE GRID */}
-
             <div className="grid grid-cols-2 gap-x-3 gap-y-1 lg:hidden">
               {categories.map(
                 (category) => {
@@ -605,8 +535,6 @@ export default function ProductsCatalog({
                 }
               )}
             </div>
-
-            {/* DESKTOP NAV */}
 
             <div className="hidden flex-wrap gap-x-6 gap-y-3 lg:flex">
               {categories.map(
@@ -660,10 +588,6 @@ export default function ProductsCatalog({
           </motion.nav>
         </div>
 
-        {/* =======================================================
-            PRODUCTS
-        ======================================================= */}
-
         <motion.div
           animate={{
             paddingLeft:
@@ -710,8 +634,6 @@ export default function ProductsCatalog({
                 }}
                 className="scroll-mt-[150px] lg:scroll-mt-[120px]"
               >
-                {/* CATEGORY HEADER */}
-
                 <div className="border-b border-black/10 pb-5 sm:flex sm:items-end sm:justify-between sm:pb-6">
                   <div>
                     <p className="mb-2 text-[9px] uppercase tracking-[0.25em] text-black/30 sm:mb-3 sm:text-xs">
@@ -731,8 +653,6 @@ export default function ProductsCatalog({
                       : `${category.products?.length ?? 0} продукта`}
                   </span>
                 </div>
-
-                {/* SUBCATEGORIES */}
 
                 {category.subcategories && (
                   <div className="mt-8 space-y-14 sm:mt-12 sm:space-y-20">
@@ -798,8 +718,6 @@ export default function ProductsCatalog({
                   </div>
                 )}
 
-                {/* DIRECT PRODUCTS */}
-
                 {category.products && (
                   <div className="mt-8 grid grid-cols-2 gap-3 sm:mt-12 sm:gap-5 lg:grid-cols-3 lg:gap-6">
                     {category.products.map(
@@ -839,10 +757,6 @@ export default function ProductsCatalog({
           )}
         </motion.div>
       </div>
-
-      {/* =========================================================
-          MOBILE STICKY NAV
-      ========================================================= */}
 
       <AnimatePresence>
         {mobileStickyMenu &&
@@ -1098,10 +1012,6 @@ export default function ProductsCatalog({
           )}
       </AnimatePresence>
 
-      {/* =========================================================
-          DESKTOP FLOATING NAV
-      ========================================================= */}
-
       <AnimatePresence>
         {floatingMenu &&
           !selected && (
@@ -1299,10 +1209,6 @@ export default function ProductsCatalog({
           )}
       </AnimatePresence>
 
-      {/* =========================================================
-          PRODUCT OVERLAY
-      ========================================================= */}
-
       <AnimatePresence>
         {selected && (
           <>
@@ -1356,10 +1262,6 @@ export default function ProductsCatalog({
     </LayoutGroup>
   );
 }
-
-/* ===============================================================
-   PRODUCT CARD
-================================================================ */
 
 type ProductCardProps = {
   product: ProductFamily;
@@ -1462,10 +1364,6 @@ function ProductCard({
     </motion.div>
   );
 }
-
-/* ===============================================================
-   EXPANDED PRODUCT
-================================================================ */
 
 type ExpandedProductProps = {
   selected: SelectedProduct;
@@ -1593,6 +1491,17 @@ function ExpandedProduct({
                 Професионална сигурност
               </span>
             </div>
+
+            <Link
+              href={`/produkti/${product.slug}`}
+              className="group mt-7 inline-flex w-fit items-center gap-2 text-sm font-medium text-[#3f7edb] sm:mt-9"
+            >
+              Пълна информация
+
+              <span className="transition-transform duration-300 group-hover:translate-x-1">
+                →
+              </span>
+            </Link>
           </motion.div>
         </div>
 

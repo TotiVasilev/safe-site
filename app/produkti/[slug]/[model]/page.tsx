@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { productCategories } from "@/data/products";
+import { client } from "@/sanity/lib/client";
 
 type ModelPageProps = {
   params: Promise<{
@@ -8,6 +8,54 @@ type ModelPageProps = {
     model: string;
   }>;
 };
+
+type ProductModel = {
+  name: string;
+  dimensions?: string;
+  internalDimensions?: string;
+  weight?: string;
+  volume?: string;
+  resistance?: string;
+};
+
+type Product = {
+  name: string;
+  slug: string;
+  category?: {
+    name: string;
+  };
+  subcategory?: {
+    name: string;
+  };
+  models: ProductModel[];
+};
+
+const PRODUCT_QUERY = `
+  *[
+    _type == "product" &&
+    slug.current == $slug
+  ][0] {
+    name,
+    "slug": slug.current,
+
+    "category": category->{
+      name
+    },
+
+    "subcategory": subcategory->{
+      name
+    },
+
+    models[] {
+      name,
+      dimensions,
+      internalDimensions,
+      weight,
+      volume,
+      resistance
+    }
+  }
+`;
 
 function createSlug(value: string) {
   return value
@@ -21,66 +69,29 @@ export default async function ModelPage({
 }: ModelPageProps) {
   const { slug, model: modelSlug } = await params;
 
-  let product = null;
-  let model = null;
-  let parentCategory = "";
-  let parentSubcategory = "";
+  const product = await client.fetch<Product | null>(
+    PRODUCT_QUERY,
+    { slug }
+  );
 
-  for (const category of productCategories) {
-    if (category.products) {
-      const foundProduct = category.products.find(
-        (item) => item.slug === slug
-      );
-
-      if (foundProduct) {
-        const foundModel = foundProduct.models.find(
-          (item) => createSlug(item.name) === modelSlug
-        );
-
-        if (foundModel) {
-          product = foundProduct;
-          model = foundModel;
-          parentCategory = category.name;
-          break;
-        }
-      }
-    }
-
-    if (category.subcategories) {
-      for (const subcategory of category.subcategories) {
-        const foundProduct = subcategory.products.find(
-          (item) => item.slug === slug
-        );
-
-        if (foundProduct) {
-          const foundModel = foundProduct.models.find(
-            (item) => createSlug(item.name) === modelSlug
-          );
-
-          if (foundModel) {
-            product = foundProduct;
-            model = foundModel;
-            parentCategory = category.name;
-            parentSubcategory = subcategory.name;
-            break;
-          }
-        }
-      }
-    }
-
-    if (model) {
-      break;
-    }
-  }
-
-  if (!product || !model) {
+  if (!product) {
     notFound();
   }
+
+  const model = (product.models ?? []).find(
+    (item) => createSlug(item.name) === modelSlug
+  );
+
+  if (!model) {
+    notFound();
+  }
+
+  const parentCategory = product.category?.name ?? "";
+  const parentSubcategory = product.subcategory?.name ?? "";
 
   return (
     <main className="min-h-screen bg-white px-6 py-28 lg:px-12">
       <div className="mx-auto max-w-7xl">
-        {/* Breadcrumb */}
         <div className="mb-12 flex flex-wrap items-center gap-2 text-sm text-black/40">
           <Link
             href="/"
@@ -114,9 +125,7 @@ export default async function ModelPage({
           </span>
         </div>
 
-        {/* Model hero */}
         <section className="grid gap-12 lg:grid-cols-2 lg:gap-20">
-          {/* Image placeholder */}
           <div className="aspect-square overflow-hidden rounded-3xl bg-neutral-100">
             <div className="flex h-full items-center justify-center">
               <span className="text-xs uppercase tracking-[0.3em] text-black/20">
@@ -125,7 +134,6 @@ export default async function ModelPage({
             </div>
           </div>
 
-          {/* Model information */}
           <div className="flex flex-col justify-center">
             <p className="text-xs uppercase tracking-[0.3em] text-black/40">
               {parentSubcategory || parentCategory}
@@ -146,7 +154,6 @@ export default async function ModelPage({
           </div>
         </section>
 
-        {/* Specifications */}
         <section className="mt-32">
           <div className="border-b border-black/10 pb-6">
             <p className="text-xs uppercase tracking-[0.3em] text-black/40">
@@ -231,7 +238,6 @@ export default async function ModelPage({
           </div>
         </section>
 
-        {/* Contact */}
         <section className="mt-32 rounded-3xl bg-black px-8 py-16 text-white sm:px-12 lg:px-16">
           <p className="text-xs uppercase tracking-[0.3em] text-white/40">
             Нуждаете се от информация?
@@ -254,7 +260,6 @@ export default async function ModelPage({
           </Link>
         </section>
 
-        {/* Back */}
         <div className="mt-16">
           <Link
             href={`/produkti/${product.slug}`}

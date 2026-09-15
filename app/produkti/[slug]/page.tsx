@@ -1,12 +1,65 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
-import { productCategories } from "@/data/products";
+import { client } from "@/sanity/lib/client";
 
 type ProductPageProps = {
   params: Promise<{
     slug: string;
   }>;
 };
+
+type ProductModel = {
+  name: string;
+  dimensions?: string;
+  internalDimensions?: string;
+  weight?: string;
+  volume?: string;
+  resistance?: string;
+};
+
+type Product = {
+  name: string;
+  slug: string;
+  description: string;
+  image?: string;
+  models: ProductModel[];
+  category?: {
+    name: string;
+  };
+  subcategory?: {
+    name: string;
+  };
+};
+
+const PRODUCT_QUERY = `
+  *[
+    _type == "product" &&
+    slug.current == $slug
+  ][0] {
+    name,
+    "slug": slug.current,
+    description,
+    "image": image.asset->url,
+
+    "category": category->{
+      name
+    },
+
+    "subcategory": subcategory->{
+      name
+    },
+
+    models[] {
+      name,
+      dimensions,
+      internalDimensions,
+      weight,
+      volume,
+      resistance
+    }
+  }
+`;
 
 function createSlug(value: string) {
   return value
@@ -20,51 +73,22 @@ export default async function ProductPage({
 }: ProductPageProps) {
   const { slug } = await params;
 
-  let product = null;
-  let parentCategory = "";
-  let parentSubcategory = "";
-
-  for (const category of productCategories) {
-    if (category.products) {
-      const found = category.products.find(
-        (item) => item.slug === slug
-      );
-
-      if (found) {
-        product = found;
-        parentCategory = category.name;
-        break;
-      }
-    }
-
-    if (category.subcategories) {
-      for (const subcategory of category.subcategories) {
-        const found = subcategory.products.find(
-          (item) => item.slug === slug
-        );
-
-        if (found) {
-          product = found;
-          parentCategory = category.name;
-          parentSubcategory = subcategory.name;
-          break;
-        }
-      }
-    }
-
-    if (product) {
-      break;
-    }
-  }
+  const product = await client.fetch<Product | null>(
+    PRODUCT_QUERY,
+    { slug }
+  );
 
   if (!product) {
     notFound();
   }
 
+  const parentCategory = product.category?.name ?? "";
+  const parentSubcategory = product.subcategory?.name ?? "";
+  const models = product.models ?? [];
+
   return (
     <main className="min-h-screen bg-white px-6 py-28 lg:px-12">
       <div className="mx-auto max-w-7xl">
-        {/* Breadcrumb */}
         <div className="mb-12 flex flex-wrap items-center gap-2 text-sm text-black/40">
           <Link
             href="/"
@@ -103,18 +127,26 @@ export default async function ProductPage({
           </span>
         </div>
 
-        {/* Product hero */}
         <section className="grid gap-12 lg:grid-cols-2 lg:gap-20">
-          {/* Image placeholder */}
-          <div className="aspect-square overflow-hidden rounded-3xl bg-neutral-100">
-            <div className="flex h-full items-center justify-center">
-              <span className="text-xs uppercase tracking-[0.3em] text-black/20">
-                SAFETY
-              </span>
-            </div>
+          <div className="relative aspect-square overflow-hidden rounded-3xl bg-neutral-100">
+            {product.image ? (
+              <Image
+                src={product.image}
+                alt={product.name}
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-contain"
+                priority
+              />
+            ) : (
+              <div className="flex h-full items-center justify-center">
+                <span className="text-xs uppercase tracking-[0.3em] text-black/20">
+                  SAFETY
+                </span>
+              </div>
+            )}
           </div>
 
-          {/* Product information */}
           <div className="flex flex-col justify-center">
             <p className="text-xs uppercase tracking-[0.3em] text-black/40">
               {parentSubcategory || parentCategory}
@@ -130,8 +162,8 @@ export default async function ProductPage({
 
             <div className="mt-10 flex flex-wrap gap-3">
               <span className="rounded-full bg-black px-4 py-2 text-sm text-white">
-                {product.models.length}{" "}
-                {product.models.length === 1
+                {models.length}{" "}
+                {models.length === 1
                   ? "модел"
                   : "модела"}
               </span>
@@ -143,8 +175,7 @@ export default async function ProductPage({
           </div>
         </section>
 
-        {/* Models */}
-        {product.models.length > 0 && (
+        {models.length > 0 && (
           <section className="mt-32">
             <div className="border-b border-black/10 pb-6">
               <p className="text-xs uppercase tracking-[0.3em] text-black/40">
@@ -157,7 +188,7 @@ export default async function ProductPage({
             </div>
 
             <div className="mt-8 overflow-hidden rounded-2xl border border-black/10">
-              {product.models.map((model, index) => (
+              {models.map((model, index) => (
                 <Link
                   key={model.name}
                   href={`/produkti/${product.slug}/${createSlug(
@@ -184,7 +215,6 @@ export default async function ProductPage({
           </section>
         )}
 
-        {/* Contact */}
         <section className="mt-32 rounded-3xl bg-black px-8 py-16 text-white sm:px-12 lg:px-16">
           <p className="text-xs uppercase tracking-[0.3em] text-white/40">
             Имате въпроси?
