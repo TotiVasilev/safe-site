@@ -1,6 +1,10 @@
+
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { client } from "@/sanity/lib/client";
+import {
+  productCategories,
+  type ProductFamily,
+} from "@/data/products";
 
 type ModelPageProps = {
   params: Promise<{
@@ -9,53 +13,43 @@ type ModelPageProps = {
   }>;
 };
 
-type ProductModel = {
-  name: string;
-  dimensions?: string;
-  internalDimensions?: string;
-  weight?: string;
-  volume?: string;
-  resistance?: string;
-};
-
-type Product = {
-  name: string;
-  slug: string;
-  category?: {
+type ProductWithParents = ProductFamily & {
+  category: {
     name: string;
   };
   subcategory?: {
     name: string;
   };
-  models: ProductModel[];
 };
 
-const PRODUCT_QUERY = `
-  *[
-    _type == "product" &&
-    slug.current == $slug
-  ][0] {
-    name,
-    "slug": slug.current,
+function getAllProducts(): ProductWithParents[] {
+  return productCategories.flatMap((category) => {
+    const directProducts = (category.products ?? []).map(
+      (product) => ({
+        ...product,
+        category: {
+          name: category.name,
+        },
+      })
+    );
 
-    "category": category->{
-      name
-    },
+    const subcategoryProducts = (
+      category.subcategories ?? []
+    ).flatMap((subcategory) =>
+      subcategory.products.map((product) => ({
+        ...product,
+        category: {
+          name: category.name,
+        },
+        subcategory: {
+          name: subcategory.name,
+        },
+      }))
+    );
 
-    "subcategory": subcategory->{
-      name
-    },
-
-    models[] {
-      name,
-      dimensions,
-      internalDimensions,
-      weight,
-      volume,
-      resistance
-    }
-  }
-`;
+    return [...directProducts, ...subcategoryProducts];
+  });
+}
 
 function createSlug(value: string) {
   return value
@@ -64,14 +58,24 @@ function createSlug(value: string) {
     .replace(/\s+/g, "-");
 }
 
+export function generateStaticParams() {
+  return getAllProducts().flatMap((product) =>
+    (product.models ?? []).map((model) => ({
+      slug: product.slug,
+      model: createSlug(model.name),
+    }))
+  );
+}
+
+export const dynamicParams = false;
+
 export default async function ModelPage({
   params,
 }: ModelPageProps) {
   const { slug, model: modelSlug } = await params;
 
-  const product = await client.fetch<Product | null>(
-    PRODUCT_QUERY,
-    { slug }
+  const product = getAllProducts().find(
+    (item) => item.slug === slug
   );
 
   if (!product) {

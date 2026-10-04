@@ -1,7 +1,11 @@
+
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { client } from "@/sanity/lib/client";
+import {
+  productCategories,
+  type ProductFamily,
+} from "@/data/products";
 
 type ProductPageProps = {
   params: Promise<{
@@ -9,22 +13,8 @@ type ProductPageProps = {
   }>;
 };
 
-type ProductModel = {
-  name: string;
-  dimensions?: string;
-  internalDimensions?: string;
-  weight?: string;
-  volume?: string;
-  resistance?: string;
-};
-
-type Product = {
-  name: string;
-  slug: string;
-  description: string;
-  image?: string;
-  models: ProductModel[];
-  category?: {
+type ProductWithParents = ProductFamily & {
+  category: {
     name: string;
   };
   subcategory?: {
@@ -32,34 +22,34 @@ type Product = {
   };
 };
 
-const PRODUCT_QUERY = `
-  *[
-    _type == "product" &&
-    slug.current == $slug
-  ][0] {
-    name,
-    "slug": slug.current,
-    description,
-    "image": image.asset->url,
+function getAllProducts(): ProductWithParents[] {
+  return productCategories.flatMap((category) => {
+    const directProducts = (category.products ?? []).map(
+      (product) => ({
+        ...product,
+        category: {
+          name: category.name,
+        },
+      })
+    );
 
-    "category": category->{
-      name
-    },
+    const subcategoryProducts = (
+      category.subcategories ?? []
+    ).flatMap((subcategory) =>
+      subcategory.products.map((product) => ({
+        ...product,
+        category: {
+          name: category.name,
+        },
+        subcategory: {
+          name: subcategory.name,
+        },
+      }))
+    );
 
-    "subcategory": subcategory->{
-      name
-    },
-
-    models[] {
-      name,
-      dimensions,
-      internalDimensions,
-      weight,
-      volume,
-      resistance
-    }
-  }
-`;
+    return [...directProducts, ...subcategoryProducts];
+  });
+}
 
 function createSlug(value: string) {
   return value
@@ -68,14 +58,21 @@ function createSlug(value: string) {
     .replace(/\s+/g, "-");
 }
 
+export function generateStaticParams() {
+  return getAllProducts().map((product) => ({
+    slug: product.slug,
+  }));
+}
+
+export const dynamicParams = false;
+
 export default async function ProductPage({
   params,
 }: ProductPageProps) {
   const { slug } = await params;
 
-  const product = await client.fetch<Product | null>(
-    PRODUCT_QUERY,
-    { slug }
+  const product = getAllProducts().find(
+    (item) => item.slug === slug
   );
 
   if (!product) {

@@ -19,7 +19,7 @@
 
 # production
 /build
-
+backup.tar.gz
 # misc
 .DS_Store
 *.pem
