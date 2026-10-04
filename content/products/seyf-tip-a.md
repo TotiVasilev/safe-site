@@ -1,7 +1,7 @@
 ---
 title: Сейф Тип A
 slug: seyf-tip-a
-description: Висок клааааас сейф с IV степен на съпротивление по EN 1143-1.
+description: Висок клас сейф с IV степен на съпротивление по EN 1143-1.
 image: ""
 models:
   - name: A-801
