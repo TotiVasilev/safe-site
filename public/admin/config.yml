@@ -1,0 +1,72 @@
+
+
+backend:
+  name: github
+  repo: TotiVasilev/safe-site
+  branch: main
+  base_url: https://tetraedar-cms-auth.todorvasilev0144.workers.dev
+  auth_endpoint: auth
+  site_domain: tetraedar.pages.dev
+
+
+collections:
+  - name: products
+    label: Products
+    label_singular: Product
+    folder: content/products
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields:
+      - label: Product name
+        name: title
+        widget: string
+
+      - label: Product slug
+        name: slug
+        widget: string
+        hint: "Must match the existing product URL."
+
+      - label: Description
+        name: body
+        widget: markdown
+
+      - label: Main image
+        name: image
+        widget: image
+        required: false
+
+      - label: Models
+        name: models
+        widget: list
+        required: false
+        fields:
+          - label: Model name
+            name: name
+            widget: string
+
+          - label: External dimensions
+            name: dimensions
+            widget: string
+            required: false
+
+          - label: Internal dimensions
+            name: internalDimensions
+            widget: string
+            required: false
+
+          - label: Weight
+            name: weight
+            widget: string
+            required: false
+
+          - label: Volume
+            name: volume
+            widget: string
+            required: false
+
+          - label: Resistance class
+            name: resistance
+            widget: string
+            required: false
