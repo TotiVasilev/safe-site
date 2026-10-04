@@ -1,7 +1,7 @@
 backend:
   name: github
   repo: TotiVasilev/safe-site
-  branch: main
+  branch: master
   base_url: https://tetraedar-cms-auth.todorvasilev0144.workers.dev
   auth_endpoint: auth
   site_domain: tetraedar.pages.dev
