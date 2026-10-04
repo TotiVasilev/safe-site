@@ -14,8 +14,8 @@ collections:
     label: Products
     label_singular: Product
     folder: content/products
-    create: true
-    slug: "{{slug}}"
+    create: false
+    delete: false
     extension: md
     format: frontmatter
 
@@ -27,11 +27,11 @@ collections:
       - label: Product slug
         name: slug
         widget: string
-        hint: "Must match the existing product URL."
+        hint: "Do not change this. It connects the editor to the website."
 
       - label: Description
-        name: body
-        widget: markdown
+        name: description
+        widget: text
 
       - label: Main image
         name: image
@@ -42,7 +42,6 @@ collections:
         name: models
         widget: list
         required: false
-
         fields:
           - label: Model name
             name: name

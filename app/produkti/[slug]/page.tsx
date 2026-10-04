@@ -1,55 +1,13 @@
-
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import {
-  productCategories,
-  type ProductFamily,
-} from "@/data/products";
+import { getAllProducts } from "@/data/cms-products";
 
 type ProductPageProps = {
   params: Promise<{
     slug: string;
   }>;
 };
-
-type ProductWithParents = ProductFamily & {
-  category: {
-    name: string;
-  };
-  subcategory?: {
-    name: string;
-  };
-};
-
-function getAllProducts(): ProductWithParents[] {
-  return productCategories.flatMap((category) => {
-    const directProducts = (category.products ?? []).map(
-      (product) => ({
-        ...product,
-        category: {
-          name: category.name,
-        },
-      })
-    );
-
-    const subcategoryProducts = (
-      category.subcategories ?? []
-    ).flatMap((subcategory) =>
-      subcategory.products.map((product) => ({
-        ...product,
-        category: {
-          name: category.name,
-        },
-        subcategory: {
-          name: subcategory.name,
-        },
-      }))
-    );
-
-    return [...directProducts, ...subcategoryProducts];
-  });
-}
 
 function createSlug(value: string) {
   return value
@@ -80,7 +38,8 @@ export default async function ProductPage({
   }
 
   const parentCategory = product.category?.name ?? "";
-  const parentSubcategory = product.subcategory?.name ?? "";
+  const parentSubcategory =
+    product.subcategory?.name ?? "";
   const models = product.models ?? [];
 
   return (
@@ -153,7 +112,7 @@ export default async function ProductPage({
               {product.name}
             </h1>
 
-            <p className="mt-7 max-w-xl text-lg leading-8 text-black/60">
+            <p className="mt-7 max-w-xl whitespace-pre-line text-lg leading-8 text-black/60">
               {product.description}
             </p>
 

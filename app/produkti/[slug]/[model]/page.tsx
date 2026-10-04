@@ -1,10 +1,6 @@
-
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  productCategories,
-  type ProductFamily,
-} from "@/data/products";
+import { getAllProducts } from "@/data/cms-products";
 
 type ModelPageProps = {
   params: Promise<{
@@ -12,44 +8,6 @@ type ModelPageProps = {
     model: string;
   }>;
 };
-
-type ProductWithParents = ProductFamily & {
-  category: {
-    name: string;
-  };
-  subcategory?: {
-    name: string;
-  };
-};
-
-function getAllProducts(): ProductWithParents[] {
-  return productCategories.flatMap((category) => {
-    const directProducts = (category.products ?? []).map(
-      (product) => ({
-        ...product,
-        category: {
-          name: category.name,
-        },
-      })
-    );
-
-    const subcategoryProducts = (
-      category.subcategories ?? []
-    ).flatMap((subcategory) =>
-      subcategory.products.map((product) => ({
-        ...product,
-        category: {
-          name: category.name,
-        },
-        subcategory: {
-          name: subcategory.name,
-        },
-      }))
-    );
-
-    return [...directProducts, ...subcategoryProducts];
-  });
-}
 
 function createSlug(value: string) {
   return value
@@ -91,7 +49,8 @@ export default async function ModelPage({
   }
 
   const parentCategory = product.category?.name ?? "";
-  const parentSubcategory = product.subcategory?.name ?? "";
+  const parentSubcategory =
+    product.subcategory?.name ?? "";
 
   return (
     <main className="min-h-screen bg-white px-6 py-28 lg:px-12">
