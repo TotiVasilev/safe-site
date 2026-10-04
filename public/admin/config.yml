@@ -1,5 +1,3 @@
-
-
 backend:
   name: github
   repo: TotiVasilev/safe-site
@@ -8,6 +6,8 @@ backend:
   auth_endpoint: auth
   site_domain: tetraedar.pages.dev
 
+media_folder: public/products/uploads
+public_folder: /products/uploads
 
 collections:
   - name: products
@@ -18,6 +18,7 @@ collections:
     slug: "{{slug}}"
     extension: md
     format: frontmatter
+
     fields:
       - label: Product name
         name: title
@@ -41,6 +42,7 @@ collections:
         name: models
         widget: list
         required: false
+
         fields:
           - label: Model name
             name: name
