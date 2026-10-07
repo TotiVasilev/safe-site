@@ -6,6 +6,7 @@ import matter from "gray-matter";
 
 import {
   productCategories,
+  type ProductCategory,
   type ProductFamily,
   type ProductModel,
 } from "@/data/products";
@@ -32,14 +33,12 @@ type CmsProduct = {
   slug?: unknown;
   description?: unknown;
   image?: unknown;
+  cardLabel?: unknown;
+  images?: unknown;
   models?: unknown;
 };
 
-const contentDirectory = path.join(
-  process.cwd(),
-  "content",
-  "products"
-);
+const contentDirectory = path.join(process.cwd(), "content", "products");
 
 function optionalText(value: unknown): string | undefined {
   return typeof value === "string" && value.trim()
@@ -47,33 +46,31 @@ function optionalText(value: unknown): string | undefined {
     : undefined;
 }
 
+function optionalTextArray(value: unknown): string[] | undefined {
+  if (!Array.isArray(value)) return undefined;
+
+  const values = value
+    .map(optionalText)
+    .filter((item): item is string => Boolean(item));
+
+  return values.length > 0 ? values : undefined;
+}
+
 function readCmsProduct(slug: string): CmsProduct | null {
-  if (!/^[a-z0-9-]+$/.test(slug)) {
-    return null;
-  }
+  if (!/^[a-z0-9-]+$/.test(slug)) return null;
 
-  const filePath = path.join(
-    contentDirectory,
-    `${slug}.md`
-  );
+  const filePath = path.join(contentDirectory, `${slug}.md`);
 
-  if (!fs.existsSync(filePath)) {
-    return null;
-  }
+  if (!fs.existsSync(filePath)) return null;
 
-  const source = fs.readFileSync(filePath, "utf8");
-  const parsed = matter(source);
-
-  return parsed.data as CmsProduct;
+  return matter(fs.readFileSync(filePath, "utf8")).data as CmsProduct;
 }
 
 function mergeModels(
   originalModels: ProductModel[],
   cmsModels: unknown
 ): ProductModel[] {
-  if (!Array.isArray(cmsModels)) {
-    return originalModels;
-  }
+  if (!Array.isArray(cmsModels)) return originalModels;
 
   const cmsByName = new Map<string, CmsModel>();
 
@@ -90,83 +87,68 @@ function mergeModels(
   return originalModels.map((original) => {
     const edited = cmsByName.get(original.name);
 
-    if (!edited) {
-      return original;
-    }
+    if (!edited) return original;
 
     return {
       ...original,
       dimensions:
-        optionalText(edited.dimensions) ??
-        original.dimensions,
+        optionalText(edited.dimensions) ?? original.dimensions,
       internalDimensions:
         optionalText(edited.internalDimensions) ??
         original.internalDimensions,
-      weight:
-        optionalText(edited.weight) ??
-        original.weight,
-      volume:
-        optionalText(edited.volume) ??
-        original.volume,
+      weight: optionalText(edited.weight) ?? original.weight,
+      volume: optionalText(edited.volume) ?? original.volume,
       resistance:
-        optionalText(edited.resistance) ??
-        original.resistance,
+        optionalText(edited.resistance) ?? original.resistance,
     };
   });
 }
 
-function mergeProduct(
-  product: ProductFamily
-): ProductFamily {
+function mergeProduct(product: ProductFamily): ProductFamily {
   const edited = readCmsProduct(product.slug);
 
-  if (!edited) {
-    return product;
-  }
+  if (!edited) return product;
 
   return {
     ...product,
     description:
-      optionalText(edited.description) ??
-      product.description,
-    image:
-      optionalText(edited.image) ??
-      product.image,
-    models: mergeModels(
-      product.models,
-      edited.models
-    ),
+      optionalText(edited.description) ?? product.description,
+    image: optionalText(edited.image) ?? product.image,
+    cardLabel:
+      optionalText(edited.cardLabel) ?? product.cardLabel,
+    images:
+      optionalTextArray(edited.images) ?? product.images,
+    models: mergeModels(product.models, edited.models),
   };
 }
 
+export function getProductCategories(): ProductCategory[] {
+  return productCategories.map((category) => ({
+    ...category,
+    products: category.products?.map(mergeProduct),
+    subcategories: category.subcategories?.map((subcategory) => ({
+      ...subcategory,
+      products: subcategory.products.map(mergeProduct),
+    })),
+  }));
+}
+
 export function getAllProducts(): ProductWithParents[] {
-  return productCategories.flatMap((category) => {
-    const directProducts = (
-      category.products ?? []
-    ).map((product) => ({
-      ...mergeProduct(product),
-      category: {
-        name: category.name,
-      },
+  return getProductCategories().flatMap((category) => {
+    const directProducts = (category.products ?? []).map((product) => ({
+      ...product,
+      category: { name: category.name },
     }));
 
-    const subcategoryProducts = (
-      category.subcategories ?? []
-    ).flatMap((subcategory) =>
-      subcategory.products.map((product) => ({
-        ...mergeProduct(product),
-        category: {
-          name: category.name,
-        },
-        subcategory: {
-          name: subcategory.name,
-        },
-      }))
+    const subcategoryProducts = (category.subcategories ?? []).flatMap(
+      (subcategory) =>
+        subcategory.products.map((product) => ({
+          ...product,
+          category: { name: category.name },
+          subcategory: { name: subcategory.name },
+        }))
     );
 
-    return [
-      ...directProducts,
-      ...subcategoryProducts,
-    ];
+    return [...directProducts, ...subcategoryProducts];
   });
 }

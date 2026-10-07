@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -1018,56 +1019,134 @@ type ProductCardProps = {
   category: string;
   subcategory?: string;
 };
+
 function ProductCard({
   product,
   category,
   subcategory,
 }: ProductCardProps) {
+  const galleryImages = Array.from(
+    new Set(
+      [product.image, ...(product.images ?? [])].filter(
+        (image): image is string => Boolean(image)
+      )
+    )
+  );
+
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [hovered, setHovered] = useState(false);
+
+  useEffect(() => {
+    if (!hovered || galleryImages.length < 2) {
+      setActiveImageIndex(0);
+      return;
+    }
+
+    const timer = window.setInterval(() => {
+      setActiveImageIndex(
+        (current) => (current + 1) % galleryImages.length
+      );
+    }, 1400);
+
+    return () => window.clearInterval(timer);
+  }, [hovered, galleryImages.length]);
+
+  const cardLabel = product.cardLabel;
+
   return (
     <motion.div
-      className="min-w-0 overflow-hidden rounded-[18px] border border-black/10 bg-white sm:rounded-2xl"
+      onHoverStart={() => setHovered(true)}
+      onHoverEnd={() => setHovered(false)}
+      whileHover={{
+        y: -4,
+        scale: 1.012,
+      }}
+      transition={{
+        duration: 0.22,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      className="min-w-0 overflow-hidden rounded-[18px] border border-black/10 bg-white shadow-[0_1px_0_rgba(0,0,0,0.02)] transition-shadow duration-300 hover:shadow-[0_16px_40px_rgba(0,0,0,0.08)] sm:rounded-2xl"
     >
       <Link
         href={`/produkti/${product.slug}`}
         className="group block h-full w-full text-left"
       >
         <div className="relative aspect-[1/1.03] overflow-hidden bg-neutral-100 sm:aspect-[4/3]">
-          <div className="flex h-full items-center justify-center">
-            <span className="text-[8px] uppercase tracking-[0.3em] text-black/20 sm:text-xs">
-              SAFETY
-            </span>
-          </div>
-          <div className="absolute right-5 top-5 hidden h-10 w-10 items-center justify-center rounded-full bg-white/90 text-lg opacity-0 shadow-sm backdrop-blur transition-all duration-300 group-hover:opacity-100 lg:flex">
+          {galleryImages.length > 0 ? (
+            galleryImages.map((image, imageIndex) => (
+              <Image
+                key={`${image}-${imageIndex}`}
+                src={image}
+                alt={
+                  imageIndex === 0
+                    ? product.name
+                    : `${product.name} - ${imageIndex + 1}`
+                }
+                fill
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
+                className={`object-cover transition-all duration-500 ${
+                  imageIndex === activeImageIndex
+                    ? "scale-100 opacity-100"
+                    : "scale-[1.015] opacity-0"
+                }`}
+              />
+            ))
+          ) : (
+            <div className="flex h-full items-center justify-center">
+              <span className="text-[8px] uppercase tracking-[0.3em] text-black/20 sm:text-xs">
+                SAFETY
+              </span>
+            </div>
+          )}
+
+          <div className="absolute right-5 top-5 hidden h-10 w-10 items-center justify-center rounded-full bg-white/90 text-lg opacity-0 shadow-sm backdrop-blur transition-all duration-300 group-hover:translate-x-0.5 group-hover:opacity-100 lg:flex">
             →
           </div>
+
+          {galleryImages.length > 1 && (
+            <div className="absolute bottom-4 left-1/2 hidden -translate-x-1/2 items-center gap-1.5 rounded-full bg-black/20 px-2.5 py-1.5 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100 lg:flex">
+              {galleryImages.map((_, dotIndex) => (
+                <span
+                  key={dotIndex}
+                  className={`block h-1.5 rounded-full bg-white transition-all duration-300 ${
+                    dotIndex === activeImageIndex
+                      ? "w-4 opacity-100"
+                      : "w-1.5 opacity-55"
+                  }`}
+                />
+              ))}
+            </div>
+          )}
         </div>
+
         <div className="p-3.5 sm:p-6">
-          <p className="truncate text-[8px] uppercase tracking-[0.18em] text-black/30 sm:text-xs sm:tracking-[0.2em]">
-            {subcategory ??
-              category}
-          </p>
-          <h4 className="mt-2 line-clamp-2 text-[15px] font-medium leading-[1.25] tracking-tight sm:mt-3 sm:text-lg">
+          {cardLabel && (
+            <p className="truncate text-[8px] uppercase tracking-[0.18em] text-black/30 sm:text-xs sm:tracking-[0.2em]">
+              {cardLabel}
+            </p>
+          )}
+
+          <h4
+            className={`line-clamp-2 text-[15px] font-medium leading-[1.25] tracking-tight sm:text-lg ${
+              cardLabel ? "mt-2 sm:mt-3" : ""
+            }`}
+          >
             {product.name}
           </h4>
+
           <p className="mt-3 hidden line-clamp-2 text-sm leading-6 text-black/50 sm:block">
-            {
-              product.description
-            }
+            {product.description}
           </p>
+
           <div className="mt-4 border-t border-black/10 pt-3 sm:mt-6 sm:flex sm:items-center sm:justify-between sm:pt-4">
             <span className="block text-[9px] text-black/35 sm:text-xs">
-              {
-                product.models
-                  .length
-              }{" "}
-              {product.models
-                .length === 1
-                ? "модел"
-                : "модела"}
+              {product.models.length}{" "}
+              {product.models.length === 1 ? "модел" : "модела"}
             </span>
+
             <span className="mt-2 block text-[10px] font-medium leading-4 sm:mt-0 sm:text-xs">
               Виж продукта
-              <span className="ml-1">
+              <span className="ml-1 inline-block transition-transform duration-300 group-hover:translate-x-1">
                 →
               </span>
             </span>

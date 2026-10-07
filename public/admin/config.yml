@@ -29,6 +29,12 @@ collections:
         widget: string
         hint: "Do not change this. It connects the editor to the website."
 
+      - label: Card label
+        name: cardLabel
+        widget: string
+        required: false
+        hint: "Optional short text shown above the product name on the catalog card. Leave empty to hide it."
+
       - label: Description
         name: description
         widget: text
@@ -37,6 +43,17 @@ collections:
         name: image
         widget: image
         required: false
+        hint: "The main image shown on the product card and product page."
+
+      - label: Gallery images
+        name: images
+        widget: list
+        required: false
+        hint: "Optional extra images. On desktop, the product card cycles through them while hovered."
+        field:
+          label: Image
+          name: image
+          widget: image
 
       - label: Models
         name: models
