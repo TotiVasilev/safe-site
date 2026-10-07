@@ -71,10 +71,10 @@ export default function ProductGallery({
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
             priority={index === 0}
-            className={`object-contain p-4 transition-all duration-500 sm:p-6 ${
+            className={`object-contain p-4 transition-opacity duration-300 sm:p-6 ${
               index === activeIndex
-                ? "scale-100 opacity-100"
-                : "pointer-events-none scale-[0.99] opacity-0"
+                ? "opacity-100"
+                : "pointer-events-none opacity-0"
             }`}
           />
         ))}
