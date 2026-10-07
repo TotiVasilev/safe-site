@@ -1,6 +1,6 @@
 import Link from "next/link";
-import Image from "next/image";
 import { notFound } from "next/navigation";
+import ProductGallery from "@/components/ui/ProductGallery";
 import { getAllProducts } from "@/data/cms-products";
 
 type ProductPageProps = {
@@ -13,7 +13,7 @@ function createSlug(value: string) {
   return value
     .toLowerCase()
     .trim()
-    .replace(/\s+/g, "-");
+    .replace(/\\s+/g, "-");
 }
 
 export function generateStaticParams() {
@@ -46,22 +46,13 @@ export default async function ProductPage({
     <main className="min-h-screen bg-white px-6 py-28 lg:px-12">
       <div className="mx-auto max-w-7xl">
         <div className="mb-12 flex flex-wrap items-center gap-2 text-sm text-black/40">
-          <Link
-            href="/"
-            className="transition-colors hover:text-black"
-          >
+          <Link href="/" className="transition-colors hover:text-black">
             Начало
           </Link>
-
           <span>/</span>
-
-          <Link
-            href="/produkti"
-            className="transition-colors hover:text-black"
-          >
+          <Link href="/produkti" className="transition-colors hover:text-black">
             Продукти
           </Link>
-
           <span>/</span>
 
           {parentCategory && (
@@ -78,34 +69,21 @@ export default async function ProductPage({
             </>
           )}
 
-          <span className="text-black">
-            {product.name}
-          </span>
+          <span className="text-black">{product.name}</span>
         </div>
 
-        <section className="grid gap-12 lg:grid-cols-2 lg:gap-20">
-          <div className="relative aspect-square overflow-hidden rounded-3xl bg-neutral-100">
-            {product.image ? (
-              <Image
-                src={product.image}
-                alt={product.name}
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-contain"
-                priority
-              />
-            ) : (
-              <div className="flex h-full items-center justify-center">
-                <span className="text-xs uppercase tracking-[0.3em] text-black/20">
-                  SAFETY
-                </span>
-              </div>
-            )}
-          </div>
+        <section className="grid items-start gap-12 lg:grid-cols-2 lg:gap-20">
+          <ProductGallery
+            productName={product.name}
+            mainImage={product.image}
+            images={product.images}
+          />
 
-          <div className="flex flex-col justify-center">
+          <div className="flex flex-col justify-center lg:sticky lg:top-28">
             <p className="text-xs uppercase tracking-[0.3em] text-black/40">
-              {parentSubcategory || parentCategory}
+              {product.cardLabel ||
+                parentSubcategory ||
+                parentCategory}
             </p>
 
             <h1 className="mt-5 text-5xl font-medium tracking-tight sm:text-6xl">
@@ -118,10 +96,7 @@ export default async function ProductPage({
 
             <div className="mt-10 flex flex-wrap gap-3">
               <span className="rounded-full bg-black px-4 py-2 text-sm text-white">
-                {models.length}{" "}
-                {models.length === 1
-                  ? "модел"
-                  : "модела"}
+                {models.length} {models.length === 1 ? "модел" : "модела"}
               </span>
 
               <span className="rounded-full border border-black/10 px-4 py-2 text-sm">
@@ -137,7 +112,6 @@ export default async function ProductPage({
               <p className="text-xs uppercase tracking-[0.3em] text-black/40">
                 Модели
               </p>
-
               <h2 className="mt-3 text-3xl font-medium tracking-tight sm:text-4xl">
                 Налични модели
               </h2>
@@ -147,19 +121,14 @@ export default async function ProductPage({
               {models.map((model, index) => (
                 <Link
                   key={model.name}
-                  href={`/produkti/${product.slug}/${createSlug(
-                    model.name
-                  )}`}
+                  href={`/produkti/${product.slug}/${createSlug(model.name)}`}
                   className="group flex items-center justify-between border-b border-black/10 px-6 py-5 transition-colors last:border-b-0 hover:bg-black/[0.02]"
                 >
                   <div className="flex items-center gap-5">
                     <span className="text-xs text-black/30">
                       {String(index + 1).padStart(2, "0")}
                     </span>
-
-                    <span className="font-medium">
-                      {model.name}
-                    </span>
+                    <span className="font-medium">{model.name}</span>
                   </div>
 
                   <span className="text-sm text-black/30 transition-transform duration-300 group-hover:translate-x-1">

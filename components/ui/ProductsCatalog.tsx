@@ -1071,7 +1071,7 @@ function ProductCard({
         href={`/produkti/${product.slug}`}
         className="group block h-full w-full text-left"
       >
-        <div className="relative aspect-[1/1.03] overflow-hidden bg-neutral-100 sm:aspect-[4/3]">
+        <div className="relative aspect-[4/5] overflow-hidden bg-neutral-100 sm:aspect-[4/5]">
           {galleryImages.length > 0 ? (
             galleryImages.map((image, imageIndex) => (
               <Image
@@ -1084,7 +1084,7 @@ function ProductCard({
                 }
                 fill
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
-                className={`object-cover transition-all duration-500 ${
+                className={`object-contain p-3 transition-all duration-500 sm:p-4 ${
                   imageIndex === activeImageIndex
                     ? "scale-100 opacity-100"
                     : "scale-[1.015] opacity-0"
