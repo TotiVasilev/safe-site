@@ -1071,7 +1071,7 @@ function ProductCard({
         href={`/produkti/${product.slug}`}
         className="group block h-full w-full text-left"
       >
-        <div className="relative aspect-[4/5] overflow-hidden bg-neutral-100 sm:aspect-[4/5]">
+        <div className="relative aspect-[4/3] overflow-hidden bg-neutral-100">
           {galleryImages.length > 0 ? (
             galleryImages.map((image, imageIndex) => (
               <Image

@@ -72,14 +72,14 @@ export default async function ProductPage({
           <span className="text-black">{product.name}</span>
         </div>
 
-        <section className="grid items-start gap-12 lg:grid-cols-2 lg:gap-20">
+        <section className="grid items-start gap-10 lg:grid-cols-[minmax(0,520px)_minmax(0,1fr)] lg:gap-16">
           <ProductGallery
             productName={product.name}
             mainImage={product.image}
             images={product.images}
           />
 
-          <div className="flex flex-col justify-center lg:sticky lg:top-28">
+          <div className="flex flex-col justify-center lg:sticky lg:top-28 lg:pt-4">
             <p className="text-xs uppercase tracking-[0.3em] text-black/40">
               {product.cardLabel ||
                 parentSubcategory ||

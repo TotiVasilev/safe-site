@@ -36,7 +36,7 @@ export default function ProductGallery({
 
   if (galleryImages.length === 0) {
     return (
-      <div className="flex aspect-[4/5] items-center justify-center overflow-hidden rounded-3xl bg-neutral-100">
+      <div className="flex aspect-square items-center justify-center overflow-hidden rounded-3xl bg-neutral-100">
         <span className="text-xs uppercase tracking-[0.3em] text-black/20">
           SAFETY
         </span>
@@ -58,7 +58,7 @@ export default function ProductGallery({
 
   return (
     <div>
-      <div className="group relative aspect-[4/5] overflow-hidden rounded-3xl bg-neutral-100">
+      <div className="group relative aspect-square overflow-hidden rounded-3xl bg-neutral-100">
         {galleryImages.map((image, index) => (
           <Image
             key={`${image}-${index}`}
@@ -85,7 +85,7 @@ export default function ProductGallery({
               type="button"
               onClick={showPrevious}
               aria-label="Предишно изображение"
-              className="absolute left-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-xl shadow-sm backdrop-blur transition-all hover:scale-105 hover:bg-white sm:left-5"
+              className="absolute left-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-xl opacity-0 shadow-sm backdrop-blur transition-all hover:scale-105 hover:bg-white group-hover:opacity-100 sm:left-5 [@media(hover:none)]:opacity-100"
             >
               ←
             </button>
@@ -94,7 +94,7 @@ export default function ProductGallery({
               type="button"
               onClick={showNext}
               aria-label="Следващо изображение"
-              className="absolute right-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-xl shadow-sm backdrop-blur transition-all hover:scale-105 hover:bg-white sm:right-5"
+              className="absolute right-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-xl opacity-0 shadow-sm backdrop-blur transition-all hover:scale-105 hover:bg-white group-hover:opacity-100 sm:right-5 [@media(hover:none)]:opacity-100"
             >
               →
             </button>
