@@ -1,8 +1,17 @@
 ---
 title: Сейф Тип B
 slug: seyf-tip-b
-description: Висок клас сейф с V степен на съпротивление по EN 1143-1.
-image: /products/safes/type-b.jpg
+cardLabel: Степен V по EN 1143-1
+description: |-
+  Висок клас сейф с V степен на съпротивление по EN 1143-1.
+  Отговаря на наредба на БНБ №8121з-444 за сейфове.
+image: /products/uploads/tipb.png
+images:
+  - /products/uploads/tipb-2-.png
+  - /products/uploads/tipb-3-.png
+  - /products/uploads/tipb-4-.png
+  - /products/uploads/tipb-5-.png
+  - /products/uploads/tipb-6-.png
 models:
   - name: B-801
   - name: B-802
@@ -19,4 +28,3 @@ models:
   - name: B-813
   - name: B-814
 ---
-
