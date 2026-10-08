@@ -4,39 +4,12 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import SafeScene from "@/components/ui/services/SafeScene";
 
-const services = [
-  {
-    title: "Гаранционен и извънгаранционен сервиз",
-    description:
-      "Професионално обслужване и поддръжка на сейфове, трезорни системи и заключващи механизми.",
-  },
-  {
-    title: "Монтаж на ключалки",
-    description:
-      "Монтаж и подмяна на механични и електронни заключващи системи според конкретните изисквания.",
-  },
-  {
-    title:
-      "Прекодиране на механични и електронни кодови ключалки",
-    description:
-      "Настройка, промяна на кодове и преконфигуриране на заключващи механизми.",
-  },
-  {
-    title: "Профилактика на заключващи системи",
-    description:
-      "Периодична проверка, настройка и профилактика за надеждна и дългосрочна работа.",
-  },
-  {
-    title: "Аварийно отваряне",
-    description:
-      "Специализирана помощ при блокирали, повредени или недостъпни заключващи системи.",
-  },
-  {
-    title: "Консултация",
-    description:
-      "Професионална помощ при избор на сейф, заключваща система, монтаж и последваща поддръжка.",
-  },
-];
+import servicesContent from "@/content/services.json";
+
+const services = Array.from({ length: 6 }, (_, index) => ({
+  title: servicesContent[`title${index + 1}` as keyof typeof servicesContent],
+  description: servicesContent[`description${index + 1}` as keyof typeof servicesContent],
+}));
 
 type MobileTextLayout = {
   className: string;
@@ -339,13 +312,13 @@ export default function ServicesExperience() {
                 Услуги и сервиз
               </p>
 
-              <h1 className="mt-4 text-[1.95rem] font-light leading-[1.02] tracking-[-0.04em]">
+              <h1 data-cms-field={`title${activeIndex + 1}`} className="mt-4 text-[1.95rem] font-light leading-[1.02] tracking-[-0.04em]">
                 {activeService.title}
               </h1>
 
               <div className="mt-5 h-px w-12 bg-[#3f7edb]" />
 
-              <p className="mt-5 text-[13px] leading-[1.7] text-black/55">
+              <p data-cms-field={`description${activeIndex + 1}`} className="mt-5 text-[13px] leading-[1.7] text-black/55">
                 {
                   activeService.description
                 }
@@ -387,6 +360,7 @@ export default function ServicesExperience() {
                 return (
                   <button
                     type="button"
+                    data-cms-service-index={index}
                     key={
                       service.title
                     }
@@ -406,6 +380,7 @@ export default function ServicesExperience() {
                     />
 
                     <span
+                      data-cms-field={`title${index + 1}`}
                       className={`max-w-[185px] text-sm leading-5 transition-all duration-300 ${
                         active
                           ? "font-medium text-[#3f7edb]"
@@ -489,7 +464,7 @@ export default function ServicesExperience() {
               }}
               className={`absolute top-1/2 z-20 w-[33%] -translate-y-1/2 ${currentLayout.textClass}`}
             >
-              <h1 className="text-[clamp(2.4rem,3.5vw,4.4rem)] font-light leading-[1.02] tracking-[-0.035em]">
+              <h1 data-cms-field={`title${activeIndex + 1}`} className="text-[clamp(2.4rem,3.5vw,4.4rem)] font-light leading-[1.02] tracking-[-0.035em]">
                 {
                   activeService.title
                 }
@@ -497,7 +472,7 @@ export default function ServicesExperience() {
 
               <div className="mt-8 h-px w-16 bg-[#3f7edb]" />
 
-              <p className="mt-8 max-w-xl text-lg leading-8 text-black/55">
+              <p data-cms-field={`description${activeIndex + 1}`} className="mt-8 max-w-xl text-lg leading-8 text-black/55">
                 {
                   activeService.description
                 }

@@ -303,6 +303,62 @@
     });
   };
 
+
+  // Services editor uses the same working direct-DOM preview as the homepage.
+  function ServicesPreview(props) {
+    HomepagePreview.call(this, props);
+  }
+  ServicesPreview.prototype = Object.create(HomepagePreview.prototype);
+  ServicesPreview.prototype.constructor = ServicesPreview;
+
+  ServicesPreview.prototype.apply = function (values) {
+    var doc = this.document();
+    if (!doc || !doc.querySelector('[data-cms-service-index]')) return;
+    var self = this;
+    Object.keys(values).forEach(function (key) {
+      if (!/^(title|description)[1-6]$/.test(key)) return;
+      var value = values[key];
+      if (typeof value !== 'string') return;
+      self.targets(key).forEach(function (target) {
+        if (target.textContent !== value) target.textContent = value;
+      });
+    });
+  };
+
+  ServicesPreview.prototype.highlight = function (field) {
+    var doc = this.document();
+    if (!doc) return;
+    if (field && /^(title|description)[1-6]$/.test(field)) {
+      var index = Number(field.match(/[1-6]$/)[0]) - 1;
+      var selector = '[data-cms-service-index="' + index + '"]';
+      var button = doc.querySelector(selector);
+      if (button && this.currentService !== index) {
+        this.currentService = index;
+        button.click();
+      }
+    }
+    HomepagePreview.prototype.highlight.call(this, field);
+  };
+
+  ServicesPreview.prototype.render = function () {
+    return element('div', {
+      style: {height:'100%',minHeight:'80vh',display:'flex',flexDirection:'column',background:'#f5f5f5'},
+      children: [
+        element('div', {
+          style: {padding:'10px 14px',fontSize:'12px',background:'#fff',borderBottom:'1px solid #ddd'},
+          children: 'Услуги и сервиз - преглед преди публикуване'
+        }),
+        element('iframe', {
+          ref: this.attach,
+          onLoad: this.onLoad,
+          title: 'Услуги и сервиз - преглед на живо',
+          src: '/uslugi/?cms_preview=1',
+          style: {width:'100%',flex:'1 1 auto',minHeight:'75vh',border:0,background:'#fff'}
+        })
+      ]
+    });
+  };
+
   var attempts = 0;
 
   function register() {
@@ -313,6 +369,9 @@
       window.CMS.registerPreviewTemplate(
         "homepage",
         HomepagePreview
+      );
+      window.CMS.registerPreviewTemplate(
+        "services", ServicesPreview
       );
       return;
     }

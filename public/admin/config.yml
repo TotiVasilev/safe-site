@@ -149,6 +149,59 @@ collections:
 - name: website
   label: Съдържание на сайта
   files:
+  - name: services
+    label: Услуги и сервиз
+    file: content/services.json
+    format: json
+    fields:
+    - label: Услуга 1 - Заглавие
+      name: title1
+      widget: string
+      required: true
+    - label: Услуга 1 - Описание
+      name: description1
+      widget: text
+      required: true
+    - label: Услуга 2 - Заглавие
+      name: title2
+      widget: string
+      required: true
+    - label: Услуга 2 - Описание
+      name: description2
+      widget: text
+      required: true
+    - label: Услуга 3 - Заглавие
+      name: title3
+      widget: string
+      required: true
+    - label: Услуга 3 - Описание
+      name: description3
+      widget: text
+      required: true
+    - label: Услуга 4 - Заглавие
+      name: title4
+      widget: string
+      required: true
+    - label: Услуга 4 - Описание
+      name: description4
+      widget: text
+      required: true
+    - label: Услуга 5 - Заглавие
+      name: title5
+      widget: string
+      required: true
+    - label: Услуга 5 - Описание
+      name: description5
+      widget: text
+      required: true
+    - label: Услуга 6 - Заглавие
+      name: title6
+      widget: string
+      required: true
+    - label: Услуга 6 - Описание
+      name: description6
+      widget: text
+      required: true
   - name: homepage
     label: Начална страница
     file: content/homepage.json
