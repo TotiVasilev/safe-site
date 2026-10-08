@@ -1,8 +1,9 @@
 ---
-title: Депозит Сейф Тип Люлка Вътрешен
-slug: depozit-seyf-lyulka-vutreshen
-description: Вътрешен вариант за депозиране на пари и документи.
-image: /products/bank/deposit-swinger-internal.jpg
+title: Тип Мултисейф(Таймбокс)
+slug: depozit-seyf-typ-multiseyf
+description: Отговаря на наредба на БНБ за сейфове.
+image: /products/uploads/typ-multiseyf.png
+images:
+  - /products/uploads/typ-multiseyf-2-.png
 models: []
 ---
-
