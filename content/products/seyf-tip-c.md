@@ -1,8 +1,17 @@
 ---
 title: Сейф Тип C
 slug: seyf-tip-c
-description: 'Висок клас сейф с модели, сертифицирани до VI степен по EN 1143-1.'
-image: /products/safes/type-c.jpg
+cardLabel: Степен VI по EN 1143-1
+description: |-
+  Висок клас сейф с модели, сертифицирани до VI степен по EN 1143-1.
+  Отговаря на наредба на БНБ №8121з-444 за сейфове.
+image: /products/uploads/tipb.png
+images:
+  - /products/uploads/tipb-2-.png
+  - /products/uploads/tipb-3-.png
+  - /products/uploads/tipb-4-.png
+  - /products/uploads/tipb-5-.png
+  - /products/uploads/tipb-6-.png
 models:
   - name: C-801
   - name: C-802
@@ -19,4 +28,3 @@ models:
   - name: C-813
   - name: C-814
 ---
-
