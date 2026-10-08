@@ -1,13 +1,15 @@
 ---
 title: Трезорни панели
 slug: trezorni-paneli
+cardLabel: Съпротивление по EN 1143-1
 description: >-
   Многослойни панели за изграждане и повишаване на защитата на трезорни
   помещения.
-image: /products/vault/panels.jpg
+
+  Панелите са потвърждавали многократно при тестови изпитвания съгласно EN 1143-1 качествата си и са получавали съответните сертификати.
+image: /products/uploads/trezorni-paneli.png
 models:
   - name: Тип T
   - name: Тип E
   - name: Тип Sx
 ---
-
