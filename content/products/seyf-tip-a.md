@@ -2,7 +2,9 @@
 title: Сейф Тип A
 slug: seyf-tip-a
 cardLabel: Степен IV по EN 1143-1
-description: Висок клас сейф с IV степен на съпротивление по EN 1143-1.
+description: |-
+  Висок клас сейф с IV степен на съпротивление по EN 1143-1.
+  Отговаря на наредба на БНБ №8121з-444 за сейфове.
 image: /products/uploads/typea-removebg-preview.png
 images:
   - /products/uploads/typea-2-.png
