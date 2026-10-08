@@ -8,7 +8,7 @@ export default function Partners({ partners }: { partners: Partner[] }) {
   const repeatedPartners = Array.from({ length: 4 }, () => partners).flat();
 
   return (
-    <div className="partners-marquee overflow-hidden">
+    <div data-cms-field="partners" className="partners-marquee overflow-hidden">
       <div className="partners-track flex w-max items-center">
         {repeatedPartners.map((partner, index) => (
           <div key={`${partner.name}-${index}`} className="partner-item flex h-28 w-64 shrink-0 items-center justify-center px-8">

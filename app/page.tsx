@@ -10,6 +10,7 @@ export default function Home() {
   const home = getHomepage();
   return (
     <main className="overflow-hidden bg-white text-black">
+      <script src="/admin/homepage-bridge.js" defer />
       {/* =========================================================
           MOBILE HOMEPAGE
           Visible below 1024px
@@ -22,7 +23,7 @@ export default function Home() {
           {/* BACKGROUND */}
           <div className="pointer-events-none absolute inset-0">
             {home.heroBackground && (
-              <div className="absolute inset-0 bg-cover bg-center opacity-[0.12]" style={{ backgroundImage: `url(${JSON.stringify(home.heroBackground).slice(1,-1)})` }} />
+              <div data-cms-field="heroBackground" className="absolute inset-0 bg-cover bg-center opacity-[0.12]" style={{ backgroundImage: `url(${JSON.stringify(home.heroBackground).slice(1,-1)})` }} />
             )}
             <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.035)_1px,transparent_1px)] bg-[size:44px_44px]" />
 
@@ -33,14 +34,14 @@ export default function Home() {
             {/* HERO TEXT */}
             <Reveal direction="fade" duration={0.8}>
               <div>
-                <h1 className="text-[clamp(3.15rem,14vw,4.5rem)] font-medium leading-[0.89] tracking-[-0.055em]">
+                <h1 data-cms-field="heroTitle" className="text-[clamp(3.15rem,14vw,4.5rem)] font-medium leading-[0.89] tracking-[-0.055em]">
                   {home.heroTitle.split("\n").map((line, index) => (
                     <span key={index}>{index > 0 && <br />}{line}</span>
                   ))}
                 </h1>
 
                 <p className="mt-6 max-w-md text-[15px] leading-7 text-black/55">
-                  {home.heroDescription}
+                  <span data-cms-field="heroDescription">{home.heroDescription}</span>
                 </p>
               </div>
             </Reveal>
@@ -123,7 +124,7 @@ export default function Home() {
                 href={home.primaryLink}
                 className="group flex min-h-14 w-full items-center justify-between bg-[#3f7edb] px-6 text-sm font-medium text-white transition-colors duration-300 active:bg-[#326dc3]"
               >
-                {home.primaryButton}
+                <span data-cms-field="primaryButton">{home.primaryButton}</span>
 
                 <span className="text-lg transition-transform duration-300 group-hover:translate-x-1">
                   →
@@ -134,7 +135,7 @@ export default function Home() {
                 href={home.secondaryLink}
                 className="group flex min-h-12 w-full items-center justify-between border border-black/10 px-6 text-sm font-medium text-black/65"
               >
-                {home.secondaryButton}
+                <span data-cms-field="secondaryButton">{home.secondaryButton}</span>
                 <span>→</span>
               </Link>
             </div>
@@ -148,20 +149,20 @@ export default function Home() {
           <Reveal direction="up">
             <div>
               <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-[#3f7edb]">
-                {home.aboutLabel}
+                <span data-cms-field="aboutLabel">{home.aboutLabel}</span>
               </p>
 
               <h2 className="mt-5 text-[2.65rem] font-medium leading-[0.98] tracking-[-0.045em]">
-                {home.aboutTitle}
+                <span data-cms-field="aboutTitle">{home.aboutTitle}</span>
               </h2>
 
               <div className="mt-8 border-t border-black/10 pt-8">
                 <p className="text-[15px] leading-7 text-black/55">
-                  {home.aboutParagraph1}
+                  <span data-cms-field="aboutParagraph1">{home.aboutParagraph1}</span>
                 </p>
 
                 <p className="mt-6 text-[15px] leading-7 text-black/55">
-                  {home.aboutParagraph2}
+                  <span data-cms-field="aboutParagraph2">{home.aboutParagraph2}</span>
                 </p>
               </div>
             </div>
@@ -176,11 +177,11 @@ export default function Home() {
 
                   <div>
                     <h3 className="text-xl font-medium tracking-tight">
-                      {home.feature1Title}
+                      <span data-cms-field="feature1Title">{home.feature1Title}</span>
                     </h3>
 
                     <p className="mt-3 text-sm leading-6 text-black/50">
-                      {home.feature1Description}
+                      <span data-cms-field="feature1Description">{home.feature1Description}</span>
                     </p>
                   </div>
                 </div>
@@ -192,11 +193,11 @@ export default function Home() {
 
                   <div>
                     <h3 className="text-xl font-medium tracking-tight">
-                      {home.feature2Title}
+                      <span data-cms-field="feature2Title">{home.feature2Title}</span>
                     </h3>
 
                     <p className="mt-3 text-sm leading-6 text-black/50">
-                      {home.feature2Description}
+                      <span data-cms-field="feature2Description">{home.feature2Description}</span>
                     </p>
                   </div>
                 </div>
@@ -208,11 +209,11 @@ export default function Home() {
 
                   <div>
                     <h3 className="text-xl font-medium tracking-tight">
-                      {home.feature3Title}
+                      <span data-cms-field="feature3Title">{home.feature3Title}</span>
                     </h3>
 
                     <p className="mt-3 text-sm leading-6 text-black/50">
-                      {home.feature3Description}
+                      <span data-cms-field="feature3Description">{home.feature3Description}</span>
                     </p>
                   </div>
                 </div>
@@ -228,15 +229,15 @@ export default function Home() {
           <Reveal direction="up">
             <div>
               <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-[#3f7edb]">
-                {home.partnersLabel}
+                <span data-cms-field="partnersLabel">{home.partnersLabel}</span>
               </p>
 
               <h2 className="mt-5 text-[2.65rem] font-medium leading-[0.98] tracking-[-0.045em]">
-                {home.partnersTitle}
+                <span data-cms-field="partnersTitle">{home.partnersTitle}</span>
               </h2>
 
               <p className="mt-6 max-w-sm text-sm leading-6 text-black/45">
-                {home.partnersDescription}
+                <span data-cms-field="partnersDescription">{home.partnersDescription}</span>
               </p>
             </div>
 
@@ -255,15 +256,15 @@ export default function Home() {
           <div className="relative">
             <Reveal direction="up">
               <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-[#6ea4f1]">
-                {home.productsLabel}
+                <span data-cms-field="productsLabel">{home.productsLabel}</span>
               </p>
 
               <h2 className="mt-5 text-[2.7rem] font-medium leading-[0.97] tracking-[-0.045em]">
-                {home.productsTitle}
+                <span data-cms-field="productsTitle">{home.productsTitle}</span>
               </h2>
 
               <p className="mt-7 border-t border-white/10 pt-7 text-[15px] leading-7 text-white/45">
-                {home.productsDescription}
+                <span data-cms-field="productsDescription">{home.productsDescription}</span>
               </p>
             </Reveal>
 
@@ -295,11 +296,11 @@ export default function Home() {
               {/* PRODUCT TEXT */}
               <div className="mt-9">
                 <h3 className="text-[2.3rem] font-medium leading-[1] tracking-[-0.04em]">
-                  {home.featuredTitle}
+                  <span data-cms-field="featuredTitle">{home.featuredTitle}</span>
                 </h3>
 
                 <p className="mt-5 text-[15px] leading-7 text-white/45">
-                  {home.featuredDescription}
+                  <span data-cms-field="featuredDescription">{home.featuredDescription}</span>
                 </p>
 
                 {/* STRONG CTA */}
@@ -307,7 +308,7 @@ export default function Home() {
                   href={home.primaryLink}
                   className="group mt-8 flex min-h-14 w-full items-center justify-between bg-[#3f7edb] px-6 text-sm font-medium text-white transition-colors duration-300 active:bg-[#326dc3]"
                 >
-                  {home.catalogButton}
+                  <span data-cms-field="catalogButton">{home.catalogButton}</span>
 
                   <span className="text-lg transition-transform duration-300 group-hover:translate-x-1">
                     →
@@ -325,15 +326,15 @@ export default function Home() {
           <Reveal direction="up">
             <div>
               <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-[#3f7edb]">
-                {home.catalogLabel}
+                <span data-cms-field="catalogLabel">{home.catalogLabel}</span>
               </p>
 
               <h2 className="mt-5 text-[2.65rem] font-medium leading-[0.98] tracking-[-0.045em]">
-                {home.catalogTitle}
+                <span data-cms-field="catalogTitle">{home.catalogTitle}</span>
               </h2>
 
               <p className="mt-6 text-sm leading-6 text-black/45">
-                {home.catalogDescription}
+                <span data-cms-field="catalogDescription">{home.catalogDescription}</span>
               </p>
             </div>
           </Reveal>
@@ -350,22 +351,22 @@ export default function Home() {
           <Reveal direction="up">
             <div>
               <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-[#3f7edb]">
-                {home.servicesLabel}
+                <span data-cms-field="servicesLabel">{home.servicesLabel}</span>
               </p>
 
               <h2 className="mt-5 text-[2.65rem] font-medium leading-[0.98] tracking-[-0.045em]">
-                {home.servicesTitle}
+                <span data-cms-field="servicesTitle">{home.servicesTitle}</span>
               </h2>
 
               <p className="mt-7 border-t border-black/10 pt-7 text-[15px] leading-7 text-black/55">
-                {home.servicesDescription}
+                <span data-cms-field="servicesDescription">{home.servicesDescription}</span>
               </p>
 
               <Link
                 href={home.secondaryLink}
                 className="group mt-8 flex min-h-14 w-full items-center justify-between bg-black px-6 text-sm font-medium text-white transition-colors duration-300 active:bg-[#3f7edb]"
               >
-                {home.servicesButton}
+                <span data-cms-field="servicesButton">{home.servicesButton}</span>
 
                 <span>→</span>
               </Link>
@@ -382,22 +383,22 @@ export default function Home() {
           <div className="relative">
             <Reveal direction="up">
               <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-white/60">
-                {home.contactLabel}
+                <span data-cms-field="contactLabel">{home.contactLabel}</span>
               </p>
 
               <h2 className="mt-5 text-[2.65rem] font-medium leading-[0.98] tracking-[-0.045em]">
-                {home.contactTitle}
+                <span data-cms-field="contactTitle">{home.contactTitle}</span>
               </h2>
 
               <p className="mt-7 border-t border-white/20 pt-7 text-[15px] leading-7 text-white/70">
-                {home.contactDescription}
+                <span data-cms-field="contactDescription">{home.contactDescription}</span>
               </p>
 
               <Link
                 href={home.contactLink}
                 className="group mt-8 flex min-h-14 w-full items-center justify-between bg-white px-6 text-sm font-medium text-black transition-colors duration-300 active:bg-black active:text-white"
               >
-                {home.contactButton}
+                <span data-cms-field="contactButton">{home.contactButton}</span>
 
                 <span>→</span>
               </Link>
@@ -417,7 +418,7 @@ export default function Home() {
         <section className="relative min-h-screen overflow-hidden px-6 pb-16 pt-28 lg:px-12">
           <div className="pointer-events-none absolute inset-0">
             {home.heroBackground && (
-              <div className="absolute inset-0 bg-cover bg-center opacity-[0.12]" style={{ backgroundImage: `url(${JSON.stringify(home.heroBackground).slice(1,-1)})` }} />
+              <div data-cms-field="heroBackground" className="absolute inset-0 bg-cover bg-center opacity-[0.12]" style={{ backgroundImage: `url(${JSON.stringify(home.heroBackground).slice(1,-1)})` }} />
             )}
             <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.035)_1px,transparent_1px)] bg-[size:72px_72px]" />
 
@@ -429,14 +430,14 @@ export default function Home() {
               {/* LEFT */}
               <Reveal direction="fade" duration={1}>
                 <div className="relative z-20">
-                  <h1 className="max-w-4xl text-[clamp(3rem,5.1vw,5.8rem)] font-medium leading-[0.94] tracking-[-0.045em]">
+                  <h1 data-cms-field="heroTitle" className="max-w-4xl text-[clamp(3rem,5.1vw,5.8rem)] font-medium leading-[0.94] tracking-[-0.045em]">
                     {home.heroTitle.split("\n").map((line, index) => (
                     <span key={index}>{index > 0 && <br />}{line}</span>
                   ))}
                   </h1>
 
                   <p className="mt-9 max-w-xl text-base leading-8 text-black/55 sm:text-lg">
-                    {home.heroDescription}
+                    <span data-cms-field="heroDescription">{home.heroDescription}</span>
                   </p>
 
                   <div className="mt-10 flex flex-wrap items-center gap-7">
@@ -444,7 +445,7 @@ export default function Home() {
                       href={home.primaryLink}
                       className="group inline-flex items-center gap-4 bg-[#3f7edb] px-7 py-4 text-sm font-medium text-white transition-all duration-300 hover:bg-[#326dc3]"
                     >
-                      {home.primaryButton}
+                      <span data-cms-field="primaryButton">{home.primaryButton}</span>
 
                       <span className="transition-transform duration-300 group-hover:translate-x-1">
                         →
@@ -455,7 +456,7 @@ export default function Home() {
                       href={home.secondaryLink}
                       className="group inline-flex items-center gap-3 text-sm font-medium text-black/65 transition-colors hover:text-black"
                     >
-                      {home.secondaryButton}
+                      <span data-cms-field="secondaryButton">{home.secondaryButton}</span>
 
                       <span className="transition-transform duration-300 group-hover:translate-x-1">
                         →
@@ -523,14 +524,14 @@ export default function Home() {
                     </div>
 
                     <p className="text-right text-[10px] uppercase tracking-[0.18em] text-[#3f7edb]">
-                      {home.pointerRight}
+                      <span data-cms-field="pointerRight">{home.pointerRight}</span>
                     </p>
                   </div>
 
                   {/* CONSTRUCTION CALLOUT */}
                   <div className="absolute bottom-[22%] left-[4%] w-[150px]">
                     <p className="mb-2 text-[10px] uppercase tracking-[0.18em] text-[#3f7edb]">
-                      {home.pointerLeft}
+                      <span data-cms-field="pointerLeft">{home.pointerLeft}</span>
                     </p>
 
                     <div className="flex items-center">
@@ -562,20 +563,20 @@ export default function Home() {
             <Reveal direction="right">
               <div className="max-w-5xl">
                 <p className="text-xs font-medium uppercase tracking-[0.3em] text-[#3f7edb]">
-                  {home.aboutLabel}
+                  <span data-cms-field="aboutLabel">{home.aboutLabel}</span>
                 </p>
 
                 <h2 className="mt-6 max-w-4xl text-4xl font-medium leading-[1.04] tracking-[-0.035em] sm:text-5xl lg:text-6xl">
-                  {home.aboutTitle}
+                  <span data-cms-field="aboutTitle">{home.aboutTitle}</span>
                 </h2>
 
                 <div className="mt-10 grid max-w-5xl gap-8 border-t border-black/10 pt-10 md:grid-cols-2">
                   <p className="text-base leading-8 text-black/55">
-                    {home.aboutParagraph1}
+                    <span data-cms-field="aboutParagraph1">{home.aboutParagraph1}</span>
                   </p>
 
                   <p className="text-base leading-8 text-black/55">
-                    {home.aboutParagraph2}
+                    <span data-cms-field="aboutParagraph2">{home.aboutParagraph2}</span>
                   </p>
                 </div>
               </div>
@@ -586,31 +587,31 @@ export default function Home() {
               <div className="mt-24 grid border-y border-black/10 md:grid-cols-3">
                 <div className="border-b border-black/10 py-10 md:border-b-0 md:border-r md:pr-10">
                   <h3 className="text-2xl font-medium">
-                    {home.feature1Title}
+                    <span data-cms-field="feature1Title">{home.feature1Title}</span>
                   </h3>
 
                   <p className="mt-4 max-w-sm text-sm leading-7 text-black/50">
-                    {home.feature1Description}
+                    <span data-cms-field="feature1Description">{home.feature1Description}</span>
                   </p>
                 </div>
 
                 <div className="border-b border-black/10 py-10 md:border-b-0 md:border-r md:px-10">
                   <h3 className="text-2xl font-medium">
-                    {home.feature2Title}
+                    <span data-cms-field="feature2Title">{home.feature2Title}</span>
                   </h3>
 
                   <p className="mt-4 max-w-sm text-sm leading-7 text-black/50">
-                    {home.feature2Description}
+                    <span data-cms-field="feature2Description">{home.feature2Description}</span>
                   </p>
                 </div>
 
                 <div className="py-10 md:pl-10">
                   <h3 className="text-2xl font-medium">
-                    {home.feature3Title}
+                    <span data-cms-field="feature3Title">{home.feature3Title}</span>
                   </h3>
 
                   <p className="mt-4 max-w-sm text-sm leading-7 text-black/50">
-                    {home.feature3Description}
+                    <span data-cms-field="feature3Description">{home.feature3Description}</span>
                   </p>
                 </div>
               </div>
@@ -621,15 +622,15 @@ export default function Home() {
               <div className="mt-28">
                 <div className="max-w-5xl">
                   <p className="text-xs font-medium uppercase tracking-[0.3em] text-[#3f7edb]">
-                    {home.partnersLabel}
+                    <span data-cms-field="partnersLabel">{home.partnersLabel}</span>
                   </p>
 
                   <h2 className="mt-6 max-w-4xl text-4xl font-medium leading-[1.04] tracking-[-0.035em] sm:text-5xl lg:text-6xl">
-                    {home.partnersTitle}
+                    <span data-cms-field="partnersTitle">{home.partnersTitle}</span>
                   </h2>
 
                   <p className="mt-8 max-w-2xl text-sm leading-7 text-black/45">
-                    {home.partnersDescription}
+                    <span data-cms-field="partnersDescription">{home.partnersDescription}</span>
                   </p>
                 </div>
 
@@ -651,23 +652,23 @@ export default function Home() {
             <Reveal direction="up">
               <div className="max-w-5xl">
                 <p className="text-xs font-medium uppercase tracking-[0.3em] text-[#6ea4f1]">
-                  {home.productsLabel}
+                  <span data-cms-field="productsLabel">{home.productsLabel}</span>
                 </p>
 
                 <h2 className="mt-6 max-w-4xl text-4xl font-medium leading-[1.04] tracking-[-0.035em] sm:text-5xl lg:text-6xl">
-                  {home.productsTitle}
+                  <span data-cms-field="productsTitle">{home.productsTitle}</span>
                 </h2>
 
                 <div className="mt-10 flex flex-col gap-8 border-t border-white/10 pt-10 sm:flex-row sm:items-end sm:justify-between">
                   <p className="max-w-2xl text-base leading-8 text-white/45">
-                    {home.productsDescription}
+                    <span data-cms-field="productsDescription">{home.productsDescription}</span>
                   </p>
 
                   <Link
                     href={home.primaryLink}
                     className="group inline-flex w-fit items-center gap-4 text-sm font-medium text-white"
                   >
-                    {home.catalogButton}
+                    <span data-cms-field="catalogButton">{home.catalogButton}</span>
 
                     <span className="text-[#6ea4f1] transition-transform duration-300 group-hover:translate-x-1">
                       →
@@ -695,7 +696,7 @@ export default function Home() {
 
                     <div className="absolute bottom-8 left-0 hidden w-[170px] lg:block">
                       <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.18em] text-[#6ea4f1]">
-                        {home.pointerLeft}
+                        <span data-cms-field="pointerLeft">{home.pointerLeft}</span>
                       </p>
 
                       <div className="flex items-center">
@@ -708,11 +709,11 @@ export default function Home() {
                   {/* TEXT */}
                   <div>
                     <h3 className="whitespace-pre-line text-4xl font-medium leading-[1.04] tracking-[-0.035em] sm:text-5xl lg:text-6xl">
-                      {home.featuredTitle}
+                      <span data-cms-field="featuredTitle">{home.featuredTitle}</span>
                     </h3>
 
                     <p className="mt-7 max-w-lg text-base leading-8 text-white/45">
-                      {home.featuredDescription}
+                      <span data-cms-field="featuredDescription">{home.featuredDescription}</span>
                     </p>
                   </div>
                 </div>
@@ -729,15 +730,15 @@ export default function Home() {
             <Reveal direction="up">
               <div className="max-w-5xl">
                 <p className="text-xs font-medium uppercase tracking-[0.3em] text-[#3f7edb]">
-                  {home.catalogLabel}
+                  <span data-cms-field="catalogLabel">{home.catalogLabel}</span>
                 </p>
 
                 <h2 className="mt-6 max-w-4xl text-4xl font-medium leading-[1.04] tracking-[-0.035em] sm:text-5xl lg:text-6xl">
-                  {home.catalogTitle}
+                  <span data-cms-field="catalogTitle">{home.catalogTitle}</span>
                 </h2>
 
                 <p className="mt-8 max-w-2xl text-sm leading-7 text-black/45">
-                  {home.catalogDescription}
+                  <span data-cms-field="catalogDescription">{home.catalogDescription}</span>
                 </p>
               </div>
             </Reveal>
@@ -756,23 +757,23 @@ export default function Home() {
             <Reveal direction="left">
               <div className="max-w-5xl">
                 <p className="text-xs font-medium uppercase tracking-[0.3em] text-[#3f7edb]">
-                  {home.servicesLabel}
+                  <span data-cms-field="servicesLabel">{home.servicesLabel}</span>
                 </p>
 
                 <h2 className="mt-6 max-w-4xl text-4xl font-medium leading-[1.04] tracking-[-0.035em] sm:text-5xl lg:text-6xl">
-                  {home.servicesTitle}
+                  <span data-cms-field="servicesTitle">{home.servicesTitle}</span>
                 </h2>
 
                 <div className="mt-10 flex flex-col gap-8 border-t border-black/10 pt-10 sm:flex-row sm:items-end sm:justify-between">
                   <p className="max-w-2xl text-base leading-8 text-black/55">
-                    {home.servicesDescription}
+                    <span data-cms-field="servicesDescription">{home.servicesDescription}</span>
                   </p>
 
                   <Link
                     href={home.secondaryLink}
                     className="group inline-flex w-fit items-center gap-5 bg-black px-6 py-4 text-sm font-medium text-white transition-colors hover:bg-[#3f7edb]"
                   >
-                    {home.servicesButton}
+                    <span data-cms-field="servicesButton">{home.servicesButton}</span>
 
                     <span className="transition-transform duration-300 group-hover:translate-x-1">
                       →
@@ -794,23 +795,23 @@ export default function Home() {
             <Reveal direction="up">
               <div className="max-w-5xl">
                 <p className="text-xs font-medium uppercase tracking-[0.3em] text-white/65">
-                  {home.contactLabel}
+                  <span data-cms-field="contactLabel">{home.contactLabel}</span>
                 </p>
 
                 <h2 className="mt-6 max-w-4xl text-4xl font-medium leading-[1.04] tracking-[-0.035em] sm:text-5xl lg:text-6xl">
-                  {home.contactTitle}
+                  <span data-cms-field="contactTitle">{home.contactTitle}</span>
                 </h2>
 
                 <div className="mt-10 flex flex-col gap-10 border-t border-white/20 pt-10 sm:flex-row sm:items-end sm:justify-between">
                   <p className="max-w-2xl text-base leading-8 text-white/70">
-                    {home.contactDescription}
+                    <span data-cms-field="contactDescription">{home.contactDescription}</span>
                   </p>
 
                   <Link
                     href={home.contactLink}
                     className="group inline-flex w-fit shrink-0 items-center gap-5 bg-white px-7 py-4 text-sm font-medium text-black transition-all duration-300 hover:bg-black hover:text-white"
                   >
-                    {home.contactButton}
+                    <span data-cms-field="contactButton">{home.contactButton}</span>
 
                     <span className="transition-transform duration-300 group-hover:translate-x-1">
                       →
