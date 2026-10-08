@@ -3,9 +3,11 @@ import Partners from "@/components/ui/Partners";
 import Reveal from "@/components/ui/Reveal";
 import ProductGrid from "@/components/ui/ProductGrid";
 import { getProductCategories } from "@/data/cms-products";
+import { getHomepage } from "@/data/cms-homepage";
 
 export default function Home() {
   const productCategories = getProductCategories();
+  const home = getHomepage();
   return (
     <main className="overflow-hidden bg-white text-black">
       {/* =========================================================
@@ -19,6 +21,9 @@ export default function Home() {
         <section className="relative overflow-hidden px-5 pb-12 pt-24">
           {/* BACKGROUND */}
           <div className="pointer-events-none absolute inset-0">
+            {home.heroBackground && (
+              <div className="absolute inset-0 bg-cover bg-center opacity-[0.12]" style={{ backgroundImage: `url(${JSON.stringify(home.heroBackground).slice(1,-1)})` }} />
+            )}
             <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.035)_1px,transparent_1px)] bg-[size:44px_44px]" />
 
             <div className="absolute -right-32 top-[36%] h-[360px] w-[360px] rounded-full bg-[#3f7edb]/10 blur-[90px]" />
@@ -29,17 +34,13 @@ export default function Home() {
             <Reveal direction="fade" duration={0.8}>
               <div>
                 <h1 className="text-[clamp(3.15rem,14vw,4.5rem)] font-medium leading-[0.89] tracking-[-0.055em]">
-                  Сигурност,
-                  <br />
-                  създадена
-                  <br />
-                  да издържи
+                  {home.heroTitle.split("\n").map((line, index) => (
+                    <span key={index}>{index > 0 && <br />}{line}</span>
+                  ))}
                 </h1>
 
                 <p className="mt-6 max-w-md text-[15px] leading-7 text-black/55">
-                  Професионални решения за физическа сигурност,
-                  сейфове, трезорни системи и специализирано банково
-                  оборудване.
+                  {home.heroDescription}
                 </p>
               </div>
             </Reveal>
@@ -119,10 +120,10 @@ export default function Home() {
             {/* CTA BUTTONS */}
             <div className="mt-1 space-y-3">
               <Link
-                href="/produkti"
+                href={home.primaryLink}
                 className="group flex min-h-14 w-full items-center justify-between bg-[#3f7edb] px-6 text-sm font-medium text-white transition-colors duration-300 active:bg-[#326dc3]"
               >
-                Разгледайте продуктите
+                {home.primaryButton}
 
                 <span className="text-lg transition-transform duration-300 group-hover:translate-x-1">
                   →
@@ -130,10 +131,10 @@ export default function Home() {
               </Link>
 
               <Link
-                href="/uslugi"
+                href={home.secondaryLink}
                 className="group flex min-h-12 w-full items-center justify-between border border-black/10 px-6 text-sm font-medium text-black/65"
               >
-                Услуги и сервиз
+                {home.secondaryButton}
                 <span>→</span>
               </Link>
             </div>
@@ -147,25 +148,20 @@ export default function Home() {
           <Reveal direction="up">
             <div>
               <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-[#3f7edb]">
-                За нас
+                {home.aboutLabel}
               </p>
 
               <h2 className="mt-5 text-[2.65rem] font-medium leading-[0.98] tracking-[-0.045em]">
-                Защитата започва с правилното инженерно решение
+                {home.aboutTitle}
               </h2>
 
               <div className="mt-8 border-t border-black/10 pt-8">
                 <p className="text-[15px] leading-7 text-black/55">
-                  Предлагаме професионални решения за защита на
-                  ценности, документи и специализирани помещения.
-                  Работим с продукти и системи, създадени за надеждна
-                  и дългосрочна експлоатация.
+                  {home.aboutParagraph1}
                 </p>
 
                 <p className="mt-6 text-[15px] leading-7 text-black/55">
-                  От избора на подходящ продукт до монтажа,
-                  настройката и последващото обслужване - подходът ни
-                  е насочен към сигурността във всеки етап.
+                  {home.aboutParagraph2}
                 </p>
               </div>
             </div>
@@ -180,12 +176,11 @@ export default function Home() {
 
                   <div>
                     <h3 className="text-xl font-medium tracking-tight">
-                      Надеждни решения
+                      {home.feature1Title}
                     </h3>
 
                     <p className="mt-3 text-sm leading-6 text-black/50">
-                      Оборудване, предназначено за високо ниво на
-                      защита и дългосрочна употреба.
+                      {home.feature1Description}
                     </p>
                   </div>
                 </div>
@@ -197,12 +192,11 @@ export default function Home() {
 
                   <div>
                     <h3 className="text-xl font-medium tracking-tight">
-                      Професионален подход
+                      {home.feature2Title}
                     </h3>
 
                     <p className="mt-3 text-sm leading-6 text-black/50">
-                      Решения според конкретните изисквания на клиента,
-                      обекта и начина на експлоатация.
+                      {home.feature2Description}
                     </p>
                   </div>
                 </div>
@@ -214,12 +208,11 @@ export default function Home() {
 
                   <div>
                     <h3 className="text-xl font-medium tracking-tight">
-                      Сервиз и поддръжка
+                      {home.feature3Title}
                     </h3>
 
                     <p className="mt-3 text-sm leading-6 text-black/50">
-                      Професионално обслужване и подкрепа след
-                      доставката и монтажа.
+                      {home.feature3Description}
                     </p>
                   </div>
                 </div>
@@ -235,21 +228,20 @@ export default function Home() {
           <Reveal direction="up">
             <div>
               <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-[#3f7edb]">
-                Доверени партньори
+                {home.partnersLabel}
               </p>
 
               <h2 className="mt-5 text-[2.65rem] font-medium leading-[0.98] tracking-[-0.045em]">
-                Доверие, изградено с времето
+                {home.partnersTitle}
               </h2>
 
               <p className="mt-6 max-w-sm text-sm leading-6 text-black/45">
-                Решения за сигурност, използвани от водещи финансови
-                институции.
+                {home.partnersDescription}
               </p>
             </div>
 
             <div className="mt-10">
-              <Partners />
+              <Partners partners={home.partners} />
             </div>
           </Reveal>
         </section>
@@ -263,17 +255,15 @@ export default function Home() {
           <div className="relative">
             <Reveal direction="up">
               <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-[#6ea4f1]">
-                Продуктова гама
+                {home.productsLabel}
               </p>
 
               <h2 className="mt-5 text-[2.7rem] font-medium leading-[0.97] tracking-[-0.045em]">
-                Оборудване за реална защита
+                {home.productsTitle}
               </h2>
 
               <p className="mt-7 border-t border-white/10 pt-7 text-[15px] leading-7 text-white/45">
-                Решения за различни нива на физическа сигурност - от
-                сейфове до специализирано банково и трезорно
-                оборудване.
+                {home.productsDescription}
               </p>
             </Reveal>
 
@@ -305,20 +295,19 @@ export default function Home() {
               {/* PRODUCT TEXT */}
               <div className="mt-9">
                 <h3 className="text-[2.3rem] font-medium leading-[1] tracking-[-0.04em]">
-                  Сейфове и системи за физическа сигурност
+                  {home.featuredTitle}
                 </h3>
 
                 <p className="mt-5 text-[15px] leading-7 text-white/45">
-                  Продуктови решения за защита на ценности, документи
-                  и специализирани помещения.
+                  {home.featuredDescription}
                 </p>
 
                 {/* STRONG CTA */}
                 <Link
-                  href="/produkti"
+                  href={home.primaryLink}
                   className="group mt-8 flex min-h-14 w-full items-center justify-between bg-[#3f7edb] px-6 text-sm font-medium text-white transition-colors duration-300 active:bg-[#326dc3]"
                 >
-                  Виж целия каталог
+                  {home.catalogButton}
 
                   <span className="text-lg transition-transform duration-300 group-hover:translate-x-1">
                     →
@@ -336,15 +325,15 @@ export default function Home() {
           <Reveal direction="up">
             <div>
               <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-[#3f7edb]">
-                Каталог
+                {home.catalogLabel}
               </p>
 
               <h2 className="mt-5 text-[2.65rem] font-medium leading-[0.98] tracking-[-0.045em]">
-                Основни категории
+                {home.catalogTitle}
               </h2>
 
               <p className="mt-6 text-sm leading-6 text-black/45">
-                Разгледайте основните категории от нашето портфолио.
+                {home.catalogDescription}
               </p>
             </div>
           </Reveal>
@@ -361,23 +350,22 @@ export default function Home() {
           <Reveal direction="up">
             <div>
               <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-[#3f7edb]">
-                Услуги и сервиз
+                {home.servicesLabel}
               </p>
 
               <h2 className="mt-5 text-[2.65rem] font-medium leading-[0.98] tracking-[-0.045em]">
-                Сигурността не приключва с доставката
+                {home.servicesTitle}
               </h2>
 
               <p className="mt-7 border-t border-black/10 pt-7 text-[15px] leading-7 text-black/55">
-                Консултация, монтаж, прекодиране, профилактика,
-                аварийно отваряне и професионална сервизна поддръжка.
+                {home.servicesDescription}
               </p>
 
               <Link
-                href="/uslugi"
+                href={home.secondaryLink}
                 className="group mt-8 flex min-h-14 w-full items-center justify-between bg-black px-6 text-sm font-medium text-white transition-colors duration-300 active:bg-[#3f7edb]"
               >
-                Виж услугите
+                {home.servicesButton}
 
                 <span>→</span>
               </Link>
@@ -394,23 +382,22 @@ export default function Home() {
           <div className="relative">
             <Reveal direction="up">
               <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-white/60">
-                Запитване
+                {home.contactLabel}
               </p>
 
               <h2 className="mt-5 text-[2.65rem] font-medium leading-[0.98] tracking-[-0.045em]">
-                Нека намерим правилното решение за вашия обект
+                {home.contactTitle}
               </h2>
 
               <p className="mt-7 border-t border-white/20 pt-7 text-[15px] leading-7 text-white/70">
-                Свържете се с нас за консултация, продуктово запитване
-                или индивидуално решение според вашите изисквания.
+                {home.contactDescription}
               </p>
 
               <Link
-                href="/kontakti"
+                href={home.contactLink}
                 className="group mt-8 flex min-h-14 w-full items-center justify-between bg-white px-6 text-sm font-medium text-black transition-colors duration-300 active:bg-black active:text-white"
               >
-                Изпратете запитване
+                {home.contactButton}
 
                 <span>→</span>
               </Link>
@@ -429,6 +416,9 @@ export default function Home() {
         ========================================================= */}
         <section className="relative min-h-screen overflow-hidden px-6 pb-16 pt-28 lg:px-12">
           <div className="pointer-events-none absolute inset-0">
+            {home.heroBackground && (
+              <div className="absolute inset-0 bg-cover bg-center opacity-[0.12]" style={{ backgroundImage: `url(${JSON.stringify(home.heroBackground).slice(1,-1)})` }} />
+            )}
             <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.035)_1px,transparent_1px)] bg-[size:72px_72px]" />
 
             <div className="absolute right-[-10%] top-[20%] h-[650px] w-[650px] rounded-full bg-[#3f7edb]/[0.07] blur-[120px]" />
@@ -440,25 +430,21 @@ export default function Home() {
               <Reveal direction="fade" duration={1}>
                 <div className="relative z-20">
                   <h1 className="max-w-4xl text-[clamp(3rem,5.1vw,5.8rem)] font-medium leading-[0.94] tracking-[-0.045em]">
-                    Сигурност,
-                    <br />
-                    създадена
-                    <br />
-                    да издържи
+                    {home.heroTitle.split("\n").map((line, index) => (
+                    <span key={index}>{index > 0 && <br />}{line}</span>
+                  ))}
                   </h1>
 
                   <p className="mt-9 max-w-xl text-base leading-8 text-black/55 sm:text-lg">
-                    Професионални решения за физическа сигурност,
-                    сейфове, трезорни системи и специализирано банково
-                    оборудване.
+                    {home.heroDescription}
                   </p>
 
                   <div className="mt-10 flex flex-wrap items-center gap-7">
                     <Link
-                      href="/produkti"
+                      href={home.primaryLink}
                       className="group inline-flex items-center gap-4 bg-[#3f7edb] px-7 py-4 text-sm font-medium text-white transition-all duration-300 hover:bg-[#326dc3]"
                     >
-                      Разгледайте продуктите
+                      {home.primaryButton}
 
                       <span className="transition-transform duration-300 group-hover:translate-x-1">
                         →
@@ -466,10 +452,10 @@ export default function Home() {
                     </Link>
 
                     <Link
-                      href="/uslugi"
+                      href={home.secondaryLink}
                       className="group inline-flex items-center gap-3 text-sm font-medium text-black/65 transition-colors hover:text-black"
                     >
-                      Услуги и сервиз
+                      {home.secondaryButton}
 
                       <span className="transition-transform duration-300 group-hover:translate-x-1">
                         →
@@ -537,14 +523,14 @@ export default function Home() {
                     </div>
 
                     <p className="text-right text-[10px] uppercase tracking-[0.18em] text-[#3f7edb]">
-                      Заключваща система
+                      {home.pointerRight}
                     </p>
                   </div>
 
                   {/* CONSTRUCTION CALLOUT */}
                   <div className="absolute bottom-[22%] left-[4%] w-[150px]">
                     <p className="mb-2 text-[10px] uppercase tracking-[0.18em] text-[#3f7edb]">
-                      Усилена конструкция
+                      {home.pointerLeft}
                     </p>
 
                     <div className="flex items-center">
@@ -576,25 +562,20 @@ export default function Home() {
             <Reveal direction="right">
               <div className="max-w-5xl">
                 <p className="text-xs font-medium uppercase tracking-[0.3em] text-[#3f7edb]">
-                  За нас
+                  {home.aboutLabel}
                 </p>
 
                 <h2 className="mt-6 max-w-4xl text-4xl font-medium leading-[1.04] tracking-[-0.035em] sm:text-5xl lg:text-6xl">
-                  Защитата започва с правилното инженерно решение
+                  {home.aboutTitle}
                 </h2>
 
                 <div className="mt-10 grid max-w-5xl gap-8 border-t border-black/10 pt-10 md:grid-cols-2">
                   <p className="text-base leading-8 text-black/55">
-                    Предлагаме професионални решения за защита на
-                    ценности, документи и специализирани помещения.
-                    Работим с продукти и системи, създадени за надеждна
-                    и дългосрочна експлоатация.
+                    {home.aboutParagraph1}
                   </p>
 
                   <p className="text-base leading-8 text-black/55">
-                    От избора на подходящ продукт до монтажа,
-                    настройката и последващото обслужване - подходът ни
-                    е насочен към сигурността във всеки етап.
+                    {home.aboutParagraph2}
                   </p>
                 </div>
               </div>
@@ -605,34 +586,31 @@ export default function Home() {
               <div className="mt-24 grid border-y border-black/10 md:grid-cols-3">
                 <div className="border-b border-black/10 py-10 md:border-b-0 md:border-r md:pr-10">
                   <h3 className="text-2xl font-medium">
-                    Надеждни решения
+                    {home.feature1Title}
                   </h3>
 
                   <p className="mt-4 max-w-sm text-sm leading-7 text-black/50">
-                    Оборудване, предназначено за високо ниво на защита и
-                    дългосрочна употреба.
+                    {home.feature1Description}
                   </p>
                 </div>
 
                 <div className="border-b border-black/10 py-10 md:border-b-0 md:border-r md:px-10">
                   <h3 className="text-2xl font-medium">
-                    Професионален подход
+                    {home.feature2Title}
                   </h3>
 
                   <p className="mt-4 max-w-sm text-sm leading-7 text-black/50">
-                    Решения според конкретните изисквания на клиента,
-                    обекта и начина на експлоатация.
+                    {home.feature2Description}
                   </p>
                 </div>
 
                 <div className="py-10 md:pl-10">
                   <h3 className="text-2xl font-medium">
-                    Сервиз и поддръжка
+                    {home.feature3Title}
                   </h3>
 
                   <p className="mt-4 max-w-sm text-sm leading-7 text-black/50">
-                    Професионално обслужване и подкрепа след доставката и
-                    монтажа.
+                    {home.feature3Description}
                   </p>
                 </div>
               </div>
@@ -643,21 +621,20 @@ export default function Home() {
               <div className="mt-28">
                 <div className="max-w-5xl">
                   <p className="text-xs font-medium uppercase tracking-[0.3em] text-[#3f7edb]">
-                    Доверени партньори
+                    {home.partnersLabel}
                   </p>
 
                   <h2 className="mt-6 max-w-4xl text-4xl font-medium leading-[1.04] tracking-[-0.035em] sm:text-5xl lg:text-6xl">
-                    Доверие, изградено с времето
+                    {home.partnersTitle}
                   </h2>
 
                   <p className="mt-8 max-w-2xl text-sm leading-7 text-black/45">
-                    Решения за сигурност, използвани от водещи
-                    финансови институции.
+                    {home.partnersDescription}
                   </p>
                 </div>
 
                 <div className="mt-14">
-                  <Partners />
+                  <Partners partners={home.partners} />
                 </div>
               </div>
             </Reveal>
@@ -674,25 +651,23 @@ export default function Home() {
             <Reveal direction="up">
               <div className="max-w-5xl">
                 <p className="text-xs font-medium uppercase tracking-[0.3em] text-[#6ea4f1]">
-                  Продуктова гама
+                  {home.productsLabel}
                 </p>
 
                 <h2 className="mt-6 max-w-4xl text-4xl font-medium leading-[1.04] tracking-[-0.035em] sm:text-5xl lg:text-6xl">
-                  Оборудване за реална защита
+                  {home.productsTitle}
                 </h2>
 
                 <div className="mt-10 flex flex-col gap-8 border-t border-white/10 pt-10 sm:flex-row sm:items-end sm:justify-between">
                   <p className="max-w-2xl text-base leading-8 text-white/45">
-                    Решения за различни нива на физическа сигурност -
-                    от сейфове до специализирано банково и трезорно
-                    оборудване.
+                    {home.productsDescription}
                   </p>
 
                   <Link
-                    href="/produkti"
+                    href={home.primaryLink}
                     className="group inline-flex w-fit items-center gap-4 text-sm font-medium text-white"
                   >
-                    Виж целия каталог
+                    {home.catalogButton}
 
                     <span className="text-[#6ea4f1] transition-transform duration-300 group-hover:translate-x-1">
                       →
@@ -720,7 +695,7 @@ export default function Home() {
 
                     <div className="absolute bottom-8 left-0 hidden w-[170px] lg:block">
                       <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.18em] text-[#6ea4f1]">
-                        Усилена конструкция
+                        {home.pointerLeft}
                       </p>
 
                       <div className="flex items-center">
@@ -732,15 +707,12 @@ export default function Home() {
 
                   {/* TEXT */}
                   <div>
-                    <h3 className="text-4xl font-medium leading-[1.04] tracking-[-0.035em] sm:text-5xl lg:text-6xl">
-                      Сейфове и системи
-                      <br />
-                      за физическа сигурност
+                    <h3 className="whitespace-pre-line text-4xl font-medium leading-[1.04] tracking-[-0.035em] sm:text-5xl lg:text-6xl">
+                      {home.featuredTitle}
                     </h3>
 
                     <p className="mt-7 max-w-lg text-base leading-8 text-white/45">
-                      Продуктови решения за защита на ценности,
-                      документи и специализирани помещения.
+                      {home.featuredDescription}
                     </p>
                   </div>
                 </div>
@@ -757,15 +729,15 @@ export default function Home() {
             <Reveal direction="up">
               <div className="max-w-5xl">
                 <p className="text-xs font-medium uppercase tracking-[0.3em] text-[#3f7edb]">
-                  Каталог
+                  {home.catalogLabel}
                 </p>
 
                 <h2 className="mt-6 max-w-4xl text-4xl font-medium leading-[1.04] tracking-[-0.035em] sm:text-5xl lg:text-6xl">
-                  Основни категории
+                  {home.catalogTitle}
                 </h2>
 
                 <p className="mt-8 max-w-2xl text-sm leading-7 text-black/45">
-                  Разгледайте основните категории от нашето портфолио.
+                  {home.catalogDescription}
                 </p>
               </div>
             </Reveal>
@@ -784,25 +756,23 @@ export default function Home() {
             <Reveal direction="left">
               <div className="max-w-5xl">
                 <p className="text-xs font-medium uppercase tracking-[0.3em] text-[#3f7edb]">
-                  Услуги и сервиз
+                  {home.servicesLabel}
                 </p>
 
                 <h2 className="mt-6 max-w-4xl text-4xl font-medium leading-[1.04] tracking-[-0.035em] sm:text-5xl lg:text-6xl">
-                  Сигурността не приключва с доставката
+                  {home.servicesTitle}
                 </h2>
 
                 <div className="mt-10 flex flex-col gap-8 border-t border-black/10 pt-10 sm:flex-row sm:items-end sm:justify-between">
                   <p className="max-w-2xl text-base leading-8 text-black/55">
-                    Консултация, монтаж, прекодиране, профилактика,
-                    аварийно отваряне и професионална сервизна
-                    поддръжка.
+                    {home.servicesDescription}
                   </p>
 
                   <Link
-                    href="/uslugi"
+                    href={home.secondaryLink}
                     className="group inline-flex w-fit items-center gap-5 bg-black px-6 py-4 text-sm font-medium text-white transition-colors hover:bg-[#3f7edb]"
                   >
-                    Виж услугите
+                    {home.servicesButton}
 
                     <span className="transition-transform duration-300 group-hover:translate-x-1">
                       →
@@ -824,25 +794,23 @@ export default function Home() {
             <Reveal direction="up">
               <div className="max-w-5xl">
                 <p className="text-xs font-medium uppercase tracking-[0.3em] text-white/65">
-                  Запитване
+                  {home.contactLabel}
                 </p>
 
                 <h2 className="mt-6 max-w-4xl text-4xl font-medium leading-[1.04] tracking-[-0.035em] sm:text-5xl lg:text-6xl">
-                  Нека намерим правилното решение за вашия обект
+                  {home.contactTitle}
                 </h2>
 
                 <div className="mt-10 flex flex-col gap-10 border-t border-white/20 pt-10 sm:flex-row sm:items-end sm:justify-between">
                   <p className="max-w-2xl text-base leading-8 text-white/70">
-                    Свържете се с нас за консултация, продуктово
-                    запитване или индивидуално решение според вашите
-                    изисквания.
+                    {home.contactDescription}
                   </p>
 
                   <Link
-                    href="/kontakti"
+                    href={home.contactLink}
                     className="group inline-flex w-fit shrink-0 items-center gap-5 bg-white px-7 py-4 text-sm font-medium text-black transition-all duration-300 hover:bg-black hover:text-white"
                   >
-                    Изпратете запитване
+                    {home.contactButton}
 
                     <span className="transition-transform duration-300 group-hover:translate-x-1">
                       →

@@ -5,91 +5,339 @@ backend:
   base_url: https://tetraedar-cms-auth.todorvasilev0144.workers.dev
   auth_endpoint: auth
   site_domain: tetraedar.pages.dev
-
 media_folder: public/products/uploads
 public_folder: /products/uploads
-
 collections:
-  - name: categories
-    label: "Категории"
-    label_singular: "Категория"
-    folder: content/categories
-    create: true
-    delete: false
-    identifier_field: title
-    slug: "{{slug}}"
-    extension: md
-    format: frontmatter
+- name: categories
+  label: Категории
+  label_singular: Категория
+  folder: content/categories
+  create: true
+  delete: false
+  identifier_field: title
+  slug: '{{slug}}'
+  extension: md
+  format: frontmatter
+  fields:
+  - label: Име на категорията
+    name: title
+    widget: string
+  - label: Ред на показване
+    name: order
+    widget: number
+    value_type: int
+    default: 100
+    min: 0
+    hint: По-малко число = по-напред. Ако два записа имат еднакъв номер, подреждат се по постоянния си идентификатор.
+- name: subcategories
+  label: Подкатегории
+  label_singular: Подкатегория
+  folder: content/subcategories
+  create: true
+  delete: false
+  identifier_field: title
+  slug: '{{slug}}'
+  extension: md
+  format: frontmatter
+  fields:
+  - label: Име на подкатегорията
+    name: title
+    widget: string
+  - label: Родителска категория
+    name: category
+    widget: relation
+    collection: categories
+    search_fields:
+    - title
+    value_field: '{{slug}}'
+    display_fields:
+    - title
+  - label: Ред на показване
+    name: order
+    widget: number
+    value_type: int
+    default: 100
+    min: 0
+- name: products
+  label: Продукти
+  label_singular: Продукт
+  folder: content/products
+  create: true
+  delete: true
+  identifier_field: title
+  slug: '{{slug}}'
+  extension: md
+  format: frontmatter
+  fields:
+  - label: Име на продукта
+    name: title
+    widget: string
+  - label: Категория
+    name: category
+    widget: relation
+    collection: categories
+    search_fields:
+    - title
+    value_field: '{{slug}}'
+    display_fields:
+    - title
+  - label: Подкатегория (по избор)
+    name: subcategory
+    widget: relation
+    required: false
+    collection: subcategories
+    search_fields:
+    - title
+    value_field: '{{slug}}'
+    display_fields:
+    - title
+    hint: Изберете подкатегория от същата категория. Оставете празно, ако няма такава.
+  - label: Кратък надпис над името
+    name: cardLabel
+    widget: string
+    required: false
+  - label: Описание
+    name: description
+    widget: text
+  - label: Основна снимка
+    name: image
+    widget: image
+    required: false
+  - label: Допълнителни снимки (може да ги размествате)
+    name: images
+    widget: list
+    required: false
+    field:
+      label: Снимка
+      name: image
+      widget: image
+  - label: Модели и технически характеристики
+    name: models
+    widget: list
+    required: false
     fields:
-      - { label: "Име на категорията", name: title, widget: string }
-      - { label: "Ред на показване", name: order, widget: number, value_type: int, default: 100, min: 0, hint: "По-малко число = по-напред. Например 10, 20, 30." }
-
-  - name: subcategories
-    label: "Подкатегории"
-    label_singular: "Подкатегория"
-    folder: content/subcategories
-    create: true
-    delete: false
-    identifier_field: title
-    slug: "{{slug}}"
-    extension: md
-    format: frontmatter
+    - label: Име на модела
+      name: name
+      widget: string
+    - label: Външни размери
+      name: dimensions
+      widget: string
+      required: false
+    - label: Вътрешни размери
+      name: internalDimensions
+      widget: string
+      required: false
+    - label: Тегло
+      name: weight
+      widget: string
+      required: false
+    - label: Обем
+      name: volume
+      widget: string
+      required: false
+    - label: Клас на устойчивост
+      name: resistance
+      widget: string
+      required: false
+- name: website
+  label: Съдържание на сайта
+  files:
+  - name: homepage
+    label: Начална страница и партньори
+    file: content/homepage.json
+    format: json
     fields:
-      - { label: "Име на подкатегорията", name: title, widget: string }
-      - label: "Родителска категория"
-        name: category
-        widget: relation
-        collection: categories
-        search_fields: [title]
-        value_field: "{{slug}}"
-        display_fields: [title]
-      - { label: "Ред на показване", name: order, widget: number, value_type: int, default: 100, min: 0 }
-
-  - name: products
-    label: "Продукти"
-    label_singular: "Продукт"
-    folder: content/products
-    create: true
-    delete: false
-    identifier_field: title
-    slug: "{{slug}}"
-    extension: md
-    format: frontmatter
+    - label: Начален екран — Заглавие (нов ред = нов ред в заглавието)
+      name: heroTitle
+      widget: text
+      required: true
+    - label: Описание
+      name: heroDescription
+      widget: text
+      required: true
+    - label: Фонова снимка
+      name: heroBackground
+      widget: image
+      required: false
+    - label: Текст на бутон Продукти
+      name: primaryButton
+      widget: string
+      required: true
+    - label: Адрес на бутон Продукти
+      name: primaryLink
+      widget: string
+      required: true
+      hint: Например /produkti или /uslugi
+    - label: Текст на бутон Услуги
+      name: secondaryButton
+      widget: string
+      required: true
+    - label: Адрес на бутон Услуги
+      name: secondaryLink
+      widget: string
+      required: true
+      hint: Например /produkti или /uslugi
+    - label: За нас — Надпис
+      name: aboutLabel
+      widget: string
+      required: true
+    - label: Заглавие
+      name: aboutTitle
+      widget: string
+      required: true
+    - label: Първи абзац
+      name: aboutParagraph1
+      widget: text
+      required: true
+    - label: Втори абзац
+      name: aboutParagraph2
+      widget: text
+      required: true
+    - label: Предимство 1
+      name: feature1Title
+      widget: string
+      required: true
+    - label: Описание 1
+      name: feature1Description
+      widget: text
+      required: true
+    - label: Предимство 2
+      name: feature2Title
+      widget: string
+      required: true
+    - label: Описание 2
+      name: feature2Description
+      widget: text
+      required: true
+    - label: Предимство 3
+      name: feature3Title
+      widget: string
+      required: true
+    - label: Описание 3
+      name: feature3Description
+      widget: text
+      required: true
+    - label: Доверени партньори — Надпис
+      name: partnersLabel
+      widget: string
+      required: true
+    - label: Заглавие
+      name: partnersTitle
+      widget: string
+      required: true
+    - label: Описание
+      name: partnersDescription
+      widget: text
+      required: true
+    - label: Продукти на началната страница — Надпис
+      name: productsLabel
+      widget: string
+      required: true
+    - label: Заглавие
+      name: productsTitle
+      widget: string
+      required: true
+    - label: Описание
+      name: productsDescription
+      widget: text
+      required: true
+    - label: Заглавие на представения продукт
+      name: featuredTitle
+      widget: string
+      required: true
+    - label: Описание на представения продукт
+      name: featuredDescription
+      widget: text
+      required: true
+    - label: Текст на бутон Каталог
+      name: catalogButton
+      widget: string
+      required: true
+    - label: Надпис над каталога
+      name: catalogLabel
+      widget: string
+      required: true
+    - label: Заглавие на каталога
+      name: catalogTitle
+      widget: string
+      required: true
+    - label: Описание на каталога
+      name: catalogDescription
+      widget: text
+      required: true
+    - label: Услуги на началната страница — Надпис
+      name: servicesLabel
+      widget: string
+      required: true
+    - label: Заглавие
+      name: servicesTitle
+      widget: string
+      required: true
+    - label: Описание
+      name: servicesDescription
+      widget: text
+      required: true
+    - label: Текст на бутон Услуги
+      name: servicesButton
+      widget: string
+      required: true
+    - label: Запитване — Надпис
+      name: contactLabel
+      widget: string
+      required: true
+    - label: Заглавие
+      name: contactTitle
+      widget: string
+      required: true
+    - label: Описание
+      name: contactDescription
+      widget: text
+      required: true
+    - label: Текст на бутон Запитване
+      name: contactButton
+      widget: string
+      required: true
+    - label: Адрес на бутон Запитване
+      name: contactLink
+      widget: string
+      required: true
+      hint: Например /produkti или /uslugi
+    - label: Лога на партньорите (може да ги размествате)
+      name: partners
+      widget: list
+      required: false
+      summary: '{{fields.name}}'
+      fields:
+      - label: Име
+        name: name
+        widget: string
+      - label: Лого (ако е празно, показва името)
+        name: image
+        widget: image
+        required: false
+      - label: Сайт (по избор)
+        name: url
+        widget: string
+        required: false
+- name: ordering
+  label: Подредба на продуктите
+  files:
+  - name: product-order
+    label: Подредба — влачете продуктите
+    file: content/product-order.json
+    format: json
     fields:
-      - { label: "Име на продукта", name: title, widget: string }
-      - label: "Категория"
-        name: category
+    - label: Продукти (влачете редовете, за да промените реда)
+      name: products
+      widget: list
+      required: false
+      field:
+        label: Продукт
+        name: product
         widget: relation
-        collection: categories
-        search_fields: [title]
-        value_field: "{{slug}}"
-        display_fields: [title]
-      - label: "Подкатегория (по избор)"
-        name: subcategory
-        widget: relation
-        required: false
-        collection: subcategories
-        search_fields: [title]
-        value_field: "{{slug}}"
-        display_fields: [title]
-        hint: "Изберете подкатегория от същата категория. Оставете празно, ако няма такава."
-      - { label: "Ред на показване", name: order, widget: number, value_type: int, default: 100, min: 0, hint: "По-малко число = по-напред." }
-      - { label: "Кратък надпис над името", name: cardLabel, widget: string, required: false }
-      - { label: "Описание", name: description, widget: text }
-      - { label: "Основна снимка", name: image, widget: image, required: false }
-      - label: "Допълнителни снимки (може да ги размествате)"
-        name: images
-        widget: list
-        required: false
-        field: { label: "Снимка", name: image, widget: image }
-      - label: "Модели и технически характеристики"
-        name: models
-        widget: list
-        required: false
-        fields:
-          - { label: "Име на модела", name: name, widget: string }
-          - { label: "Външни размери", name: dimensions, widget: string, required: false }
-          - { label: "Вътрешни размери", name: internalDimensions, widget: string, required: false }
-          - { label: "Тегло", name: weight, widget: string, required: false }
-          - { label: "Обем", name: volume, widget: string, required: false }
-          - { label: "Клас на устойчивост", name: resistance, widget: string, required: false }
+        collection: products
+        search_fields:
+        - title
+        value_field: '{{slug}}'
+        display_fields:
+        - title
