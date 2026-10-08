@@ -1,8 +1,10 @@
 ---
 title: Стенен Сейф Тип CTM
 slug: ctm
-description: Стенен сейф с II категория на съпротивление и механична брава клас A.
-image: /products/safes/ctm.jpg
+cardLabel: Степен II по БДС EN 1143-1
+description: Стенен сейф с II категория на съпротивление и механична брава клас
+  A по EN 1300.
+image: /products/uploads/typ-ctm.png
 models:
   - name: CTM-1
   - name: CTM-2
@@ -11,4 +13,3 @@ models:
   - name: CTM-5
   - name: CTM-6
 ---
-
