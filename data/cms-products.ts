@@ -78,21 +78,6 @@ export function getProductCategories(): ProductCategory[] {
   const categoryEntries = sortEntries(entries("categories"));
   const subcategoryEntries = sortEntries(entries("subcategories"));
   const productEntries = sortEntries(entries("products"));
-  const orderingFile = path.join(process.cwd(), "content", "product-order.json");
-  const ordering = fs.existsSync(orderingFile)
-    ? JSON.parse(fs.readFileSync(orderingFile, "utf8")) as { products?: unknown }
-    : {};
-  const orderList = Array.isArray(ordering.products) ? ordering.products.filter((value): value is string => typeof value === "string") : [];
-  const orderPositions = new Map<string, number>();
-  orderList.forEach((slug, index) => {
-    if (!orderPositions.has(slug)) orderPositions.set(slug, index);
-  });
-  productEntries.sort((a, b) =>
-    (orderPositions.get(a._id) ?? Number.MAX_SAFE_INTEGER) - (orderPositions.get(b._id) ?? Number.MAX_SAFE_INTEGER)
-    || number(a.order) - number(b.order)
-    || a._id.localeCompare(b._id)
-  );
-
   const knownCategories = new Set(categoryEntries.map((entry) => entry._id));
   const knownSubcategories = new Map(subcategoryEntries.map((entry) => [entry._id, entry]));
   const slugs = new Set<string>();

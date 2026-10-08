@@ -92,6 +92,13 @@ collections:
     display_fields:
     - title
     hint: Изберете подкатегория от същата категория. Оставете празно, ако няма такава.
+  - label: Ред на показване
+    name: order
+    widget: number
+    value_type: int
+    default: 100
+    min: 0
+    hint: По-малко число означава по-предна позиция. При еднакви числа продуктите се подреждат по идентификатор.
   - label: Кратък надпис над името
     name: cardLabel
     widget: string
@@ -143,11 +150,11 @@ collections:
   label: Съдържание на сайта
   files:
   - name: homepage
-    label: Начална страница и партньори
+    label: Начална страница
     file: content/homepage.json
     format: json
     fields:
-    - label: Начален екран — Заглавие (нов ред = нов ред в заглавието)
+    - label: Начален екран - Заглавие (нов ред = нов ред в заглавието)
       name: heroTitle
       widget: text
       required: true
@@ -177,7 +184,7 @@ collections:
       widget: string
       required: true
       hint: Например /produkti или /uslugi
-    - label: За нас — Надпис
+    - label: За нас - Надпис
       name: aboutLabel
       widget: string
       required: true
@@ -217,7 +224,7 @@ collections:
       name: feature3Description
       widget: text
       required: true
-    - label: Доверени партньори — Надпис
+    - label: Доверени партньори - Надпис
       name: partnersLabel
       widget: string
       required: true
@@ -229,7 +236,7 @@ collections:
       name: partnersDescription
       widget: text
       required: true
-    - label: Продукти на началната страница — Надпис
+    - label: Продукти на началната страница - Надпис
       name: productsLabel
       widget: string
       required: true
@@ -265,7 +272,7 @@ collections:
       name: catalogDescription
       widget: text
       required: true
-    - label: Услуги на началната страница — Надпис
+    - label: Услуги на началната страница - Надпис
       name: servicesLabel
       widget: string
       required: true
@@ -281,7 +288,7 @@ collections:
       name: servicesButton
       widget: string
       required: true
-    - label: Запитване — Надпис
+    - label: Запитване - Надпис
       name: contactLabel
       widget: string
       required: true
@@ -319,25 +326,3 @@ collections:
         name: url
         widget: string
         required: false
-- name: ordering
-  label: Подредба на продуктите
-  files:
-  - name: product-order
-    label: Подредба — влачете продуктите
-    file: content/product-order.json
-    format: json
-    fields:
-    - label: Продукти (влачете редовете, за да промените реда)
-      name: products
-      widget: list
-      required: false
-      field:
-        label: Продукт
-        name: product
-        widget: relation
-        collection: products
-        search_fields:
-        - title
-        value_field: '{{slug}}'
-        display_fields:
-        - title
