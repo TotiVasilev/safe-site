@@ -10,81 +10,86 @@ media_folder: public/products/uploads
 public_folder: /products/uploads
 
 collections:
-  - name: products
-    label: Products
-    label_singular: Product
-    folder: content/products
-    create: false
+  - name: categories
+    label: "Категории"
+    label_singular: "Категория"
+    folder: content/categories
+    create: true
     delete: false
+    identifier_field: title
+    slug: "{{slug}}"
     extension: md
     format: frontmatter
-
     fields:
-      - label: Product name
-        name: title
-        widget: string
+      - { label: "Име на категорията", name: title, widget: string }
+      - { label: "Ред на показване", name: order, widget: number, value_type: int, default: 100, min: 0, hint: "По-малко число = по-напред. Например 10, 20, 30." }
 
-      - label: Product slug
-        name: slug
-        widget: string
-        hint: "Do not change this. It connects the editor to the website."
+  - name: subcategories
+    label: "Подкатегории"
+    label_singular: "Подкатегория"
+    folder: content/subcategories
+    create: true
+    delete: false
+    identifier_field: title
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields:
+      - { label: "Име на подкатегорията", name: title, widget: string }
+      - label: "Родителска категория"
+        name: category
+        widget: relation
+        collection: categories
+        search_fields: [title]
+        value_field: "{{slug}}"
+        display_fields: [title]
+      - { label: "Ред на показване", name: order, widget: number, value_type: int, default: 100, min: 0 }
 
-      - label: Card label
-        name: cardLabel
-        widget: string
+  - name: products
+    label: "Продукти"
+    label_singular: "Продукт"
+    folder: content/products
+    create: true
+    delete: false
+    identifier_field: title
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields:
+      - { label: "Име на продукта", name: title, widget: string }
+      - label: "Категория"
+        name: category
+        widget: relation
+        collection: categories
+        search_fields: [title]
+        value_field: "{{slug}}"
+        display_fields: [title]
+      - label: "Подкатегория (по избор)"
+        name: subcategory
+        widget: relation
         required: false
-        hint: "Optional short text shown above the product name on the catalog card. Leave empty to hide it."
-
-      - label: Description
-        name: description
-        widget: text
-
-      - label: Main image
-        name: image
-        widget: image
-        required: false
-        hint: "The main image shown on the product card and product page."
-
-      - label: Gallery images
+        collection: subcategories
+        search_fields: [title]
+        value_field: "{{slug}}"
+        display_fields: [title]
+        hint: "Изберете подкатегория от същата категория. Оставете празно, ако няма такава."
+      - { label: "Ред на показване", name: order, widget: number, value_type: int, default: 100, min: 0, hint: "По-малко число = по-напред." }
+      - { label: "Кратък надпис над името", name: cardLabel, widget: string, required: false }
+      - { label: "Описание", name: description, widget: text }
+      - { label: "Основна снимка", name: image, widget: image, required: false }
+      - label: "Допълнителни снимки (може да ги размествате)"
         name: images
         widget: list
         required: false
-        hint: "Optional extra images. On desktop, the product card cycles through them while hovered."
-        field:
-          label: Image
-          name: image
-          widget: image
-
-      - label: Models
+        field: { label: "Снимка", name: image, widget: image }
+      - label: "Модели и технически характеристики"
         name: models
         widget: list
         required: false
         fields:
-          - label: Model name
-            name: name
-            widget: string
-
-          - label: External dimensions
-            name: dimensions
-            widget: string
-            required: false
-
-          - label: Internal dimensions
-            name: internalDimensions
-            widget: string
-            required: false
-
-          - label: Weight
-            name: weight
-            widget: string
-            required: false
-
-          - label: Volume
-            name: volume
-            widget: string
-            required: false
-
-          - label: Resistance class
-            name: resistance
-            widget: string
-            required: false
+          - { label: "Име на модела", name: name, widget: string }
+          - { label: "Външни размери", name: dimensions, widget: string, required: false }
+          - { label: "Вътрешни размери", name: internalDimensions, widget: string, required: false }
+          - { label: "Тегло", name: weight, widget: string, required: false }
+          - { label: "Обем", name: volume, widget: string, required: false }
+          - { label: "Клас на устойчивост", name: resistance, widget: string, required: false }

@@ -4,4 +4,6 @@ slug: blok-seyfove
 description: Лични сейфове за съхранение на ценности в охраняеми банкови трезори.
 image: /products/uploads/blok-seyfove.png
 models: []
+category: bankovi-produkti
+order: 20
 ---

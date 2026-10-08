@@ -2,9 +2,10 @@ import Link from "next/link";
 import Partners from "@/components/ui/Partners";
 import Reveal from "@/components/ui/Reveal";
 import ProductGrid from "@/components/ui/ProductGrid";
-import { productCategories } from "@/data/products";
+import { getProductCategories } from "@/data/cms-products";
 
 export default function Home() {
+  const productCategories = getProductCategories();
   return (
     <main className="overflow-hidden bg-white text-black">
       {/* =========================================================
