@@ -1,13 +1,14 @@
 
-/* TETRAEDAR - Decap live homepage preview. No additional React runtime. */
+/* TETRAEDAR - Decap live homepage preview */
 (function () {
-  'use strict';
+  "use strict";
 
-  var REACT_ELEMENT = Symbol.for('react.transitional.element');
+  // Use Decap's React runtime. Do not load another copy of React.
+  var ELEMENT = Symbol.for("react.transitional.element");
 
-  function node(type, props) {
+  function element(type, props) {
     return {
-      $$typeof: REACT_ELEMENT,
+      $$typeof: ELEMENT,
       type: type,
       key: null,
       props: props || {},
@@ -15,211 +16,300 @@
     };
   }
 
-  function plain(value) {
-    if (value && typeof value.toJS === 'function') return value.toJS();
-    return value && typeof value === 'object' ? value : {};
+  function toPlain(value) {
+    if (value && typeof value.toJS === "function") {
+      return value.toJS();
+    }
+
+    return value && typeof value === "object" ? value : {};
   }
 
-  function Preview(props) {
+  function HomepagePreview(props) {
     this.props = props;
     this.frame = null;
+    this.previewWindow = null;
     this.ready = false;
-    this.field = null;
+    this.activeField = null;
 
+    this.attach = this.attach.bind(this);
+    this.onLoad = this.onLoad.bind(this);
     this.onMessage = this.onMessage.bind(this);
     this.onFocus = this.onFocus.bind(this);
     this.onInput = this.onInput.bind(this);
-    this.attach = this.attach.bind(this);
   }
 
-  Preview.prototype.isReactComponent = {};
+  HomepagePreview.prototype.isReactComponent = {};
 
-  Preview.prototype.attach = function (frame) {
-    if (frame !== this.frame) this.ready = false;
+  HomepagePreview.prototype.attach = function (frame) {
+    if (this.frame === frame) return;
+
+    if (this.previewWindow) {
+      this.previewWindow.removeEventListener(
+        "message",
+        this.onMessage
+      );
+    }
+
     this.frame = frame;
+    this.ready = false;
+    this.previewWindow = frame
+      ? frame.ownerDocument.defaultView
+      : null;
+
+    // Decap renders preview components in a separate iframe.
+    // Listen in THAT window, not the main admin window.
+    if (this.previewWindow) {
+      this.previewWindow.addEventListener(
+        "message",
+        this.onMessage
+      );
+    }
   };
 
-  Preview.prototype.componentDidMount = function () {
-    window.addEventListener('message', this.onMessage);
-    document.addEventListener('focusin', this.onFocus, true);
-    document.addEventListener('input', this.onInput, true);
-    document.addEventListener('change', this.onInput, true);
+  HomepagePreview.prototype.componentDidMount = function () {
+    document.addEventListener("focusin", this.onFocus, true);
+    document.addEventListener("input", this.onInput, true);
+    document.addEventListener("change", this.onInput, true);
+
     this.sync();
   };
 
-  Preview.prototype.componentDidUpdate = function () {
+  HomepagePreview.prototype.componentDidUpdate = function () {
     this.sync();
   };
 
-  Preview.prototype.componentWillUnmount = function () {
-    window.removeEventListener('message', this.onMessage);
-    document.removeEventListener('focusin', this.onFocus, true);
-    document.removeEventListener('input', this.onInput, true);
-    document.removeEventListener('change', this.onInput, true);
+  HomepagePreview.prototype.componentWillUnmount = function () {
+    document.removeEventListener("focusin", this.onFocus, true);
+    document.removeEventListener("input", this.onInput, true);
+    document.removeEventListener("change", this.onInput, true);
+
+    if (this.previewWindow) {
+      this.previewWindow.removeEventListener(
+        "message",
+        this.onMessage
+      );
+    }
+
+    this.previewWindow = null;
+    this.frame = null;
+    this.ready = false;
   };
 
-  Preview.prototype.onMessage = function (event) {
-    if (
-      !this.frame ||
-      event.source !== this.frame.contentWindow ||
-      event.origin !== location.origin
-    ) return;
+  HomepagePreview.prototype.onLoad = function () {
+    // The homepage bridge is loaded before the iframe load event.
+    this.ready = true;
+    this.sync();
+  };
+
+  HomepagePreview.prototype.onMessage = function (event) {
+    if (!this.frame || !this.frame.contentWindow) return;
+
+    if (event.source !== this.frame.contentWindow) return;
+    if (event.origin !== location.origin) return;
+
+    var message = event.data;
 
     if (
-      event.data &&
-      event.data.source === 'tetraedar-preview' &&
-      event.data.type === 'ready'
+      message &&
+      message.source === "tetraedar-preview" &&
+      message.type === "ready"
     ) {
       this.ready = true;
       this.sync();
     }
   };
 
-  Preview.prototype.values = function () {
+  HomepagePreview.prototype.values = function () {
     var entry = this.props.entry;
 
-    return plain(
-      entry && typeof entry.get === 'function'
-        ? entry.get('data')
-        : {}
-    );
+    if (!entry || typeof entry.get !== "function") {
+      return {};
+    }
+
+    return toPlain(entry.get("data"));
   };
 
-  Preview.prototype.post = function (type, payload) {
-    if (!this.ready || !this.frame || !this.frame.contentWindow) return;
+  HomepagePreview.prototype.post = function (type, payload) {
+    if (!this.ready || !this.frame) return;
+    if (!this.frame.contentWindow) return;
 
     this.frame.contentWindow.postMessage(
       Object.assign(
-        { source: 'tetraedar-cms', type: type },
+        {
+          source: "tetraedar-cms",
+          type: type
+        },
         payload || {}
       ),
       location.origin
     );
   };
 
-  Preview.prototype.sync = function () {
-    this.post('update', { values: this.values() });
+  HomepagePreview.prototype.sync = function () {
+    this.post("update", {
+      values: this.values()
+    });
 
-    if (this.field) {
-      this.post('focus', { field: this.field });
+    if (this.activeField) {
+      this.post("focus", {
+        field: this.activeField
+      });
     }
   };
 
-  Preview.prototype.fieldFor = function (input) {
+  HomepagePreview.prototype.fieldFor = function (target) {
+    if (!target || !target.closest) return null;
+
     if (
-      !input ||
-      !input.closest ||
-      !input.closest('input, textarea, select, [contenteditable="true"]')
-    ) return null;
+      !target.closest(
+        'input, textarea, select, [contenteditable="true"]'
+      )
+    ) {
+      return null;
+    }
 
-    var holder = input.closest('[data-field-name]');
+    var holder = target.closest("[data-field-name]");
 
-    if (holder) return holder.getAttribute('data-field-name');
+    if (holder) {
+      var fieldName = holder.getAttribute("data-field-name");
 
-    var label = input.closest('label');
+      if (fieldName) return fieldName;
+    }
 
-    var name = [
-      input.name,
-      input.id,
-      label && label.getAttribute('for')
-    ].filter(Boolean).join(' ').toLowerCase();
+    var label = target.closest("label");
 
-    var fields = Object.keys(this.values()).sort(function (a, b) {
+    var identifier = [
+      target.name,
+      target.id,
+      label && label.getAttribute("for")
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+
+    var keys = Object.keys(this.values()).sort(function (a, b) {
       return b.length - a.length;
     });
 
-    for (var i = 0; i < fields.length; i++) {
-      if (name.indexOf(fields[i].toLowerCase()) !== -1) {
-        return fields[i];
+    for (var i = 0; i < keys.length; i++) {
+      if (identifier.indexOf(keys[i].toLowerCase()) !== -1) {
+        return keys[i];
       }
     }
 
     return null;
   };
 
-  Preview.prototype.onFocus = function (event) {
+  HomepagePreview.prototype.onFocus = function (event) {
     var field = this.fieldFor(event.target);
+
     if (!field) return;
 
-    this.field = field;
-    this.post('focus', { field: field });
+    this.activeField = field;
+
+    this.post("focus", {
+      field: field
+    });
   };
 
-  Preview.prototype.onInput = function (event) {
+  HomepagePreview.prototype.onInput = function (event) {
     var field = this.fieldFor(event.target);
+
     if (!field) return;
 
-    this.field = field;
+    this.activeField = field;
 
     var target = event.target;
-    var self = this;
 
-    // Show typing immediately, then synchronize Decap's draft state.
+    // Immediately preview typed values without waiting for Decap
+    // to finish updating its internal draft.
     if (
-      target.type !== 'file' &&
-      target.type !== 'checkbox' &&
-      field !== 'partners'
+      target.type !== "file" &&
+      target.type !== "checkbox" &&
+      field !== "partners"
     ) {
-      var next = this.values();
-      next[field] = target.value;
+      var values = this.values();
 
-      this.post('update', { values: next });
+      values[field] = target.value;
+
+      this.post("update", {
+        values: values
+      });
     }
 
+    this.post("focus", {
+      field: field
+    });
+
+    var self = this;
+
+    // Follow up with the actual Decap draft.
     Promise.resolve().then(function () {
       self.sync();
     });
   };
 
-  Preview.prototype.render = function () {
-    return node('div', {
+  HomepagePreview.prototype.render = function () {
+    return element("div", {
       style: {
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-        minHeight: '78vh',
-        background: '#f4f5f7'
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        minHeight: "78vh",
+        background: "#f4f5f7"
       },
       children: [
-        node('div', {
+        element("div", {
           style: {
-            background: '#fff',
-            padding: '10px 14px',
-            borderBottom: '1px solid #ddd',
-            fontSize: '12px',
-            color: '#334155'
+            padding: "10px 14px",
+            background: "#ffffff",
+            borderBottom: "1px solid #dddddd",
+            fontSize: "12px",
+            color: "#334155"
           },
-          children: 'Начална страница - промените се виждат тук преди публикуване'
+          children:
+            "Начална страница - преглед на промените преди публикуване"
         }),
-        node('iframe', {
+
+        element("iframe", {
           ref: this.attach,
-          title: 'Начална страница - преглед на живо',
-          src: '/?cms_preview=1',
+          onLoad: this.onLoad,
+          title: "Начална страница - преглед на живо",
+          src: "/?cms_preview=1",
           style: {
-            display: 'block',
-            width: '100%',
-            flex: '1 1 auto',
-            minHeight: '74vh',
+            display: "block",
+            width: "100%",
+            flex: "1 1 auto",
+            minHeight: "74vh",
             border: 0,
-            background: 'white'
+            background: "#ffffff"
           }
         })
       ]
     });
   };
 
-  var tries = 0;
+  var attempts = 0;
 
   function register() {
     if (
       window.CMS &&
-      typeof window.CMS.registerPreviewTemplate === 'function'
+      typeof window.CMS.registerPreviewTemplate === "function"
     ) {
-      window.CMS.registerPreviewTemplate('homepage', Preview);
-    } else if (++tries < 300) {
+      window.CMS.registerPreviewTemplate(
+        "homepage",
+        HomepagePreview
+      );
+
+      return;
+    }
+
+    if (++attempts < 300) {
       setTimeout(register, 100);
     } else {
-      console.error('TETRAEDAR: Decap CMS preview registration failed');
+      console.error(
+        "TETRAEDAR: Homepage preview registration failed."
+      );
     }
   }
 
