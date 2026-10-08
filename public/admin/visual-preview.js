@@ -1,9 +1,8 @@
 
-/* TETRAEDAR - Decap live homepage preview */
+/* TETRAEDAR - Direct live homepage preview for Decap CMS */
 (function () {
   "use strict";
 
-  // Use Decap's React runtime. Do not load another copy of React.
   var ELEMENT = Symbol.for("react.transitional.element");
 
   function element(type, props) {
@@ -16,176 +15,161 @@
     };
   }
 
-  function toPlain(value) {
+  function plain(value) {
     if (value && typeof value.toJS === "function") {
       return value.toJS();
     }
-
     return value && typeof value === "object" ? value : {};
   }
 
   function HomepagePreview(props) {
     this.props = props;
     this.frame = null;
-    this.previewWindow = null;
-    this.ready = false;
+    this.timer = null;
     this.activeField = null;
-
-    this.attach = this.attach.bind(this);
+    this.lastValues = {};
     this.onLoad = this.onLoad.bind(this);
-    this.onMessage = this.onMessage.bind(this);
-    this.onFocus = this.onFocus.bind(this);
+    this.attach = this.attach.bind(this);
     this.onInput = this.onInput.bind(this);
+    this.onFocus = this.onFocus.bind(this);
   }
 
   HomepagePreview.prototype.isReactComponent = {};
 
   HomepagePreview.prototype.attach = function (frame) {
-    if (this.frame === frame) return;
-
-    if (this.previewWindow) {
-      this.previewWindow.removeEventListener(
-        "message",
-        this.onMessage
-      );
-    }
-
     this.frame = frame;
-    this.ready = false;
-    this.previewWindow = frame
-      ? frame.ownerDocument.defaultView
-      : null;
-
-    // Decap renders preview components in a separate iframe.
-    // Listen in THAT window, not the main admin window.
-    if (this.previewWindow) {
-      this.previewWindow.addEventListener(
-        "message",
-        this.onMessage
-      );
-    }
-  };
-
-  HomepagePreview.prototype.componentDidMount = function () {
-    document.addEventListener("focusin", this.onFocus, true);
-    document.addEventListener("input", this.onInput, true);
-    document.addEventListener("change", this.onInput, true);
-
-    this.sync();
-  };
-
-  HomepagePreview.prototype.componentDidUpdate = function () {
-    this.sync();
-  };
-
-  HomepagePreview.prototype.componentWillUnmount = function () {
-    document.removeEventListener("focusin", this.onFocus, true);
-    document.removeEventListener("input", this.onInput, true);
-    document.removeEventListener("change", this.onInput, true);
-
-    if (this.previewWindow) {
-      this.previewWindow.removeEventListener(
-        "message",
-        this.onMessage
-      );
-    }
-
-    this.previewWindow = null;
-    this.frame = null;
-    this.ready = false;
-  };
-
-  HomepagePreview.prototype.onLoad = function () {
-    // The homepage bridge is loaded before the iframe load event.
-    this.ready = true;
-    this.sync();
-  };
-
-  HomepagePreview.prototype.onMessage = function (event) {
-    if (!this.frame || !this.frame.contentWindow) return;
-
-    if (event.source !== this.frame.contentWindow) return;
-    if (event.origin !== location.origin) return;
-
-    var message = event.data;
-
-    if (
-      message &&
-      message.source === "tetraedar-preview" &&
-      message.type === "ready"
-    ) {
-      this.ready = true;
-      this.sync();
-    }
   };
 
   HomepagePreview.prototype.values = function () {
     var entry = this.props.entry;
+    if (!entry || typeof entry.get !== "function") return {};
+    return plain(entry.get("data"));
+  };
 
-    if (!entry || typeof entry.get !== "function") {
-      return {};
+  HomepagePreview.prototype.document = function () {
+    try {
+      return this.frame && this.frame.contentDocument;
+    } catch (error) {
+      return null;
     }
-
-    return toPlain(entry.get("data"));
   };
 
-  HomepagePreview.prototype.post = function (type, payload) {
-    if (!this.ready || !this.frame) return;
-    if (!this.frame.contentWindow) return;
+  HomepagePreview.prototype.targets = function (field) {
+    var doc = this.document();
+    if (!doc) return [];
 
-    this.frame.contentWindow.postMessage(
-      Object.assign(
-        {
-          source: "tetraedar-cms",
-          type: type
-        },
-        payload || {}
-      ),
-      location.origin
-    );
+    return Array.from(doc.querySelectorAll("[data-cms-field]"))
+      .filter(function (node) {
+        return node.getAttribute("data-cms-field") === field;
+      });
   };
 
-  HomepagePreview.prototype.sync = function () {
-    this.post("update", {
-      values: this.values()
+  HomepagePreview.prototype.apply = function (values) {
+    var self = this;
+    var doc = this.document();
+
+    if (!doc || !doc.querySelector("[data-cms-field]")) return;
+
+    Object.keys(values).forEach(function (key) {
+      var value = values[key];
+
+      if (value == null || typeof value === "object") return;
+
+      if (key === "heroBackground") {
+        self.targets(key).forEach(function (node) {
+          if (value) {
+            node.style.backgroundImage =
+              "url(" + JSON.stringify(String(value)) + ")";
+          }
+        });
+        return;
+      }
+
+      var links = {
+        primaryLink: "primaryButton",
+        secondaryLink: "secondaryButton",
+        contactLink: "contactButton"
+      };
+
+      if (links[key]) {
+        self.targets(links[key]).forEach(function (node) {
+          var anchor = node.closest("a");
+          if (anchor) anchor.setAttribute("href", String(value));
+        });
+        return;
+      }
+
+      self.targets(key).forEach(function (node) {
+        var text = String(value);
+
+        if (node.textContent !== text) {
+          node.textContent = text;
+        }
+
+        if (key === "heroTitle") {
+          node.style.whiteSpace = "pre-line";
+        }
+      });
+    });
+  };
+
+  HomepagePreview.prototype.highlight = function (field) {
+    var doc = this.document();
+    if (!doc) return;
+
+    doc.querySelectorAll("[data-cms-field]").forEach(function (node) {
+      node.style.outline = "";
+      node.style.outlineOffset = "";
     });
 
-    if (this.activeField) {
-      this.post("focus", {
-        field: this.activeField
+    if (!field) return;
+
+    var targets = this.targets(field);
+
+    targets.forEach(function (node) {
+      node.style.outline = "3px solid #3b82f6";
+      node.style.outlineOffset = "4px";
+    });
+
+    var visible = targets.find(function (node) {
+      var rect = node.getBoundingClientRect();
+      return rect.width > 0 && rect.height > 0;
+    });
+
+    if (visible) {
+      visible.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
       });
     }
   };
 
-  HomepagePreview.prototype.fieldFor = function (target) {
-    if (!target || !target.closest) return null;
+  HomepagePreview.prototype.sync = function () {
+    var values = this.values();
 
-    if (
-      !target.closest(
-        'input, textarea, select, [contenteditable="true"]'
-      )
-    ) {
-      return null;
-    }
+    this.lastValues = values;
+    this.apply(values);
+  };
+
+  HomepagePreview.prototype.onLoad = function () {
+    this.sync();
+    this.highlight(this.activeField);
+  };
+
+  HomepagePreview.prototype.findField = function (target) {
+    if (!target || !target.closest) return null;
 
     var holder = target.closest("[data-field-name]");
 
     if (holder) {
-      var fieldName = holder.getAttribute("data-field-name");
-
-      if (fieldName) return fieldName;
+      var name = holder.getAttribute("data-field-name");
+      if (name) return name;
     }
-
-    var label = target.closest("label");
 
     var identifier = [
       target.name,
-      target.id,
-      label && label.getAttribute("for")
-    ]
-      .filter(Boolean)
-      .join(" ")
-      .toLowerCase();
+      target.id
+    ].filter(Boolean).join(" ").toLowerCase();
 
     var keys = Object.keys(this.values()).sort(function (a, b) {
       return b.length - a.length;
@@ -201,88 +185,118 @@
   };
 
   HomepagePreview.prototype.onFocus = function (event) {
-    var field = this.fieldFor(event.target);
-
+    var field = this.findField(event.target);
     if (!field) return;
 
     this.activeField = field;
-
-    this.post("focus", {
-      field: field
-    });
+    this.highlight(field);
   };
 
   HomepagePreview.prototype.onInput = function (event) {
-    var field = this.fieldFor(event.target);
+    var field = this.findField(event.target);
 
-    if (!field) return;
+    if (field) {
+      this.activeField = field;
 
-    this.activeField = field;
+      var values = Object.assign({}, this.values());
 
-    var target = event.target;
+      if (
+        event.target &&
+        typeof event.target.value === "string" &&
+        event.target.type !== "file"
+      ) {
+        values[field] = event.target.value;
+      }
 
-    // Immediately preview typed values without waiting for Decap
-    // to finish updating its internal draft.
-    if (
-      target.type !== "file" &&
-      target.type !== "checkbox" &&
-      field !== "partners"
-    ) {
-      var values = this.values();
-
-      values[field] = target.value;
-
-      this.post("update", {
-        values: values
-      });
+      this.apply(values);
+      this.highlight(field);
     }
 
-    this.post("focus", {
-      field: field
-    });
+    var self = this;
+    setTimeout(function () {
+      self.sync();
+    }, 150);
+  };
 
+  HomepagePreview.prototype.componentDidMount = function () {
     var self = this;
 
-    // Follow up with the actual Decap draft.
-    Promise.resolve().then(function () {
+    // Decap's editor is in the outer admin document.
+    window.top.document.addEventListener(
+      "focusin", this.onFocus, true
+    );
+
+    window.top.document.addEventListener(
+      "input", this.onInput, true
+    );
+
+    window.top.document.addEventListener(
+      "change", this.onInput, true
+    );
+
+    // Keep the rendered homepage synchronized with Decap's draft.
+    this.timer = setInterval(function () {
       self.sync();
-    });
+    }, 300);
+
+    this.sync();
+  };
+
+  HomepagePreview.prototype.componentDidUpdate = function () {
+    this.sync();
+  };
+
+  HomepagePreview.prototype.componentWillUnmount = function () {
+    if (this.timer) clearInterval(this.timer);
+
+    try {
+      window.top.document.removeEventListener(
+        "focusin", this.onFocus, true
+      );
+
+      window.top.document.removeEventListener(
+        "input", this.onInput, true
+      );
+
+      window.top.document.removeEventListener(
+        "change", this.onInput, true
+      );
+    } catch (error) {
+      // The editor can still be closed safely.
+    }
   };
 
   HomepagePreview.prototype.render = function () {
     return element("div", {
       style: {
+        height: "100%",
+        minHeight: "80vh",
         display: "flex",
         flexDirection: "column",
-        height: "100%",
-        minHeight: "78vh",
-        background: "#f4f5f7"
+        background: "#f5f5f5"
       },
       children: [
         element("div", {
           style: {
             padding: "10px 14px",
-            background: "#ffffff",
-            borderBottom: "1px solid #dddddd",
             fontSize: "12px",
-            color: "#334155"
+            background: "#fff",
+            borderBottom: "1px solid #ddd"
           },
           children:
-            "Начална страница - преглед на промените преди публикуване"
+            "Начална страница - преглед преди публикуване"
         }),
-
         element("iframe", {
           ref: this.attach,
           onLoad: this.onLoad,
           title: "Начална страница - преглед на живо",
           src: "/?cms_preview=1",
           style: {
-            display: "block",
             width: "100%",
             flex: "1 1 auto",
-            minHeight: "74vh",
+            minHeight: "75vh",
             border: 0,
-            background: "#ffffff"
+            background: "#fff"
           }
         })
       ]
@@ -300,16 +314,11 @@
         "homepage",
         HomepagePreview
       );
-
       return;
     }
 
     if (++attempts < 300) {
       setTimeout(register, 100);
-    } else {
-      console.error(
-        "TETRAEDAR: Homepage preview registration failed."
-      );
     }
   }
 
