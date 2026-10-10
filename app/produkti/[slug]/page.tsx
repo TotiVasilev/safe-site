@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import ProductGallery from "@/components/ui/ProductGallery";\nimport ModelSelector from "@/components/ui/ModelSelector";
+import ProductGallery from "@/components/ui/ProductGallery";
+import ModelSelector from "@/components/ui/ModelSelector";
 import { getAllProducts } from "@/data/cms-products";
 
 type ProductPageProps = {
