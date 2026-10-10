@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import ProductGallery from "@/components/ui/ProductGallery";
-import ProductDescription from "@/components/ui/ProductDescription";
+import ProductGallery from "@/components/ui/ProductGallery";\nimport ModelSelector from "@/components/ui/ModelSelector";
 import { getAllProducts } from "@/data/cms-products";
 
 type ProductPageProps = {
@@ -9,13 +8,6 @@ type ProductPageProps = {
     slug: string;
   }>;
 };
-
-function createSlug(value: string) {
-  return value
-    .toLowerCase()
-    .trim()
-    .replace(/\\s+/g, "-");
-}
 
 export function generateStaticParams() {
   return getAllProducts().map((product) => ({
@@ -92,7 +84,7 @@ export default async function ProductPage({
             </h1>
 
             <p className="mt-7 max-w-xl whitespace-pre-line text-lg leading-8 text-black/60">
-              <ProductDescription description={product.description} attachments={product.attachments} />
+              {product.description}
             </p>
 
             <div className="mt-10 flex flex-wrap gap-3">
@@ -108,37 +100,7 @@ export default async function ProductPage({
         </section>
 
         {models.length > 0 && (
-          <section className="mt-32">
-            <div className="border-b border-black/10 pb-6">
-              <p className="text-xs uppercase tracking-[0.3em] text-black/40">
-                Модели
-              </p>
-              <h2 className="mt-3 text-3xl font-medium tracking-tight sm:text-4xl">
-                Налични модели
-              </h2>
-            </div>
-
-            <div className="mt-8 overflow-hidden rounded-2xl border border-black/10">
-              {models.map((model, index) => (
-                <Link
-                  key={model.name}
-                  href={`/produkti/${product.slug}/${createSlug(model.name)}`}
-                  className="group flex items-center justify-between border-b border-black/10 px-6 py-5 transition-colors last:border-b-0 hover:bg-black/[0.02]"
-                >
-                  <div className="flex items-center gap-5">
-                    <span className="text-xs text-black/30">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <span className="font-medium">{model.name}</span>
-                  </div>
-
-                  <span className="text-sm text-black/30 transition-transform duration-300 group-hover:translate-x-1">
-                    →
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </section>
+          <ModelSelector models={models} drawing={product.modelDrawing} productName={product.name} />
         )}
 
         <section className="mt-32 rounded-3xl bg-black px-8 py-16 text-white sm:px-12 lg:px-16">

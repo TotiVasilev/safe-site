@@ -106,24 +106,6 @@ collections:
   - label: Описание
     name: description
     widget: text
-  - label: Кликаеми думи и прикачени файлове
-    name: attachments
-    widget: list
-    required: false
-    collapsed: true
-    summary: '{{fields.phrase}}'
-    hint: Добавете дума или точен откъс от описанието и прикачете изображение или PDF. Работи и в каталога, и в страницата на продукта.
-    fields:
-    - label: Дума или фраза от описанието
-      name: phrase
-      widget: string
-      hint: Напишете точно текста, който трябва да стане кликаем (включително главни/малки букви).
-    - label: Изображение или PDF файл
-      name: file
-      widget: file
-      media_folder: /public/products/uploads
-      public_folder: /products/uploads
-      hint: Изберете или качете PDF или изображение.
   - label: Основна снимка
     name: image
     widget: image
@@ -136,6 +118,10 @@ collections:
       label: Снимка
       name: image
       widget: image
+  - label: Обща техническа схема за моделите (H, B, L)
+    name: modelDrawing
+    widget: image
+    required: false
   - label: Модели и технически характеристики
     name: models
     widget: list
@@ -144,12 +130,28 @@ collections:
     - label: Име на модела
       name: name
       widget: string
-    - label: Външни размери
-      name: dimensions
+    - label: Външна височина (H), мм
+      name: height
       widget: string
       required: false
-    - label: Вътрешни размери
-      name: internalDimensions
+    - label: Външна ширина (B), мм
+      name: width
+      widget: string
+      required: false
+    - label: Външна дълбочина (L), мм
+      name: depth
+      widget: string
+      required: false
+    - label: Вътрешна височина (H₁), мм
+      name: innerHeight
+      widget: string
+      required: false
+    - label: Вътрешна ширина (B₁), мм
+      name: innerWidth
+      widget: string
+      required: false
+    - label: Вътрешна дълбочина (L₁), мм
+      name: innerDepth
       widget: string
       required: false
     - label: Тегло

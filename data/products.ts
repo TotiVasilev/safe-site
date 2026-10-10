@@ -3,6 +3,12 @@ export type ProductModel = {
   name: string;
 
   dimensions?: string;
+  height?: string;
+  width?: string;
+  depth?: string;
+  innerHeight?: string;
+  innerWidth?: string;
+  innerDepth?: string;
 
   internalDimensions?: string;
 
@@ -16,19 +22,14 @@ export type ProductModel = {
 
 
 
-export type ProductAttachment = {
-  phrase: string;
-  file: string;
-};
-
 export type ProductFamily = {
   id: string;
   name: string;
   slug: string;
   description: string;
-  attachments?: ProductAttachment[];
   image?: string;
   cardLabel?: string;
+  modelDrawing?: string;
   images?: string[];
   models: ProductModel[];
 };

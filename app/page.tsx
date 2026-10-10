@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Script from "next/script";
 import Partners from "@/components/ui/Partners";
 import Reveal from "@/components/ui/Reveal";
 import ProductGrid from "@/components/ui/ProductGrid";
@@ -10,7 +11,7 @@ export default function Home() {
   const home = getHomepage();
   return (
     <main className="overflow-hidden bg-white text-black">
-      <script src="/admin/homepage-bridge.js" defer />
+      <Script src="/admin/homepage-bridge.js" strategy="afterInteractive" />
       {/* =========================================================
           MOBILE HOMEPAGE
           Visible below 1024px
