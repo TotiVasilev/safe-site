@@ -32,6 +32,7 @@ export type ProductFamily = {
   name: string;
   slug: string;
   description: string;
+  catalogDescription?: string;
   attachments?: ProductAttachment[];
   image?: string;
   cardLabel?: string;

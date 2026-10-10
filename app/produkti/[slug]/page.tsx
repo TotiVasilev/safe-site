@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ProductGallery from "@/components/ui/ProductGallery";
+import ProductDescription from "@/components/ui/ProductDescription";
 import ModelSelector from "@/components/ui/ModelSelector";
 import { getAllProducts } from "@/data/cms-products";
 
@@ -85,7 +86,7 @@ export default async function ProductPage({
             </h1>
 
             <p className="mt-7 max-w-xl whitespace-pre-line text-lg leading-8 text-black/60">
-              {product.description}
+              <ProductDescription description={product.description} attachments={product.attachments} />
             </p>
 
             <div className="mt-10 flex flex-wrap gap-3">

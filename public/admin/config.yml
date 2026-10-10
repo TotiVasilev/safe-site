@@ -103,7 +103,12 @@ collections:
     name: cardLabel
     widget: string
     required: false
-  - label: Описание
+  - label: Кратко описание за каталога
+    name: catalogDescription
+    widget: text
+    required: false
+    hint: Показва се в малките продуктови карти. Ако е празно, използва се основното описание.
+  - label: Подробно описание за страницата на продукта
     name: description
     widget: text
   - label: Кликаеми думи и прикачени файлове
@@ -112,7 +117,7 @@ collections:
     required: false
     collapsed: true
     summary: '{{fields.phrase}}'
-    hint: Добавете дума или точен откъс от описанието и прикачете изображение или PDF. Работи и в каталога, и в страницата на продукта.
+    hint: Една обща настройка за двете описания. Думата става кликаема само там, където присъства, и може да добавяте много различни фрази и файлове.
     fields:
     - label: Дума или фраза от описанието
       name: phrase

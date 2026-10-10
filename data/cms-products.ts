@@ -21,6 +21,10 @@ function text(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
 }
 
+function measurement(value: unknown): string {
+  return typeof value === "number" && Number.isFinite(value) ? String(value) : text(value);
+}
+
 function number(value: unknown): number {
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : 9999;
@@ -50,17 +54,17 @@ function models(value: unknown): ProductModel[] {
     if (!name) return [];
     return [{
       name,
-      dimensions: text(item.dimensions) || undefined,
-      height: text(item.height) || undefined,
-      width: text(item.width) || undefined,
-      depth: text(item.depth) || undefined,
-      innerHeight: text(item.innerHeight) || undefined,
-      innerWidth: text(item.innerWidth) || undefined,
-      innerDepth: text(item.innerDepth) || undefined,
-      internalDimensions: text(item.internalDimensions) || undefined,
-      weight: text(item.weight) || undefined,
-      volume: text(item.volume) || undefined,
-      resistance: text(item.resistance) || undefined,
+      dimensions: measurement(item.dimensions) || undefined,
+      height: measurement(item.height) || undefined,
+      width: measurement(item.width) || undefined,
+      depth: measurement(item.depth) || undefined,
+      innerHeight: measurement(item.innerHeight) || undefined,
+      innerWidth: measurement(item.innerWidth) || undefined,
+      innerDepth: measurement(item.innerDepth) || undefined,
+      internalDimensions: measurement(item.internalDimensions) || undefined,
+      weight: measurement(item.weight) || undefined,
+      volume: measurement(item.volume) || undefined,
+      resistance: measurement(item.resistance) || undefined,
     }];
   });
 }
@@ -71,6 +75,7 @@ function product(entry: Entry): ProductFamily {
     slug: entry._id,
     name: text(entry.title) || entry._id,
     description: text(entry.description),
+    catalogDescription: text(entry.catalogDescription) || undefined,
     attachments: Array.isArray(entry.attachments)
       ? entry.attachments.flatMap((raw) => {
           if (!raw || typeof raw !== "object") return [];

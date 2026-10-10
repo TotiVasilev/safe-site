@@ -1,7 +1,7 @@
 "use client";
-import Image from "next/image";
 import ProductDescription from "@/components/ui/ProductDescription";
-import { useRouter } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import {
   AnimatePresence,
@@ -25,26 +25,6 @@ export default function ProductsCatalog({
     useState<string | null>(null);
   const [floatingMenu, setFloatingMenu] =
     useState(false);
-  const [advancedMenu, setAdvancedMenu] = useState(true);
-  useEffect(() => {
-    try {
-      const saved = window.localStorage.getItem("tetraedar:advanced-menu");
-      if (saved !== null) setAdvancedMenu(saved === "true");
-    } catch {
-      // Keep the default when storage is unavailable.
-    }
-  }, []);
-  function toggleAdvancedMenu() {
-    setAdvancedMenu((enabled) => {
-      const next = !enabled;
-      try {
-        window.localStorage.setItem("tetraedar:advanced-menu", String(next));
-      } catch {
-        // The toggle still works for this visit.
-      }
-      return next;
-    });
-  }
   const [menuHovered, setMenuHovered] =
     useState(false);
   const [mobileStickyMenu, setMobileStickyMenu] =
@@ -97,13 +77,16 @@ export default function ProductsCatalog({
     };
   }, [mobileMenuOpen]);
   function getDocumentTop(element: HTMLElement) {
-    return element.getBoundingClientRect().top + window.scrollY;
+    let top = 0;
+    let current: HTMLElement | null = element;
+    while (current) {
+      top += current.offsetTop;
+      current = current.offsetParent as HTMLElement | null;
+    }
+    return top;
   }
   useEffect(() => {
     const rawHash = window.location.hash;
-    const historyMarker = sessionStorage.getItem("tetraedar:history-navigation");
-    sessionStorage.removeItem("tetraedar:history-navigation");
-    if (historyMarker === window.location.pathname + rawHash) return;
     if (!rawHash) return;
     const elementId = decodeURIComponent(
       rawHash.slice(1)
@@ -311,23 +294,10 @@ export default function ProductsCatalog({
     const top =
       getDocumentTop(element) -
       headerOffset;
-    const target = Math.max(0, top);
-    window.scrollTo({ top: target, behavior: "auto" });
-    // The floating navigation and Motion layout can settle after the click.
-    // Re-measure the SAME target, instead of reusing a stale pixel offset.
-    const alignToTarget = () => {
-      const updated = document.getElementById(elementId);
-      if (updated) {
-        window.scrollTo({
-          top: Math.max(0, getDocumentTop(updated) - headerOffset),
-          behavior: "auto",
-        });
-      }
-    };
-    window.requestAnimationFrame(() => {
-      window.requestAnimationFrame(alignToTarget);
+    window.scrollTo({
+      top: Math.max(0, top),
+      behavior: "auto",
     });
-    window.setTimeout(alignToTarget, 180);
   }
   function jumpToCategory(
     slug: string
@@ -387,30 +357,6 @@ export default function ProductsCatalog({
             Разгледайте нашите решения за
             сигурност, съхранение и защита.
           </p>
-          <div className="mt-7 flex items-center gap-3">
-            <button
-              type="button"
-              role="checkbox"
-              aria-checked={advancedMenu}
-              onClick={toggleAdvancedMenu}
-              className="inline-flex min-h-10 items-center gap-2 rounded-lg border border-black/15 bg-white px-3 py-2 text-sm font-medium text-black/70 transition-colors hover:border-[#3f7edb]/50 hover:text-[#3f7edb]"
-            >
-              <span
-                aria-hidden="true"
-                className={`flex h-4 w-4 items-center justify-center rounded border text-[11px] leading-none ${
-                  advancedMenu
-                    ? "border-[#3f7edb] bg-[#3f7edb] text-white"
-                    : "border-black/30 bg-white text-transparent"
-                }`}
-              >
-                ✓
-              </span>
-              Разширено меню
-            </button>
-            <span className="text-xs text-black/45">
-              {advancedMenu ? "Със свиване на каталога" : "Без свиване на каталога"}
-            </span>
-          </div>
         </motion.header>
         <div
           ref={navigationMarkerRef}
@@ -450,7 +396,11 @@ export default function ProductsCatalog({
                         category.id
                       }
                       type="button"
-                      onClick={() => jumpToCategory(category.slug)}
+                      onClick={() =>
+                        jumpToCategory(
+                          category.slug
+                        )
+                      }
                       className={`relative flex min-h-[44px] w-full items-center rounded-lg px-2 py-2 text-left text-[13px] leading-[1.25] transition-colors ${
                         active
                           ? "bg-[#3f7edb]/[0.07] font-medium text-[#3f7edb]"
@@ -483,7 +433,11 @@ export default function ProductsCatalog({
                         category.id
                       }
                       type="button"
-                      onClick={() => jumpToCategory(category.slug)}
+                      onClick={() =>
+                        jumpToCategory(
+                          category.slug
+                        )
+                      }
                       className={`relative shrink-0 whitespace-nowrap py-1 text-sm transition-colors duration-200 ${
                         active
                           ? "text-[#3f7edb]"
@@ -519,7 +473,7 @@ export default function ProductsCatalog({
         <motion.div
           animate={{
             paddingLeft:
-              floatingMenu && advancedMenu
+              floatingMenu
                 ? 150
                 : 0,
           }}
@@ -907,7 +861,7 @@ export default function ProductsCatalog({
             >
               <motion.div
                 animate={{
-                  width: advancedMenu && menuHovered
+                  width: menuHovered
                     ? 245
                     : 200,
                 }}
@@ -929,7 +883,7 @@ export default function ProductsCatalog({
                       category.slug;
                     const showSubcategories =
                       categoryActive ||
-                      (advancedMenu && menuHovered);
+                      menuHovered;
                     return (
                       <div
                         key={
@@ -1098,8 +1052,6 @@ function ProductCard({
     return () => window.clearInterval(timer);
   }, [hovered, galleryImages.length]);
 
-  const router = useRouter();
-  const productHref = `/produkti/${product.slug}`;
   const cardLabel = product.cardLabel;
 
   return (
@@ -1114,24 +1066,10 @@ function ProductCard({
         duration: 0.22,
         ease: [0.22, 1, 0.36, 1],
       }}
-      role="link"
-      tabIndex={0}
-      aria-label={`Виж ${product.name}`}
-      onClick={(event) => {
-        if ((event.target as HTMLElement).closest("a, button")) return;
-        router.push(productHref);
-      }}
-      onKeyDown={(event) => {
-        if (event.target !== event.currentTarget) return;
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          router.push(productHref);
-        }
-      }}
-      className="relative min-w-0 cursor-pointer overflow-hidden rounded-[18px] border border-black/10 bg-white shadow-[0_1px_0_rgba(0,0,0,0.02)] transition-shadow duration-300 hover:shadow-[0_16px_40px_rgba(0,0,0,0.08)] sm:rounded-2xl"
+      className="group relative min-w-0 overflow-hidden rounded-[18px] border border-black/10 bg-white shadow-[0_1px_0_rgba(0,0,0,0.02)] transition-shadow duration-300 hover:shadow-[0_16px_40px_rgba(0,0,0,0.08)] sm:rounded-2xl"
     >
-      <div className="group block h-full w-full text-left">
-
+      <div className="relative h-full w-full text-left">
+        <Link href={`/produkti/${product.slug}`} aria-label={`Виж ${product.name}`} className="absolute inset-0 z-10" />
         <div className="relative aspect-[4/3] overflow-hidden bg-neutral-100">
           {galleryImages.length > 0 ? (
             galleryImages.map((image, imageIndex) => (
@@ -1196,7 +1134,7 @@ function ProductCard({
           </h4>
 
           <p className="mt-3 hidden line-clamp-2 text-sm leading-6 text-black/50 sm:block">
-            <ProductDescription description={product.description} attachments={product.attachments} />
+            <ProductDescription description={product.catalogDescription || product.description} attachments={product.attachments} />
           </p>
 
           <div className="mt-4 border-t border-black/10 pt-3 sm:mt-6 sm:flex sm:items-center sm:justify-between sm:pt-4">
