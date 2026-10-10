@@ -81,6 +81,9 @@ export default function ProductsCatalog({
   }
   useEffect(() => {
     const rawHash = window.location.hash;
+    const historyMarker = sessionStorage.getItem("tetraedar:history-navigation");
+    sessionStorage.removeItem("tetraedar:history-navigation");
+    if (historyMarker === window.location.pathname + rawHash) return;
     if (!rawHash) return;
     const elementId = decodeURIComponent(
       rawHash.slice(1)
@@ -288,10 +291,23 @@ export default function ProductsCatalog({
     const top =
       getDocumentTop(element) -
       headerOffset;
-    window.scrollTo({
-      top: Math.max(0, top),
-      behavior: "auto",
+    const target = Math.max(0, top);
+    window.scrollTo({ top: target, behavior: "auto" });
+    // The floating navigation and Motion layout can settle after the click.
+    // Re-measure the SAME target, instead of reusing a stale pixel offset.
+    const alignToTarget = () => {
+      const updated = document.getElementById(elementId);
+      if (updated) {
+        window.scrollTo({
+          top: Math.max(0, getDocumentTop(updated) - headerOffset),
+          behavior: "auto",
+        });
+      }
+    };
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(alignToTarget);
     });
+    window.setTimeout(alignToTarget, 180);
   }
   function jumpToCategory(
     slug: string

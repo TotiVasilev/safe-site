@@ -14,18 +14,23 @@ export default function Header() {
   const [menuOpen, setMenuOpen] =
     useState(false);
 
-  /* =========================================================
-     DISABLE BROWSER AUTOMATIC SCROLL RESTORATION
-  ========================================================= */
-
+  // Let the browser restore the previous scroll position on Back/Forward.
   useEffect(() => {
-    if (
-      "scrollRestoration" in
-      window.history
-    ) {
-      window.history.scrollRestoration =
-        "manual";
-    }
+    const previous = window.history.scrollRestoration;
+    window.history.scrollRestoration = "auto";
+    const markHistoryNavigation = () => {
+      // The catalog consumes this marker to avoid overriding a restored
+      // position with its category hash on a Back/Forward navigation.
+      sessionStorage.setItem(
+        "tetraedar:history-navigation",
+        window.location.pathname + window.location.hash
+      );
+    };
+    window.addEventListener("popstate", markHistoryNavigation);
+    return () => {
+      window.removeEventListener("popstate", markHistoryNavigation);
+      window.history.scrollRestoration = previous;
+    };
   }, []);
 
   /* =========================================================
@@ -57,79 +62,10 @@ export default function Header() {
     };
   }, []);
 
-  /* =========================================================
-     ROUTE CHANGE SCROLL RESET
-  ========================================================= */
-
+  // Close the mobile menu on navigation without resetting page scroll.
+  // Next.js and the browser handle new navigations and history restoration.
   useEffect(() => {
     setMenuOpen(false);
-
-    /*
-    | Product category URLs need their hashes.
-    |
-    | Example:
-    | /produkti#category-trezorni-reshenia
-    */
-
-    if (window.location.hash) {
-      return;
-    }
-
-    function resetScroll() {
-      window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: "auto",
-      });
-    }
-
-    /*
-    | Immediate.
-    */
-
-    resetScroll();
-
-    /*
-    | Next browser paint.
-    */
-
-    const frame =
-      window.requestAnimationFrame(
-        resetScroll
-      );
-
-    /*
-    | Safari / Chrome can perform their own
-    | restoration slightly later.
-    |
-    | We correct after that as well.
-    */
-
-    const timer1 =
-      window.setTimeout(
-        resetScroll,
-        50
-      );
-
-    const timer2 =
-      window.setTimeout(
-        resetScroll,
-        180
-      );
-
-    return () => {
-      window.cancelAnimationFrame(
-        frame
-      );
-
-      window.clearTimeout(
-        timer1
-      );
-
-      window.clearTimeout(
-        timer2
-      );
-    };
   }, [pathname]);
 
   function closeMenu() {
