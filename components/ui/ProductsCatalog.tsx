@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import ProductDescription from "@/components/ui/ProductDescription";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -1065,12 +1066,10 @@ function ProductCard({
         duration: 0.22,
         ease: [0.22, 1, 0.36, 1],
       }}
-      className="min-w-0 overflow-hidden rounded-[18px] border border-black/10 bg-white shadow-[0_1px_0_rgba(0,0,0,0.02)] transition-shadow duration-300 hover:shadow-[0_16px_40px_rgba(0,0,0,0.08)] sm:rounded-2xl"
+      className="relative min-w-0 overflow-hidden rounded-[18px] border border-black/10 bg-white shadow-[0_1px_0_rgba(0,0,0,0.02)] transition-shadow duration-300 hover:shadow-[0_16px_40px_rgba(0,0,0,0.08)] sm:rounded-2xl"
     >
-      <Link
-        href={`/produkti/${product.slug}`}
-        className="group block h-full w-full text-left"
-      >
+      <div className="group block h-full w-full text-left">
+        <Link href={`/produkti/${product.slug}`} aria-label={`Виж ${product.name}`} className="absolute inset-0 z-0" />
         <div className="relative aspect-[4/3] overflow-hidden bg-neutral-100">
           {galleryImages.length > 0 ? (
             galleryImages.map((image, imageIndex) => (
@@ -1135,7 +1134,7 @@ function ProductCard({
           </h4>
 
           <p className="mt-3 hidden line-clamp-2 text-sm leading-6 text-black/50 sm:block">
-            {product.description}
+            <ProductDescription description={product.description} attachments={product.attachments} />
           </p>
 
           <div className="mt-4 border-t border-black/10 pt-3 sm:mt-6 sm:flex sm:items-center sm:justify-between sm:pt-4">
@@ -1152,7 +1151,7 @@ function ProductCard({
             </span>
           </div>
         </div>
-      </Link>
+      </div>
     </motion.div>
   );
 }

@@ -16,11 +16,17 @@ export type ProductModel = {
 
 
 
+export type ProductAttachment = {
+  phrase: string;
+  file: string;
+};
+
 export type ProductFamily = {
   id: string;
   name: string;
   slug: string;
   description: string;
+  attachments?: ProductAttachment[];
   image?: string;
   cardLabel?: string;
   images?: string[];

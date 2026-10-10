@@ -65,6 +65,15 @@ function product(entry: Entry): ProductFamily {
     slug: entry._id,
     name: text(entry.title) || entry._id,
     description: text(entry.description),
+    attachments: Array.isArray(entry.attachments)
+      ? entry.attachments.flatMap((raw) => {
+          if (!raw || typeof raw !== "object") return [];
+          const item = raw as Record<string, unknown>;
+          const phrase = text(item.phrase);
+          const file = text(item.file);
+          return phrase && file ? [{ phrase, file }] : [];
+        })
+      : [],
     image: text(entry.image) || undefined,
     cardLabel: text(entry.cardLabel) || undefined,
     images: Array.isArray(entry.images)
