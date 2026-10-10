@@ -9,7 +9,7 @@ description: |-
   Отговаря на наредба на БНБ №8121з-444 за сейфове.
 attachments:
   - phrase: БНБ №8121з-444
-    file: /products/uploads/logo.png
+    file: /products/uploads/tetraedarcatalog.pdf
 models:
   - name: A-801
   - name: A-802
