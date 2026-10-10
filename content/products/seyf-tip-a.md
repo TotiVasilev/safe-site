@@ -4,13 +4,25 @@ category: seyfove
 subcategory: svobodnostoyashti
 order: 10
 cardLabel: Степен IV по EN 1143-1
-description: |-
+catalogDescription: |-
   Висок клас сейф с IV степен на съпротивление по EN 1143-1.
   Отговаря на наредба на БНБ №8121з-444 за сейфове.
-attachments:
-  - phrase: БНБ №8121з-444
-    file: /products/uploads/employment-job-application-791x1024.png
+description: >-
+  Сейфовете Тип А стандартно се произвеждат с 2 механични ключови брави клас B.
+  Сейфът е изпитан и с изключение на А-802 има  сертификат за IV степен на
+  съпротивление по EN 1143-1. Допълнително заключване, цветове и защитни мерки
+  се предлагат според изискванията на клиента.
+
+
+  Отговаря на наредба на БНБ №8121з-444 за сейфове.
 image: /products/uploads/typea-removebg-preview.png
+images:
+  - /products/uploads/typea-2-.png
+  - /products/uploads/typea-3-.png
+  - /products/uploads/typea-4-.png
+  - /products/uploads/typea-5-.png
+  - /products/uploads/typea.png
+modelDrawing: /products/uploads/typearazmeri.png
 models:
   - name: A-802
     height: 550
@@ -61,11 +73,9 @@ models:
     innerDepth: 496
     weight: 1150 kg
 slug: seyf-tip-a
-images:
-  - /products/uploads/typea-2-.png
-  - /products/uploads/typea-3-.png
-  - /products/uploads/typea-4-.png
-  - /products/uploads/typea-5-.png
-  - /products/uploads/typea.png
-modelDrawing: /products/uploads/typearazmeri.png
+attachments:
+  - phrase: БНБ №8121з-444
+    file: /products/uploads/employment-job-application-791x1024.png
+  - phrase: механични
+    file: /products/uploads/tetraedarcatalog.pdf
 ---
