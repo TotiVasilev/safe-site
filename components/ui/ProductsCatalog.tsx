@@ -390,10 +390,7 @@ export default function ProductsCatalog({
                         category.id
                       }
                       type="button"
-                      onClick={() => {
-                        const slug = category.slug;
-                        window.requestAnimationFrame(() => jumpToCategory(slug));
-                      }}
+                      onClick={() => jumpToCategory(category.slug)}
                       className={`relative flex min-h-[44px] w-full items-center rounded-lg px-2 py-2 text-left text-[13px] leading-[1.25] transition-colors ${
                         active
                           ? "bg-[#3f7edb]/[0.07] font-medium text-[#3f7edb]"
@@ -426,10 +423,7 @@ export default function ProductsCatalog({
                         category.id
                       }
                       type="button"
-                      onClick={() => {
-                        const slug = category.slug;
-                        window.requestAnimationFrame(() => jumpToCategory(slug));
-                      }}
+                      onClick={() => jumpToCategory(category.slug)}
                       className={`relative shrink-0 whitespace-nowrap py-1 text-sm transition-colors duration-200 ${
                         active
                           ? "text-[#3f7edb]"
