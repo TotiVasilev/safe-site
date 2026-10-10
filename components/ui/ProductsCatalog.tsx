@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import ProductDescription from "@/components/ui/ProductDescription";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
   AnimatePresence,
@@ -77,13 +77,7 @@ export default function ProductsCatalog({
     };
   }, [mobileMenuOpen]);
   function getDocumentTop(element: HTMLElement) {
-    let top = 0;
-    let current: HTMLElement | null = element;
-    while (current) {
-      top += current.offsetTop;
-      current = current.offsetParent as HTMLElement | null;
-    }
-    return top;
+    return element.getBoundingClientRect().top + window.scrollY;
   }
   useEffect(() => {
     const rawHash = window.location.hash;
@@ -396,11 +390,10 @@ export default function ProductsCatalog({
                         category.id
                       }
                       type="button"
-                      onClick={() =>
-                        jumpToCategory(
-                          category.slug
-                        )
-                      }
+                      onClick={() => {
+                        const slug = category.slug;
+                        window.requestAnimationFrame(() => jumpToCategory(slug));
+                      }}
                       className={`relative flex min-h-[44px] w-full items-center rounded-lg px-2 py-2 text-left text-[13px] leading-[1.25] transition-colors ${
                         active
                           ? "bg-[#3f7edb]/[0.07] font-medium text-[#3f7edb]"
@@ -433,11 +426,10 @@ export default function ProductsCatalog({
                         category.id
                       }
                       type="button"
-                      onClick={() =>
-                        jumpToCategory(
-                          category.slug
-                        )
-                      }
+                      onClick={() => {
+                        const slug = category.slug;
+                        window.requestAnimationFrame(() => jumpToCategory(slug));
+                      }}
                       className={`relative shrink-0 whitespace-nowrap py-1 text-sm transition-colors duration-200 ${
                         active
                           ? "text-[#3f7edb]"
@@ -1052,6 +1044,8 @@ function ProductCard({
     return () => window.clearInterval(timer);
   }, [hovered, galleryImages.length]);
 
+  const router = useRouter();
+  const productHref = `/produkti/${product.slug}`;
   const cardLabel = product.cardLabel;
 
   return (
@@ -1066,10 +1060,24 @@ function ProductCard({
         duration: 0.22,
         ease: [0.22, 1, 0.36, 1],
       }}
-      className="relative min-w-0 overflow-hidden rounded-[18px] border border-black/10 bg-white shadow-[0_1px_0_rgba(0,0,0,0.02)] transition-shadow duration-300 hover:shadow-[0_16px_40px_rgba(0,0,0,0.08)] sm:rounded-2xl"
+      role="link"
+      tabIndex={0}
+      aria-label={`Виж ${product.name}`}
+      onClick={(event) => {
+        if ((event.target as HTMLElement).closest("a, button")) return;
+        router.push(productHref);
+      }}
+      onKeyDown={(event) => {
+        if (event.target !== event.currentTarget) return;
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          router.push(productHref);
+        }
+      }}
+      className="relative min-w-0 cursor-pointer overflow-hidden rounded-[18px] border border-black/10 bg-white shadow-[0_1px_0_rgba(0,0,0,0.02)] transition-shadow duration-300 hover:shadow-[0_16px_40px_rgba(0,0,0,0.08)] sm:rounded-2xl"
     >
       <div className="group block h-full w-full text-left">
-        <Link href={`/produkti/${product.slug}`} aria-label={`Виж ${product.name}`} className="absolute inset-0 z-0" />
+
         <div className="relative aspect-[4/3] overflow-hidden bg-neutral-100">
           {galleryImages.length > 0 ? (
             galleryImages.map((image, imageIndex) => (
