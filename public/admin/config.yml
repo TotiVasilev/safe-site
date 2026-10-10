@@ -106,6 +106,24 @@ collections:
   - label: Описание
     name: description
     widget: text
+  - label: Кликаеми думи и прикачени файлове
+    name: attachments
+    widget: list
+    required: false
+    collapsed: true
+    summary: '{{fields.phrase}}'
+    hint: Добавете дума или точен откъс от описанието и прикачете изображение или PDF. Работи и в каталога, и в страницата на продукта.
+    fields:
+    - label: Дума или фраза от описанието
+      name: phrase
+      widget: string
+      hint: Напишете точно текста, който трябва да стане кликаем (включително главни/малки букви).
+    - label: Изображение или PDF файл
+      name: file
+      widget: file
+      media_folder: /public/products/uploads
+      public_folder: /products/uploads
+      hint: Изберете или качете PDF или изображение.
   - label: Основна снимка
     name: image
     widget: image
