@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import ProductGallery from "@/components/ui/ProductGallery";
 import ProductDescription from "@/components/ui/ProductDescription";
 import ModelSelector from "@/components/ui/ModelSelector";
-import { getAllProducts } from "@/data/cms-products";
+import { getAllProducts, getProductCategories } from "@/data/cms-products";
 
 type ProductPageProps = {
   params: Promise<{
@@ -36,6 +36,9 @@ export default async function ProductPage({
   const parentSubcategory =
     product.subcategory?.name ?? "";
   const models = product.models ?? [];
+  const category = getProductCategories().find((item) => item.name === parentCategory);
+  const subcategory = category?.subcategories?.find((item) => item.name === parentSubcategory);
+
 
   return (
     <main className="min-h-screen bg-white px-6 py-28 lg:px-12">
@@ -52,14 +55,18 @@ export default async function ProductPage({
 
           {parentCategory && (
             <>
-              <span>{parentCategory}</span>
+              {category ? (
+                <Link href={`/produkti#category-${category.slug}`} className="transition-colors hover:text-blue-600 hover:underline">{parentCategory}</Link>
+              ) : <span>{parentCategory}</span>}
               <span>/</span>
             </>
           )}
 
           {parentSubcategory && (
             <>
-              <span>{parentSubcategory}</span>
+              {category && subcategory ? (
+                <Link href={`/produkti#subcategory-${category.slug}-${subcategory.id}`} className="transition-colors hover:text-blue-600 hover:underline">{parentSubcategory}</Link>
+              ) : <span>{parentSubcategory}</span>}
               <span>/</span>
             </>
           )}
@@ -97,6 +104,17 @@ export default async function ProductPage({
               <span className="rounded-full border border-black/10 px-4 py-2 text-sm">
                 Професионална сигурност
               </span>
+            </div>
+
+            <div className="mt-7">
+              <button
+                type="button"
+                title="Демонстрационен бутон — скоро ще бъде добавена форма за запитване"
+                className="inline-flex items-center gap-3 rounded-full bg-[#3f7edb] px-7 py-3.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#326bc1]"
+              >
+                Свържете се с нас <span aria-hidden="true">↗</span>
+              </button>
+              <p className="mt-2 text-xs text-black/40">Демонстрационен бутон</p>
             </div>
           </div>
         </section>
