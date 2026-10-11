@@ -25,7 +25,7 @@ export default function ProductDescription({ description, attachments = [] }: Pr
   return <>
     {parts.map((part, index) => part.file && isSafeFile(part.file) ? (
       <a key={index} href={part.file} target="_blank" rel="noopener noreferrer"
-        className="relative z-20 font-medium text-blue-600 underline decoration-blue-400/60 underline-offset-2 hover:text-blue-800"
+        className="relative z-20 font-medium text-blue-600 no-underline hover:text-blue-800"
         onClick={(event) => {
           event.stopPropagation();
           if (part.file && isImage(part.file)) { event.preventDefault(); setImage(part.file); }

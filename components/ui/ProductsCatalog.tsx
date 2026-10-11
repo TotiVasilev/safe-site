@@ -138,7 +138,7 @@ export default function ProductsCatalog({
     });
     timer = window.setTimeout(() => {
       correctHashPosition();
-    }, 180);
+    }, 450);
     return () => {
       window.cancelAnimationFrame(frame1);
       window.cancelAnimationFrame(frame2);
@@ -318,6 +318,19 @@ export default function ProductsCatalog({
       top: Math.max(0, top),
       behavior: "auto",
     });
+    // The advanced sidebar changes the catalog padding over 350ms.
+    // Correct again after that layout animation has settled, otherwise
+    // the selected category can land under the sticky header.
+    if (advancedMenu && !isMobile) {
+      window.setTimeout(() => {
+        const current = document.getElementById(elementId);
+        if (!current) return;
+        window.scrollTo({
+          top: Math.max(0, getDocumentTop(current) - headerOffset),
+          behavior: "auto",
+        });
+      }, 420);
+    }
   }
   function jumpToCategory(
     slug: string

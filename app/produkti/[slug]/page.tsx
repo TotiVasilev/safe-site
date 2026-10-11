@@ -56,7 +56,7 @@ export default async function ProductPage({
           {parentCategory && (
             <>
               {category ? (
-                <Link href={`/produkti#category-${category.slug}`} className="transition-colors hover:text-blue-600 hover:underline">{parentCategory}</Link>
+                <Link href={`/produkti#category-${category.slug}`} className="transition-colors hover:text-black">{parentCategory}</Link>
               ) : <span>{parentCategory}</span>}
               <span>/</span>
             </>
@@ -65,7 +65,7 @@ export default async function ProductPage({
           {parentSubcategory && (
             <>
               {category && subcategory ? (
-                <Link href={`/produkti#subcategory-${category.slug}-${subcategory.id}`} className="transition-colors hover:text-blue-600 hover:underline">{parentSubcategory}</Link>
+                <Link href={`/produkti#subcategory-${category.slug}-${subcategory.id}`} className="transition-colors hover:text-black">{parentSubcategory}</Link>
               ) : <span>{parentSubcategory}</span>}
               <span>/</span>
             </>
@@ -114,7 +114,6 @@ export default async function ProductPage({
               >
                 Свържете се с нас <span aria-hidden="true">↗</span>
               </button>
-              <p className="mt-2 text-xs text-black/40">Демонстрационен бутон</p>
             </div>
           </div>
         </section>
