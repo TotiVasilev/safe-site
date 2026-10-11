@@ -21,7 +21,10 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "TETRAEDAR",
-  icons: { icon: "/favicon.png" },
+  icons: {
+  icon: [{ url: "/favicon.png?v=2", type: "image/png" }],
+  shortcut: "/favicon.png?v=2",
+  },
   description:
     "Сейфове, трезорни решения и системи за сигурност.",
 };
