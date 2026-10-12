@@ -1,6 +1,6 @@
 ---
-title: Механична времева брава
-urlSlug: mehanichna-vremeva-brava
+title: Механични времеви брави
+urlSlug: mehanichni-vremevi-bravi
 category: bravi
 order: 30
 cardLabel: Модел STB 1600X
