@@ -65,13 +65,21 @@ collections:
   create: true
   delete: true
   identifier_field: title
-  slug: '{{slug}}'
+  slug: '{{fields.urlSlug}}'
   extension: md
   format: frontmatter
   fields:
   - label: Име на продукта
     name: title
     widget: string
+  - label: URL адрес (Slug)
+    name: urlSlug
+    widget: string
+    required: true
+    pattern:
+    - '^[a-z0-9]+(-[a-z0-9]+)*$'
+    - 'Използвайте само малки латински букви, цифри и тирета (например ogneuporen-sejf).'
+    hint: 'Задължително за нов продукт. Определя адреса /produkti/вашият-slug/. Изберете уникална стойност.'
   - label: Категория
     name: category
     widget: relation
