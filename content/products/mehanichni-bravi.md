@@ -8,5 +8,5 @@ description: Механичните брави за сейфове с двойн
   производители KABA, STUV, WITTKOPP, LEBTIG, SG са най-надеждното решение за
   продукти до Х степен на съпротивление по EN1143-1.
 lockCollection: false
-image: /products/uploads/mehanichni-bravi.jpg
+image: /products/uploads/mehanichni-bravi1.png
 ---
