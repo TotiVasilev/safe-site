@@ -431,7 +431,7 @@ export default function Home() {
               {/* LEFT */}
               <Reveal direction="fade" duration={1}>
                 <div className="relative z-20">
-                  <h1 data-cms-field="heroTitle" className="max-w-4xl text-[64px] font-medium leading-[0.94] tracking-[-0.045em]">
+                  <h1 data-cms-field="heroTitle" className="max-w-4xl text-[68px] font-medium leading-[0.94] tracking-[-0.045em]">
                     {home.heroTitle.split("\n").map((line, index) => (
                     <span key={index}>{index > 0 && <br />}{line}</span>
                   ))}

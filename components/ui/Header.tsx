@@ -148,7 +148,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
             : "bg-[#f5f5f4]/95 backdrop-blur-md"
         }`}
       >
-        <div className="relative z-30 mx-auto flex h-20 w-full max-w-[1040px] items-center justify-between gap-4 px-5 xl:gap-5 xl:px-5">
+        <div className="relative z-30 mx-auto flex h-20 w-full max-w-7xl items-center justify-between gap-4 px-5 lg:px-12 xl:gap-5">
           {/* LOGO */}
 
           <Link
