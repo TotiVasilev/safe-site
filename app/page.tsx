@@ -10,7 +10,7 @@ export default function Home() {
   const productCategories = getProductCategories();
   const home = getHomepage();
   const typeStyle = (field: string, mobile: boolean): React.CSSProperties => {
-    const setting = home.typography?.[field];
+    const setting = (home as unknown as Record<string, unknown>)[`${field}Style`] as {desktop?:number;mobile?:number;bold?:boolean} | undefined ?? home.typography?.[field];
     if (!setting) return {};
     const size = mobile ? setting.mobile : setting.desktop;
     return { ...(typeof size === "number" && size > 0 ? {fontSize:`${size}px`} : {}), ...(typeof setting.bold === "boolean" ? {fontWeight:setting.bold ? 700 : 400} : {}) };
@@ -48,7 +48,7 @@ export default function Home() {
                 </h1>
 
                 <p className="mt-6 max-w-md text-[15px] leading-7 text-black/55">
-                  <span data-cms-field="heroDescription">{home.heroDescription}</span>
+                  <span data-cms-field="heroDescription" style={typeStyle("heroDescription", true)}>{home.heroDescription}</span>
                 </p>
               </div>
             </Reveal>
@@ -131,7 +131,7 @@ export default function Home() {
                 href={home.primaryLink}
                 className="group flex min-h-14 w-full items-center justify-between bg-[#3f7edb] px-6 text-sm font-medium text-white transition-colors duration-300 active:bg-[#326dc3]"
               >
-                <span data-cms-field="primaryButton">{home.primaryButton}</span>
+                <span data-cms-field="primaryButton" style={typeStyle("primaryButton", true)}>{home.primaryButton}</span>
 
                 <span className="text-lg transition-transform duration-300 group-hover:translate-x-1">
                   →
@@ -142,7 +142,7 @@ export default function Home() {
                 href={home.secondaryLink}
                 className="group flex min-h-12 w-full items-center justify-between border border-black/10 px-6 text-sm font-medium text-black/65"
               >
-                <span data-cms-field="secondaryButton">{home.secondaryButton}</span>
+                <span data-cms-field="secondaryButton" style={typeStyle("secondaryButton", true)}>{home.secondaryButton}</span>
                 <span>→</span>
               </Link>
             </div>
@@ -165,11 +165,11 @@ export default function Home() {
 
               <div className="mt-8 border-t border-black/10 pt-8">
                 <p className="text-[15px] leading-7 text-black/55">
-                  <span data-cms-field="aboutParagraph1">{home.aboutParagraph1}</span>
+                  <span data-cms-field="aboutParagraph1" style={typeStyle("aboutParagraph1", true)}>{home.aboutParagraph1}</span>
                 </p>
 
                 <p className="mt-6 text-[15px] leading-7 text-black/55">
-                  <span data-cms-field="aboutParagraph2">{home.aboutParagraph2}</span>
+                  <span data-cms-field="aboutParagraph2" style={typeStyle("aboutParagraph2", true)}>{home.aboutParagraph2}</span>
                 </p>
               </div>
             </div>
@@ -184,11 +184,11 @@ export default function Home() {
 
                   <div>
                     <h3 className="text-xl font-medium tracking-tight">
-                      <span data-cms-field="feature1Title">{home.feature1Title}</span>
+                      <span data-cms-field="feature1Title" style={typeStyle("feature1Title", true)}>{home.feature1Title}</span>
                     </h3>
 
                     <p className="mt-3 text-sm leading-6 text-black/50">
-                      <span data-cms-field="feature1Description">{home.feature1Description}</span>
+                      <span data-cms-field="feature1Description" style={typeStyle("feature1Description", true)}>{home.feature1Description}</span>
                     </p>
                   </div>
                 </div>
@@ -200,11 +200,11 @@ export default function Home() {
 
                   <div>
                     <h3 className="text-xl font-medium tracking-tight">
-                      <span data-cms-field="feature2Title">{home.feature2Title}</span>
+                      <span data-cms-field="feature2Title" style={typeStyle("feature2Title", true)}>{home.feature2Title}</span>
                     </h3>
 
                     <p className="mt-3 text-sm leading-6 text-black/50">
-                      <span data-cms-field="feature2Description">{home.feature2Description}</span>
+                      <span data-cms-field="feature2Description" style={typeStyle("feature2Description", true)}>{home.feature2Description}</span>
                     </p>
                   </div>
                 </div>
@@ -216,11 +216,11 @@ export default function Home() {
 
                   <div>
                     <h3 className="text-xl font-medium tracking-tight">
-                      <span data-cms-field="feature3Title">{home.feature3Title}</span>
+                      <span data-cms-field="feature3Title" style={typeStyle("feature3Title", true)}>{home.feature3Title}</span>
                     </h3>
 
                     <p className="mt-3 text-sm leading-6 text-black/50">
-                      <span data-cms-field="feature3Description">{home.feature3Description}</span>
+                      <span data-cms-field="feature3Description" style={typeStyle("feature3Description", true)}>{home.feature3Description}</span>
                     </p>
                   </div>
                 </div>
@@ -244,7 +244,7 @@ export default function Home() {
               </h2>
 
               <p className="mt-6 max-w-sm text-sm leading-6 text-black/45">
-                <span data-cms-field="partnersDescription">{home.partnersDescription}</span>
+                <span data-cms-field="partnersDescription" style={typeStyle("partnersDescription", true)}>{home.partnersDescription}</span>
               </p>
             </div>
 
@@ -271,7 +271,7 @@ export default function Home() {
               </h2>
 
               <p className="mt-7 border-t border-white/10 pt-7 text-[15px] leading-7 text-white/45">
-                <span data-cms-field="productsDescription">{home.productsDescription}</span>
+                <span data-cms-field="productsDescription" style={typeStyle("productsDescription", true)}>{home.productsDescription}</span>
               </p>
             </Reveal>
 
@@ -307,7 +307,7 @@ export default function Home() {
                 </h3>
 
                 <p className="mt-5 text-[15px] leading-7 text-white/45">
-                  <span data-cms-field="featuredDescription">{home.featuredDescription}</span>
+                  <span data-cms-field="featuredDescription" style={typeStyle("featuredDescription", true)}>{home.featuredDescription}</span>
                 </p>
 
                 {/* STRONG CTA */}
@@ -315,7 +315,7 @@ export default function Home() {
                   href={home.primaryLink}
                   className="group mt-8 flex min-h-14 w-full items-center justify-between bg-[#3f7edb] px-6 text-sm font-medium text-white transition-colors duration-300 active:bg-[#326dc3]"
                 >
-                  <span data-cms-field="catalogButton">{home.catalogButton}</span>
+                  <span data-cms-field="catalogButton" style={typeStyle("catalogButton", true)}>{home.catalogButton}</span>
 
                   <span className="text-lg transition-transform duration-300 group-hover:translate-x-1">
                     →
@@ -341,7 +341,7 @@ export default function Home() {
               </h2>
 
               <p className="mt-6 text-sm leading-6 text-black/45">
-                <span data-cms-field="catalogDescription">{home.catalogDescription}</span>
+                <span data-cms-field="catalogDescription" style={typeStyle("catalogDescription", true)}>{home.catalogDescription}</span>
               </p>
             </div>
           </Reveal>
@@ -366,14 +366,14 @@ export default function Home() {
               </h2>
 
               <p className="mt-7 border-t border-black/10 pt-7 text-[15px] leading-7 text-black/55">
-                <span data-cms-field="servicesDescription">{home.servicesDescription}</span>
+                <span data-cms-field="servicesDescription" style={typeStyle("servicesDescription", true)}>{home.servicesDescription}</span>
               </p>
 
               <Link
                 href={home.secondaryLink}
                 className="group mt-8 flex min-h-14 w-full items-center justify-between bg-black px-6 text-sm font-medium text-white transition-colors duration-300 active:bg-[#3f7edb]"
               >
-                <span data-cms-field="servicesButton">{home.servicesButton}</span>
+                <span data-cms-field="servicesButton" style={typeStyle("servicesButton", true)}>{home.servicesButton}</span>
 
                 <span>→</span>
               </Link>
@@ -398,14 +398,14 @@ export default function Home() {
               </h2>
 
               <p className="mt-7 border-t border-white/20 pt-7 text-[15px] leading-7 text-white/70">
-                <span data-cms-field="contactDescription">{home.contactDescription}</span>
+                <span data-cms-field="contactDescription" style={typeStyle("contactDescription", true)}>{home.contactDescription}</span>
               </p>
 
               <Link
                 href={home.contactLink}
                 className="group mt-8 flex min-h-14 w-full items-center justify-between bg-white px-6 text-sm font-medium text-black transition-colors duration-300 active:bg-black active:text-white"
               >
-                <span data-cms-field="contactButton">{home.contactButton}</span>
+                <span data-cms-field="contactButton" style={typeStyle("contactButton", true)}>{home.contactButton}</span>
 
                 <span>→</span>
               </Link>
@@ -444,7 +444,7 @@ export default function Home() {
                   </h1>
 
                   <p className="mt-9 max-w-xl text-base leading-8 text-black/55 sm:text-lg">
-                    <span data-cms-field="heroDescription">{home.heroDescription}</span>
+                    <span data-cms-field="heroDescription" style={typeStyle("heroDescription", false)}>{home.heroDescription}</span>
                   </p>
 
                   <div className="mt-10 flex flex-wrap items-center gap-7">
@@ -452,7 +452,7 @@ export default function Home() {
                       href={home.primaryLink}
                       className="group inline-flex items-center gap-4 bg-[#3f7edb] px-7 py-4 text-sm font-medium text-white transition-all duration-300 hover:bg-[#326dc3]"
                     >
-                      <span data-cms-field="primaryButton">{home.primaryButton}</span>
+                      <span data-cms-field="primaryButton" style={typeStyle("primaryButton", false)}>{home.primaryButton}</span>
 
                       <span className="transition-transform duration-300 group-hover:translate-x-1">
                         →
@@ -463,7 +463,7 @@ export default function Home() {
                       href={home.secondaryLink}
                       className="group inline-flex items-center gap-3 text-sm font-medium text-black/65 transition-colors hover:text-black"
                     >
-                      <span data-cms-field="secondaryButton">{home.secondaryButton}</span>
+                      <span data-cms-field="secondaryButton" style={typeStyle("secondaryButton", false)}>{home.secondaryButton}</span>
 
                       <span className="transition-transform duration-300 group-hover:translate-x-1">
                         →
@@ -531,14 +531,14 @@ export default function Home() {
                     </div>
 
                     <p className="text-right text-[10px] uppercase tracking-[0.18em] text-[#3f7edb]">
-                      <span data-cms-field="pointerRight">{home.pointerRight}</span>
+                      <span data-cms-field="pointerRight" style={typeStyle("pointerRight", false)}>{home.pointerRight}</span>
                     </p>
                   </div>
 
                   {/* CONSTRUCTION CALLOUT */}
                   <div className="absolute bottom-[22%] left-[4%] w-[150px]">
                     <p className="mb-2 text-[10px] uppercase tracking-[0.18em] text-[#3f7edb]">
-                      <span data-cms-field="pointerLeft">{home.pointerLeft}</span>
+                      <span data-cms-field="pointerLeft" style={typeStyle("pointerLeft", false)}>{home.pointerLeft}</span>
                     </p>
 
                     <div className="flex items-center">
@@ -579,11 +579,11 @@ export default function Home() {
 
                 <div className="mt-10 grid max-w-5xl gap-8 border-t border-black/10 pt-10 md:grid-cols-2">
                   <p className="text-base leading-8 text-black/55">
-                    <span data-cms-field="aboutParagraph1">{home.aboutParagraph1}</span>
+                    <span data-cms-field="aboutParagraph1" style={typeStyle("aboutParagraph1", false)}>{home.aboutParagraph1}</span>
                   </p>
 
                   <p className="text-base leading-8 text-black/55">
-                    <span data-cms-field="aboutParagraph2">{home.aboutParagraph2}</span>
+                    <span data-cms-field="aboutParagraph2" style={typeStyle("aboutParagraph2", false)}>{home.aboutParagraph2}</span>
                   </p>
                 </div>
               </div>
@@ -594,31 +594,31 @@ export default function Home() {
               <div className="mt-24 grid border-y border-black/10 md:grid-cols-3">
                 <div className="border-b border-black/10 py-10 md:border-b-0 md:border-r md:pr-10">
                   <h3 className="text-2xl font-medium">
-                    <span data-cms-field="feature1Title">{home.feature1Title}</span>
+                    <span data-cms-field="feature1Title" style={typeStyle("feature1Title", false)}>{home.feature1Title}</span>
                   </h3>
 
                   <p className="mt-4 max-w-sm text-sm leading-7 text-black/50">
-                    <span data-cms-field="feature1Description">{home.feature1Description}</span>
+                    <span data-cms-field="feature1Description" style={typeStyle("feature1Description", false)}>{home.feature1Description}</span>
                   </p>
                 </div>
 
                 <div className="border-b border-black/10 py-10 md:border-b-0 md:border-r md:px-10">
                   <h3 className="text-2xl font-medium">
-                    <span data-cms-field="feature2Title">{home.feature2Title}</span>
+                    <span data-cms-field="feature2Title" style={typeStyle("feature2Title", false)}>{home.feature2Title}</span>
                   </h3>
 
                   <p className="mt-4 max-w-sm text-sm leading-7 text-black/50">
-                    <span data-cms-field="feature2Description">{home.feature2Description}</span>
+                    <span data-cms-field="feature2Description" style={typeStyle("feature2Description", false)}>{home.feature2Description}</span>
                   </p>
                 </div>
 
                 <div className="py-10 md:pl-10">
                   <h3 className="text-2xl font-medium">
-                    <span data-cms-field="feature3Title">{home.feature3Title}</span>
+                    <span data-cms-field="feature3Title" style={typeStyle("feature3Title", false)}>{home.feature3Title}</span>
                   </h3>
 
                   <p className="mt-4 max-w-sm text-sm leading-7 text-black/50">
-                    <span data-cms-field="feature3Description">{home.feature3Description}</span>
+                    <span data-cms-field="feature3Description" style={typeStyle("feature3Description", false)}>{home.feature3Description}</span>
                   </p>
                 </div>
               </div>
@@ -637,7 +637,7 @@ export default function Home() {
                   </h2>
 
                   <p className="mt-8 max-w-2xl text-sm leading-7 text-black/45">
-                    <span data-cms-field="partnersDescription">{home.partnersDescription}</span>
+                    <span data-cms-field="partnersDescription" style={typeStyle("partnersDescription", false)}>{home.partnersDescription}</span>
                   </p>
                 </div>
 
@@ -668,14 +668,14 @@ export default function Home() {
 
                 <div className="mt-10 flex flex-col gap-8 border-t border-white/10 pt-10 sm:flex-row sm:items-end sm:justify-between">
                   <p className="max-w-2xl text-base leading-8 text-white/45">
-                    <span data-cms-field="productsDescription">{home.productsDescription}</span>
+                    <span data-cms-field="productsDescription" style={typeStyle("productsDescription", false)}>{home.productsDescription}</span>
                   </p>
 
                   <Link
                     href={home.primaryLink}
                     className="group inline-flex w-fit items-center gap-4 text-sm font-medium text-white"
                   >
-                    <span data-cms-field="catalogButton">{home.catalogButton}</span>
+                    <span data-cms-field="catalogButton" style={typeStyle("catalogButton", false)}>{home.catalogButton}</span>
 
                     <span className="text-[#6ea4f1] transition-transform duration-300 group-hover:translate-x-1">
                       →
@@ -703,7 +703,7 @@ export default function Home() {
 
                     <div className="absolute bottom-8 left-0 hidden w-[170px] lg:block">
                       <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.18em] text-[#6ea4f1]">
-                        <span data-cms-field="pointerLeft">{home.pointerLeft}</span>
+                        <span data-cms-field="pointerLeft" style={typeStyle("pointerLeft", false)}>{home.pointerLeft}</span>
                       </p>
 
                       <div className="flex items-center">
@@ -720,7 +720,7 @@ export default function Home() {
                     </h3>
 
                     <p className="mt-7 max-w-lg text-base leading-8 text-white/45">
-                      <span data-cms-field="featuredDescription">{home.featuredDescription}</span>
+                      <span data-cms-field="featuredDescription" style={typeStyle("featuredDescription", false)}>{home.featuredDescription}</span>
                     </p>
                   </div>
                 </div>
@@ -745,7 +745,7 @@ export default function Home() {
                 </h2>
 
                 <p className="mt-8 max-w-2xl text-sm leading-7 text-black/45">
-                  <span data-cms-field="catalogDescription">{home.catalogDescription}</span>
+                  <span data-cms-field="catalogDescription" style={typeStyle("catalogDescription", false)}>{home.catalogDescription}</span>
                 </p>
               </div>
             </Reveal>
@@ -773,14 +773,14 @@ export default function Home() {
 
                 <div className="mt-10 flex flex-col gap-8 border-t border-black/10 pt-10 sm:flex-row sm:items-end sm:justify-between">
                   <p className="max-w-2xl text-base leading-8 text-black/55">
-                    <span data-cms-field="servicesDescription">{home.servicesDescription}</span>
+                    <span data-cms-field="servicesDescription" style={typeStyle("servicesDescription", false)}>{home.servicesDescription}</span>
                   </p>
 
                   <Link
                     href={home.secondaryLink}
                     className="group inline-flex w-fit items-center gap-5 bg-black px-6 py-4 text-sm font-medium text-white transition-colors hover:bg-[#3f7edb]"
                   >
-                    <span data-cms-field="servicesButton">{home.servicesButton}</span>
+                    <span data-cms-field="servicesButton" style={typeStyle("servicesButton", false)}>{home.servicesButton}</span>
 
                     <span className="transition-transform duration-300 group-hover:translate-x-1">
                       →
@@ -811,14 +811,14 @@ export default function Home() {
 
                 <div className="mt-10 flex flex-col gap-10 border-t border-white/20 pt-10 sm:flex-row sm:items-end sm:justify-between">
                   <p className="max-w-2xl text-base leading-8 text-white/70">
-                    <span data-cms-field="contactDescription">{home.contactDescription}</span>
+                    <span data-cms-field="contactDescription" style={typeStyle("contactDescription", false)}>{home.contactDescription}</span>
                   </p>
 
                   <Link
                     href={home.contactLink}
                     className="group inline-flex w-fit shrink-0 items-center gap-5 bg-white px-7 py-4 text-sm font-medium text-black transition-all duration-300 hover:bg-black hover:text-white"
                   >
-                    <span data-cms-field="contactButton">{home.contactButton}</span>
+                    <span data-cms-field="contactButton" style={typeStyle("contactButton", false)}>{home.contactButton}</span>
 
                     <span className="transition-transform duration-300 group-hover:translate-x-1">
                       →

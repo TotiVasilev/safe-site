@@ -46,6 +46,7 @@ export type Homepage = {
   contactLink: string;
   partners: Partner[];
   typography?: Record<string, {desktop?:number;mobile?:number;bold?:boolean}>;
+  [key: `${string}Style`]: {desktop?:number;mobile?:number;bold?:boolean} | undefined;
 };
 
 export function getHomepage(): Homepage {

@@ -70,10 +70,27 @@
 
     if (!doc || !doc.querySelector("[data-cms-field]")) return;
 
+    // Each adjacent CMS font control updates the real homepage immediately.
+    Object.keys(values).forEach(function (key) {
+      if (!/Style$/.test(key)) return;
+      var field = key.slice(0, -5);
+      var style = values[key] || {};
+      self.targets(field).forEach(function (node) {
+        if (!node.dataset.cmsOriginalFontSize) {
+          node.dataset.cmsOriginalFontSize = node.style.fontSize || '__none__';
+          node.dataset.cmsOriginalWeight = node.style.fontWeight || '__none__';
+        }
+        var mobile = !!node.closest('.lg\:hidden');
+        var size = mobile ? style.mobile : style.desktop;
+        node.style.fontSize = Number(size) > 0 ? size + 'px' : (node.dataset.cmsOriginalFontSize === '__none__' ? '' : node.dataset.cmsOriginalFontSize);
+        node.style.fontWeight = typeof style.bold === 'boolean' ? (style.bold ? '700' : '400') : (node.dataset.cmsOriginalWeight === '__none__' ? '' : node.dataset.cmsOriginalWeight);
+      });
+    });
+
     Object.keys(values).forEach(function (key) {
       var value = values[key];
 
-      if (value == null || typeof value === "object") return;
+      if (value == null || typeof value === "object" || /Style$/.test(key)) return;
 
       if (key === "heroBackground") {
         self.targets(key).forEach(function (node) {

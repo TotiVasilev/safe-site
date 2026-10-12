@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Phone, Mail, MapPin } from "lucide-react";
 
 export default function Header({ contact }: { contact: {phone:string;email:string;address:string;locationLabel:string} }) {
   const pathname = usePathname();
@@ -108,7 +109,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
       isActive(path);
 
     return `
-      flex w-[150px] items-center justify-center
+      flex w-[142px] items-center justify-center
       rounded-xl px-4 py-2.5
       text-sm font-medium
       transition-all duration-300
@@ -147,13 +148,13 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
             : "bg-[#f5f5f4]/95 backdrop-blur-md"
         }`}
       >
-        <div className="relative z-30 mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-12">
+        <div className="relative z-30 mx-auto flex h-20 w-full max-w-[1500px] items-center justify-between gap-4 px-5 xl:gap-5 xl:px-9">
           {/* LOGO */}
 
           <Link
             href="/"
             onClick={closeMenu}
-            className="flex items-center gap-3"
+            className="flex w-max items-center gap-1.5"
           >
             <Image
               src="/branding/tetraedar-logo.png"
@@ -161,18 +162,15 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
               width={48}
               height={48}
               priority
-              className="h-11 w-auto object-contain"
+              className="h-12 w-auto object-contain"
             />
 
-            <span className="flex flex-col items-end leading-none text-[#3f7edb]">
-              <span className="text-[20px] font-medium tracking-[0.01em] sm:text-[25px]">ТЕТРАЕДЪР</span>
-              <span className="mt-1 text-[10px] font-medium tracking-[0.07em] text-black/50">От 1990</span>
-            </span>
+            <span className="text-[24px] font-medium leading-none tracking-[0.005em] text-[#3f7edb] sm:text-[29px]">ТЕТРАЕДЪР</span>
           </Link>
 
           {/* DESKTOP NAVIGATION */}
 
-          <nav className="hidden items-center gap-2 md:flex">
+          <nav className="ml-auto hidden shrink-0 items-center gap-1 xl:flex">
             <Link
               href="/"
               className={desktopNavClass(
@@ -210,15 +208,15 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
             </button>
           </nav>
 
-          {/* Optional company contacts; editable in the CMS. */}
+          {/* Contact details follow the original right-positioned navigation, rather than centering it. */}
           {(contact.phone || contact.email || contact.address) && (
-            <div className="relative hidden items-center gap-3 xl:flex">
-              <div className="flex flex-col items-end gap-0.5 text-[11px] text-black/60">
-                {contact.phone && <a className="hover:text-black" href={`tel:${contact.phone.replace(/\s/g, "")}`}>{contact.phone}</a>}
-                {contact.email && <a className="hover:text-black" href={`mailto:${contact.email}`}>{contact.email}</a>}
+            <div className="relative ml-3 hidden shrink-0 items-center gap-3 xl:flex">
+              <div className="flex flex-col items-start gap-1 text-[11px] text-black/60">
+                {contact.phone && <a className="flex items-center gap-2 hover:text-[#3f7edb]" href={`tel:${contact.phone.replace(/\s/g, "")}`}><Phone size={13} aria-hidden="true" />{contact.phone}</a>}
+                {contact.email && <a className="flex items-center gap-2 hover:text-[#3f7edb]" href={`mailto:${contact.email}`}><Mail size={13} aria-hidden="true" />{contact.email}</a>}
               </div>
               {contact.address && <div className="relative">
-                <button type="button" aria-label="Покажи адрес" aria-expanded={addressOpen} onClick={() => setAddressOpen(v=>!v)} className="rounded-full border border-black/10 p-2 text-[#3f7edb] hover:bg-white/70">⌖</button>
+                <button type="button" aria-label="Покажи адрес" aria-expanded={addressOpen} onClick={() => setAddressOpen(v => !v)} className="flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-[#3f7edb] transition-colors hover:bg-white/70"><MapPin size={18} aria-hidden="true" /></button>
                 {addressOpen && <div className="absolute right-0 top-full z-[110] mt-3 w-64 rounded-xl border border-black/10 bg-white p-4 text-sm shadow-lg"><p className="mb-2 font-medium">{contact.locationLabel}</p><a className="text-[#3f7edb] hover:text-black" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(contact.address)}`} target="_blank" rel="noopener noreferrer">{contact.address} ↗</a></div>}
               </div>}
             </div>
@@ -236,7 +234,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
               menuOpen
             }
             onClick={toggleMenu}
-            className="relative z-50 flex h-10 w-10 items-center justify-center md:hidden"
+            className="relative z-50 flex h-10 w-10 items-center justify-center ml-auto xl:hidden"
           >
             <div className="flex w-5 flex-col gap-1.5">
               <span
@@ -261,7 +259,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
         {/* MOBILE MENU */}
 
         <div
-          className={`relative z-30 overflow-hidden transition-all duration-500 md:hidden ${
+          className={`relative z-30 overflow-hidden transition-all duration-500 xl:hidden ${
             menuOpen
               ? "max-h-[420px]"
               : "max-h-0"
@@ -330,7 +328,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
           type="button"
           aria-label="Затвори менюто"
           onClick={closeMenu}
-          className="fixed inset-x-0 bottom-0 top-20 z-[90] bg-black/[0.04] md:hidden"
+          className="fixed inset-x-0 bottom-0 top-20 z-[90] bg-black/[0.04] xl:hidden"
         />
       )}
     </>

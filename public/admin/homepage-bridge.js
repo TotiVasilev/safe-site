@@ -92,6 +92,16 @@
     if (!values || typeof values !== 'object') return;
 
     Object.keys(values).forEach(function (key) {
+      if (!/Style$/.test(key)) return;
+      var setting = values[key] || {};
+      fields(key.slice(0, -5)).forEach(function (node) {
+        var mobile = !!node.closest('.lg\:hidden');
+        var size = mobile ? setting.mobile : setting.desktop;
+        if (Number(size) > 0) node.style.fontSize = size + 'px';
+        if (typeof setting.bold === 'boolean') node.style.fontWeight = setting.bold ? '700' : '400';
+      });
+    });
+    Object.keys(values).forEach(function (key) {
       var value = values[key];
 
       if (key === 'partners') {

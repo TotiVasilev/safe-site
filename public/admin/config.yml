@@ -280,10 +280,28 @@ collections:
       name: heroTitle
       widget: text
       required: true
+    - label: "Шрифт — heroTitle"
+      name: heroTitleStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Описание
       name: heroDescription
       widget: text
       required: true
+    - label: "Шрифт — heroDescription"
+      name: heroDescriptionStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Фонова снимка
       name: heroBackground
       widget: image
@@ -292,6 +310,15 @@ collections:
       name: primaryButton
       widget: string
       required: true
+    - label: "Шрифт — primaryButton"
+      name: primaryButtonStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Адрес на бутон Продукти
       name: primaryLink
       widget: string
@@ -301,6 +328,15 @@ collections:
       name: secondaryButton
       widget: string
       required: true
+    - label: "Шрифт — secondaryButton"
+      name: secondaryButtonStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Адрес на бутон Услуги
       name: secondaryLink
       widget: string
@@ -310,122 +346,392 @@ collections:
       name: aboutLabel
       widget: string
       required: true
+    - label: "Шрифт — aboutLabel"
+      name: aboutLabelStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Заглавие
       name: aboutTitle
       widget: string
       required: true
+    - label: "Шрифт — aboutTitle"
+      name: aboutTitleStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Първи абзац
       name: aboutParagraph1
       widget: text
       required: true
+    - label: "Шрифт — aboutParagraph1"
+      name: aboutParagraph1Style
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Втори абзац
       name: aboutParagraph2
       widget: text
       required: true
+    - label: "Шрифт — aboutParagraph2"
+      name: aboutParagraph2Style
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Предимство 1
       name: feature1Title
       widget: string
       required: true
+    - label: "Шрифт — feature1Title"
+      name: feature1TitleStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Описание 1
       name: feature1Description
       widget: text
       required: true
+    - label: "Шрифт — feature1Description"
+      name: feature1DescriptionStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Предимство 2
       name: feature2Title
       widget: string
       required: true
+    - label: "Шрифт — feature2Title"
+      name: feature2TitleStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Описание 2
       name: feature2Description
       widget: text
       required: true
+    - label: "Шрифт — feature2Description"
+      name: feature2DescriptionStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Предимство 3
       name: feature3Title
       widget: string
       required: true
+    - label: "Шрифт — feature3Title"
+      name: feature3TitleStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Описание 3
       name: feature3Description
       widget: text
       required: true
+    - label: "Шрифт — feature3Description"
+      name: feature3DescriptionStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Доверени партньори - Надпис
       name: partnersLabel
       widget: string
       required: true
+    - label: "Шрифт — partnersLabel"
+      name: partnersLabelStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Заглавие
       name: partnersTitle
       widget: string
       required: true
+    - label: "Шрифт — partnersTitle"
+      name: partnersTitleStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Описание
       name: partnersDescription
       widget: text
       required: true
+    - label: "Шрифт — partnersDescription"
+      name: partnersDescriptionStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Продукти на началната страница - Надпис
       name: productsLabel
       widget: string
       required: true
+    - label: "Шрифт — productsLabel"
+      name: productsLabelStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Заглавие
       name: productsTitle
       widget: string
       required: true
+    - label: "Шрифт — productsTitle"
+      name: productsTitleStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Описание
       name: productsDescription
       widget: text
       required: true
+    - label: "Шрифт — productsDescription"
+      name: productsDescriptionStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Заглавие на представения продукт
       name: featuredTitle
       widget: string
       required: true
+    - label: "Шрифт — featuredTitle"
+      name: featuredTitleStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Описание на представения продукт
       name: featuredDescription
       widget: text
       required: true
+    - label: "Шрифт — featuredDescription"
+      name: featuredDescriptionStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Текст на бутон Каталог
       name: catalogButton
       widget: string
       required: true
+    - label: "Шрифт — catalogButton"
+      name: catalogButtonStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Надпис над каталога
       name: catalogLabel
       widget: string
       required: true
+    - label: "Шрифт — catalogLabel"
+      name: catalogLabelStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Заглавие на каталога
       name: catalogTitle
       widget: string
       required: true
+    - label: "Шрифт — catalogTitle"
+      name: catalogTitleStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Описание на каталога
       name: catalogDescription
       widget: text
       required: true
+    - label: "Шрифт — catalogDescription"
+      name: catalogDescriptionStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Услуги на началната страница - Надпис
       name: servicesLabel
       widget: string
       required: true
+    - label: "Шрифт — servicesLabel"
+      name: servicesLabelStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Заглавие
       name: servicesTitle
       widget: string
       required: true
+    - label: "Шрифт — servicesTitle"
+      name: servicesTitleStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Описание
       name: servicesDescription
       widget: text
       required: true
+    - label: "Шрифт — servicesDescription"
+      name: servicesDescriptionStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Текст на бутон Услуги
       name: servicesButton
       widget: string
       required: true
+    - label: "Шрифт — servicesButton"
+      name: servicesButtonStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Запитване - Надпис
       name: contactLabel
       widget: string
       required: true
+    - label: "Шрифт — contactLabel"
+      name: contactLabelStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Заглавие
       name: contactTitle
       widget: string
       required: true
+    - label: "Шрифт — contactTitle"
+      name: contactTitleStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Описание
       name: contactDescription
       widget: text
       required: true
+    - label: "Шрифт — contactDescription"
+      name: contactDescriptionStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Текст на бутон Запитване
       name: contactButton
       widget: string
       required: true
+    - label: "Шрифт — contactButton"
+      name: contactButtonStyle
+      widget: object
+      required: false
+      collapsed: false
+      fields:
+      - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
+      - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
+      - {label: Удебелен текст, name: bold, widget: boolean, required: false}
     - label: Адрес на бутон Запитване
       name: contactLink
       widget: string
@@ -449,135 +755,3 @@ collections:
         widget: string
         required: false
 
-    - label: Размери и удебеляване на заглавията и сините надписи
-      name: typography
-      widget: object
-      required: false
-      collapsed: true
-      fields:
-      - label: heroTitle
-        name: heroTitle
-        widget: object
-        required: false
-        collapsed: true
-        fields:
-        - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
-        - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
-        - {label: Удебелен текст, name: bold, widget: boolean, required: false}
-      - label: aboutLabel
-        name: aboutLabel
-        widget: object
-        required: false
-        collapsed: true
-        fields:
-        - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
-        - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
-        - {label: Удебелен текст, name: bold, widget: boolean, required: false}
-      - label: aboutTitle
-        name: aboutTitle
-        widget: object
-        required: false
-        collapsed: true
-        fields:
-        - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
-        - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
-        - {label: Удебелен текст, name: bold, widget: boolean, required: false}
-      - label: partnersLabel
-        name: partnersLabel
-        widget: object
-        required: false
-        collapsed: true
-        fields:
-        - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
-        - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
-        - {label: Удебелен текст, name: bold, widget: boolean, required: false}
-      - label: partnersTitle
-        name: partnersTitle
-        widget: object
-        required: false
-        collapsed: true
-        fields:
-        - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
-        - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
-        - {label: Удебелен текст, name: bold, widget: boolean, required: false}
-      - label: productsLabel
-        name: productsLabel
-        widget: object
-        required: false
-        collapsed: true
-        fields:
-        - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
-        - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
-        - {label: Удебелен текст, name: bold, widget: boolean, required: false}
-      - label: productsTitle
-        name: productsTitle
-        widget: object
-        required: false
-        collapsed: true
-        fields:
-        - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
-        - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
-        - {label: Удебелен текст, name: bold, widget: boolean, required: false}
-      - label: featuredTitle
-        name: featuredTitle
-        widget: object
-        required: false
-        collapsed: true
-        fields:
-        - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
-        - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
-        - {label: Удебелен текст, name: bold, widget: boolean, required: false}
-      - label: catalogLabel
-        name: catalogLabel
-        widget: object
-        required: false
-        collapsed: true
-        fields:
-        - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
-        - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
-        - {label: Удебелен текст, name: bold, widget: boolean, required: false}
-      - label: catalogTitle
-        name: catalogTitle
-        widget: object
-        required: false
-        collapsed: true
-        fields:
-        - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
-        - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
-        - {label: Удебелен текст, name: bold, widget: boolean, required: false}
-      - label: servicesLabel
-        name: servicesLabel
-        widget: object
-        required: false
-        collapsed: true
-        fields:
-        - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
-        - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
-        - {label: Удебелен текст, name: bold, widget: boolean, required: false}
-      - label: servicesTitle
-        name: servicesTitle
-        widget: object
-        required: false
-        collapsed: true
-        fields:
-        - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
-        - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
-        - {label: Удебелен текст, name: bold, widget: boolean, required: false}
-      - label: contactLabel
-        name: contactLabel
-        widget: object
-        required: false
-        collapsed: true
-        fields:
-        - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
-        - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
-        - {label: Удебелен текст, name: bold, widget: boolean, required: false}
-      - label: contactTitle
-        name: contactTitle
-        widget: object
-        required: false
-        collapsed: true
-        fields:
-        - {label: Размер на компютър (px), name: desktop, widget: number, required: false, value_type: int, min: 8, max: 120}
-        - {label: Размер на телефон (px), name: mobile, widget: number, required: false, value_type: int, min: 8, max: 80}
-        - {label: Удебелен текст, name: bold, widget: boolean, required: false}
