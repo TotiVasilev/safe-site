@@ -109,7 +109,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
       isActive(path);
 
     return `
-      flex w-[142px] items-center justify-center
+      flex w-[142px] shrink-0 items-center justify-center whitespace-nowrap
       rounded-xl px-4 py-2.5
       text-sm font-medium
       transition-all duration-300
@@ -148,7 +148,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
             : "bg-[#f5f5f4]/95 backdrop-blur-md"
         }`}
       >
-        <div className="relative z-30 mx-auto flex h-20 w-full max-w-[1500px] items-center justify-between gap-4 px-5 xl:gap-5 xl:px-9">
+        <div className="relative z-30 mx-auto flex h-20 w-full max-w-[1040px] items-center justify-between gap-4 px-5 xl:gap-5 xl:px-5">
           {/* LOGO */}
 
           <Link
@@ -210,7 +210,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
 
           {/* Contact details follow the original right-positioned navigation, rather than centering it. */}
           {(contact.phone || contact.email || contact.address) && (
-            <div className="relative ml-3 hidden shrink-0 items-center gap-3 xl:flex">
+            <div className="relative ml-2 hidden shrink-0 items-center gap-2 xl:flex">
               <div className="flex flex-col items-start gap-1 text-[11px] text-black/60">
                 {contact.phone && <a className="flex items-center gap-2 hover:text-[#3f7edb]" href={`tel:${contact.phone.replace(/\s/g, "")}`}><Phone size={13} aria-hidden="true" />{contact.phone}</a>}
                 {contact.email && <a className="flex items-center gap-2 hover:text-[#3f7edb]" href={`mailto:${contact.email}`}><Mail size={13} aria-hidden="true" />{contact.email}</a>}
