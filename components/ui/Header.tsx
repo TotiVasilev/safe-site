@@ -5,8 +5,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function Header() {
+export default function Header({ contact }: { contact: {phone:string;email:string;address:string;locationLabel:string} }) {
   const pathname = usePathname();
+  const [addressOpen, setAddressOpen] = useState(false);
 
   const [scrolled, setScrolled] =
     useState(false);
@@ -163,8 +164,9 @@ export default function Header() {
               className="h-11 w-auto object-contain"
             />
 
-            <span className="text-[24px] font-medium tracking-[0.01em] text-[#3f7edb] sm:text-[28px]">
-              TETRAEDAR
+            <span className="flex flex-col items-end leading-none text-[#3f7edb]">
+              <span className="text-[20px] font-medium tracking-[0.01em] sm:text-[25px]">ТЕТРАЕДЪР</span>
+              <span className="mt-1 text-[10px] font-medium tracking-[0.07em] text-black/50">От 1990</span>
             </span>
           </Link>
 
@@ -208,6 +210,19 @@ export default function Header() {
             </button>
           </nav>
 
+          {/* Optional company contacts; editable in the CMS. */}
+          {(contact.phone || contact.email || contact.address) && (
+            <div className="relative hidden items-center gap-3 xl:flex">
+              <div className="flex flex-col items-end gap-0.5 text-[11px] text-black/60">
+                {contact.phone && <a className="hover:text-black" href={`tel:${contact.phone.replace(/\s/g, "")}`}>{contact.phone}</a>}
+                {contact.email && <a className="hover:text-black" href={`mailto:${contact.email}`}>{contact.email}</a>}
+              </div>
+              {contact.address && <div className="relative">
+                <button type="button" aria-label="Покажи адрес" aria-expanded={addressOpen} onClick={() => setAddressOpen(v=>!v)} className="rounded-full border border-black/10 p-2 text-[#3f7edb] hover:bg-white/70">⌖</button>
+                {addressOpen && <div className="absolute right-0 top-full z-[110] mt-3 w-64 rounded-xl border border-black/10 bg-white p-4 text-sm shadow-lg"><p className="mb-2 font-medium">{contact.locationLabel}</p><a className="text-[#3f7edb] hover:text-black" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(contact.address)}`} target="_blank" rel="noopener noreferrer">{contact.address} ↗</a></div>}
+              </div>}
+            </div>
+          )}
           {/* MOBILE BUTTON */}
 
           <button
@@ -290,6 +305,11 @@ export default function Header() {
                 Услуги и Сервиз
               </Link>
 
+              {(contact.phone || contact.email || contact.address) && <div className="mt-4 flex flex-col gap-2 border-t border-black/10 px-4 pt-4 text-sm text-black/60">
+                {contact.phone && <a href={`tel:${contact.phone.replace(/\s/g, "")}`}>{contact.phone}</a>}
+                {contact.email && <a href={`mailto:${contact.email}`}>{contact.email}</a>}
+                {contact.address && <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(contact.address)}`} target="_blank" rel="noopener noreferrer">{contact.locationLabel}: {contact.address} ↗</a>}
+              </div>}
               <button
                 type="button"
                 className="self-start px-4 pt-5 text-xs font-medium tracking-[0.2em] text-black/45 transition-colors hover:text-[#3f7edb]"

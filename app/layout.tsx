@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Header from "@/components/ui/Header";
+import { getHeaderContact } from "@/data/cms-header";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -47,7 +48,7 @@ export default function RootLayout({
       )}
     >
       <body className="min-h-full bg-white text-black">
-        <Header />
+        <Header contact={getHeaderContact()} />
 
         {children}
       </body>

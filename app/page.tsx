@@ -9,6 +9,12 @@ import { getHomepage } from "@/data/cms-homepage";
 export default function Home() {
   const productCategories = getProductCategories();
   const home = getHomepage();
+  const typeStyle = (field: string, mobile: boolean): React.CSSProperties => {
+    const setting = home.typography?.[field];
+    if (!setting) return {};
+    const size = mobile ? setting.mobile : setting.desktop;
+    return { ...(typeof size === "number" && size > 0 ? {fontSize:`${size}px`} : {}), ...(typeof setting.bold === "boolean" ? {fontWeight:setting.bold ? 700 : 400} : {}) };
+  };
   return (
     <main className="overflow-hidden bg-white text-black">
       <Script src="/admin/homepage-bridge.js" strategy="afterInteractive" />
@@ -35,7 +41,7 @@ export default function Home() {
             {/* HERO TEXT */}
             <Reveal direction="fade" duration={0.8}>
               <div>
-                <h1 data-cms-field="heroTitle" className="text-[clamp(3.15rem,14vw,4.5rem)] font-medium leading-[0.89] tracking-[-0.055em]">
+                <h1 data-cms-field="heroTitle" style={typeStyle("heroTitle", true)} className="text-[clamp(3.15rem,14vw,4.5rem)] font-medium leading-[0.89] tracking-[-0.055em]">
                   {home.heroTitle.split("\n").map((line, index) => (
                     <span key={index}>{index > 0 && <br />}{line}</span>
                   ))}
@@ -150,11 +156,11 @@ export default function Home() {
           <Reveal direction="up">
             <div>
               <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-[#3f7edb]">
-                <span data-cms-field="aboutLabel">{home.aboutLabel}</span>
+                <span data-cms-field="aboutLabel" style={typeStyle("aboutLabel", true)}>{home.aboutLabel}</span>
               </p>
 
               <h2 className="mt-5 text-[2.65rem] font-medium leading-[0.98] tracking-[-0.045em]">
-                <span data-cms-field="aboutTitle">{home.aboutTitle}</span>
+                <span data-cms-field="aboutTitle" style={typeStyle("aboutTitle", true)}>{home.aboutTitle}</span>
               </h2>
 
               <div className="mt-8 border-t border-black/10 pt-8">
@@ -230,11 +236,11 @@ export default function Home() {
           <Reveal direction="up">
             <div>
               <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-[#3f7edb]">
-                <span data-cms-field="partnersLabel">{home.partnersLabel}</span>
+                <span data-cms-field="partnersLabel" style={typeStyle("partnersLabel", true)}>{home.partnersLabel}</span>
               </p>
 
               <h2 className="mt-5 text-[2.65rem] font-medium leading-[0.98] tracking-[-0.045em]">
-                <span data-cms-field="partnersTitle">{home.partnersTitle}</span>
+                <span data-cms-field="partnersTitle" style={typeStyle("partnersTitle", true)}>{home.partnersTitle}</span>
               </h2>
 
               <p className="mt-6 max-w-sm text-sm leading-6 text-black/45">
@@ -257,11 +263,11 @@ export default function Home() {
           <div className="relative">
             <Reveal direction="up">
               <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-[#6ea4f1]">
-                <span data-cms-field="productsLabel">{home.productsLabel}</span>
+                <span data-cms-field="productsLabel" style={typeStyle("productsLabel", true)}>{home.productsLabel}</span>
               </p>
 
               <h2 className="mt-5 text-[2.7rem] font-medium leading-[0.97] tracking-[-0.045em]">
-                <span data-cms-field="productsTitle">{home.productsTitle}</span>
+                <span data-cms-field="productsTitle" style={typeStyle("productsTitle", true)}>{home.productsTitle}</span>
               </h2>
 
               <p className="mt-7 border-t border-white/10 pt-7 text-[15px] leading-7 text-white/45">
@@ -297,7 +303,7 @@ export default function Home() {
               {/* PRODUCT TEXT */}
               <div className="mt-9">
                 <h3 className="text-[2.3rem] font-medium leading-[1] tracking-[-0.04em]">
-                  <span data-cms-field="featuredTitle">{home.featuredTitle}</span>
+                  <span data-cms-field="featuredTitle" style={typeStyle("featuredTitle", true)}>{home.featuredTitle}</span>
                 </h3>
 
                 <p className="mt-5 text-[15px] leading-7 text-white/45">
@@ -327,11 +333,11 @@ export default function Home() {
           <Reveal direction="up">
             <div>
               <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-[#3f7edb]">
-                <span data-cms-field="catalogLabel">{home.catalogLabel}</span>
+                <span data-cms-field="catalogLabel" style={typeStyle("catalogLabel", true)}>{home.catalogLabel}</span>
               </p>
 
               <h2 className="mt-5 text-[2.65rem] font-medium leading-[0.98] tracking-[-0.045em]">
-                <span data-cms-field="catalogTitle">{home.catalogTitle}</span>
+                <span data-cms-field="catalogTitle" style={typeStyle("catalogTitle", true)}>{home.catalogTitle}</span>
               </h2>
 
               <p className="mt-6 text-sm leading-6 text-black/45">
@@ -352,11 +358,11 @@ export default function Home() {
           <Reveal direction="up">
             <div>
               <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-[#3f7edb]">
-                <span data-cms-field="servicesLabel">{home.servicesLabel}</span>
+                <span data-cms-field="servicesLabel" style={typeStyle("servicesLabel", true)}>{home.servicesLabel}</span>
               </p>
 
               <h2 className="mt-5 text-[2.65rem] font-medium leading-[0.98] tracking-[-0.045em]">
-                <span data-cms-field="servicesTitle">{home.servicesTitle}</span>
+                <span data-cms-field="servicesTitle" style={typeStyle("servicesTitle", true)}>{home.servicesTitle}</span>
               </h2>
 
               <p className="mt-7 border-t border-black/10 pt-7 text-[15px] leading-7 text-black/55">
@@ -384,11 +390,11 @@ export default function Home() {
           <div className="relative">
             <Reveal direction="up">
               <p className="text-[10px] font-medium uppercase tracking-[0.28em] text-white/60">
-                <span data-cms-field="contactLabel">{home.contactLabel}</span>
+                <span data-cms-field="contactLabel" style={typeStyle("contactLabel", true)}>{home.contactLabel}</span>
               </p>
 
               <h2 className="mt-5 text-[2.65rem] font-medium leading-[0.98] tracking-[-0.045em]">
-                <span data-cms-field="contactTitle">{home.contactTitle}</span>
+                <span data-cms-field="contactTitle" style={typeStyle("contactTitle", true)}>{home.contactTitle}</span>
               </h2>
 
               <p className="mt-7 border-t border-white/20 pt-7 text-[15px] leading-7 text-white/70">
@@ -431,7 +437,7 @@ export default function Home() {
               {/* LEFT */}
               <Reveal direction="fade" duration={1}>
                 <div className="relative z-20">
-                  <h1 data-cms-field="heroTitle" className="max-w-4xl text-[clamp(3rem,5.1vw,5.8rem)] font-medium leading-[0.94] tracking-[-0.045em]">
+                  <h1 data-cms-field="heroTitle" style={typeStyle("heroTitle", false)} className="max-w-4xl text-[clamp(3rem,5.1vw,5.8rem)] font-medium leading-[0.94] tracking-[-0.045em]">
                     {home.heroTitle.split("\n").map((line, index) => (
                     <span key={index}>{index > 0 && <br />}{line}</span>
                   ))}
@@ -564,11 +570,11 @@ export default function Home() {
             <Reveal direction="right">
               <div className="max-w-5xl">
                 <p className="text-xs font-medium uppercase tracking-[0.3em] text-[#3f7edb]">
-                  <span data-cms-field="aboutLabel">{home.aboutLabel}</span>
+                  <span data-cms-field="aboutLabel" style={typeStyle("aboutLabel", false)}>{home.aboutLabel}</span>
                 </p>
 
                 <h2 className="mt-6 max-w-4xl text-4xl font-medium leading-[1.04] tracking-[-0.035em] sm:text-5xl lg:text-6xl">
-                  <span data-cms-field="aboutTitle">{home.aboutTitle}</span>
+                  <span data-cms-field="aboutTitle" style={typeStyle("aboutTitle", false)}>{home.aboutTitle}</span>
                 </h2>
 
                 <div className="mt-10 grid max-w-5xl gap-8 border-t border-black/10 pt-10 md:grid-cols-2">
@@ -623,11 +629,11 @@ export default function Home() {
               <div className="mt-28">
                 <div className="max-w-5xl">
                   <p className="text-xs font-medium uppercase tracking-[0.3em] text-[#3f7edb]">
-                    <span data-cms-field="partnersLabel">{home.partnersLabel}</span>
+                    <span data-cms-field="partnersLabel" style={typeStyle("partnersLabel", false)}>{home.partnersLabel}</span>
                   </p>
 
                   <h2 className="mt-6 max-w-4xl text-4xl font-medium leading-[1.04] tracking-[-0.035em] sm:text-5xl lg:text-6xl">
-                    <span data-cms-field="partnersTitle">{home.partnersTitle}</span>
+                    <span data-cms-field="partnersTitle" style={typeStyle("partnersTitle", false)}>{home.partnersTitle}</span>
                   </h2>
 
                   <p className="mt-8 max-w-2xl text-sm leading-7 text-black/45">
@@ -653,11 +659,11 @@ export default function Home() {
             <Reveal direction="up">
               <div className="max-w-5xl">
                 <p className="text-xs font-medium uppercase tracking-[0.3em] text-[#6ea4f1]">
-                  <span data-cms-field="productsLabel">{home.productsLabel}</span>
+                  <span data-cms-field="productsLabel" style={typeStyle("productsLabel", false)}>{home.productsLabel}</span>
                 </p>
 
                 <h2 className="mt-6 max-w-4xl text-4xl font-medium leading-[1.04] tracking-[-0.035em] sm:text-5xl lg:text-6xl">
-                  <span data-cms-field="productsTitle">{home.productsTitle}</span>
+                  <span data-cms-field="productsTitle" style={typeStyle("productsTitle", false)}>{home.productsTitle}</span>
                 </h2>
 
                 <div className="mt-10 flex flex-col gap-8 border-t border-white/10 pt-10 sm:flex-row sm:items-end sm:justify-between">
@@ -710,7 +716,7 @@ export default function Home() {
                   {/* TEXT */}
                   <div>
                     <h3 className="whitespace-pre-line text-4xl font-medium leading-[1.04] tracking-[-0.035em] sm:text-5xl lg:text-6xl">
-                      <span data-cms-field="featuredTitle">{home.featuredTitle}</span>
+                      <span data-cms-field="featuredTitle" style={typeStyle("featuredTitle", false)}>{home.featuredTitle}</span>
                     </h3>
 
                     <p className="mt-7 max-w-lg text-base leading-8 text-white/45">
@@ -731,11 +737,11 @@ export default function Home() {
             <Reveal direction="up">
               <div className="max-w-5xl">
                 <p className="text-xs font-medium uppercase tracking-[0.3em] text-[#3f7edb]">
-                  <span data-cms-field="catalogLabel">{home.catalogLabel}</span>
+                  <span data-cms-field="catalogLabel" style={typeStyle("catalogLabel", false)}>{home.catalogLabel}</span>
                 </p>
 
                 <h2 className="mt-6 max-w-4xl text-4xl font-medium leading-[1.04] tracking-[-0.035em] sm:text-5xl lg:text-6xl">
-                  <span data-cms-field="catalogTitle">{home.catalogTitle}</span>
+                  <span data-cms-field="catalogTitle" style={typeStyle("catalogTitle", false)}>{home.catalogTitle}</span>
                 </h2>
 
                 <p className="mt-8 max-w-2xl text-sm leading-7 text-black/45">
@@ -758,11 +764,11 @@ export default function Home() {
             <Reveal direction="left">
               <div className="max-w-5xl">
                 <p className="text-xs font-medium uppercase tracking-[0.3em] text-[#3f7edb]">
-                  <span data-cms-field="servicesLabel">{home.servicesLabel}</span>
+                  <span data-cms-field="servicesLabel" style={typeStyle("servicesLabel", false)}>{home.servicesLabel}</span>
                 </p>
 
                 <h2 className="mt-6 max-w-4xl text-4xl font-medium leading-[1.04] tracking-[-0.035em] sm:text-5xl lg:text-6xl">
-                  <span data-cms-field="servicesTitle">{home.servicesTitle}</span>
+                  <span data-cms-field="servicesTitle" style={typeStyle("servicesTitle", false)}>{home.servicesTitle}</span>
                 </h2>
 
                 <div className="mt-10 flex flex-col gap-8 border-t border-black/10 pt-10 sm:flex-row sm:items-end sm:justify-between">
@@ -796,11 +802,11 @@ export default function Home() {
             <Reveal direction="up">
               <div className="max-w-5xl">
                 <p className="text-xs font-medium uppercase tracking-[0.3em] text-white/65">
-                  <span data-cms-field="contactLabel">{home.contactLabel}</span>
+                  <span data-cms-field="contactLabel" style={typeStyle("contactLabel", false)}>{home.contactLabel}</span>
                 </p>
 
                 <h2 className="mt-6 max-w-4xl text-4xl font-medium leading-[1.04] tracking-[-0.035em] sm:text-5xl lg:text-6xl">
-                  <span data-cms-field="contactTitle">{home.contactTitle}</span>
+                  <span data-cms-field="contactTitle" style={typeStyle("contactTitle", false)}>{home.contactTitle}</span>
                 </h2>
 
                 <div className="mt-10 flex flex-col gap-10 border-t border-white/20 pt-10 sm:flex-row sm:items-end sm:justify-between">

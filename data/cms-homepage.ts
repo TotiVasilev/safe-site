@@ -45,6 +45,7 @@ export type Homepage = {
   secondaryLink: string;
   contactLink: string;
   partners: Partner[];
+  typography?: Record<string, {desktop?:number;mobile?:number;bold?:boolean}>;
 };
 
 export function getHomepage(): Homepage {

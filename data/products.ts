@@ -37,6 +37,8 @@ export type ProductFamily = {
   image?: string;
   cardLabel?: string;
   modelDrawing?: string;
+  lockCollection?: boolean;
+  lockItems?: {name:string;cardLabel?:string;description?:string;image?:string}[];
   images?: string[];
   models: ProductModel[];
 };

@@ -88,6 +88,13 @@ function product(entry: Entry): ProductFamily {
     image: text(entry.image) || undefined,
     cardLabel: text(entry.cardLabel) || undefined,
     modelDrawing: text(entry.modelDrawing) || undefined,
+    lockCollection: entry.lockCollection === true,
+    lockItems: Array.isArray(entry.lockItems) ? entry.lockItems.flatMap(raw => {
+      if (!raw || typeof raw !== "object") return [];
+      const item = raw as Record<string, unknown>;
+      const name = text(item.name);
+      return name ? [{name, cardLabel:text(item.cardLabel), description:text(item.description), image:text(item.image)}] : [];
+    }) : [],
     images: Array.isArray(entry.images)
       ? entry.images.map(text).filter(Boolean)
       : [],
