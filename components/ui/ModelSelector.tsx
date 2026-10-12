@@ -8,17 +8,34 @@ type Props = { models: ProductModel[]; drawing?: string; productName: string };
 
 function parseDimensions(value?: string) {
   if (!value) return ["—", "—", "—"];
-  const parts = value.split(/\\s*[x×хХ;,/]\\s*/i).map((part) => part.trim()).filter(Boolean);
+  const parts = value.split(/\s*[x×хХ;,/]\s*/i).map((part) => part.trim()).filter(Boolean);
   return parts.length === 3 ? parts : [value, "—", "—"];
+}
+
+function DimensionColumn({ title, values, labels }: { title: string; values: string[]; labels: string[] }) {
+  return (
+    <div className="min-w-0">
+      <h4 className="mb-3 text-center text-xs font-medium text-black/65 sm:text-sm">{title}</h4>
+      <dl className="space-y-2">
+        {values.map((value, index) => (
+          <div key={labels[index]} className="min-w-0 rounded-xl bg-neutral-50 px-3 py-3">
+            <dt className="text-xs text-black/45">{labels[index]}</dt>
+            <dd className="mt-1 break-words text-lg font-medium tabular-nums sm:text-xl">{value || "—"}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  );
 }
 
 export default function ModelSelector({ models, drawing, productName }: Props) {
   const [selected, setSelected] = useState(0);
   const model = models[selected];
   if (!model) return null;
+
   const legacyExternal = parseDimensions(model.dimensions);
-  const external = [model.height || legacyExternal[0], model.width || legacyExternal[1], model.depth || legacyExternal[2]];
   const legacyInternal = parseDimensions(model.internalDimensions);
+  const external = [model.height || legacyExternal[0], model.width || legacyExternal[1], model.depth || legacyExternal[2]];
   const internal = [model.innerHeight || legacyInternal[0], model.innerWidth || legacyInternal[1], model.innerDepth || legacyInternal[2]];
   const hasMeasurements = Boolean(model.dimensions || model.internalDimensions || model.height || model.width || model.depth || model.innerHeight || model.innerWidth || model.innerDepth || model.weight || model.volume || model.resistance);
 
@@ -28,56 +45,65 @@ export default function ModelSelector({ models, drawing, productName }: Props) {
         <p className="text-xs uppercase tracking-[0.3em] text-black/40">Модели</p>
         <h2 className="mt-3 text-3xl font-medium tracking-tight sm:text-4xl">Налични модели</h2>
       </div>
-      <div className="mt-8 grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-12">
-        <div className="overflow-hidden rounded-2xl border border-black/10 bg-neutral-50">
-          <div className="border-b border-black/10 px-6 py-4 text-sm font-medium text-black/65">Схема на размерите</div>
+
+      {/* On desktop the drawing, measurements, and model list are independent columns.
+          Selecting a model changes only the middle column, never the page layout. */}
+      <div className="mt-8 grid items-start gap-5 md:grid-cols-12 lg:gap-6">
+        <div className="min-w-0 overflow-hidden rounded-2xl border border-black/10 bg-neutral-50 md:col-span-5">
+          <div className="border-b border-black/10 px-5 py-4 text-sm font-medium text-black/65">Схема на размерите</div>
           {drawing ? (
             <div className="relative aspect-[4/3] w-full">
-              <Image src={drawing} alt={`Схема на размерите за ${productName}`} fill unoptimized sizes="(max-width: 1024px) 100vw, 50vw" className="object-contain p-5" />
+              <Image src={drawing} alt={`Схема на размерите за ${productName}`} fill unoptimized sizes="(max-width: 767px) 100vw, 42vw" className="object-contain" />
             </div>
           ) : (
-            <div className="flex aspect-[4/3] items-center justify-center px-8 text-center text-sm leading-6 text-black/45">
+            <div className="flex aspect-[4/3] items-center justify-center px-8 text-center text-sm leading-6 text-black/45 ">
               Техническата схема ще се появи тук, след като бъде добавена в CMS.
             </div>
           )}
-          <p className="border-t border-black/10 px-6 py-3 text-xs text-black/45">Една обща схема за всички модели от серията.</p>
+          <p className="border-t border-black/10 px-5 py-3 text-xs text-black/45">Една обща схема за всички модели от серията.</p>
         </div>
-        <div className="min-w-0">
-          <label htmlFor="product-model-selector" className="mb-3 block text-sm font-medium text-black/65">Изберете модел</label>
-          <select id="product-model-selector" value={selected} onChange={(event) => setSelected(Number(event.target.value))} className="w-full rounded-xl border border-black/15 bg-white px-4 py-4 text-base font-medium outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/15">
-            {models.map((item, index) => <option key={`${item.name}-${index}`} value={index}>{item.name}</option>)}
-          </select>
-          <div className="mt-8 flex items-center justify-between border-b border-black/10 pb-4">
-            <h3 className="text-xl font-medium">Размери на {model.name}</h3>
-            <span className="text-xs text-black/40">mm</span>
+
+        <div className="min-w-0 md:col-span-4">
+          <div className="flex min-h-10 items-center justify-between gap-2 border-b border-black/10 pb-3">
+            <h3 className="min-w-0 break-words text-lg font-medium">Размери на {model.name}</h3>
+            <span className="shrink-0 text-xs text-black/40">mm</span>
           </div>
           {hasMeasurements ? (
             <>
-              <div className="mt-5 grid grid-cols-3 gap-3">
-                {external.map((value, index) => (
-                  <div key={`outer-${index}`} className="rounded-xl bg-neutral-50 p-3 sm:p-4">
-                    <p className="text-xs text-black/50">{["Височина H", "Ширина B", "Дълбочина L"][index]}</p>
-                    <p className="mt-2 break-words text-lg font-medium sm:text-2xl">{value}</p>
-                    <p className="text-xs text-black/35">Външен размер</p>
-                  </div>
-                ))}
-                {internal.map((value, index) => (
-                  <div key={`inner-${index}`} className="rounded-xl bg-neutral-50 p-3 sm:p-4">
-                    <p className="text-xs text-black/50">{["Височина H₁", "Ширина B₁", "Дълбочина L₁"][index]}</p>
-                    <p className="mt-2 break-words text-lg font-medium sm:text-2xl">{value}</p>
-                    <p className="text-xs text-black/35">Вътрешен размер</p>
-                  </div>
-                ))}
+              <div className="mt-4 grid grid-cols-2 gap-2">
+                <DimensionColumn title="Външни размери" values={external} labels={["Височина H", "Ширина B", "Дълбочина L"]} />
+                <DimensionColumn title="Вътрешни размери" values={internal} labels={["Височина H₁", "Ширина B₁", "Дълбочина L₁"]} />
               </div>
               {(model.weight || model.volume || model.resistance) && (
-                <dl className="mt-5 divide-y divide-black/10 rounded-xl border border-black/10 px-5">
-                  {model.weight && <div className="flex justify-between gap-4 py-4"><dt className="text-black/55">Маса</dt><dd className="font-medium">{model.weight}</dd></div>}
-                  {model.volume && <div className="flex justify-between gap-4 py-4"><dt className="text-black/55">Обем</dt><dd className="font-medium">{model.volume}</dd></div>}
-                  {model.resistance && <div className="flex justify-between gap-4 py-4"><dt className="text-black/55">Клас на устойчивост</dt><dd className="font-medium">{model.resistance}</dd></div>}
+                <dl className="mt-3 divide-y divide-black/10 rounded-xl border border-black/10 px-4">
+                  {model.weight && <div className="flex justify-between gap-4 py-3 text-sm"><dt className="text-black/55">Маса</dt><dd className="font-medium">{model.weight}</dd></div>}
+                  {model.volume && <div className="flex justify-between gap-4 py-3 text-sm"><dt className="text-black/55">Обем</dt><dd className="font-medium">{model.volume}</dd></div>}
+                  {model.resistance && <div className="flex justify-between gap-4 py-3 text-sm"><dt className="text-black/55">Клас на устойчивост</dt><dd className="font-medium">{model.resistance}</dd></div>}
                 </dl>
               )}
             </>
-          ) : <p className="mt-6 rounded-xl bg-neutral-50 p-5 text-sm leading-6 text-black/55">Размерите за този модел все още не са въведени.</p>}
+          ) : (
+            <p className="mt-4 rounded-xl bg-neutral-50 p-5 text-sm leading-6 text-black/55">Размерите за този модел все още не са въведени.</p>
+          )}
+        </div>
+
+        <div className="min-w-0 md:col-span-3">
+          <div className="flex min-h-10 items-center justify-between gap-2 border-b border-black/10 pb-3">
+            <h3 className="text-sm font-medium text-black/70">Изберете модел</h3>
+          </div>
+          <div className={`mt-4 grid gap-2 ${models.length <= 2 ? "grid-cols-1" : "grid-cols-2"}`} role="group" aria-label="Изберете модел">
+            {models.map((item, index) => (
+              <button
+                key={`${item.name}-${index}`}
+                type="button"
+                aria-pressed={selected === index}
+                onClick={() => setSelected(index)}
+                className={`min-w-0 rounded-lg border px-2 py-3 text-center text-xs font-medium transition-colors sm:text-sm ${selected === index ? "border-[#3f7edb] bg-[#3f7edb]/10 text-[#3f7edb]" : "border-black/10 bg-neutral-50 text-black/70 hover:border-black/25 hover:bg-neutral-100"}`}
+              >
+                <span className="break-words">{item.name}</span>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </section>
