@@ -16,14 +16,14 @@ description: >-
 
 
   Отговаря на наредба на БНБ №8121з-444 за сейфове.
-image: /products/uploads/fixed-typearazmeri-skica-1.png
+image: /products/uploads/typea-removebg-preview.png
 images:
   - /products/uploads/typea-2-.png
   - /products/uploads/typea-3-.png
   - /products/uploads/typea-4-.png
   - /products/uploads/typea-5-.png
   - /products/uploads/typea.png
-modelDrawing: /products/uploads/fixed-typearazmeri-skica.png
+modelDrawing: /products/uploads/fixed-typearazmeri-skica-1.png
 models:
   - name: A-802
     height: 550
