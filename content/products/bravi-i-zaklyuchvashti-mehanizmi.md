@@ -22,7 +22,7 @@ lockItems:
       Съответства на стандарта UL. Лека и здрава сплав „Замак". Лост за
       деактивиране.
   - name: Механични брави
-    image: /products/uploads/mehanichni-bravi.jpg
+    image: /products/uploads/mehanichni-bravi1.png
     description: Механичните брави за сейфове с двойно нарязани ключове на водещите
       производители KABA, STUV, WITTKOPP, LEBTIG, SG са най-надеждното решение
       за продукти до Х степен на съпротивление по EN1143-1.
@@ -41,7 +41,7 @@ image: /products/uploads/safe-kluckalki-icon.png
 images:
   - /products/uploads/mehanichni-kodovi-bravi.jpg
   - /products/uploads/stb_1600m.png
-  - /products/uploads/mehanichni-bravi.jpg
+  - /products/uploads/mehanichni-bravi1.png
   - /products/uploads/mehanichna-brava.png
   - /products/uploads/elektronni-kodovi-bravi.png
 ---
