@@ -1,5 +1,6 @@
 ---
 title: Сейф Тип A
+urlSlug: seyf-tip-a
 category: seyfove
 subcategory: svobodnostoyashti
 order: 10
@@ -22,7 +23,7 @@ images:
   - /products/uploads/typea-4-.png
   - /products/uploads/typea-5-.png
   - /products/uploads/typea.png
-modelDrawing: /products/uploads/typearazmeri.png
+modelDrawing: /products/uploads/fixed-typearazmeri-skica.png
 models:
   - name: A-802
     height: 550
