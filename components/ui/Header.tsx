@@ -4,11 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail } from "lucide-react";
 
 export default function Header({ contact }: { contact: {phone:string;email:string;address:string;locationLabel:string} }) {
   const pathname = usePathname();
-  const [addressOpen, setAddressOpen] = useState(false);
 
   const [scrolled, setScrolled] =
     useState(false);
@@ -148,7 +147,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
             : "bg-[#f5f5f4]/95 backdrop-blur-md"
         }`}
       >
-        <div className="relative z-30 mx-auto flex h-20 w-full max-w-7xl items-center justify-between gap-4 px-5 lg:px-12 xl:gap-5">
+        <div className="relative z-30 mx-auto flex h-20 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-0">
           {/* LOGO */}
 
           <Link
@@ -170,7 +169,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
 
           {/* DESKTOP NAVIGATION */}
 
-          <nav className="ml-auto hidden shrink-0 items-center gap-1 xl:flex">
+          <nav className="absolute left-[calc(50%-133px)] hidden shrink-0 items-center gap-1 xl:flex">
             <Link
               href="/"
               className={desktopNavClass(
@@ -208,17 +207,14 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
             </button>
           </nav>
 
-          {/* Contact details follow the original right-positioned navigation, rather than centering it. */}
-          {(contact.phone || contact.email || contact.address) && (
-            <div className="relative ml-2 hidden shrink-0 items-center gap-2 xl:flex">
+          {/* Phone and email stay stacked at the right content edge. */}
+          {(contact.phone || contact.email) && (
+            <div className="ml-auto hidden shrink-0 items-center xl:flex">
               <div className="flex flex-col items-start gap-1 text-[11px] text-black/60">
                 {contact.phone && <a className="flex items-center gap-2 hover:text-[#3f7edb]" href={`tel:${contact.phone.replace(/\s/g, "")}`}><Phone size={13} aria-hidden="true" />{contact.phone}</a>}
                 {contact.email && <a className="flex items-center gap-2 hover:text-[#3f7edb]" href={`mailto:${contact.email}`}><Mail size={13} aria-hidden="true" />{contact.email}</a>}
               </div>
-              {contact.address && <div className="relative">
-                <button type="button" aria-label="Покажи адрес" aria-expanded={addressOpen} onClick={() => setAddressOpen(v => !v)} className="flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-[#3f7edb] transition-colors hover:bg-white/70"><MapPin size={18} aria-hidden="true" /></button>
-                {addressOpen && <div className="absolute right-0 top-full z-[110] mt-3 w-64 rounded-xl border border-black/10 bg-white p-4 text-sm shadow-lg"><p className="mb-2 font-medium">{contact.locationLabel}</p><a className="text-[#3f7edb] hover:text-black" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(contact.address)}`} target="_blank" rel="noopener noreferrer">{contact.address} ↗</a></div>}
-              </div>}
+
             </div>
           )}
           {/* MOBILE BUTTON */}
@@ -303,10 +299,9 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
                 Услуги и Сервиз
               </Link>
 
-              {(contact.phone || contact.email || contact.address) && <div className="mt-4 flex flex-col gap-2 border-t border-black/10 px-4 pt-4 text-sm text-black/60">
+              {(contact.phone || contact.email) && <div className="mt-4 flex flex-col gap-2 border-t border-black/10 px-4 pt-4 text-sm text-black/60">
                 {contact.phone && <a href={`tel:${contact.phone.replace(/\s/g, "")}`}>{contact.phone}</a>}
                 {contact.email && <a href={`mailto:${contact.email}`}>{contact.email}</a>}
-                {contact.address && <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(contact.address)}`} target="_blank" rel="noopener noreferrer">{contact.locationLabel}: {contact.address} ↗</a>}
               </div>}
               <button
                 type="button"
