@@ -15,13 +15,28 @@ description: Конструкцията е предназначена за де�
   1300. Цветове, габаритни размери, брой на бравите, ключовете, видове защити,
   както и други индивидуални изисквания на клиента извън посочените се договарят
   допълнително.
-image: /products/uploads/typ-lulka.png
+image: /products/uploads/main-typ-lulka.png
 images:
   - /products/uploads/typ-lulka-2-.png
   - /products/uploads/typ-lulka-3-.png
   - /products/uploads/typ-lulka-4-.png
 modelDrawing: /products/uploads/fixed-typ-lulka-skica.png
 models:
-  - name: Тип Люлка
+  - name: L-1
+    height: "1700"
+    width: "700"
+    depth: "900"
+    innerHeight: "1100"
+    innerWidth: "562"
+    innerDepth: "696"
+    weight: "1440"
+  - name: L-2
+    height: "1600"
+    width: "700"
+    depth: "800"
+    innerHeight: "1000"
+    innerWidth: "562"
+    innerDepth: "596"
+    weight: "1350"
 slug: depozit-seyf-lyulka
 ---
