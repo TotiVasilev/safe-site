@@ -18,10 +18,31 @@ description: >-
   Отговаря на наредба на БНБ №8121з-444 за сейфове.
 models:
   - name: WH1200
+    height: "600"
+    width: "1200"
+    depth: "600"
+    innerHeight: "422"
+    innerWidth: "465"
+    innerDepth: "376"
+    weight: "810"
   - name: WH1400
+    height: "700"
+    width: "1200"
+    depth: "600"
+    innerHeight: "522"
+    innerWidth: "465"
+    innerDepth: "376"
+    weight: "920"
   - name: WH1600
+    height: "800"
+    width: "1200"
+    depth: "600"
+    innerHeight: "622"
+    innerWidth: "465"
+    innerDepth: "376"
+    weight: "1030"
 slug: seyf-tip-wh
-image: /products/uploads/tipwh.png
+image: /products/uploads/main-tipwh.png
 images: []
 modelDrawing: /products/uploads/fixed-typ-wh-skica.png
 ---
