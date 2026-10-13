@@ -20,8 +20,15 @@ description: >-
   Отговаря на наредба на БНБ №8121з-444  за сейфове.
 models:
   - name: ET
+    height: "1800"
+    width: "900"
+    depth: "650"
+    innerHeight: "1622"
+    innerWidth: "722"
+    innerDepth: "426"
+    weight: "1430"
 slug: tip-et
-image: /products/uploads/typ-et.png
+image: /products/uploads/main-typ-et-2-.png
 images:
   - /products/uploads/typ-et-2-.png
 modelDrawing: /products/uploads/fixed-typ-et-skica.png
