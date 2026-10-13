@@ -1,5 +1,6 @@
 ---
-models: []
+models:
+  - name: Домашен сейф
 slug: domashen-seyf
 title: Домашен сейф
 urlSlug: domashen-seyf
