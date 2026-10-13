@@ -5,12 +5,18 @@ category: seyfove
 subcategory: dvukrilni-trezorni-seyfove
 order: 10
 cardLabel: Степен V по EN 1143-1
-description: |-
+catalogDescription: |-
   Двукрил сейф категория V с модулни депозитни сейфове. 
   Kомплектова се минимум с два броя брави клас В по ЕN 1300.
-image: /products/uploads/typ-dd.png
-modelDrawing: /products/uploads/fixed-typ-dd-skica.png
 models:
   - name: DD
 slug: tip-dd
+description: Сейфа е предназначен за малки банкови офиси в които няма изградени
+  специални помещения оборудвани като граждански трезор. Представлява сейф с две
+  врати от които едната „покриващата“ се комплектова минимум с два броя брави
+  клас В по ЕN 1300. Сейфа е проектиран за V степен на съпротивление по смисъла
+  на EN 1143-1. В него са монтирани модулно депозитни сейфове с режим на
+  отключване „разрешение банка-еднократо отключване и заключване на клиента“.
+image: /products/uploads/typ-dd.png
+modelDrawing: /products/uploads/fixed-typ-dd-skica.png
 ---
