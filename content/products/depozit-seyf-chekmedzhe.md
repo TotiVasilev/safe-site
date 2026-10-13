@@ -13,8 +13,9 @@ description: Сейфа е предназначен за депозиране н
   при стандартно изпълнение с два броя брави клас В по EN 1300. Цветове,
   габаритни размери, брой на бравите, ключовете, видове защити, както и други
   индивидуални изисквания на клиента извън посочените се договарят допълнително.
-image: /products/uploads/typ-chekmedje.png
+image: /products/uploads/main-typ-chekmedje.png
 images:
+  - /products/uploads/typ-chekmedje.png
   - /products/uploads/typ-lulka-3-.png
   - /products/uploads/typ-lulka-2-.png
 modelDrawing: /products/uploads/fixed-typ-chekmedje-skica.png
