@@ -1,5 +1,6 @@
 ---
-models: []
+models:
+  - name: Мултисейф
 slug: depozit-seyf-typ-multiseyf
 title: Тип Мултисейф(Таймбокс)
 urlSlug: depozit-seyf-lyulka-vutreshen
