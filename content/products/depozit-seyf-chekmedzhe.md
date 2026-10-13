@@ -20,6 +20,21 @@ images:
   - /products/uploads/typ-lulka-2-.png
 modelDrawing: /products/uploads/fixed-typ-chekmedje-skica.png
 models:
-  - name: Тип Чекмедже
+  - name: SH-1
+    height: "1500"
+    width: "700"
+    depth: "800"
+    innerHeight: "1290"
+    innerWidth: "490"
+    innerDepth: "596"
+    weight: "1250"
+  - name: SH-2
+    height: "1600"
+    width: "700"
+    depth: "800"
+    innerHeight: "1390"
+    innerWidth: "490"
+    innerDepth: "596"
+    weight: "1350"
 slug: depozit-seyf-chekmedzhe
 ---
