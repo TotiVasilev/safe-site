@@ -14,7 +14,9 @@ description: Блок сейфовете са лични сейфове за с�
   400 мм. В таблицата е посочен състава от клетки на 10 стандартни модула.По
   желание на клиента се разработнат и други варианти. Стандартен цвят-светлосив
   хамершлак.
-image: /products/uploads/blok-seyfove.png
+image: /products/uploads/main-blok-seyfove.png
+images:
+  - /products/uploads/blok-seyfove.png
 modelDrawing: /products/uploads/fixed-blok-seyfove-skica.png
 models:
   - name: Блок сейфове
