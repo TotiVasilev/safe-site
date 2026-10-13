@@ -21,6 +21,7 @@ images:
   - /products/uploads/typ-lulka-3-.png
   - /products/uploads/typ-lulka-4-.png
 modelDrawing: /products/uploads/fixed-typ-lulka-skica.png
-models: []
+models:
+  - name: Тип Люлка
 slug: depozit-seyf-lyulka
 ---
