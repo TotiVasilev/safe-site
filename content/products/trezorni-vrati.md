@@ -9,7 +9,17 @@ catalogDescription: |-
   Отговаря на наредба на БНБ за трезорни помещения.
 models:
   - name: "310"
+    height: "2180"
+    width: "1205"
+    depth: "360"
+    weight: "1950"
+    resistance: X
   - name: "320"
+    height: "2000"
+    width: "1000"
+    depth: "360"
+    weight: "1450"
+    resistance: VII
 slug: trezorni-vrati
 description: >-
   Трезорните врати са предназначени за банкови трезори и сигурни помещения и са
