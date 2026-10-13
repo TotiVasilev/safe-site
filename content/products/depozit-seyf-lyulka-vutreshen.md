@@ -1,6 +1,10 @@
 ---
 models:
-  - name: Мултисейф
+  - name: DC
+    height: "650"
+    width: "470"
+    depth: "500"
+    weight: "90"
 slug: depozit-seyf-typ-multiseyf
 title: Тип Мултисейф(Таймбокс)
 urlSlug: depozit-seyf-lyulka-vutreshen
