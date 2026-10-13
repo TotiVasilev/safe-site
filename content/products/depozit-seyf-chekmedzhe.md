@@ -2,6 +2,7 @@
 models: []
 slug: depozit-seyf-chekmedzhe
 title: Депозит Сейф Тип Чекмедже
+urlSlug: depozit-seyf-chekmedzhe
 category: seyfove
 subcategory: depozitni-seyfove
 order: 20
@@ -12,4 +13,5 @@ image: /products/uploads/typ-chekmedje.png
 images:
   - /products/uploads/typ-lulka-3-.png
   - /products/uploads/typ-lulka-2-.png
+modelDrawing: /products/uploads/fixed-typ-chekmedje-skica.png
 ---
