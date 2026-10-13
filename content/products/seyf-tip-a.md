@@ -16,7 +16,7 @@ description: >-
 
 
   Отговаря на наредба на БНБ №8121з-444 за сейфове.
-image: /products/uploads/typea-removebg-preview.png
+image: /products/uploads/fixed-typea-main.png
 images:
   - /products/uploads/typea-2-.png
   - /products/uploads/typea-3-.png
