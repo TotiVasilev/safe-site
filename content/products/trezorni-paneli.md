@@ -11,6 +11,9 @@ catalogDescription: >-
   Панелите са потвърждавали многократно при тестови изпитвания съгласно EN 1143-1.
 models:
   - name: Тип T
+    depth: "50"
+    weight: "67"
+    resistance: II
   - name: Тип E
   - name: Тип Sx
 slug: trezorni-paneli
@@ -27,6 +30,6 @@ description: >-
 
 
   Отговаря на наредба на БНБ за трезорни помещения.
-image: /products/uploads/trezorni-paneli.png
+image: /products/uploads/main-trezorni-paneli.png
 modelDrawing: /products/uploads/fixed-trezorni-paneli-skica.png
 ---
