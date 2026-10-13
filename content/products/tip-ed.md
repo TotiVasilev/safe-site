@@ -20,11 +20,24 @@ description: >-
   Отговаря на наредба на БНБ №8121з-444  за сейфове.
 models:
   - name: ED1
+    height: "1900"
+    width: "900"
+    depth: "650"
+    innerHeight: "1722"
+    innerWidth: "722"
+    innerDepth: "426"
+    weight: "1800"
   - name: ED2
+    height: "1800"
+    width: "900"
+    depth: "650"
+    innerHeight: "1622"
+    innerWidth: "722"
+    innerDepth: "426"
+    weight: "1600"
 slug: tip-ed
-image: /products/uploads/typ-ed.png
+image: /products/uploads/typ-ed-3-.png
 images:
   - /products/uploads/typ-ed-2-.png
-  - /products/uploads/typ-ed-3-.png
 modelDrawing: /products/uploads/fixed-typ-ed-skica.png
 ---
