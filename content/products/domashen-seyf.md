@@ -1,6 +1,13 @@
 ---
 models:
   - name: Домашен сейф
+    height: "350"
+    width: "450"
+    depth: "350"
+    innerHeight: "260"
+    innerWidth: "370"
+    innerDepth: "225"
+    weight: "90"
 slug: domashen-seyf
 title: Домашен сейф
 urlSlug: domashen-seyf
