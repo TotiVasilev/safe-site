@@ -16,6 +16,7 @@ description: Блок сейфовете са лични сейфове за с�
   хамершлак.
 image: /products/uploads/blok-seyfove.png
 modelDrawing: /products/uploads/fixed-blok-seyfove-skica.png
-models: []
+models:
+  - name: Блок сейфове
 slug: blok-seyfove
 ---
