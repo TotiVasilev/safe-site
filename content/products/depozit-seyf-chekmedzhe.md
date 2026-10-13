@@ -18,6 +18,7 @@ images:
   - /products/uploads/typ-lulka-3-.png
   - /products/uploads/typ-lulka-2-.png
 modelDrawing: /products/uploads/fixed-typ-chekmedje-skica.png
-models: []
+models:
+  - name: Тип Чекмедже
 slug: depozit-seyf-chekmedzhe
 ---
