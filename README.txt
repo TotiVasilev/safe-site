@@ -1,0 +1,1 @@
+Copy app/blue-home.css and public/services/service-illustration.webp into matching folders in your project. IMPORTANT: this stylesheet is based on the blue-home-fade.css version available here; if you have made newer CSS edits, append only the final Services illustration block instead of replacing the entire CSS. Restart Next.js and hard-refresh the page.

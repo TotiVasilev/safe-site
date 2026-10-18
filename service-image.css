@@ -1,0 +1,17 @@
+/* Add at the very end of app/blue-home.css */
+.blue-site .b-service-image {
+  background-image: url('/services/service-illustration.webp');
+  background-color: transparent;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  box-shadow: none;
+  min-height: 540px;
+}
+.blue-site .b-service-image::after { display: none; }
+@media (max-width: 900px) {
+  .blue-site .b-service-image { min-height: 400px; }
+}
+@media (max-width: 600px) {
+  .blue-site .b-service-image { min-height: 310px; }
+}
