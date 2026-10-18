@@ -70,3 +70,11 @@
     filter: none;
   }
 }
+
+/* Match the navigation brand: same family, medium weight, tracking and blue. */
+.about-logo-reveal__wordmark {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  letter-spacing: .005em;
+  color: #3f7edb;
+}

@@ -117,10 +117,155 @@
   .blue-site .b-stack-fade { transition-duration: 0ms; }
 }
 
-
 /* Services illustration — replaces the original photo. */
 .blue-site .b-service-image {
   background: transparent url("/services/service-illustration.webp") center center / contain no-repeat;
   box-shadow: none;
 }
 .blue-site .b-service-image::after { display: none; }
+
+/* Motion polish: one-time intersection reveals. Layout and positions are unchanged. */
+.blue-site .about-logo-reveal { background: transparent; border: 0; }
+.blue-site .b-hero-media-reveal { width:100%; min-width:0; }
+.blue-site .b-hero-media-reveal .b-stack { width:100%; }
+@media (prefers-reduced-motion: no-preference) {
+  .blue-site.motion-ready [data-reveal] { opacity:0; transition-property:opacity,transform,filter; transition-duration:850ms; transition-timing-function:cubic-bezier(.2,.72,.22,1); transition-delay:var(--reveal-delay,0ms); }
+  .blue-site.motion-ready [data-reveal="fade"] { transform:none; }
+  .blue-site.motion-ready [data-reveal="up"] { transform:translate3d(0,28px,0); }
+  .blue-site.motion-ready [data-reveal="down"] { transform:translate3d(0,-30px,0); }
+  .blue-site.motion-ready [data-reveal="right"] { transform:translate3d(48px,0,0); }
+  .blue-site.motion-ready [data-reveal="contact"] { transform:translate3d(0,38px,0) scale(.97); filter:blur(6px); transition-duration:1050ms; }
+  .blue-site.motion-ready [data-reveal].is-revealed { opacity:1; transform:none; filter:none; }
+  /* Disable legacy scroll-timeline animation so it cannot fight the new reveals. */
+  .blue-site .b-intro-grid>div:last-child,.blue-site .b-range-top,.blue-site .b-range-item,.blue-site .b-partners-head,.blue-site .b-service-copy,.blue-site .b-contact h2 { animation:none; animation-timeline:auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .blue-site [data-reveal] { opacity:1!important; transform:none!important; filter:none!important; transition:none!important; }
+}
+
+/* Shared alignment with the desktop navigation (Header.tsx: max-w-7xl).
+   Only foreground content is constrained; section backgrounds stay full-bleed. */
+.blue-site .b-shell,
+.blue-site .b-hero > .b-shell {
+  width: min(calc(100% - 48px), 1280px);
+  max-width: 1280px;
+  margin-inline: auto;
+}
+.blue-site .b-hero-layout,
+.blue-site .b-intro-grid,
+.blue-site .b-service-grid,
+.blue-site .b-range-top,
+.blue-site .b-partners-head,
+.blue-site .b-contact-grid { min-width: 0; }
+.blue-site .b-hero-layout > *,
+.blue-site .b-intro-grid > *,
+.blue-site .b-service-grid > *,
+.blue-site .b-range-top > *,
+.blue-site .b-partners-head > *,
+.blue-site .b-contact-grid > * { min-width: 0; }
+.blue-site .b-hero-media-reveal { max-width: 100%; overflow: hidden; }
+.blue-site .b-hero-text h1,
+.blue-site .b-hero-text p,
+.blue-site .b-about-content h2,
+.blue-site .b-service-copy h2,
+.blue-site .b-contact h2 { overflow-wrap: break-word; }
+@media (min-width: 901px) {
+  .blue-site .b-hero-layout {
+    grid-template-columns: minmax(0, 43%) minmax(0, 57%);
+  }
+  .blue-site .b-hero-text { padding-right: 35px; }
+}
+@media (max-width: 639px) {
+  .blue-site .b-shell,
+  .blue-site .b-hero > .b-shell { width: calc(100% - 40px); }
+}
+
+/* V-next: small desktop-only vertical adjustment, preserving hero height and all dimensions. */
+@media (min-width: 901px) {
+  .blue-site .b-hero-layout > .b-hero-text,
+  .blue-site .b-hero-layout > .b-hero-media-reveal {
+    position: relative;
+    top: -65px;
+  }
+}
+
+/* Restore a smooth category hover, independent of scroll-reveal transitions. */
+.blue-site .b-range-item {
+  transition: padding-left 320ms cubic-bezier(.2,.72,.22,1),
+              background-color 320ms ease,
+              border-color 320ms ease;
+}
+.blue-site .b-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 260ms ease, border-color 260ms ease,
+              transform 260ms cubic-bezier(.2,.72,.22,1), background-color 260ms ease;
+}
+.blue-site .b-secondary:hover,
+.blue-site .b-secondary:focus-visible {
+  color: #2866c3;
+  border-bottom-color: #2866c3;
+  transform: translateY(-3px);
+  background-color: rgba(63,127,221,.06);
+}
+.blue-site .b-secondary:focus-visible { outline: 2px solid #3f7fdd; outline-offset: 5px; }
+
+/* Trigger the catalog as one group so fast scrolling cannot reveal row 5 before row 4. */
+@media (prefers-reduced-motion: no-preference) {
+  .blue-site.motion-ready .b-range-list[data-reveal-group="catalog"] .b-range-item {
+    opacity: 0;
+    transition-property: opacity, padding-left, background-color, border-color;
+    transition-duration: 650ms, 320ms, 320ms, 320ms;
+    transition-timing-function: ease, cubic-bezier(.2,.72,.22,1), ease, ease;
+    transition-delay: 0ms;
+  }
+  .blue-site.motion-ready .b-range-list[data-reveal-group="catalog"].is-revealed .b-range-item {
+    opacity: 1;
+    transition-delay: calc((var(--catalog-index, 0) * 115ms)), 0ms, 0ms, 0ms;
+  }
+}
+
+.blue-site .b-range-item:nth-child(1) { --catalog-index: 0; }
+.blue-site .b-range-item:nth-child(2) { --catalog-index: 1; }
+.blue-site .b-range-item:nth-child(3) { --catalog-index: 2; }
+.blue-site .b-range-item:nth-child(4) { --catalog-index: 3; }
+.blue-site .b-range-item:nth-child(5) { --catalog-index: 4; }
+.blue-site .b-range-item:nth-child(6) { --catalog-index: 5; }
+.blue-site .b-range-item:nth-child(7) { --catalog-index: 6; }
+.blue-site .b-range-item:nth-child(8) { --catalog-index: 7; }
+.blue-site .b-range-item:nth-child(9) { --catalog-index: 8; }
+.blue-site .b-range-item:nth-child(10) { --catalog-index: 9; }
+.blue-site .b-range-item:nth-child(11) { --catalog-index: 10; }
+.blue-site .b-range-item:nth-child(12) { --catalog-index: 11; }
+.blue-site .b-range-item:nth-child(13) { --catalog-index: 12; }
+.blue-site .b-range-item:nth-child(14) { --catalog-index: 13; }
+.blue-site .b-range-item:nth-child(15) { --catalog-index: 14; }
+.blue-site .b-range-item:nth-child(16) { --catalog-index: 15; }
+.blue-site .b-range-item:nth-child(17) { --catalog-index: 16; }
+.blue-site .b-range-item:nth-child(18) { --catalog-index: 17; }
+.blue-site .b-range-item:nth-child(19) { --catalog-index: 18; }
+.blue-site .b-range-item:nth-child(20) { --catalog-index: 19; }
+.blue-site .b-range-item:nth-child(21) { --catalog-index: 20; }
+.blue-site .b-range-item:nth-child(22) { --catalog-index: 21; }
+.blue-site .b-range-item:nth-child(23) { --catalog-index: 22; }
+.blue-site .b-range-item:nth-child(24) { --catalog-index: 23; }
+.blue-site .b-range-item:nth-child(25) { --catalog-index: 24; }
+.blue-site .b-range-item:nth-child(26) { --catalog-index: 25; }
+.blue-site .b-range-item:nth-child(27) { --catalog-index: 26; }
+.blue-site .b-range-item:nth-child(28) { --catalog-index: 27; }
+.blue-site .b-range-item:nth-child(29) { --catalog-index: 28; }
+.blue-site .b-range-item:nth-child(30) { --catalog-index: 29; }
+
+/* Section eyebrow labels: visibly bold, retaining their original 11px size. */
+.blue-site .b-overline {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 900;
+  letter-spacing: .10em;
+  color: var(--blue);
+}
+/* Consultation label remains white against the blue section. */
+.blue-site .b-contact .b-overline {
+  color: #fff;
+  font-weight: 900;
+}

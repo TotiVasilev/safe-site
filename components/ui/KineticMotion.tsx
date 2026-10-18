@@ -1,14 +1,33 @@
 "use client";
-import {useEffect} from "react";
-export default function KineticMotion(){
- useEffect(()=>{
-  const elements=[...document.querySelectorAll<HTMLElement>(".k-statement-main,.k-category-header,.k-category,.k-detail-copy,.k-partner-heading,.k-service-title,.k-end h2")];
-  const obs=new IntersectionObserver(entries=>{for(const entry of entries)if(entry.isIntersecting){entry.target.classList.add("k-in");obs.unobserve(entry.target)}},{threshold:.1,rootMargin:"0px 0px -4% 0px"});
-  elements.forEach(e=>obs.observe(e));
-  let raf=0;
-  const onScroll=()=>{if(raf)return;raf=requestAnimationFrame(()=>{const y=window.scrollY;document.documentElement.style.setProperty("--k-scroll",String(y));raf=0})};
-  onScroll();window.addEventListener("scroll",onScroll,{passive:true});
-  return()=>{obs.disconnect();window.removeEventListener("scroll",onScroll);cancelAnimationFrame(raf);document.documentElement.style.removeProperty("--k-scroll")};
- },[]);
- return null;
+import { useEffect } from "react";
+
+/** Reveal each element once as it enters the viewport; no layout shifts. */
+export default function KineticMotion() {
+  useEffect(() => {
+    const site = document.querySelector<HTMLElement>(".blue-site");
+    if (!site) return;
+    const elements = Array.from(site.querySelectorAll<HTMLElement>("[data-reveal], [data-reveal-group]"));
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+      elements.forEach(el => el.classList.add("is-revealed"));
+      return;
+    }
+    const observer = new IntersectionObserver(entries => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        entry.target.classList.add("is-revealed");
+        observer.unobserve(entry.target);
+      }
+    }, { threshold: 0.08, rootMargin: "0px 0px -6% 0px" });
+    // Activate hidden initial state only after observers are registered.
+    elements.forEach(el => {
+      const delay = el.dataset.revealDelay;
+      if (delay && !el.style.getPropertyValue("--reveal-delay")) {
+        el.style.setProperty("--reveal-delay", `${Number(delay) * 130}ms`);
+      }
+      observer.observe(el);
+    });
+    site.classList.add("motion-ready");
+    return () => { observer.disconnect(); site.classList.remove("motion-ready"); };
+  }, []);
+  return null;
 }
