@@ -12,6 +12,9 @@ function parseDimensions(value?: string) {
   return parts.length === 3 ? parts : [value, "—", "—"];
 }
 
+// Shared color for the model heading and all measurement labels.
+const measurementLabelColor = "text-[#374151]";
+
 export default function ModelSelector({ models, drawing, productName }: Props) {
   const [selected, setSelected] = useState(0);
   const model = models[selected];
@@ -29,9 +32,6 @@ export default function ModelSelector({ models, drawing, productName }: Props) {
         <p className="text-xs uppercase tracking-[0.3em] text-black/40">Модели</p>
         <h2 className="mt-3 text-3xl font-medium tracking-tight sm:text-4xl">Налични модели</h2>
       </div>
-
-      {/* Keep the original two-panel proportions. Model buttons sit above the
-          measurements and wrap left-to-right after the seventh button. */}
       <div className="mt-8 grid items-start gap-8 md:grid-cols-2 lg:gap-10">
         <div className="min-w-0 overflow-hidden rounded-2xl border border-black/10 bg-neutral-50">
           <div className="border-b border-black/10 px-5 py-4 text-sm font-medium text-black/65">Схема на размерите</div>
@@ -46,9 +46,8 @@ export default function ModelSelector({ models, drawing, productName }: Props) {
           )}
           <p className="border-t border-black/10 px-5 py-3 text-xs text-black/45">Една обща схема за всички модели от серията.</p>
         </div>
-
         <div className="min-w-0">
-          <h3 className="mb-3 text-sm font-medium text-black/70">Изберете модел</h3>
+          <h3 className={`mb-3 text-sm font-medium ${measurementLabelColor}`}>Изберете модел</h3>
           <div className="grid grid-cols-3 gap-2 sm:grid-cols-5 lg:grid-cols-7" role="group" aria-label="Изберете модел">
             {models.map((item, index) => (
               <button
@@ -62,7 +61,6 @@ export default function ModelSelector({ models, drawing, productName }: Props) {
               </button>
             ))}
           </div>
-
           <div className="mt-7 flex items-center justify-between gap-2 border-b border-black/10 pb-4">
             <h3 className="min-w-0 break-words text-lg font-medium">Размери на {model.name}</h3>
             <span className="shrink-0 text-xs text-black/40">mm</span>
@@ -79,17 +77,17 @@ export default function ModelSelector({ models, drawing, productName }: Props) {
                   ["Дълбочина L₁", internal[2], "Вътрешен размер"],
                 ].map(([label, value, caption]) => (
                   <div key={label} className="min-w-0 rounded-xl bg-neutral-50 px-3 py-3">
-                    <dt className="text-xs text-black/45">{label}</dt>
+                    <dt className={`text-xs font-medium ${measurementLabelColor}`}>{label}</dt>
                     <dd className="mt-1 break-words text-lg font-medium tabular-nums sm:text-xl">{value || "—"}</dd>
-                    <dd className="text-xs text-black/40">{caption}</dd>
+                    <dd className={`text-xs font-medium ${measurementLabelColor}`}>{caption}</dd>
                   </div>
                 ))}
               </dl>
               {(model.weight || model.volume || model.resistance) && (
                 <dl className="mt-4 divide-y divide-black/10 rounded-xl border border-black/10 px-4">
-                  {model.weight && <div className="flex justify-between gap-4 py-3 text-sm"><dt className="text-black/55">Маса</dt><dd className="font-medium">{model.weight}</dd></div>}
-                  {model.volume && <div className="flex justify-between gap-4 py-3 text-sm"><dt className="text-black/55">Обем</dt><dd className="font-medium">{model.volume}</dd></div>}
-                  {model.resistance && <div className="flex justify-between gap-4 py-3 text-sm"><dt className="text-black/55">Клас на устойчивост</dt><dd className="font-medium">{model.resistance}</dd></div>}
+                  {model.weight && <div className="flex justify-between gap-4 py-3 text-sm"><dt className={`font-medium ${measurementLabelColor}`}>Маса</dt><dd className="font-medium">{model.weight}</dd></div>}
+                  {model.volume && <div className="flex justify-between gap-4 py-3 text-sm"><dt className={`font-medium ${measurementLabelColor}`}>Обем</dt><dd className="font-medium">{model.volume}</dd></div>}
+                  {model.resistance && <div className="flex justify-between gap-4 py-3 text-sm"><dt className={`font-medium ${measurementLabelColor}`}>Клас на устойчивост</dt><dd className="font-medium">{model.resistance}</dd></div>}
                 </dl>
               )}
             </>
