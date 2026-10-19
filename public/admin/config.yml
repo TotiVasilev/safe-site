@@ -292,10 +292,6 @@ collections:
       name: heroDescription
       widget: text
       required: true
-    - label: Фонова снимка
-      name: heroBackground
-      widget: image
-      required: false
     - label: Текст на бутон Продукти
       name: primaryButton
       widget: string
@@ -374,33 +370,9 @@ collections:
       name: productsTitle
       widget: string
       required: true
-    - label: Описание
-      name: productsDescription
-      widget: text
-      required: true
-    - label: Заглавие на представения продукт
-      name: featuredTitle
-      widget: string
-      required: true
-    - label: Описание на представения продукт
-      name: featuredDescription
-      widget: text
-      required: true
     - label: Текст на бутон Каталог
       name: catalogButton
       widget: string
-      required: true
-    - label: Надпис над каталога
-      name: catalogLabel
-      widget: string
-      required: true
-    - label: Заглавие на каталога
-      name: catalogTitle
-      widget: string
-      required: true
-    - label: Описание на каталога
-      name: catalogDescription
-      widget: text
       required: true
     - label: Услуги на началната страница - Надпис
       name: servicesLabel

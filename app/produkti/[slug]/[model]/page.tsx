@@ -98,7 +98,7 @@ export default async function ModelPage({
           </div>
 
           <div className="flex flex-col justify-center">
-            <p className="text-xs uppercase tracking-[0.3em] text-black/40">
+            <p className="text-xs uppercase tracking-[0.3em] text-[#3f7edb]">
               {parentSubcategory || parentCategory}
             </p>
 
@@ -119,7 +119,7 @@ export default async function ModelPage({
 
         <section className="mt-32">
           <div className="border-b border-black/10 pb-6">
-            <p className="text-xs uppercase tracking-[0.3em] text-black/40">
+            <p className="text-xs uppercase tracking-[0.3em] text-[#3f7edb]">
               Характеристики
             </p>
 

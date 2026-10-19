@@ -269,3 +269,33 @@
   color: #fff;
   font-weight: 900;
 }
+
+/* Partners: stacked left copy and full-height right-only continuous logo reel. */
+.blue-site .b-partners-layout { display:grid;grid-template-columns:minmax(0, 1fr) minmax(0, 1fr);gap:clamp(32px,5vw,80px);align-items:stretch; }
+.blue-site .b-partners-head { display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:0;min-width:0; }
+.blue-site .b-partners-head .b-overline { margin-bottom:30px; }
+.blue-site .b-partners-head h2 { max-width:620px; }
+.blue-site .b-partners-head > p { margin-top:25px;max-width:560px;font-size:16px;line-height:1.75;color:#263244; }
+.blue-site .b-partner-marquee { margin:0;min-width:0;min-height:310px;display:flex;align-items:center;padding:20px 0; }
+.blue-site .b-partner-marquee .partners-marquee { width:100%; }
+.blue-site .b-partner-marquee .partner-item { width:290px;height:185px;padding:12px; }
+.blue-site .b-partner-marquee .partner-item > div { border-radius:18px; }
+@media (max-width:900px) {
+ .blue-site .b-partners-layout { grid-template-columns:1fr;gap:35px; }
+ .blue-site .b-partner-marquee { min-height:170px; }
+ .blue-site .b-partner-marquee .partner-item { width:230px;height:135px; }
+}
+
+/* Restore original dark homepage headings and existing homepage paragraph colors. */
+.blue-site .b-intro h2,
+.blue-site .b-partners h2,
+.blue-site .b-service-copy h2,
+.blue-site .b-method h2 { color:var(--ink); }
+/* Keep the original dark-on-blue and white-on-blue section treatments. */
+/* Larger bank artwork within the existing right-hand marquee. */
+.blue-site .b-partner-marquee .partner-item { width:340px; height:205px; padding:8px 16px; }
+.blue-site .b-partner-marquee .partner-logo-artwork { width:290px; height:125px; max-width:100%; }
+@media(max-width:900px){
+  .blue-site .b-partner-marquee .partner-item { width:275px; height:165px; padding:8px 12px; }
+  .blue-site .b-partner-marquee .partner-logo-artwork { width:245px; height:110px; }
+}

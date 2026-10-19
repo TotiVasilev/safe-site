@@ -348,13 +348,13 @@ export default function ProductsCatalog({
           }}
           className="max-w-3xl"
         >
-          <p className="text-[10px] uppercase tracking-[0.28em] text-black/35 sm:text-xs sm:tracking-[0.3em]">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#3f7edb]">
             Каталог
           </p>
-          <h1 className="mt-4 text-[2.8rem] font-medium leading-none tracking-[-0.045em] sm:mt-5 sm:text-6xl lg:text-7xl">
+          <h1 className="mt-4 text-[2.8rem] font-medium leading-none tracking-[-0.045em] sm:mt-5 sm:text-[60px]">
             Продукти
           </h1>
-          <p className="mt-5 max-w-2xl text-[15px] leading-7 text-black/55 sm:mt-6 sm:text-lg sm:leading-8">
+          <p className="mt-5 max-w-2xl text-[15px] leading-7 text-black/75 sm:mt-6 sm:text-lg sm:leading-8">
             Разгледайте нашите решения за
             сигурност, съхранение и защита.
           </p>
@@ -493,7 +493,7 @@ export default function ProductsCatalog({
               >
                 <div className="border-b border-black/10 pb-5 sm:flex sm:items-end sm:justify-between sm:pb-6">
                   <div>
-                    <p className="mb-2 text-[9px] uppercase tracking-[0.25em] text-black/30 sm:mb-3 sm:text-xs">
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#3f7edb] sm:mb-3">
                       Категория
                     </p>
                     <h2 className="text-[2rem] font-medium leading-tight tracking-[-0.035em] sm:text-4xl">
@@ -640,7 +640,7 @@ export default function ProductsCatalog({
                   {currentSubcategory ? (
                     <>
                       <div className="min-w-0 flex-1 pr-12">
-                        <p className="truncate text-[9px] font-medium uppercase tracking-[0.24em] text-[#3f7edb]">
+                        <p className="truncate text-[11px] font-semibold uppercase tracking-[0.12em] text-[#3f7edb]">
                           {currentCategory?.name ??
                             "Каталог"}
                         </p>
@@ -669,7 +669,7 @@ export default function ProductsCatalog({
                   ) : (
                     <>
                       <div className="flex min-h-[52px] w-full items-center pr-12 text-left">
-                        <p className="truncate text-[9px] font-medium uppercase tracking-[0.24em] text-[#3f7edb]">
+                        <p className="truncate text-[11px] font-semibold uppercase tracking-[0.12em] text-[#3f7edb]">
                           {currentCategory?.name ??
                             "Каталог"}
                         </p>
@@ -1060,7 +1060,7 @@ function ProductCard({
         duration: 0.22,
         ease: [0.22, 1, 0.36, 1],
       }}
-      className="group relative min-w-0 overflow-hidden rounded-[18px] border border-black/10 bg-white shadow-[0_1px_0_rgba(0,0,0,0.02)] transition-shadow duration-300 hover:shadow-[0_16px_40px_rgba(0,0,0,0.08)] sm:rounded-2xl"
+      className="group relative min-w-0 overflow-hidden rounded-[18px] border border-black/10 bg-white shadow-[0_1px_0_rgba(0,0,0,0.02)] transition-shadow duration-300 hover:shadow-[0_16px_40px_rgba(63,126,219,0.18)] sm:rounded-2xl"
     >
       <div className="relative h-full w-full text-left">
         <Link href={`/produkti/${product.slug}`} aria-label={`Виж ${product.name}`} className="absolute inset-0 z-10" />
@@ -1114,7 +1114,7 @@ function ProductCard({
 
         <div className="p-3.5 sm:p-6">
           {cardLabel && (
-            <p className="truncate text-[8px] uppercase tracking-[0.18em] text-black/30 sm:text-xs sm:tracking-[0.2em]">
+            <p className="truncate text-[11px] font-semibold uppercase tracking-[0.12em] text-[#3f7edb]">
               {cardLabel}
             </p>
           )}
@@ -1127,7 +1127,7 @@ function ProductCard({
             {product.name}
           </h4>
 
-          <p className="mt-3 hidden line-clamp-2 text-sm leading-6 text-black/50 sm:block">
+          <p className="mt-3 hidden line-clamp-2 text-sm leading-6 text-black/70 sm:block">
             <ProductDescription description={product.catalogDescription || product.description} attachments={product.attachments} />
           </p>
 
@@ -1137,7 +1137,7 @@ function ProductCard({
               {product.models.length === 1 ? "модел" : "модела"}
             </span>
 
-            <span className="mt-2 block text-[10px] font-medium leading-4 sm:mt-0 sm:text-xs">
+            <span className="mt-2 block text-[10px] font-medium leading-4 transition-colors duration-300 group-hover:text-[#3f7edb] sm:mt-0 sm:text-xs">
               Виж продукта
               <span className="ml-1 inline-block transition-transform duration-300 group-hover:translate-x-1">
                 →

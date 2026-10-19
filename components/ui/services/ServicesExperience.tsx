@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import SafeScene from "@/components/ui/services/SafeScene";
+import { ShieldCheck, Wrench, RefreshCw, KeyRound, LockKeyhole, Settings, Hash, SlidersHorizontal, SearchCheck, LockOpen, CircleAlert, Shield, ClipboardList, MessageCircle } from "lucide-react";
 
 import servicesContent from "@/content/services.json";
 
@@ -10,6 +11,15 @@ const services = Array.from({ length: 6 }, (_, index) => ({
   title: servicesContent[`title${index + 1}` as keyof typeof servicesContent],
   description: servicesContent[`description${index + 1}` as keyof typeof servicesContent],
 }));
+
+const serviceDetails = [
+  [{ icon: ShieldCheck, label: "Гаранционно обслужване" }, { icon: Wrench, label: "Диагностика и ремонт" }, { icon: RefreshCw, label: "Подмяна на компоненти" }],
+  [{ icon: KeyRound, label: "Механични ключалки" }, { icon: LockKeyhole, label: "Електронни ключалки" }, { icon: Settings, label: "Монтаж и настройка" }],
+  [{ icon: Hash, label: "Промяна на кодове" }, { icon: ShieldCheck, label: "Контрол на достъпа" }, { icon: Settings, label: "Настройка на системи" }],
+  [{ icon: SearchCheck, label: "Технически преглед" }, { icon: SlidersHorizontal, label: "Проверка и настройка" }, { icon: ShieldCheck, label: "Превенция на повреди" }],
+  [{ icon: LockOpen, label: "Възстановяване на достъпа" }, { icon: CircleAlert, label: "Блокирали механизми" }, { icon: Shield, label: "Внимателна намеса" }],
+  [{ icon: ClipboardList, label: "Оценка на нуждите" }, { icon: ShieldCheck, label: "Избор на защита" }, { icon: MessageCircle, label: "Индивидуално решение" }],
+];
 
 type MobileTextLayout = {
   className: string;
@@ -227,9 +237,11 @@ export default function ServicesExperience() {
   return (
     <main
       onClick={goToNextService}
+      style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
       className="
         relative
         overflow-hidden
+        font-[Arial,Helvetica,sans-serif]
         bg-white
         pt-20
         text-black
@@ -308,17 +320,17 @@ export default function ServicesExperience() {
                 mobileText.width
               }
             >
-              <p className="text-[9px] font-medium uppercase tracking-[0.29em] text-[#3f7edb]">
+              <p className="text-base font-semibold tracking-normal text-[#172033]">
                 Услуги и сервиз
               </p>
 
-              <h1 data-cms-field={`title${activeIndex + 1}`} className="mt-4 text-[1.95rem] font-light leading-[1.02] tracking-[-0.04em]">
+              <h1 data-cms-field={`title${activeIndex + 1}`} className="mt-4 text-[42px] font-medium leading-[1.02] tracking-[-0.045em] text-[#3f7edb]">
                 {activeService.title}
               </h1>
 
               <div className="mt-5 h-px w-12 bg-[#3f7edb]" />
 
-              <p data-cms-field={`description${activeIndex + 1}`} className="mt-5 text-[13px] leading-[1.7] text-black/55">
+              <p data-cms-field={`description${activeIndex + 1}`} className="mt-5 text-[15px] leading-[1.7] text-[#263244]">
                 {
                   activeService.description
                 }
@@ -344,7 +356,7 @@ export default function ServicesExperience() {
           className="absolute left-10 top-1/2 z-30 hidden -translate-y-1/2 xl:block"
         >
           <div className="mb-10">
-            <p className="text-base font-medium uppercase tracking-[0.25em] text-[#3f7edb]">
+            <p className="text-[18px] font-semibold leading-none tracking-normal text-[#172033]">
               Услуги и сервиз
             </p>
           </div>
@@ -464,7 +476,7 @@ export default function ServicesExperience() {
               }}
               className={`absolute top-1/2 z-20 w-[33%] -translate-y-1/2 ${currentLayout.textClass}`}
             >
-              <h1 data-cms-field={`title${activeIndex + 1}`} className="text-[clamp(2.4rem,3.5vw,4.4rem)] font-light leading-[1.02] tracking-[-0.035em]">
+              <h1 data-cms-field={`title${activeIndex + 1}`} className="text-[60px] font-medium leading-[1.04] tracking-[-0.035em] text-[#3f7edb]">
                 {
                   activeService.title
                 }
@@ -472,40 +484,22 @@ export default function ServicesExperience() {
 
               <div className="mt-8 h-px w-16 bg-[#3f7edb]" />
 
-              <p data-cms-field={`description${activeIndex + 1}`} className="mt-8 max-w-xl text-lg leading-8 text-black/55">
+              <p data-cms-field={`description${activeIndex + 1}`} className="mt-8 max-w-xl text-[16px] leading-[1.75] text-[#263244]">
                 {
                   activeService.description
                 }
               </p>
 
-              {/* DETAILS */}
-
+              {/* Service-specific details; preserve the existing three-column row. */}
               <div className="mt-10 grid max-w-xl grid-cols-3 gap-6 border-t border-black/10 pt-8">
-                <div>
-                  <div className="mb-3 h-8 w-8 rounded-full border border-black/15" />
-
-                  <p className="text-sm font-medium">
-                    Професионално
-                    обслужване
-                  </p>
-                </div>
-
-                <div>
-                  <div className="mb-3 h-8 w-8 rounded-full border border-black/15" />
-
-                  <p className="text-sm font-medium">
-                    Бърза реакция
-                  </p>
-                </div>
-
-                <div>
-                  <div className="mb-3 h-8 w-8 rounded-full border border-black/15" />
-
-                  <p className="text-sm font-medium">
-                    Специализиран
-                    екип
-                  </p>
-                </div>
+                {serviceDetails[activeIndex].map(({ icon: Icon, label }, index) => (
+                  <div key={`${activeIndex}-${index}`}>
+                    <div className="mb-3 flex h-8 w-8 items-center justify-center rounded-full border border-[#3f7edb]/35 text-[#3f7edb]">
+                      <Icon size={17} strokeWidth={1.8} aria-hidden="true" />
+                    </div>
+                    <p className="text-sm font-medium leading-5">{label}</p>
+                  </div>
+                ))}
               </div>
             </motion.section>
           </AnimatePresence>

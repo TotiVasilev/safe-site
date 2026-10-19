@@ -103,7 +103,7 @@ export default async function ProductPage({
           />
 
           <div className="flex flex-col justify-center lg:sticky lg:top-28 lg:pt-4">
-            <p className="text-xs uppercase tracking-[0.3em] text-black/40">
+            <p className="text-xs uppercase tracking-[0.3em] text-[#3f7edb]">
               {product.cardLabel ||
                 parentSubcategory ||
                 parentCategory}
