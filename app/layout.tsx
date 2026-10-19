@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Header from "@/components/ui/Header";
+import SiteFooter from "@/components/ui/SiteFooter";
 import { getHeaderContact } from "@/data/cms-header";
 
 const inter = Inter({
@@ -51,6 +52,7 @@ export default function RootLayout({
         <Header contact={getHeaderContact()} />
 
         {children}
+        <SiteFooter />
       </body>
     </html>
   );

@@ -279,6 +279,20 @@ collections:
     - {label: Имейл, name: email, widget: string, required: false}
     - {label: Адрес за Google Maps, name: address, widget: string, required: false}
     - {label: Надпис за адреса, name: locationLabel, widget: string, required: false, default: Адрес}
+  - name: siteFooter
+    label: Футър на сайта
+    file: content/site-footer.json
+    format: json
+    fields:
+    - label: Адрес на фирмата
+      name: address
+      widget: string
+    - label: Линк към Google Maps
+      name: mapsUrl
+      widget: string
+    - label: Текст на линка за личните данни
+      name: privacyLabel
+      widget: string
   - name: homepage
     label: Начална страница
     file: content/homepage.json
@@ -288,6 +302,21 @@ collections:
       name: heroTitle
       widget: text
       required: true
+    - label: Снимки на началния екран (слайдшоу)
+      name: heroSlides
+      widget: list
+      required: false
+      summary: '{{fields.alt}}'
+      hint: Добавяйте, премахвайте и пренареждайте снимките. Смяната е автоматична на всеки 3 секунди.
+      fields:
+      - label: Снимка
+        name: image
+        widget: image
+        required: true
+      - label: Описание на снимката (по избор)
+        name: alt
+        widget: string
+        required: false
     - label: Описание
       name: heroDescription
       widget: text

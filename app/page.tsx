@@ -23,7 +23,7 @@ export default function Home(){
       <p data-reveal="fade" data-reveal-delay="1" data-cms-field="heroDescription">{h.heroDescription}</p>
       <div className="b-actions" data-reveal="up" data-reveal-delay="2"><Link href={h.primaryLink} className="b-primary"><span data-cms-field="primaryButton">{h.primaryButton}</span><span>↗</span></Link><Link href={h.secondaryLink} className="b-secondary"><span data-cms-field="secondaryButton">{h.secondaryButton}</span> ↗</Link></div>
      </div>
-     <div className="b-hero-media-reveal" data-reveal="right" data-reveal-delay="1"><HeroImageStack/></div>
+     <div className="b-hero-media-reveal" data-reveal="right" data-reveal-delay="1"><HeroImageStack slides={h.heroSlides}/></div>
     </div>
    </div>
   </section>
@@ -42,6 +42,6 @@ export default function Home(){
 
   <section className="b-service"><div className="b-shell b-service-grid"><div className="b-service-image" data-reveal="fade"/><div className="b-service-copy" data-reveal="down"><span className="b-overline" data-cms-field="servicesLabel">{h.servicesLabel}</span><h2 data-cms-field="servicesTitle">{h.servicesTitle}</h2><p data-cms-field="servicesDescription">{h.servicesDescription}</p><Link href={h.secondaryLink} className="b-primary"><span data-cms-field="servicesButton">{h.servicesButton}</span><span>↗</span></Link></div></div></section>
 
-  <section className="b-contact"><div className="b-shell"><span className="b-overline" data-reveal="fade" data-cms-field="contactLabel">{h.contactLabel}</span><div className="b-contact-grid"><div><h2 data-reveal="contact" data-cms-field="contactTitle">{h.contactTitle}</h2><p data-reveal="fade" data-reveal-delay="1" data-cms-field="contactDescription">{h.contactDescription}</p></div><Link href={h.contactLink} className="b-contact-action" data-reveal="up" data-reveal-delay="2"><span data-cms-field="contactButton">{h.contactButton}</span><span>↗</span></Link></div><div className="b-contact-footer"><span>ТЕТРАЕДЪР © 2026</span><Link href="/politika-za-zashtita-na-lichnite-danni/" className="b-privacy-link">Политика за защита на личните данни</Link></div></div></section>
+  <section className="b-contact"><div className="b-shell"><span className="b-overline" data-reveal="fade" data-cms-field="contactLabel">{h.contactLabel}</span><div className="b-contact-grid"><div><h2 data-reveal="contact" data-cms-field="contactTitle">{h.contactTitle}</h2><p data-reveal="fade" data-reveal-delay="1" data-cms-field="contactDescription">{h.contactDescription}</p></div><Link href={h.contactLink} className="b-contact-action" data-reveal="up" data-reveal-delay="2"><span data-cms-field="contactButton">{h.contactButton}</span><span>↗</span></Link></div></div></section>
  </main>
 }

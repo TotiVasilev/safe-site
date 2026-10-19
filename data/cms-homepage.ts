@@ -2,9 +2,11 @@ import "server-only";
 import fs from "node:fs";
 import path from "node:path";
 
+export type HeroSlide = { image: string; alt?: string };
 export type Partner = { name: string; image?: string; url?: string };
 export type Homepage = {
   heroTitle: string;
+  heroSlides?: HeroSlide[];
   heroDescription: string;
   primaryButton: string;
   secondaryButton: string;
