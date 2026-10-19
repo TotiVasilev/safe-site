@@ -23,7 +23,7 @@
 .blue-site .b-white-button:hover { background: #2866c3; }
 
 /* Integration: preserve original website's type scale, while adopting redesign placement. */
-.blue-site .b-hero-text h1{font-size:68px;font-weight:500;line-height:.94;letter-spacing:-.055em}
+.blue-site .b-hero-text h1{font-size:60px;font-weight:500;line-height:.94;letter-spacing:-.055em}
 .blue-site .b-intro h2,.blue-site .b-range h2,.blue-site .b-partners h2,.blue-site .b-service-copy h2,.blue-site .b-contact h2,.blue-site .b-method h2{font-size:60px;font-weight:500;line-height:1.04;letter-spacing:-.035em}
 .blue-site .b-range-name{font-size:clamp(23px,2.3vw,36px);font-weight:500}
 .blue-site .b-primary,.blue-site .b-white-button,.blue-site .b-secondary,.blue-site .b-contact-action{font-weight:500}
@@ -299,3 +299,8 @@
   .blue-site .b-partner-marquee .partner-item { width:275px; height:165px; padding:8px 12px; }
   .blue-site .b-partner-marquee .partner-logo-artwork { width:245px; height:110px; }
 }
+
+/* Homepage privacy link */
+.blue-site .b-contact-footer{justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.blue-site .b-contact-footer .b-privacy-link{color:inherit;text-decoration:underline;text-underline-offset:4px;letter-spacing:.03em;text-transform:none;font-size:12px;font-weight:500}
+.blue-site .b-contact-footer .b-privacy-link:hover{color:#fff}

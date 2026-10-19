@@ -356,7 +356,7 @@ export default function ServicesExperience() {
           className="absolute left-10 top-1/2 z-30 hidden -translate-y-1/2 xl:block"
         >
           <div className="mb-10">
-            <p className="text-[18px] font-semibold leading-none tracking-normal text-[#172033]">
+            <p className="text-[24px] font-semibold leading-none tracking-normal text-[#172033]">
               Услуги и сервиз
             </p>
           </div>
