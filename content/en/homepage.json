@@ -17,7 +17,7 @@
       "url": ""
     },
     {
-      "name": "ОББ",
+      "name": "UBB",
       "image": "/products/uploads/obb.png",
       "url": ""
     },
@@ -56,20 +56,20 @@
   "primaryLink": "/produkti",
   "heroSlides": [
     {
-      "alt": "Стара Снимка от календар",
+      "alt": "Old Calendar photo",
       "image": "/products/uploads/image-1-1.jpg"
     },
     {
       "image": "/hero/stack/slide-1.webp",
-      "alt": "Детайл на сейфова врата и заключващ механизъм"
+      "alt": "Details of safe door and locking mechanism"
     },
     {
       "image": "/hero/stack/slide-2.webp",
-      "alt": "Банкови сейфови касети"
+      "alt": "Bank vaults"
     },
     {
       "image": "/hero/stack/slide-3.webp",
-      "alt": "Отворена трезорна врата със светлина"
+      "alt": "Opened vault door with light"
     }
   ],
   "contactDescription": "Each object has different security requirements. Contact us to discuss your needs and offer you appropriate equipment.",
