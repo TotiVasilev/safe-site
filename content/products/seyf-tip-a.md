@@ -79,4 +79,6 @@ attachments:
     file: /products/uploads/employment-job-application-791x1024.png
   - phrase: механични
     file: /products/uploads/tetraedarcatalog.pdf
+  - phrase: BNB Regulation No 8121z-444
+    file: /products/uploads/elektronni-kodovi-bravi.png
 ---
