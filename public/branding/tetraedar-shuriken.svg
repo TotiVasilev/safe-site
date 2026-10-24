@@ -1,16 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
-  <g transform="translate(0 -8)">
-    <path d="M100 25 L122 118 L108 132 L92 132 L78 118 Z" fill="#a5a5a5"/>
-    <path d="M100 25 L100 117 L79 124 Z" fill="#c7c7c7"/>
-    <path d="M100 25 L122 118 L108 132 L100 117 Z" fill="#737373"/>
-    <path d="M108 117 L196 190 L100 163 L90 145 Z" fill="#737373"/>
-    <path d="M108 117 L196 190 L117 153 L99 145 Z" fill="#858585"/>
-    <path d="M100 163 L196 190 L112 146 Z" fill="#575757"/>
-    <path d="M92 117 L5 190 L100 163 L110 145 Z" fill="#c4c4c4"/>
-    <path d="M92 117 L5 190 L82 152 L101 143 Z" fill="#d4d4d4"/>
-    <path d="M100 163 L5 190 L87 146 Z" fill="#898989"/>
-    <circle cx="100" cy="137" r="21" fill="#888"/>
-    <circle cx="100" cy="137" r="19" fill="#c6c6c6" stroke="#555" stroke-width="1.5"/>
-    <circle cx="100" cy="137" r="10.5" fill="#090909"/>
-  </g>
+<svg width="200" height="218" viewBox="0 0 200 218" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_208_113" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="200" height="164">
+<path d="M200 0H0V164H200V0Z" fill="white"/>
+<path d="M120.6 109C120.6 120.377 111.377 129.6 99.9999 129.6C88.6228 129.6 79.3999 120.377 79.3999 109C79.3999 97.6233 88.6228 88.4004 99.9999 88.4004C111.377 88.4004 120.6 97.6233 120.6 109Z" stroke-width="1.8" stroke="black"/>
+<path d="M100 119C105.523 119 110 114.523 110 109C110 103.477 105.523 99 100 99C94.4772 99 90 103.477 90 109C90 114.523 94.4772 119 100 119Z" fill="black"/>
+</mask>
+<g mask="url(#mask0_208_113)">
+<path d="M100 0V109L78 91L100 0Z" fill="#D1D1D1"/>
+<path d="M100 0L122 91L100 109V0Z" fill="#696969"/>
+<path d="M78 91L100 109L5 163L78 91Z" fill="#C9C9C9"/>
+<path d="M5 163L100 109V133L5 163Z" fill="#707070"/>
+<path d="M122 91L195 163L100 109L122 91Z" fill="#696969"/>
+<path d="M195 163L100 133V109L195 163Z" fill="#BDBDBD"/>
+<path d="M100 129C111.046 129 120 120.046 120 109C120 97.9543 111.046 89 100 89C88.9543 89 80 97.9543 80 109C80 120.046 88.9543 129 100 129Z" fill="#C6C6C6"/>
+</g>
 </svg>

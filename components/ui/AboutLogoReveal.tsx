@@ -33,7 +33,7 @@ export default function AboutLogoReveal() {
       <div className="about-logo-reveal__lockup">
         <img
           className="about-logo-reveal__symbol"
-          src="/branding/logo-removebg-preview.png"
+          src="/branding/tetraedar-shuriken.svg"
           alt=""
           width={310}
           height={310}
