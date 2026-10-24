@@ -1,5 +1,5 @@
 ---
-title: Home safe.
+title: Home safe
 category: seyfove
 order: 20
 ---

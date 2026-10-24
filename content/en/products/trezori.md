@@ -1,5 +1,5 @@
 ---
-title: Vesors
+title: Vaults
 urlSlug: trezori
 category: trezorni-resheniya
 order: 30

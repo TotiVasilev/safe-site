@@ -1,6 +1,6 @@
 ---
 models:
-- name: Home safe.
+- name: Home safe
   height: '350'
   width: '450'
   depth: '350'
@@ -9,7 +9,7 @@ models:
   innerDepth: '225'
   weight: '90'
 slug: domashen-seyf
-title: Home safe.
+title: Home safe
 urlSlug: domashen-seyf
 category: seyfove
 subcategory: domashen-seyf
