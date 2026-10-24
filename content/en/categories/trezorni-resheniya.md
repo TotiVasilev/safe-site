@@ -1,3 +1,4 @@
 ---
-title: Vault solutions
+title: Vault Solutions
+order: 20
 ---

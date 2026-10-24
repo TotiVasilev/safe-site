@@ -1,3 +1,4 @@
 ---
-title: Banking products
+title: Bank products
+order: 30
 ---
