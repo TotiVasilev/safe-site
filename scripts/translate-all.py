@@ -9,6 +9,7 @@ import yaml
 import argostranslate.package
 import argostranslate.translate
 from brand_terms import normalize_brand, translate_with_brand
+from translation_overrides import load_overrides, resolved_translation
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTENT = ROOT / 'content'
@@ -42,15 +43,18 @@ def main():
     EN.mkdir(exist_ok=True)
     cache = json.loads(CACHE_FILE.read_text(encoding='utf8')) if CACHE_FILE.exists() else {}
     cache = {k: normalize_brand(v) if isinstance(v, str) else v for k, v in cache.items()}
+    overrides = load_overrides()
     added = 0
     def translate(s):
         nonlocal added
         if not isinstance(s, str) or not CYRILLIC.search(s) or URL.match(s.strip()):
             return s
-        if s not in cache:
-            cache[s] = translate_with_brand(s, lambda value: argostranslate.translate.translate(value, 'bg', 'en'))
-            added += 1
-        return normalize_brand(cache[s])
+        result, is_new = resolved_translation(
+            s, cache, overrides,
+            lambda value: translate_with_brand(value, lambda text: argostranslate.translate.translate(text, 'bg', 'en'))
+        )
+        added += int(is_new)
+        return normalize_brand(result)
     def transform(obj, key=None, allowed=None):
         if isinstance(obj, dict):
             return {k: transform(v, k, allowed) for k, v in obj.items()}

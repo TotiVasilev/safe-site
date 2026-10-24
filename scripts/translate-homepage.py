@@ -7,6 +7,7 @@ from pathlib import Path
 import argostranslate.package
 import argostranslate.translate
 from brand_terms import normalize_brand, translate_with_brand
+from translation_overrides import load_overrides, resolved_translation
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'content' / 'homepage.json'
@@ -43,16 +44,19 @@ def main():
     old_cache = {k: normalize_brand(v) if isinstance(v, str) else v for k, v in old_cache.items()}
     translated = dict(original)
     new_cache = dict(old_cache)
+    overrides = load_overrides()
     changed = 0
     for key in TRANSLATE_KEYS:
         value = original.get(key)
         if not isinstance(value, str) or not value.strip():
             continue
         # Cache by exact Bulgarian source text: unchanged CMS fields don't get retranslated.
-        if value not in new_cache:
-            new_cache[value] = translate_with_brand(value, lambda text: argostranslate.translate.translate(text, 'bg', 'en'))
-            changed += 1
-        translated[key] = normalize_brand(new_cache[value])
+        result, is_new = resolved_translation(
+            value, new_cache, overrides,
+            lambda source: translate_with_brand(source, lambda text: argostranslate.translate.translate(text, 'bg', 'en'))
+        )
+        changed += int(is_new)
+        translated[key] = normalize_brand(result)
     TARGET.parent.mkdir(parents=True, exist_ok=True)
     TARGET.write_text(json.dumps(translated, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     CACHE.write_text(json.dumps(new_cache, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
