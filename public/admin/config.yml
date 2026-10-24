@@ -119,6 +119,23 @@ collections:
   - label: Подробно описание за страницата на продукта
     name: description
     widget: text
+  - label: Специална страница с карти за ключалки
+    name: lockCollection
+    widget: boolean
+    required: false
+    default: false
+    hint: Само за продукт в категория Ключалки. Отваря страница с некликаеми карти вместо стандартния изглед.
+  - label: Ключалки в специалната страница
+    name: lockItems
+    widget: list
+    required: false
+    collapsed: true
+    summary: '{{fields.name}}'
+    fields:
+    - {label: Име, name: name, widget: string}
+    - {label: Надпис над името, name: cardLabel, widget: string, required: false}
+    - {label: Кратко описание, name: description, widget: text, required: false}
+    - {label: Снимка, name: image, widget: image, required: false}
   - label: Кликаеми думи и прикачени файлове
     name: attachments
     widget: list
@@ -141,16 +158,11 @@ collections:
     name: image
     widget: image
     required: false
-  - label: Допълнителни снимки — подредба отляво надясно
+  - label: Допълнителни снимки
     name: images
-    widget: list
+    widget: tetraedar-gallery
     required: false
-    collapsed: false
-    hint: Снимките се показват по реда им в списъка. Може да ги размествате чрез контролите за пренареждане.
-    field:
-      label: Снимка
-      name: image
-      widget: image
+    hint: Снимките се показват отляво надясно в реда на картите.
   - label: Обща техническа схема за моделите (H, B, L)
     name: modelDrawing
     widget: image
@@ -199,24 +211,6 @@ collections:
       name: resistance
       widget: string
       required: false
-  - label: Специална страница с карти за ключалки
-    name: lockCollection
-    widget: boolean
-    required: false
-    default: false
-    hint: Само за продукт в категория Ключалки. Отваря страница с некликаеми карти вместо стандартния изглед.
-  - label: Ключалки в специалната страница
-    name: lockItems
-    widget: list
-    required: false
-    collapsed: true
-    summary: '{{fields.name}}'
-    fields:
-    - {label: Име, name: name, widget: string}
-    - {label: Надпис над името, name: cardLabel, widget: string, required: false}
-    - {label: Кратко описание, name: description, widget: text, required: false}
-    - {label: Снимка, name: image, widget: image, required: false}
-
 - name: website
   label: Съдържание на сайта
   files:
