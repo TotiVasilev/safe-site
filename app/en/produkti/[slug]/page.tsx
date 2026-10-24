@@ -140,7 +140,7 @@ export default async function ProductPage({
         </section>
 
         {models.length > 0 && (
-          <ModelSelector models={models} drawing={product.modelDrawing} productName={product.name} />
+          <ModelSelector models={models} drawing={product.modelDrawing} productName={product.name} locale="en" />
         )}
 
         <section className="mt-32 rounded-3xl bg-black px-8 py-16 text-white sm:px-12 lg:px-16">
@@ -153,9 +153,7 @@ export default async function ProductPage({
           </h2>
 
           <p className="mt-5 max-w-xl leading-7 text-white/60">
-            Contact us за повече информация относно
-            моделите, характеристиките и възможностите за
-            доставка и монтаж.
+            Contact us for more information about the models, their specifications, and delivery and installation options.
           </p>
 
           <Link

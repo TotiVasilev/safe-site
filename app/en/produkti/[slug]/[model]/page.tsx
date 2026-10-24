@@ -203,23 +203,22 @@ export default async function ModelPage({
 
         <section className="mt-32 rounded-3xl bg-black px-8 py-16 text-white sm:px-12 lg:px-16">
           <p className="text-xs uppercase tracking-[0.3em] text-white/40">
-            Нуждаете се от информация?
+            Need more information?
           </p>
 
           <h2 className="mt-5 max-w-2xl text-3xl font-medium tracking-tight sm:text-4xl">
-            Свържете се с нас за повече информация.
+            Contact us for more information.
           </h2>
 
           <p className="mt-5 max-w-xl leading-7 text-white/60">
-            Нашият екип може да ви помогне с избора на подходящ
-            модел и да предостави допълнителна информация.
+            Our team can help you choose the right model and provide additional information.
           </p>
 
           <Link
             href="/en/uslugi"
             className="mt-8 inline-flex rounded-full bg-white px-6 py-3 text-sm font-medium text-black transition-transform hover:scale-105"
           >
-            Свържете се с нас
+            Contact us
           </Link>
         </section>
 
@@ -228,7 +227,7 @@ export default async function ModelPage({
             href={`/en/produkti/${product.slug}`}
             className="text-sm font-medium underline underline-offset-4"
           >
-            ← Назад към {product.name}
+            ← Back to {product.name}
           </Link>
         </div>
       </div>

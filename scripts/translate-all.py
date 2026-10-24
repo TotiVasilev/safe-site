@@ -8,6 +8,7 @@ from pathlib import Path
 import yaml
 import argostranslate.package
 import argostranslate.translate
+from brand_terms import normalize_brand, translate_with_brand
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTENT = ROOT / 'content'
@@ -40,15 +41,16 @@ def ensure_model():
 def main():
     EN.mkdir(exist_ok=True)
     cache = json.loads(CACHE_FILE.read_text(encoding='utf8')) if CACHE_FILE.exists() else {}
+    cache = {k: normalize_brand(v) if isinstance(v, str) else v for k, v in cache.items()}
     added = 0
     def translate(s):
         nonlocal added
         if not isinstance(s, str) or not CYRILLIC.search(s) or URL.match(s.strip()):
             return s
         if s not in cache:
-            cache[s] = argostranslate.translate.translate(s, 'bg', 'en')
+            cache[s] = translate_with_brand(s, lambda value: argostranslate.translate.translate(value, 'bg', 'en'))
             added += 1
-        return cache[s]
+        return normalize_brand(cache[s])
     def transform(obj, key=None, allowed=None):
         if isinstance(obj, dict):
             return {k: transform(v, k, allowed) for k, v in obj.items()}

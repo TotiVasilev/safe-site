@@ -6,6 +6,7 @@ import json, os, sys
 from pathlib import Path
 import argostranslate.package
 import argostranslate.translate
+from brand_terms import normalize_brand, translate_with_brand
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'content' / 'homepage.json'
@@ -39,6 +40,7 @@ def main():
     install_model()
     original = json.loads(SOURCE.read_text(encoding='utf-8'))
     old_cache = json.loads(CACHE.read_text(encoding='utf-8')) if CACHE.exists() else {}
+    old_cache = {k: normalize_brand(v) if isinstance(v, str) else v for k, v in old_cache.items()}
     translated = dict(original)
     new_cache = dict(old_cache)
     changed = 0
@@ -48,9 +50,9 @@ def main():
             continue
         # Cache by exact Bulgarian source text: unchanged CMS fields don't get retranslated.
         if value not in new_cache:
-            new_cache[value] = argostranslate.translate.translate(value, 'bg', 'en')
+            new_cache[value] = translate_with_brand(value, lambda text: argostranslate.translate.translate(text, 'bg', 'en'))
             changed += 1
-        translated[key] = new_cache[value]
+        translated[key] = normalize_brand(new_cache[value])
     TARGET.parent.mkdir(parents=True, exist_ok=True)
     TARGET.write_text(json.dumps(translated, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     CACHE.write_text(json.dumps(new_cache, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
