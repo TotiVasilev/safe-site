@@ -1,0 +1,22 @@
+name: Free English translation pilot
+on:
+  workflow_dispatch:
+  # Start manually. Once translation quality is approved, this can run on CMS updates.
+permissions:
+  contents: write
+jobs:
+  translate-homepage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install argostranslate==1.9.6
+      - run: python scripts/translate-homepage.py
+      - name: Commit generated translations
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add content/en/homepage.json content/en/translation-cache.json
+          git diff --cached --quiet || (git commit -m 'Generate English homepage translation' && git push)

@@ -304,3 +304,47 @@
 .blue-site .b-contact-footer{justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
 .blue-site .b-contact-footer .b-privacy-link{color:inherit;text-decoration:underline;text-underline-offset:4px;letter-spacing:.03em;text-transform:none;font-size:12px;font-weight:500}
 .blue-site .b-contact-footer .b-privacy-link:hover{color:#fff}
+
+
+/* Homepage slideshow: softly rounded rectangle with subtle edge blending. */
+.blue-site .b-hero-media-reveal {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+}
+.blue-site .b-hero-media-reveal .b-stack {
+  clip-path: none;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 24px 65px rgba(26, 53, 91, .13);
+}
+.blue-site .b-hero-media-reveal .b-stack::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(244,247,251,.22), transparent 15%, transparent 85%, rgba(244,247,251,.16));
+}
+/* Soft ambient shapes on both sides, not a visible border. */
+.blue-site .b-hero-media-reveal::before,
+.blue-site .b-hero-media-reveal::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  width: 80px;
+  height: 72%;
+  top: 14%;
+  border-radius: 50%;
+  background: rgba(63, 126, 219, .14);
+  filter: blur(36px);
+}
+.blue-site .b-hero-media-reveal::before { left: -28px; }
+.blue-site .b-hero-media-reveal::after { right: -28px; }
+@media (max-width: 600px) {
+  .blue-site .b-hero-media-reveal .b-stack { border-radius: 16px; }
+  .blue-site .b-hero-media-reveal::before,
+  .blue-site .b-hero-media-reveal::after { width: 45px; filter: blur(22px); }
+}
