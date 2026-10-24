@@ -17,9 +17,9 @@ description: 'Type safes A standard is produced with 2 mechanical key locks clas
 image: /products/uploads/fixed-typea-main.png
 images:
 - /products/uploads/typea-2-.png
-- /products/uploads/typea-3-.png
 - /products/uploads/typea-4-.png
 - /products/uploads/typea-5-.png
+- /products/uploads/typea-3-.png
 - /products/uploads/typea.png
 modelDrawing: /products/uploads/fixed-typearazmeri-skica-1.png
 models:
