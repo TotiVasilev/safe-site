@@ -1,0 +1,83 @@
+{
+  "feature2Description": "Production base in Stara Zagora with an area of 4500 sq. m.",
+  "feature1Description": "Products tested and certified by international security standards.",
+  "heroDescription": "Since 1990 TETRAEDER has offered reliable solutions to protect values, documents and money.",
+  "catalogDescription": "Look at the main categories of our portfolio.",
+  "pointerLeft": "Strong construction",
+  "secondaryButton": "Services and service",
+  "aboutLabel": "For us.",
+  "heroBackground": "",
+  "partnersLabel": "Trusted Partners",
+  "featuredTitle": "Safety deposit boxes and physical security systems",
+  "catalogButton": "Look at the whole catalog.",
+  "partners": [
+    {
+      "name": "Fibank",
+      "image": "/products/uploads/fibank.png",
+      "url": ""
+    },
+    {
+      "name": "ОББ",
+      "image": "/products/uploads/obb.png",
+      "url": ""
+    },
+    {
+      "name": "DSK",
+      "image": "/products/uploads/mall-of-sofia-logo-dsk.png",
+      "url": ""
+    },
+    {
+      "name": "UniCredit Bulbank",
+      "image": "/products/uploads/unicredit-e1547457644805.png",
+      "url": ""
+    }
+  ],
+  "aboutTitle": "A Decade Experience",
+  "partnersTitle": "Trust proven in practice",
+  "featuredDescription": "Product solutions for the protection of values, documents and specialized premises.",
+  "secondaryLink": "/uslugi",
+  "typography": {},
+  "servicesButton": "See services",
+  "aboutParagraph1": "Founded in 1990 in Stara Zagora, TETRAEDER is a Bulgarian company specializing in the production of high-end safes and banking equipment.",
+  "productsLabel": "Our catalog.",
+  "partnersDescription": "Over the years we have implemented hundreds of projects for the banking sector in Bulgaria. Our long-term partnerships are based on reliable products, technical expertise and professional support.",
+  "aboutParagraph2": "We combine our own production, tested technologies and individual approach to each project.",
+  "contactButton": "Send an inquiry",
+  "contactLabel": "Request",
+  "productsTitle": "Decisions for each level of security",
+  "primaryButton": "Look at the products",
+  "servicesLabel": "Services and service",
+  "contactTitle": "Let's find the right solution for you.",
+  "productsDescription": "From safe deposit boxes to vault doors and specialized banking systems. Explore our product categories and find the appropriate solution for your requirements.",
+  "contactLink": "/kontakti",
+  "servicesTitle": "Security does not end with delivery",
+  "feature3Title": "Solutions according to the client",
+  "catalogLabel": "Catalogue",
+  "primaryLink": "/produkti",
+  "heroSlides": [
+    {
+      "alt": "Стара Снимка от календар",
+      "image": "/products/uploads/image-1-1.jpg"
+    },
+    {
+      "image": "/hero/stack/slide-1.webp",
+      "alt": "Детайл на сейфова врата и заключващ механизъм"
+    },
+    {
+      "image": "/hero/stack/slide-2.webp",
+      "alt": "Банкови сейфови касети"
+    },
+    {
+      "image": "/hero/stack/slide-3.webp",
+      "alt": "Отворена трезорна врата със светлина"
+    }
+  ],
+  "contactDescription": "Each object has different security requirements. Contact us to discuss your needs and offer you appropriate equipment.",
+  "feature2Title": "Own production",
+  "feature1Title": "Proven reliability",
+  "servicesDescription": "We provide professional advice, transport, installation and maintenance of equipment. From the choice of suitable product to its long-term operation.",
+  "heroTitle": "Security,\ncreated\nto endure",
+  "catalogTitle": "Main categories",
+  "pointerRight": "Locking system",
+  "feature3Description": "Options for choosing locking mechanisms, sizes and additional protections."
+}
