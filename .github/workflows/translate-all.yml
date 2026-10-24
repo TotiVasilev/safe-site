@@ -8,6 +8,7 @@ on:
       - 'content/categories/**'
       - 'content/subcategories/**'
       - 'content/products/**'
+      - 'content/en/translation-overrides.json'
 permissions:
   contents: write
 concurrency:
