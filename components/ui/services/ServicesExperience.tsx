@@ -21,6 +21,8 @@ const serviceDetails = [
   [{ icon: ClipboardList, label: "Оценка на нуждите" }, { icon: ShieldCheck, label: "Избор на защита" }, { icon: MessageCircle, label: "Индивидуално решение" }],
 ];
 
+const englishServiceDetails = [["Warranty service", "Diagnostics and repair", "Component replacement"], ["Mechanical locks", "Electronic locks", "Installation and configuration"], ["Code changes", "Access control", "System configuration"], ["Technical inspection", "Inspection and adjustment", "Fault prevention"], ["Restoring access", "Jammed mechanisms", "Careful intervention"], ["Needs assessment", "Choosing protection", "Tailored solution"]];
+
 type MobileTextLayout = {
   className: string;
   width: string;
@@ -111,10 +113,11 @@ const mobileTextLayouts: MobileTextLayout[] = [
   },
 ];
 
-export default function ServicesExperience() {
+export default function ServicesExperience({ englishContent }: { englishContent?: typeof servicesContent }) {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const activeService = services[activeIndex];
+  const localizedServices = englishContent ? Array.from({ length: 6 }, (_, index) => ({ title: englishContent[`title${index + 1}` as keyof typeof englishContent], description: englishContent[`description${index + 1}` as keyof typeof englishContent] })) : services;
+  const activeService = localizedServices[activeIndex];
   const mobileText = mobileTextLayouts[activeIndex];
 
   /*
@@ -224,7 +227,7 @@ export default function ServicesExperience() {
 
   function goToNextService() {
     setActiveIndex((current) =>
-      current === services.length - 1
+      current === localizedServices.length - 1
         ? 0
         : current + 1
     );
@@ -321,7 +324,7 @@ export default function ServicesExperience() {
               }
             >
               <p className="text-base font-semibold tracking-normal text-[#172033]">
-                Услуги и сервиз
+                {englishContent ? "Services & Support" : "Услуги и сервиз"}
               </p>
 
               <h1 data-cms-field={`title${activeIndex + 1}`} className="mt-4 text-[42px] font-medium leading-[1.02] tracking-[-0.045em] text-[#3f7edb]">
@@ -357,14 +360,14 @@ export default function ServicesExperience() {
         >
           <div className="mb-10">
             <p className="text-[24px] font-semibold leading-none tracking-normal text-[#172033]">
-              Услуги и сервиз
+              {englishContent ? "Services & Support" : "Услуги и сервиз"}
             </p>
           </div>
 
           <div className="relative flex flex-col gap-9">
             <div className="absolute left-[5px] top-3 h-[calc(100%-24px)] w-px bg-black/15" />
 
-            {services.map(
+            {localizedServices.map(
               (service, index) => {
                 const active =
                   activeIndex === index;
@@ -497,7 +500,7 @@ export default function ServicesExperience() {
                     <div className="mb-3 flex h-8 w-8 items-center justify-center rounded-full border border-[#3f7edb]/35 text-[#3f7edb]">
                       <Icon size={17} strokeWidth={1.8} aria-hidden="true" />
                     </div>
-                    <p className="text-sm font-medium leading-5">{label}</p>
+                    <p className="text-sm font-medium leading-5">{englishContent ? englishServiceDetails[activeIndex][index] : label}</p>
                   </div>
                 ))}
               </div>

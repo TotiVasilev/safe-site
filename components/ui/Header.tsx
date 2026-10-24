@@ -8,6 +8,10 @@ import { Phone, Mail } from "lucide-react";
 
 export default function Header({ contact }: { contact: {phone:string;email:string;address:string;locationLabel:string} }) {
   const pathname = usePathname();
+  const english = pathname.startsWith("/en/") || pathname === "/en";
+  const localePrefix = english ? "/en" : "";
+  const languageTarget = english ? (pathname.replace(/^\/en(?=\/|$)/, "") || "/") : `/en${pathname === "/" ? "/" : pathname}`;
+
 
   const [scrolled, setScrolled] =
     useState(false);
@@ -93,12 +97,10 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
     path: string
   ) {
     if (path === "/") {
-      return pathname === "/";
+      return pathname === `${localePrefix}/` || pathname === localePrefix;
     }
 
-    return pathname.startsWith(
-      path
-    );
+    return pathname.startsWith(`${localePrefix}${path}`);
   }
 
   function desktopNavClass(
@@ -151,7 +153,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
           {/* LOGO */}
 
           <Link
-            href="/"
+            href={`${localePrefix}/`}
             onClick={closeMenu}
             className="flex w-max items-center gap-1.5"
           >
@@ -171,40 +173,35 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
 
           <nav className="absolute left-[calc(50%-133px)] hidden shrink-0 items-center gap-1 xl:flex">
             <Link
-              href="/"
+              href={`${localePrefix}/`}
               className={desktopNavClass(
                 "/"
               )}
             >
-              Начало
+              {english ? "Home" : "Начало"}
             </Link>
 
             <Link
-              href="/produkti"
+              href={`${localePrefix}/produkti`}
               className={desktopNavClass(
                 "/produkti"
               )}
             >
-              Продукти
+              {english ? "Products" : "Продукти"}
             </Link>
 
             <Link
-              href="/uslugi"
+              href={`${localePrefix}/uslugi`}
               className={desktopNavClass(
                 "/uslugi"
               )}
             >
-              Услуги и Сервиз
+              {english ? "Services & Support" : "Услуги и Сервиз"}
             </Link>
 
             <span className="mx-3 h-5 w-px bg-black/10" />
 
-            <button
-              type="button"
-              className="rounded-lg px-2 py-2 text-xs font-medium tracking-[0.15em] text-black/45 transition-all duration-300 hover:bg-white/60 hover:text-[#3f7edb]"
-            >
-              EN
-            </button>
+            <Link href={languageTarget} className="rounded-lg px-2 py-2 text-xs font-medium tracking-[0.15em] text-black/65 transition-all duration-300 hover:bg-white/60 hover:text-[#3f7edb]" aria-label={english ? "Switch to Bulgarian" : "Switch to English"}>{english ? "BG" : "EN"}</Link>
           </nav>
 
           {/* Phone and email stay stacked at the right content edge. */}
@@ -264,7 +261,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
           <nav className="bg-[#f3f3f2] px-6 py-6 shadow-[0_16px_30px_rgba(0,0,0,0.06)]">
             <div className="flex flex-col gap-2">
               <Link
-                href="/"
+                href={`${localePrefix}/`}
                 onClick={
                   closeMenu
                 }
@@ -276,7 +273,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
               </Link>
 
               <Link
-                href="/produkti"
+                href={`${localePrefix}/produkti`}
                 onClick={
                   closeMenu
                 }
@@ -288,7 +285,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
               </Link>
 
               <Link
-                href="/uslugi"
+                href={`${localePrefix}/uslugi`}
                 onClick={
                   closeMenu
                 }
@@ -303,12 +300,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
                 {contact.phone && <a href={`tel:${contact.phone.replace(/\s/g, "")}`}>{contact.phone}</a>}
                 {contact.email && <a href={`mailto:${contact.email}`}>{contact.email}</a>}
               </div>}
-              <button
-                type="button"
-                className="self-start px-4 pt-5 text-xs font-medium tracking-[0.2em] text-black/45 transition-colors hover:text-[#3f7edb]"
-              >
-                ENGLISH
-              </button>
+              <Link href={languageTarget} onClick={closeMenu} className="self-start px-4 pt-5 text-xs font-medium tracking-[0.2em] text-black/65 transition-colors hover:text-[#3f7edb]">{english ? "БЪЛГАРСКИ" : "ENGLISH"}</Link>
             </div>
           </nav>
         </div>

@@ -14,9 +14,10 @@ import type {
 } from "@/data/products";
 type ProductsCatalogProps = {
   categories: ProductCategory[];
+  locale?: "bg" | "en";
 };
 export default function ProductsCatalog({
-  categories,
+  categories, locale = "bg",
 }: ProductsCatalogProps) {
   const [activeCategory, setActiveCategory] = useState(
     categories[0]?.slug ?? ""
@@ -349,14 +350,13 @@ export default function ProductsCatalog({
           className="max-w-3xl"
         >
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#3f7edb]">
-            Каталог
+            {locale === "en" ? "Catalog" : "Каталог"}
           </p>
           <h1 className="mt-4 text-[2.8rem] font-medium leading-none tracking-[-0.045em] sm:mt-5 sm:text-[60px]">
-            Продукти
+            {locale === "en" ? "Products" : "Продукти"}
           </h1>
           <p className="mt-5 max-w-2xl text-[15px] leading-7 text-black/75 sm:mt-6 sm:text-lg sm:leading-8">
-            Разгледайте нашите решения за
-            сигурност, съхранение и защита.
+            {locale === "en" ? "Explore our solutions for security, storage and protection." : "Разгледайте нашите решения за сигурност, съхранение и защита."}
           </p>
         </motion.header>
         <div
@@ -494,7 +494,7 @@ export default function ProductsCatalog({
                 <div className="border-b border-black/10 pb-5 sm:flex sm:items-end sm:justify-between sm:pb-6">
                   <div>
                     <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#3f7edb] sm:mb-3">
-                      Категория
+                      {locale === "en" ? "Category" : "Категория"}
                     </p>
                     <h2 className="text-[2rem] font-medium leading-tight tracking-[-0.035em] sm:text-4xl">
                       {
@@ -504,8 +504,8 @@ export default function ProductsCatalog({
                   </div>
                   <span className="hidden text-sm text-black/40 sm:block">
                     {category.subcategories
-                      ? `${category.subcategories.length} категории`
-                      : `${category.products?.length ?? 0} продукта`}
+                      ? `${category.subcategories.length} ${locale === "en" ? "categories" : "категории"}`
+                      : `${category.products?.length ?? 0} ${locale === "en" ? "products" : "продукта"}`}
                   </span>
                 </div>
                 {category.subcategories && (
@@ -538,6 +538,7 @@ export default function ProductsCatalog({
                                   product={
                                     product
                                   }
+                                  locale={locale}
                                   category={
                                     category.name
                                   }
@@ -564,6 +565,7 @@ export default function ProductsCatalog({
                           product={
                             product
                           }
+                          locale={locale}
                           category={
                             category.name
                           }
@@ -584,7 +586,7 @@ export default function ProductsCatalog({
                 {mobileMenuOpen && (
                   <motion.button
                     type="button"
-                    aria-label="Затвори менюто"
+                    aria-label={locale === "en" ? "Close menu" : "Затвори менюто"}
                     initial={{
                       opacity: 0,
                     }}
@@ -642,7 +644,7 @@ export default function ProductsCatalog({
                       <div className="min-w-0 flex-1 pr-12">
                         <p className="truncate text-[11px] font-semibold uppercase tracking-[0.12em] text-[#3f7edb]">
                           {currentCategory?.name ??
-                            "Каталог"}
+                            (locale === "en" ? "Catalog" : "Каталог")}
                         </p>
                         <p className="mt-1 truncate text-[13px] font-medium leading-none text-black">
                           {
@@ -671,7 +673,7 @@ export default function ProductsCatalog({
                       <div className="flex min-h-[52px] w-full items-center pr-12 text-left">
                         <p className="truncate text-[11px] font-semibold uppercase tracking-[0.12em] text-[#3f7edb]">
                           {currentCategory?.name ??
-                            "Каталог"}
+                            (locale === "en" ? "Catalog" : "Каталог")}
                         </p>
                       </div>
                       <motion.span
@@ -1011,12 +1013,14 @@ export default function ProductsCatalog({
 }
 type ProductCardProps = {
   product: ProductFamily;
+  locale?: "bg" | "en";
   category: string;
   subcategory?: string;
 };
 
 function ProductCard({
   product,
+  locale = "bg",
   category,
   subcategory,
 }: ProductCardProps) {
@@ -1063,7 +1067,7 @@ function ProductCard({
       className="group relative min-w-0 overflow-hidden rounded-[18px] border border-black/10 bg-white shadow-[0_1px_0_rgba(0,0,0,0.02)] transition-shadow duration-300 hover:shadow-[0_16px_40px_rgba(63,126,219,0.18)] sm:rounded-2xl"
     >
       <div className="relative h-full w-full text-left">
-        <Link href={`/produkti/${product.slug}`} aria-label={`Виж ${product.name}`} className="absolute inset-0 z-10" />
+        <Link href={`${locale === "en" ? "/en" : ""}/produkti/${product.slug}`} aria-label={`${locale === "en" ? "View" : "Виж"} ${product.name}`} className="absolute inset-0 z-10" />
         <div className="relative aspect-[4/3] overflow-hidden bg-neutral-100">
           {galleryImages.length > 0 ? (
             galleryImages.map((image, imageIndex) => (
@@ -1134,11 +1138,11 @@ function ProductCard({
           <div className="mt-4 border-t border-black/10 pt-3 sm:mt-6 sm:flex sm:items-center sm:justify-between sm:pt-4">
             <span className="block text-[9px] text-black/35 sm:text-xs">
               {product.models.length}{" "}
-              {product.models.length === 1 ? "модел" : "модела"}
+              {locale === "en" ? (product.models.length === 1 ? "model" : "models") : (product.models.length === 1 ? "модел" : "модела")}
             </span>
 
             <span className="mt-2 block text-[10px] font-medium leading-4 transition-colors duration-300 group-hover:text-[#3f7edb] sm:mt-0 sm:text-xs">
-              Виж продукта
+              {locale === "en" ? "View product" : "Виж продукта"}
               <span className="ml-1 inline-block transition-transform duration-300 group-hover:translate-x-1">
                 →
               </span>

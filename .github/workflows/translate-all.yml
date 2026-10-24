@@ -1,0 +1,38 @@
+name: Translate all CMS content to English
+on:
+  workflow_dispatch:
+  push:
+    branches: [master, main]
+    paths:
+      - 'content/*.json'
+      - 'content/categories/**'
+      - 'content/subcategories/**'
+      - 'content/products/**'
+permissions:
+  contents: write
+concurrency:
+  group: cms-translation-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  translate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install argostranslate==1.9.6 PyYAML==6.0.2
+      - run: python scripts/translate-all.py
+      - name: Commit translated CMS content
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add content/en/
+          if ! git diff --cached --quiet; then
+            git commit -m 'Update English CMS translations'
+            git pull --rebase origin "${GITHUB_REF_NAME}"
+            git push origin HEAD:"${GITHUB_REF_NAME}"
+          fi
