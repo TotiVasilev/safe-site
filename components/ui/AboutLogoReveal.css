@@ -78,3 +78,73 @@
   letter-spacing: .005em;
   color: #3f7edb;
 }
+
+/* About Us refinement: tighter lockup and repeatable click animation. */
+.about-logo-reveal__lockup {
+  position: relative;
+  isolation: isolate;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  overflow: hidden;
+}
+.about-logo-reveal__lockup:focus-visible { outline: 2px solid #3f7fdd; outline-offset: 8px; }
+.about-logo-reveal__wordmark { font-size: clamp(23px, 2.05vw, 33px); margin-top: -24px; position: relative; z-index: 1; }
+.about-logo-reveal__symbol { position: relative; z-index: 1; }
+.about-logo-reveal.is-visible .about-logo-reveal__symbol {
+  animation-duration: 2.2s;
+  animation-timing-function: cubic-bezier(.19, .83, .32, 1);
+}
+.about-logo-reveal.is-visible .about-logo-reveal__wordmark { animation-delay: .85s; animation-duration: 1.25s; }
+.about-logo-reveal__shine {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 35%, rgba(255,255,255,.04) 43%, rgba(255,255,255,.8) 50%, rgba(255,255,255,.04) 57%, transparent 65%);
+  transform: translateX(-150%);
+  animation: tetraedar-shine .8s ease-out both;
+  mix-blend-mode: screen;
+  -webkit-mask-image: linear-gradient(#000,#000);
+  mask-image: linear-gradient(#000,#000);
+}
+@keyframes tetraedar-shine { from { transform: translateX(-150%); } to { transform: translateX(150%); } }
+@media (max-width: 600px) {
+  .about-logo-reveal__wordmark { font-size: clamp(20px, 5vw, 26px); margin-top: -16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .about-logo-reveal__shine { animation: none !important; display: none; }
+}
+
+/* Fine tuning: the shine belongs to the shuriken only, not the wordmark. */
+.about-logo-reveal__symbol-wrap {
+  display: block;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  flex: none;
+}
+.about-logo-reveal__symbol-wrap .about-logo-reveal__symbol {
+  width: 100%;
+  height: 100%;
+}
+.about-logo-reveal__symbol-wrap .about-logo-reveal__shine {
+  inset: 0;
+  -webkit-mask-image: url('/branding/tetraedar-shuriken.svg');
+  mask-image: url('/branding/tetraedar-shuriken.svg');
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  animation-duration: 1.35s;
+  background: linear-gradient(110deg, transparent 31%, rgba(255,255,255,.08) 42%, rgba(255,255,255,.88) 50%, rgba(255,255,255,.08) 58%, transparent 69%);
+}
+.about-logo-reveal__wordmark { margin-top: -46px; }
+@media (max-width: 600px) {
+  .about-logo-reveal__wordmark { margin-top: -34px; }
+}

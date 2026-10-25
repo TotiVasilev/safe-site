@@ -7,6 +7,8 @@ import "./AboutLogoReveal.css";
 export default function AboutLogoReveal() {
   const rootRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
+  const [spinKey, setSpinKey] = useState(0);
+  const [shineKey, setShineKey] = useState(0);
 
   useEffect(() => {
     const element = rootRef.current;
@@ -30,8 +32,17 @@ export default function AboutLogoReveal() {
 
   return (
     <div ref={rootRef} className={`about-logo-reveal${visible ? " is-visible" : ""}`} aria-label="ТЕТРАЕДЪР">
-      <div className="about-logo-reveal__lockup">
+      <button
+        type="button"
+        className="about-logo-reveal__lockup"
+        aria-label="Завърти логото на ТЕТРАЕДЪР"
+        onClick={() => setSpinKey((key) => key + 1)}
+        onMouseEnter={() => setShineKey((key) => key + 1)}
+      >
+        <span className="about-logo-reveal__symbol-wrap">
+          {shineKey > 0 && <span key={`shine-${shineKey}`} className="about-logo-reveal__shine" aria-hidden="true" />}
         <img
+          key={`spin-${spinKey}`}
           className="about-logo-reveal__symbol"
           src="/branding/tetraedar-shuriken.svg"
           alt=""
@@ -39,8 +50,9 @@ export default function AboutLogoReveal() {
           height={310}
           draggable={false}
         />
+        </span>
         <div className="about-logo-reveal__wordmark">ТЕТРАЕДЪР</div>
-      </div>
+      </button>
     </div>
   );
 }

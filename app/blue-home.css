@@ -615,3 +615,10 @@
     grid-row: 3;
   }
 }
+
+/* About Us: single remaining description fills the right content column on desktop. */
+@media (min-width: 901px) {
+  .blue-site .b-about-content .b-intro-text { grid-template-columns: minmax(0, 1fr); max-width: 100%; }
+  .blue-site .b-about-content .b-intro-text p:empty { display: none; }
+  .blue-site .b-about-content .b-intro-text p { max-width: none; }
+}
