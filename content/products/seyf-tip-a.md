@@ -1,9 +1,7 @@
 ---
-title: Сейф Тип A
 urlSlug: seyf-tip-a
 category: seyfove
 subcategory: svobodnostoyashti
-order: 10
 cardLabel: Степен IV по EN 1143-1
 catalogDescription: |-
   Висок клас сейф с IV степен на съпротивление по EN 1143-1.
@@ -23,7 +21,6 @@ images:
   - /products/uploads/typea-5-.png
   - /products/uploads/typea-3-.png
   - /products/uploads/typea.png
-modelDrawing: /products/uploads/fixed-typearazmeri-skica-1.png
 models:
   - name: A-802
     height: 550
@@ -74,6 +71,8 @@ models:
     innerDepth: 496
     weight: 1150 kg
 slug: seyf-tip-a
+title: Сейф Тип A
+order: 10
 attachments:
   - phrase: БНБ №8121з-444
     file: /products/uploads/employment-job-application-791x1024.png
@@ -81,4 +80,7 @@ attachments:
     file: /products/uploads/tetraedarcatalog.pdf
   - phrase: BNB Regulation No 8121z-444
     file: /products/uploads/elektronni-kodovi-bravi.png
+  - phrase: IV степен на съпротивление по EN 1143-1
+    file: /products/uploads/сейф-тип-а.png
+modelDrawing: /products/uploads/fixed-typearazmeri-skica-1.png
 ---
