@@ -77,6 +77,14 @@ export default function ProductsCatalog({
       );
     };
   }, [mobileMenuOpen]);
+  // Lock the page, but allow scrolling inside the open category list.
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = previousOverflow; };
+  }, [mobileMenuOpen]);
+
   function getDocumentTop(element: HTMLElement) {
     let top = 0;
     let current: HTMLElement | null = element;
@@ -595,6 +603,7 @@ export default function ProductsCatalog({
                     }}
                     exit={{
                       opacity: 0,
+                      transition: { duration: 0 },
                     }}
                     onClick={() =>
                       setMobileMenuOpen(
@@ -711,6 +720,7 @@ export default function ProductsCatalog({
                       exit={{
                         height: 0,
                         opacity: 0,
+                        transition: { duration: 0 },
                       }}
                       transition={{
                         duration:
@@ -1068,7 +1078,7 @@ function ProductCard({
     >
       <div className="relative h-full w-full text-left">
         <Link href={`${locale === "en" ? "/en" : ""}/produkti/${product.slug}`} aria-label={`${locale === "en" ? "View" : "Виж"} ${product.name}`} className="absolute inset-0 z-10" />
-        <div className="relative aspect-[4/3] overflow-hidden bg-neutral-100">
+        <div className="relative aspect-[5/4] sm:aspect-[4/3] overflow-hidden bg-neutral-100">
           {galleryImages.length > 0 ? (
             galleryImages.map((image, imageIndex) => (
               <Image
@@ -1081,7 +1091,7 @@ function ProductCard({
                 }
                 fill
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
-                className={`object-contain p-3 transition-all duration-500 sm:p-4 ${
+                className={`object-contain p-1.5 transition-all duration-500 sm:p-4 ${
                   imageIndex === activeImageIndex
                     ? "scale-100 opacity-100"
                     : "scale-[1.015] opacity-0"
@@ -1135,13 +1145,13 @@ function ProductCard({
             <ProductDescription description={product.catalogDescription || product.description} attachments={product.attachments} />
           </p>
 
-          <div className="mt-4 border-t border-black/10 pt-3 sm:mt-6 sm:flex sm:items-center sm:justify-between sm:pt-4">
+          <div className="mt-4 flex items-center justify-between gap-2 border-t border-black/10 pt-3 sm:mt-6 sm:pt-4">
             <span className="block text-[9px] text-black/35 sm:text-xs">
               {product.models.length}{" "}
               {locale === "en" ? (product.models.length === 1 ? "model" : "models") : (product.models.length === 1 ? "модел" : "модела")}
             </span>
 
-            <span className="mt-2 block text-[10px] font-medium leading-4 transition-colors duration-300 group-hover:text-[#3f7edb] sm:mt-0 sm:text-xs">
+            <span className="block shrink-0 text-right text-[10px] font-medium leading-4 transition-colors duration-300 group-hover:text-[#3f7edb] sm:text-xs">
               {locale === "en" ? "View product" : "Виж продукта"}
               <span className="ml-1 inline-block transition-transform duration-300 group-hover:translate-x-1">
                 →

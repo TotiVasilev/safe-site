@@ -73,6 +73,14 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
     setMenuOpen(false);
   }, [pathname]);
 
+  // Prevent background scrolling while the mobile navigation is open.
+  useEffect(() => {
+    if (!menuOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = previousOverflow; };
+  }, [menuOpen]);
+
   function closeMenu() {
     setMenuOpen(false);
   }
@@ -231,7 +239,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
           >
             <div className="flex w-5 flex-col gap-1.5">
               <span
-                className={`h-px w-full bg-black transition-all duration-300 ${
+                className={`h-px w-full bg-black transition-all ${menuOpen ? "duration-0" : "duration-300"} ${
                   menuOpen
                     ? "translate-y-[4px] rotate-45"
                     : ""
@@ -239,7 +247,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
               />
 
               <span
-                className={`h-px w-full bg-black transition-all duration-300 ${
+                className={`h-px w-full bg-black transition-all ${menuOpen ? "duration-0" : "duration-300"} ${
                   menuOpen
                     ? "-translate-y-[3px] -rotate-45"
                     : ""
@@ -252,7 +260,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
         {/* MOBILE MENU */}
 
         <div
-          className={`relative z-30 overflow-hidden transition-all duration-500 xl:hidden ${
+          className={`relative z-30 overflow-hidden transition-all ${menuOpen ? "duration-300" : "duration-0"} xl:hidden ${
             menuOpen
               ? "max-h-[420px]"
               : "max-h-0"
