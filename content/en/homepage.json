@@ -14,22 +14,42 @@
     {
       "name": "Fibank",
       "image": "/products/uploads/fibank.png",
-      "url": ""
+      "url": "https://www.fibank.bg/bg"
     },
     {
       "name": "UBB",
       "image": "/products/uploads/obb.png",
-      "url": ""
+      "url": "https://ebb.ubb.bg/"
     },
     {
       "name": "DSK",
       "image": "/products/uploads/mall-of-sofia-logo-dsk.png",
-      "url": ""
+      "url": "https://dskbank.bg/"
     },
     {
       "name": "UniCredit Bulbank",
       "image": "/products/uploads/unicredit-e1547457644805.png",
-      "url": ""
+      "url": "https://www.unicreditbulbank.bg/bg/individualni-klienti/"
+    },
+    {
+      "name": "DBank",
+      "image": "/products/uploads/d_commerce_bank-removebg-preview.png",
+      "url": "https://online.dbank.bg/"
+    },
+    {
+      "name": "CCB",
+      "image": "/products/uploads/ccb-logo-1200x627.png",
+      "url": "https://www.ccbank.bg/"
+    },
+    {
+      "name": "VPsecutity",
+      "image": "/products/uploads/vip-security.png",
+      "url": "https://vipsecurity.bg/"
+    },
+    {
+      "name": "sot161",
+      "image": "/products/uploads/sot161.png",
+      "url": "https://www.sot.bg/"
     }
   ],
   "aboutTitle": "Decades of experience",
@@ -38,10 +58,10 @@
   "secondaryLink": "/uslugi",
   "typography": {},
   "servicesButton": "See services",
-  "aboutParagraph1": "Founded in 1990 in Stara Zagora, TETRAEDAR is a Bulgarian company specializing in the production of high-end safes and banking equipment.",
+  "aboutParagraph1": "Founded in 1990 in Stara Zagora, TETRAEDAR is a Bulgarian company specializing in the production of high-end safes and banking, professional and personal equipment.\n\nWe combine our own production, tested technologies and individual approach to each project.",
   "productsLabel": "Our catalog.",
-  "partnersDescription": "Over the years we have implemented hundreds of projects for the banking sector in Bulgaria. Our long-term partnerships are based on reliable products, technical expertise and professional support.",
-  "aboutParagraph2": "We combine our own production, tested technologies and individual approach to each project.",
+  "partnersDescription": "With extensive experience and hundreds of implemented projects in different industries, we build long-term partnerships based on quality solutions, technical expertise and reliable professional support.",
+  "aboutParagraph2": ".",
   "contactButton": "Send an inquiry",
   "contactLabel": "Request",
   "productsTitle": "Decisions for each level of security",
@@ -72,7 +92,7 @@
       "alt": "Opened vault door with light"
     }
   ],
-  "contactDescription": "Each object has different security requirements. Contact us to discuss your needs and offer you appropriate equipment.",
+  "contactDescription": "Each object has different security requirements. Contact us to discuss your needs and offer you appropriate equipment.\n\nOpportunity for customized orders!\n",
   "feature2Title": "Own production",
   "feature1Title": "Proven reliability",
   "servicesDescription": "We provide professional advice, transport, installation and maintenance of equipment. From the choice of suitable product to its long-term operation.",
