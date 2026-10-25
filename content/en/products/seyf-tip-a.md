@@ -1,9 +1,7 @@
 ---
-title: Safe Type A
 urlSlug: seyf-tip-a
 category: seyfove
 subcategory: svobodnostoyashti
-order: 10
 cardLabel: EN 1143-1 class IV
 catalogDescription: 'High class safe with IV resistance level EN 1143-1.
 
@@ -21,7 +19,6 @@ images:
 - /products/uploads/typea-5-.png
 - /products/uploads/typea-3-.png
 - /products/uploads/typea.png
-modelDrawing: /products/uploads/fixed-typearazmeri-skica-1.png
 models:
 - name: A-802
   height: 550
@@ -72,6 +69,8 @@ models:
   innerDepth: 496
   weight: 1150 kg
 slug: seyf-tip-a
+title: Safe Type A
+order: 10
 attachments:
 - phrase: BNB No 8121h-444
   file: /products/uploads/employment-job-application-791x1024.png
@@ -79,4 +78,7 @@ attachments:
   file: /products/uploads/tetraedarcatalog.pdf
 - phrase: BNB Regulation No 8121z-444
   file: /products/uploads/elektronni-kodovi-bravi.png
+- phrase: IV degree of resistance according to EN 1143-1
+  file: /products/uploads/сейф-тип-а.png
+modelDrawing: /products/uploads/fixed-typearazmeri-skica-1.png
 ---
