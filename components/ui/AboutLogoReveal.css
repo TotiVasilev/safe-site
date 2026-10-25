@@ -148,3 +148,29 @@
 @media (max-width: 600px) {
   .about-logo-reveal__wordmark { margin-top: -34px; }
 }
+
+/* Approved preview: left-to-right metallic polish clipped to the actual symbol.
+   The wordmark is outside the overlay, and click-to-spin is unchanged. */
+.about-logo-reveal__polish {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  overflow: visible;
+  pointer-events: none;
+}
+.about-logo-reveal__polish-sweep {
+  transform: translateX(-240px);
+  animation: tetraedar-polish-pass 1.9s cubic-bezier(.35, 0, .65, 1) forwards;
+}
+@keyframes tetraedar-polish-pass {
+  from { transform: translateX(-240px); }
+  to { transform: translateX(450px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .about-logo-reveal__polish { display: none; }
+}
+
+/* Sweep is animated in SVG coordinates, not CSS pixels. */
+.about-logo-reveal__polish rect { transform: none; }
