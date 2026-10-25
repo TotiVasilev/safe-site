@@ -80,5 +80,7 @@ attachments:
   file: /products/uploads/elektronni-kodovi-bravi.png
 - phrase: IV degree of resistance according to EN 1143-1
   file: /products/uploads/сейф-тип-а.png
+- phrase: IV degree of resistance according to EN 1143-1
+  file: /products/uploads/safe-а.png
 modelDrawing: /products/uploads/fixed-typearazmeri-skica-1.png
 ---
