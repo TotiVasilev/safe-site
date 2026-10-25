@@ -4,7 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Phone, Mail } from "lucide-react";
+import { Phone, Mail, MapPin } from "lucide-react";
+import footerData from "@/content/site-footer.json";
 
 export default function Header({ contact }: { contact: {phone:string;email:string;address:string;locationLabel:string} }) {
   const pathname = usePathname();
@@ -218,6 +219,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
               <div className="flex flex-col items-start gap-1 text-[11px] text-black/60">
                 {contact.phone && <a className="flex items-center gap-2 hover:text-[#3f7edb]" href={`tel:${contact.phone.replace(/\s/g, "")}`}><Phone size={13} aria-hidden="true" />{contact.phone}</a>}
                 {contact.email && <a className="flex items-center gap-2 hover:text-[#3f7edb]" href={`mailto:${contact.email}`}><Mail size={13} aria-hidden="true" />{contact.email}</a>}
+                <a className="flex items-center gap-2 hover:text-[#3f7edb]" href={footerData.mapsUrl} target="_blank" rel="noopener noreferrer"><MapPin size={13} aria-hidden="true" />{english ? "Location" : "Локация"}</a>
               </div>
 
             </div>
@@ -307,6 +309,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
               {(contact.phone || contact.email) && <div className="mt-4 flex flex-col gap-2 border-t border-black/10 px-4 pt-4 text-sm text-black/60">
                 {contact.phone && <a href={`tel:${contact.phone.replace(/\s/g, "")}`}>{contact.phone}</a>}
                 {contact.email && <a href={`mailto:${contact.email}`}>{contact.email}</a>}
+                <a href={footerData.mapsUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2"><MapPin size={15} aria-hidden="true" />{english ? "Location" : "Локация"}</a>
               </div>}
               <Link href={languageTarget} onClick={closeMenu} className="self-start px-4 pt-5 text-xs font-medium tracking-[0.2em] text-black/65 transition-colors hover:text-[#3f7edb]">{english ? "БЪЛГАРСКИ" : "ENGLISH"}</Link>
             </div>

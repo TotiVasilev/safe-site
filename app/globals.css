@@ -248,3 +248,10 @@ body:has(.blue-site) .site-global-footer{background:#3274d3;color:#d7e7ff}
 body:has(.blue-site) .site-global-footer-inner{border-top-color:#ffffff66}
 body:has(.blue-site) .site-global-footer-links a:hover{color:#fff}
 @media(max-width:600px){.site-global-footer-inner{width:calc(100% - 40px);align-items:flex-start;flex-direction:column;gap:18px}.site-global-footer-links{align-items:flex-start;text-align:left;gap:10px}}
+
+/* Two-row partners marquee: opposite directions, continuous loop. */
+.partners-double-marquee { display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
+.partners-double-marquee .partners-track { animation-duration: 32s; }
+.partners-double-marquee .partners-track-reverse { animation-direction: reverse; }
+@media (max-width: 600px) { .partners-double-marquee .partners-track { animation-duration: 40s; } }
+@media (prefers-reduced-motion: reduce) { .partners-double-marquee .partners-track { animation: none; } }
