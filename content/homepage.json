@@ -14,22 +14,42 @@
     {
       "name": "Fibank",
       "image": "/products/uploads/fibank.png",
-      "url": ""
+      "url": "https://www.fibank.bg/bg"
     },
     {
       "name": "ОББ",
       "image": "/products/uploads/obb.png",
-      "url": ""
+      "url": "https://ebb.ubb.bg/"
     },
     {
       "name": "DSK",
       "image": "/products/uploads/mall-of-sofia-logo-dsk.png",
-      "url": ""
+      "url": "https://dskbank.bg/"
     },
     {
       "name": "UniCredit Bulbank",
       "image": "/products/uploads/unicredit-e1547457644805.png",
-      "url": ""
+      "url": "https://www.unicreditbulbank.bg/bg/individualni-klienti/"
+    },
+    {
+      "name": "DBank",
+      "image": "/products/uploads/d_commerce_bank-removebg-preview.png",
+      "url": "https://online.dbank.bg/"
+    },
+    {
+      "name": "CCB",
+      "image": "/products/uploads/ccb-logo-1200x627.png",
+      "url": "https://www.ccbank.bg/"
+    },
+    {
+      "name": "VPsecutity",
+      "image": "/products/uploads/vip-security.png",
+      "url": "https://vipsecurity.bg/"
+    },
+    {
+      "name": "sot161",
+      "image": "/products/uploads/sot161.png",
+      "url": "https://www.sot.bg/"
     }
   ],
   "aboutTitle": "Опит, изграден с десетилетия",
@@ -38,10 +58,10 @@
   "secondaryLink": "/uslugi",
   "typography": {},
   "servicesButton": "Виж услугите",
-  "aboutParagraph1": "Основана през 1990 г. в Стара Загора, ТЕТРАЕДЪР е българска компания, специализирана в производството на висок клас сейфове и банково оборудване.",
+  "aboutParagraph1": "Основана през 1990 г. в Стара Загора, ТЕТРАЕДЪР е българска компания, специализирана в производството на висок клас сейфове и банково, професионално и лично оборудване.\n\nСъчетаваме собствено производство, изпитани технологии и индивидуален подход към всеки проект.",
   "productsLabel": "Нашият каталог",
-  "partnersDescription": "През годините сме реализирали стотици проекти за банковия сектор в България. Дългосрочните ни партньорства се основават на надеждни продукти, техническа експертиза и професионална поддръжка.",
-  "aboutParagraph2": "Съчетаваме собствено производство, изпитани технологии и индивидуален подход към всеки проект.",
+  "partnersDescription": "С богат опит и стотици реализирани проекти в различни индустрии, ние изграждаме дългосрочни партньорства, основани на качествени решения, техническа експертиза и надеждна професионална поддръжка.",
+  "aboutParagraph2": ".",
   "contactButton": "Изпратете запитване",
   "contactLabel": "Запитване",
   "productsTitle": "Решения за всяко ниво на сигурност",
@@ -72,7 +92,7 @@
       "alt": "Отворена трезорна врата със светлина"
     }
   ],
-  "contactDescription": "Всеки обект има различни изисквания за сигурност. Свържете се с нас, за да обсъдим вашите нужди и да Ви предложим подходящо оборудване.",
+  "contactDescription": "Всеки обект има различни изисквания за сигурност. Свържете се с нас, за да обсъдим вашите нужди и да Ви предложим подходящо оборудване.\n\nВъзможност за персонализирани поръчки!\n",
   "feature2Title": "Собствено производство",
   "feature1Title": "Доказана надеждност",
   "servicesDescription": "Осигуряваме професионална консултация, транспорт, монтаж и сервизна поддръжка на оборудването. От избора на подходящ продукт до неговата дългосрочна експлоатация.",
