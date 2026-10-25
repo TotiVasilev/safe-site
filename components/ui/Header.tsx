@@ -149,7 +149,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
             : "bg-[#f5f5f4]/95 backdrop-blur-md"
         }`}
       >
-        <div className="relative z-30 mx-auto flex h-20 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-0">
+        <div className="relative z-30 mx-auto flex h-16 sm:h-20 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-0">
           {/* LOGO */}
 
           <Link
@@ -163,10 +163,10 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
               width={48}
               height={48}
               priority
-              className="h-12 w-auto object-contain"
+              className="h-9 sm:h-12 w-auto object-contain"
             />
 
-            <span className="text-[24px] font-medium leading-none tracking-[0.005em] text-[#3f7edb] sm:text-[29px]">ТЕТРАЕДЪР</span>
+            <span className="text-[20px] font-medium leading-none tracking-[0.005em] text-[#3f7edb] sm:text-[29px]">ТЕТРАЕДЪР</span>
           </Link>
 
           {/* DESKTOP NAVIGATION */}
@@ -315,7 +315,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
           type="button"
           aria-label="Затвори менюто"
           onClick={closeMenu}
-          className="fixed inset-x-0 bottom-0 top-20 z-[90] bg-black/[0.04] xl:hidden"
+          className="fixed inset-x-0 bottom-0 top-16 sm:top-20 z-[90] bg-black/[0.04] xl:hidden"
         />
       )}
     </>

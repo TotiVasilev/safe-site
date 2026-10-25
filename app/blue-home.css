@@ -348,3 +348,270 @@
   .blue-site .b-hero-media-reveal::before,
   .blue-site .b-hero-media-reveal::after { width: 45px; filter: blur(22px); }
 }
+
+
+/* Tetraedar mobile homepage composition — desktop untouched. */
+@media (max-width: 600px) {
+  /* Fixed header is 64px on phones; hero alone occupies the opening viewport. */
+  .blue-site .b-hero {
+    min-height: 100svh;
+    padding-top: 64px;
+    display: flex;
+    align-items: center;
+  }
+  .blue-site .b-hero > .b-shell { width: calc(100% - 32px); }
+  .blue-site .b-hero-kicker { display: none; }
+  .blue-site .b-hero-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr);
+    grid-template-rows: auto auto auto;
+    column-gap: 6px;
+    row-gap: clamp(18px, 3.8svh, 35px);
+    min-height: 0;
+    align-content: center;
+    align-items: center;
+    padding: 18px 0 30px;
+  }
+  .blue-site .b-hero-text { display: contents; }
+  .blue-site .b-hero-text h1 {
+    grid-column: 1; grid-row: 1;
+    font-size: clamp(27px, 7.7vw, 39px);
+    line-height: 1.04;
+    letter-spacing: -.065em;
+    text-align: left;
+    text-wrap: pretty;
+    max-width: 100%;
+    min-width: 0;
+  }
+  .blue-site .b-hero-media-reveal {
+    grid-column: 2; grid-row: 1;
+    align-self: stretch;
+    min-width: 0;
+    width: 100%;
+    overflow: visible;
+    position: relative;
+  }
+  .blue-site .b-hero-media-reveal .b-stack {
+    width: 100%; height: 100%; min-height: 178px;
+    clip-path: none; border-radius: 14px;
+    box-shadow: 0 10px 25px #163e7022;
+  }
+  /* Soft blend at the left edge of the photo, without covering the headline. */
+  .blue-site .b-hero-media-reveal .b-stack::after {
+    background: linear-gradient(90deg, rgba(239,245,253,.6), rgba(239,245,253,0) 40%);
+  }
+  .blue-site .b-hero-media-reveal::before,
+  .blue-site .b-hero-media-reveal::after { display: none; }
+  .blue-site .b-hero-text > p {
+    grid-column: 1 / -1; grid-row: 2;
+    text-align: center;
+    font-size: clamp(14px, 3.5vw, 16px);
+    line-height: 1.55;
+    margin: 0 auto;
+    max-width: 350px;
+  }
+  .blue-site .b-actions {
+    grid-column: 1 / -1; grid-row: 3;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    gap: 12px; margin: 0;
+  }
+  .blue-site .b-actions .b-primary {
+    min-width: min(100%, 290px);
+    justify-content: center;
+    gap: 22px;
+    padding: 14px 20px;
+    font-size: 14px;
+    border-radius: 11px;
+  }
+  .blue-site .b-actions .b-secondary {
+    padding: 9px 12px;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  /* About: content first, spinning logo and wordmark last. No numbered feature rows. */
+  .blue-site .b-intro { padding: 58px 0 65px; }
+  .blue-site .b-intro-grid { display: flex; flex-direction: column; gap: 30px; }
+  .blue-site .b-about-content { order: 1; text-align: center; }
+  .blue-site .b-intro .b-overline { margin-bottom: 16px; }
+  .blue-site .b-intro h2 { font-size: clamp(35px, 9vw, 45px); line-height: 1.08; letter-spacing: -.055em; }
+  .blue-site .b-intro-text { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 22px; }
+  .blue-site .b-intro-text p { font-size: 15px; line-height: 1.62; }
+  .blue-site .b-about-features { display: none; }
+  .blue-site .about-logo-reveal {
+    order: 2; min-height: 250px; height: 250px;
+    border: 0; background: transparent;
+  }
+  .blue-site .about-logo-reveal__lockup { width: min(58%, 200px); }
+  .blue-site .about-logo-reveal__wordmark { font-size: clamp(21px, 5.6vw, 28px); }
+
+  /* Catalog: two cards per row, with preserved destinations and CMS labels. */
+  .blue-site .b-range { padding: 62px 0 70px; }
+  .blue-site .b-range-top { display: flex; flex-direction: column; align-items: center; gap: 22px; padding-bottom: 26px; text-align: center; }
+  .blue-site .b-range h2 { font-size: clamp(36px, 9vw, 46px); line-height: 1.08; }
+  .blue-site .b-range .b-overline { margin-bottom: 16px; }
+  .blue-site .b-range-top > div:last-child { width: 100%; max-width: none; margin: 0; justify-content: center; }
+  .blue-site .b-range-top .b-white-button { margin: 0; padding: 14px 20px; }
+  .blue-site .b-range-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; border: 0; }
+  .blue-site .b-range-list .b-range-item {
+    display: flex; flex-direction: column; align-items: flex-start;
+    justify-content: space-between;
+    min-height: 146px;
+    padding: 16px;
+    border: 1px solid #6584ab66;
+    border-radius: 15px;
+    background: #ffffff0c;
+    gap: 13px;
+  }
+  .blue-site .b-range-list .b-range-item:hover { padding: 16px; background: #ffffff19; }
+  .blue-site .b-range-name { font-size: clamp(17px, 4.7vw, 22px); line-height: 1.16; letter-spacing: -.035em; overflow-wrap: anywhere; }
+  .blue-site .b-range-index { font-size: 11px; }
+  .blue-site .b-range-arrow { align-self: flex-end; font-size: 22px; line-height: 1; }
+
+  /* Services and partners otherwise unchanged; only relocate service CTA. */
+  .blue-site .b-service-copy > .b-primary {
+    display: flex;
+    width: fit-content;
+    margin-inline: auto;
+    justify-content: center;
+    gap: 25px;
+    padding: 15px 22px;
+  }
+}
+
+
+/* Mobile homepage layout revision — image-first hero and intentional alignment.
+   Overrides the previous mobile-only composition; desktop remains unchanged. */
+@media (max-width: 600px) {
+  /* Header remains the first visible element; hero photo follows immediately. */
+  .blue-site .b-hero {
+    min-height: calc(100svh - 64px);
+    padding-top: 64px;
+    align-items: stretch;
+  }
+  .blue-site .b-hero > .b-shell { width: calc(100% - 32px); }
+  .blue-site .b-hero-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto auto auto;
+    gap: 0;
+    align-content: start;
+    padding: 0 0 42px;
+    min-height: 0;
+  }
+  .blue-site .b-hero-text { display: contents; }
+  .blue-site .b-hero-media-reveal {
+    grid-column: 1;
+    grid-row: 1;
+    width: calc(100% + 32px);
+    max-width: none;
+    margin-inline: -16px;
+    align-self: auto;
+    overflow: hidden;
+  }
+  .blue-site .b-hero-media-reveal .b-stack {
+    height: clamp(210px, 57vw, 310px);
+    min-height: 0;
+    width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .blue-site .b-hero-media-reveal .b-stack::after {
+    border-radius: 0;
+    background: linear-gradient(0deg, rgba(239,245,253,.48), transparent 28%);
+  }
+  .blue-site .b-hero-text h1 {
+    grid-column: 1;
+    grid-row: 2;
+    margin-top: 28px;
+    font-size: clamp(43px, 11.5vw, 58px);
+    line-height: 1.01;
+    letter-spacing: -.06em;
+    text-align: left;
+    max-width: 100%;
+  }
+  .blue-site .b-hero-text > p {
+    grid-column: 1;
+    grid-row: 3;
+    margin: 23px 0 0;
+    max-width: 100%;
+    font-size: 16px;
+    line-height: 1.55;
+    text-align: left;
+  }
+  .blue-site .b-actions {
+    grid-column: 1;
+    grid-row: 4;
+    margin-top: 28px;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  /* Preserve both existing hero buttons and their centered arrangement. */
+  .blue-site .b-intro .b-about-content,
+  .blue-site .b-intro .b-overline,
+  .blue-site .b-intro h2,
+  .blue-site .b-intro-text,
+  .blue-site .b-intro-text p { text-align: left; }
+  .blue-site .b-range-top { align-items: stretch; text-align: right; }
+  .blue-site .b-range-top .b-overline,
+  .blue-site .b-range-top h2,
+  .blue-site .b-range-top p { text-align: right; }
+  .blue-site .b-range-top > div:last-child {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-left: auto;
+    width: 100%;
+  }
+  .blue-site .b-range-top .b-white-button {
+    align-self: flex-end;
+    margin-left: auto;
+    margin-right: 0;
+  }
+  /* Keep the two-column catalog cards from the previous update. */
+  .blue-site .b-service-copy > .b-primary {
+    margin-left: auto;
+    margin-right: 0;
+  }
+  .blue-site .b-contact-action {
+    width: min(100%, 340px);
+    max-width: 340px;
+    margin-inline: auto;
+  }
+}
+
+/* Mobile hero refinement: taller edge-to-edge photo, compact headline with copy beside it.
+   No changes to buttons, following sections, or hero background height. */
+@media (max-width: 600px) {
+  .blue-site .b-hero-layout {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    column-gap: 14px;
+  }
+  .blue-site .b-hero-media-reveal { grid-column: 1 / -1; grid-row: 1; }
+  .blue-site .b-hero-media-reveal .b-stack {
+    height: clamp(285px, 82vw, 410px);
+  }
+  .blue-site .b-hero-text h1 {
+    grid-column: 1;
+    grid-row: 2;
+    font-size: clamp(29px, 7.7vw, 39px);
+    line-height: 1.07;
+    margin-top: 26px;
+    align-self: center;
+  }
+  .blue-site .b-hero-text > p {
+    grid-column: 2;
+    grid-row: 2;
+    margin: 26px 0 0;
+    font-size: clamp(13px, 3.45vw, 15px);
+    line-height: 1.5;
+    align-self: center;
+    min-width: 0;
+  }
+  .blue-site .b-actions {
+    grid-column: 1 / -1;
+    grid-row: 3;
+  }
+}
