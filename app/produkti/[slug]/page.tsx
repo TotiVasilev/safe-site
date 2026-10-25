@@ -128,13 +128,12 @@ export default async function ProductPage({
             </div>
 
             <div className="mt-7 flex justify-end sm:block">
-              <button
-                type="button"
-                title="Демонстрационен бутон — скоро ще бъде добавена форма за запитване"
+              <a
+                href="mailto:info@tetraedar.com"
                 className="inline-flex items-center gap-3 rounded-full bg-[#3f7edb] px-7 py-3.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#326bc1]"
               >
                 Свържете се с нас <span aria-hidden="true">↗</span>
-              </button>
+              </a>
             </div>
           </div>
         </section>
@@ -159,7 +158,7 @@ export default async function ProductPage({
           </p>
 
           <Link
-            href="/uslugi"
+            href="mailto:info@tetraedar.com"
             className="mt-8 flex w-fit ml-auto sm:ml-0 rounded-full bg-white px-6 py-3 text-sm font-medium text-black transition-transform hover:scale-105"
           >
             Свържете се с нас

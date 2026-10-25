@@ -215,8 +215,8 @@ export default async function ModelPage({
           </p>
 
           <Link
-            href="/en/uslugi"
-            className="mt-8 inline-flex rounded-full bg-white px-6 py-3 text-sm font-medium text-black transition-transform hover:scale-105"
+            href="mailto:info@tetraedar.com"
+            className="mt-8 flex w-fit ml-auto sm:ml-0 rounded-full bg-white px-6 py-3 text-sm font-medium text-black transition-transform hover:scale-105"
           >
             Contact us
           </Link>
