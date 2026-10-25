@@ -663,3 +663,25 @@
 @media (min-width: 601px) and (max-width: 900px) {
   .blue-site #b-about .b-about-features { width: 100%; }
 }
+
+/* Approved desktop hero refinement: extend only the left edge; preserve the right edge.
+   A narrow alpha fade blends the image into the existing blue hero background. */
+@media (min-width: 901px) {
+  .blue-site .b-hero-layout > .b-hero-media-reveal {
+    width: calc(100% + clamp(55px, 5.5vw, 95px));
+    max-width: none;
+    margin-left: calc(-1 * clamp(55px, 5.5vw, 95px));
+    overflow: visible;
+  }
+  .blue-site .b-hero-layout > .b-hero-media-reveal .b-stack {
+    /* Fade the expanded left portion out before it reaches the copy. */
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,.05) 12%, rgba(0,0,0,.45) 22%, #000 34%, #000 100%);
+    mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,.05) 12%, rgba(0,0,0,.45) 22%, #000 34%, #000 100%);
+  }
+}
+
+/* Keep desktop hero copy legible above the extended image's transparent edge. */
+@media (min-width: 901px) {
+  .blue-site .b-hero-layout > .b-hero-text { z-index: 3; }
+  .blue-site .b-hero-layout > .b-hero-media-reveal { z-index: 1; }
+}
