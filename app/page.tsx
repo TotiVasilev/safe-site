@@ -31,8 +31,9 @@ export default function Home(){
   <section className="b-intro" id="b-about"><div className="b-shell b-intro-grid">
     <AboutLogoReveal/>
     <div className="b-about-content" data-reveal="up"><span className="b-overline" data-cms-field="aboutLabel">{h.aboutLabel}</span><h2 data-cms-field="aboutTitle">{h.aboutTitle}</h2><div className="b-intro-text"><p data-cms-field="aboutParagraph1">{h.aboutParagraph1}</p><p data-cms-field="aboutParagraph2">{h.aboutParagraph2}</p></div>
+    </div>
     <div className="b-about-features">{[["feature1Title","feature1Description"],["feature2Title","feature2Description"],["feature3Title","feature3Description"]].map(([a,b],i)=><div className="b-about-feature" data-reveal="fade" style={{"--reveal-delay": `${i * 110}ms`} as React.CSSProperties} key={a}><span className="b-about-feature-number">0{i+1}</span><div><strong data-cms-field={a}>{h[a as keyof typeof h] as string}</strong><p data-cms-field={b}>{h[b as keyof typeof h] as string}</p></div></div>)}</div>
-    </div></div></section>
+    </div></section>
 
   <section className="b-range" id="b-products"><div className="b-shell"><div className="b-range-top" data-reveal="fade"><div><span className="b-overline" data-cms-field="productsLabel">{h.productsLabel}</span><h2 data-cms-field="productsTitle">{h.productsTitle}</h2></div><div><Link href={h.primaryLink} className="b-white-button"><span data-cms-field="catalogButton">{h.catalogButton}</span> ↗</Link></div></div>
    <div className="b-range-list" data-reveal-group="catalog">{categories.map((c,i)=><Link key={c.id} href={`/produkti#category-${c.slug}`} className="b-range-item"><span className="b-range-index">{String(i+1).padStart(2,"0")}</span><span className="b-range-name">{c.name}</span><span className="b-range-arrow">↗</span></Link>)}</div>
