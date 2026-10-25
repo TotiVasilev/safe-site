@@ -1128,7 +1128,7 @@ function ProductCard({
 
         <div className="p-3.5 sm:p-6">
           {cardLabel && (
-            <p className="truncate text-[11px] font-semibold uppercase tracking-[0.12em] text-[#3f7edb]">
+            <p className="w-full min-w-0 whitespace-normal break-words text-[9px] sm:text-[11px] font-semibold uppercase leading-[1.4] tracking-[0.04em] sm:tracking-[0.12em] text-[#3f7edb] [overflow-wrap:anywhere]">
               {cardLabel}
             </p>
           )}
