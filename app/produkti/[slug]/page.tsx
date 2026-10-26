@@ -140,7 +140,7 @@ export default async function ProductPage({
         </section>
 
         {models.length > 0 && (
-          {category?.slug === "bravi" ? <LockModelSelector models={models} productName={product.name} /> : <ModelSelector models={models} drawing={product.modelDrawing} productName={product.name} />}
+          category?.slug === "bravi" ? <LockModelSelector models={models} productName={product.name} /> : <ModelSelector models={models} drawing={product.modelDrawing} productName={product.name} />
         )}
 
         <section className="mt-32 rounded-3xl bg-black px-8 py-16 text-white sm:px-12 lg:px-16">
