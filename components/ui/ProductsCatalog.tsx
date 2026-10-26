@@ -94,44 +94,72 @@ export default function ProductsCatalog({
     }
     return top;
   }
+  // Before leaving for a product, remove the category hash from THIS history
+  // entry. Otherwise the browser re-applies #category-bravi on Back, even
+  // after a custom scroll restoration has run.
   useEffect(() => {
-    const rawHash = window.location.hash;
-    if (!rawHash) return;
-    const elementId = decodeURIComponent(
-      rawHash.slice(1)
-    );
-    if (!elementId) return;
+    const onProductClick = (event: MouseEvent) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      const link = target.closest("a[href]") as HTMLAnchorElement | null;
+      if (!link || link.origin !== window.location.origin) return;
+      if (link.pathname === window.location.pathname) return;
+      if (!/^\/(?:en\/)?produkti\/[^/]+/.test(link.pathname)) return;
+
+      const y = window.scrollY;
+      const currentState = window.history.state ?? {};
+      // Preserve Next.js router metadata when editing this history entry.
+      window.history.replaceState(
+        { ...currentState, __tetraedarCatalogReturnY: y },
+        "",
+        window.location.pathname + window.location.search
+      );
+    };
+    document.addEventListener("click", onProductClick, true);
+    return () => document.removeEventListener("click", onProductClick, true);
+  }, []);
+
+  useEffect(() => {
+    const state = window.history.state as
+      | { __tetraedarCatalogReturnY?: number }
+      | null;
+    const savedY = state?.__tetraedarCatalogReturnY;
     let frame1 = 0;
     let frame2 = 0;
     let timer = 0;
-    function correctHashPosition() {
-      const element =
-        document.getElementById(elementId);
-      if (!element) return;
-      const isMobile =
-        window.innerWidth < 1024;
-      const offset =
-        isMobile ? 150 : 120;
-      const targetTop =
-        getDocumentTop(element) -
-        offset;
-      window.scrollTo({
-        top: Math.max(0, targetTop),
-        behavior: "auto",
+    let timer2 = 0;
+
+    if (typeof savedY === "number" && Number.isFinite(savedY)) {
+      const restore = () => window.scrollTo({ top: savedY, behavior: "instant" });
+      frame1 = requestAnimationFrame(() => {
+        frame2 = requestAnimationFrame(restore);
       });
+      timer = window.setTimeout(restore, 300);
+      timer2 = window.setTimeout(restore, 850);
+    } else {
+      const rawHash = window.location.hash;
+      if (!rawHash) return;
+      const elementId = decodeURIComponent(rawHash.slice(1));
+      if (!elementId) return;
+      const correctHashPosition = () => {
+        const element = document.getElementById(elementId);
+        if (!element) return;
+        const offset = window.innerWidth < 1024 ? 150 : 120;
+        window.scrollTo({
+          top: Math.max(0, getDocumentTop(element) - offset),
+          behavior: "auto",
+        });
+      };
+      frame1 = requestAnimationFrame(() => {
+        frame2 = requestAnimationFrame(correctHashPosition);
+      });
+      timer = window.setTimeout(correctHashPosition, 450);
     }
-    frame1 = window.requestAnimationFrame(() => {
-      frame2 = window.requestAnimationFrame(() => {
-        correctHashPosition();
-      });
-    });
-    timer = window.setTimeout(() => {
-      correctHashPosition();
-    }, 450);
     return () => {
-      window.cancelAnimationFrame(frame1);
-      window.cancelAnimationFrame(frame2);
-      window.clearTimeout(timer);
+      cancelAnimationFrame(frame1);
+      cancelAnimationFrame(frame2);
+      clearTimeout(timer);
+      clearTimeout(timer2);
     };
   }, [categories]);
   useEffect(() => {
