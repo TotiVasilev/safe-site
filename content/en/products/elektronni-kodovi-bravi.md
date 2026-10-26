@@ -39,4 +39,12 @@ models:
 
     In view of the various groups of users with access to ATMs, the system offers three independent modes of operation - for
     bank employees, cash charging teams and technical specialists.'
+- name: LA GARD Electronic
+  image: /products/uploads/la-gard-electronic.png
+  description: 'Certified by UL, VdS, EN 1300, SBSC, CNPP a2p
+
+
+    Ideal for the commercial sector, financial and legal sphere, pharmaceutical industry, retail trade, storage in vaults,
+    state institutions (including law enforcement), as well as for residential needs and personal use. The series includes
+    five models and offers various features and options that cover almost any requirements for locking mechanisms for safes.'
 ---
