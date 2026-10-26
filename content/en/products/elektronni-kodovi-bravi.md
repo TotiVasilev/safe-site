@@ -10,6 +10,12 @@ description: The electronic code locks of the leading manufacturers KABA and STU
   of protection under EN 1143-1.
 lockCollection: false
 image: /products/uploads/elektronni-obshta-snimka.png
+images:
+- /products/uploads/combi-b-90.png
+- /products/uploads/cencon-atm.png
+- /products/uploads/la-gard-electronic.png
+- /products/uploads/paxos.png
+modelDrawing: ''
 models:
 - name: Tulox 100
   image: /products/uploads/elektronni-obshta-snimka.png
