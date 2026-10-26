@@ -11,6 +11,16 @@ description: The electronic code locks of the leading manufacturers KABA and STU
 lockCollection: false
 image: /products/uploads/elektronni-obshta-snimka.png
 models:
+- name: Tulox 100
+  image: /products/uploads/elektronni-obshta-snimka.png
+  description: 'Certificates: EN 1300B; VdS Class 2
+
+    Suitable for safes corresponding to EN 1143-1, Class 0-V
+
+
+    TULOX 100 is a hybrid locking system that combines an electronic lock for a safe with a mechanical emergency lock (serial
+    lock). After entering the code, the TULOX 100 lock can be opened by turning the handle. The connection between the buckle
+    and the code entry device shall be made by means of a robust spinel which ensures precise transmission of the movement.'
 - name: Combi B 90
   description: 'EN 1300, ECB-S, VdS class 2, VdS approval number: M102323 locking system, G113062 language switch
 
