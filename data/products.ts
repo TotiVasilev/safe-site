@@ -1,6 +1,8 @@
 export type ProductModel = {
 
   name: string;
+  image?: string;
+  description?: string;
 
   dimensions?: string;
   height?: string;

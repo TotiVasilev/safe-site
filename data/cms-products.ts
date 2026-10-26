@@ -54,6 +54,8 @@ function models(value: unknown): ProductModel[] {
     if (!name) return [];
     return [{
       name,
+      image: text(item.image) || undefined,
+      description: text(item.description) || undefined,
       dimensions: measurement(item.dimensions) || undefined,
       height: measurement(item.height) || undefined,
       width: measurement(item.width) || undefined,

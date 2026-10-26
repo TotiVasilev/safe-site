@@ -175,6 +175,16 @@ collections:
     - label: Име на модела
       name: name
       widget: string
+    - label: Снимка на модела (за ключалки)
+      name: image
+      widget: image
+      required: false
+      hint: Отделна снимка за този модел. Може да изберете една и съща снимка за няколко модела.
+    - label: Описание на модела (за ключалки)
+      name: description
+      widget: text
+      required: false
+      hint: Текстът се показва вдясно от снимката при избор на модела.
     - label: Външна височина (H), мм
       name: height
       widget: string

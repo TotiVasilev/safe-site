@@ -4,6 +4,7 @@ import ProductGallery from "@/components/ui/ProductGallery";
 import Image from "next/image";
 import ProductDescription from "@/components/ui/ProductDescription";
 import ModelSelector from "@/components/ui/ModelSelector";
+import LockModelSelector from "@/components/ui/LockModelSelector";
 import { getAllProducts, getProductCategories } from "@/data/cms-products";
 
 type ProductPageProps = {
@@ -139,7 +140,7 @@ export default async function ProductPage({
         </section>
 
         {models.length > 0 && (
-          <ModelSelector models={models} drawing={product.modelDrawing} productName={product.name} />
+          {category?.slug === "bravi" ? <LockModelSelector models={models} productName={product.name} /> : <ModelSelector models={models} drawing={product.modelDrawing} productName={product.name} />}
         )}
 
         <section className="mt-32 rounded-3xl bg-black px-8 py-16 text-white sm:px-12 lg:px-16">
