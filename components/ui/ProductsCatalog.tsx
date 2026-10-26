@@ -106,61 +106,46 @@ export default function ProductsCatalog({
       if (link.pathname === window.location.pathname) return;
       if (!/^\/(?:en\/)?produkti\/[^/]+/.test(link.pathname)) return;
 
-      const y = window.scrollY;
-      const currentState = window.history.state ?? {};
-      // Preserve Next.js router metadata when editing this history entry.
-      window.history.replaceState(
-        { ...currentState, __tetraedarCatalogReturnY: y },
-        "",
-        window.location.pathname + window.location.search
-      );
+      // Remove the anchor so it cannot override the browser's scroll
+      // restoration when the user returns from a product page.
+      if (window.location.hash) {
+        window.history.replaceState(
+          window.history.state,
+          "",
+          window.location.pathname + window.location.search
+        );
+      }
     };
     document.addEventListener("click", onProductClick, true);
     return () => document.removeEventListener("click", onProductClick, true);
   }, []);
 
+  // Do not re-apply a saved scroll position after returning with Back.
+  // The browser owns history restoration; a delayed scrollTo here steals
+  // the user's first scroll gesture and produces a visible snap.
   useEffect(() => {
-    const state = window.history.state as
-      | { __tetraedarCatalogReturnY?: number }
-      | null;
-    const savedY = state?.__tetraedarCatalogReturnY;
-    let frame1 = 0;
-    let frame2 = 0;
-    let timer = 0;
-    let timer2 = 0;
+    const rawHash = window.location.hash;
+    if (!rawHash) return;
 
-    if (typeof savedY === "number" && Number.isFinite(savedY)) {
-      const restore = () => window.scrollTo({ top: savedY, behavior: "instant" });
-      frame1 = requestAnimationFrame(() => {
-        frame2 = requestAnimationFrame(restore);
+    // Header marks Back/Forward before this component mounts. On history
+    // navigation the browser's restored position wins over category anchors.
+    const historyKey = "tetraedar:history-navigation";
+    const historyTarget = sessionStorage.getItem(historyKey);
+    sessionStorage.removeItem(historyKey);
+    if (historyTarget === window.location.pathname + rawHash) return;
+
+    const elementId = decodeURIComponent(rawHash.slice(1));
+    if (!elementId) return;
+    const frame = window.requestAnimationFrame(() => {
+      const element = document.getElementById(elementId);
+      if (!element) return;
+      const offset = window.innerWidth < 1024 ? 150 : 120;
+      window.scrollTo({
+        top: Math.max(0, getDocumentTop(element) - offset),
+        behavior: "instant",
       });
-      timer = window.setTimeout(restore, 300);
-      timer2 = window.setTimeout(restore, 850);
-    } else {
-      const rawHash = window.location.hash;
-      if (!rawHash) return;
-      const elementId = decodeURIComponent(rawHash.slice(1));
-      if (!elementId) return;
-      const correctHashPosition = () => {
-        const element = document.getElementById(elementId);
-        if (!element) return;
-        const offset = window.innerWidth < 1024 ? 150 : 120;
-        window.scrollTo({
-          top: Math.max(0, getDocumentTop(element) - offset),
-          behavior: "auto",
-        });
-      };
-      frame1 = requestAnimationFrame(() => {
-        frame2 = requestAnimationFrame(correctHashPosition);
-      });
-      timer = window.setTimeout(correctHashPosition, 450);
-    }
-    return () => {
-      cancelAnimationFrame(frame1);
-      cancelAnimationFrame(frame2);
-      clearTimeout(timer);
-      clearTimeout(timer2);
-    };
+    });
+    return () => window.cancelAnimationFrame(frame);
   }, [categories]);
   useEffect(() => {
     function updateNavigationState() {
