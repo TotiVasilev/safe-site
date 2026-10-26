@@ -45,9 +45,7 @@ models:
   image: /products/uploads/cencon-atm.png
   description: 'High security electronic locks (type UL I)
 
-    SBSC High Security (Sweden, Denmark, Norway, Finland), VdS Class 2 (Germany), CE, EN 1300
-
-    Class B (EU)
+    SBSC High Security (Sweden, Denmark, Norway, Finland), VdS Class 2 (Germany), CE, EN 1300 Class B (EU)
 
 
     Three modes of operation.
