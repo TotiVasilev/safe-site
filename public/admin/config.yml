@@ -160,9 +160,13 @@ collections:
     required: false
   - label: Допълнителни снимки
     name: images
-    widget: tetraedar-gallery
+    widget: list
     required: false
-    hint: Снимките се показват отляво надясно в реда на картите.
+    hint: Добавете снимки за слайдшоуто. Можете да избирате съществуващи файлове или да качвате нови, както и да пренареждате снимките.
+    field:
+      label: Снимка
+      name: image
+      widget: image
   - label: Обща техническа схема за моделите (H, B, L)
     name: modelDrawing
     widget: image
