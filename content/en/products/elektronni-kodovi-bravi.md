@@ -46,5 +46,19 @@ models:
 
     Ideal for the commercial sector, financial and legal sphere, pharmaceutical industry, retail trade, storage in vaults,
     state institutions (including law enforcement), as well as for residential needs and personal use. The series includes
-    five models and offers various features and options that cover almost any requirements for locking mechanisms for safes.'
+    five models and offers various features and options that cover almost any requirements for locking mechanisms for safes.
+
+
+    '
+- name: Paxos
+  image: /products/uploads/paxos.png
+  description: 'Certificates: EN 1300 B, C, D
+
+
+    Paxos combines exceptional reliability with ease of use, allowing easy connection of multiple locking and input devices
+    within a locking system.
+
+
+    In addition, the locking system can be monitored and configured remotely via an IP network using the programming software
+    AS384-NETW. Remote access to audit record data (the story of events) is also possible.'
 ---
