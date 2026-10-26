@@ -1,4 +1,4 @@
 ---
-title: Weapons lockers
+title: Armoured cupboards
 order: 40
 ---
