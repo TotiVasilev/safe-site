@@ -25,4 +25,18 @@ models:
     combination through the three rotating disks can the user unlock the key safe. The combination shall be changed by a sliding
     element located on the back of the buckle.'
   image: /products/uploads/combi-b-90.png
+- name: Cencon ATM
+  image: /products/uploads/cencon-atm.png
+  description: 'High security electronic locks (type UL I)
+
+    SBSC High Security (Sweden, Denmark, Norway, Finland), VdS Class 2 (Germany), CE, EN 1300
+
+    Class B (EU)
+
+
+    Three modes of operation.
+
+
+    In view of the various groups of users with access to ATMs, the system offers three independent modes of operation - for
+    bank employees, cash charging teams and technical specialists.'
 ---
