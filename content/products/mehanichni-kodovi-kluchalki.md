@@ -12,8 +12,8 @@ lockCollection: false
 image: /products/uploads/code-locks.png
 images:
   - /products/uploads/la-gard-3330.png
-  - /products/uploads/la-gard-1985.png
   - /products/uploads/la-gard-1947.png
+  - /products/uploads/la-gard-1985.png
   - /products/uploads/la-gard-3390.png
 models:
   - name: LA GARD 3330
