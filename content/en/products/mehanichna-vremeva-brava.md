@@ -1,6 +1,6 @@
 ---
 title: Mechanical time locks
-urlSlug: mehanichni-vremevi-bravi
+urlSlug: mehanichni-vremevi-kluchaki
 category: bravi
 order: 30
 cardLabel: Model STB 1600X
