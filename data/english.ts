@@ -30,6 +30,14 @@ function localizeProduct(product: ProductFamily): ProductFamily {
     description: typeof entry.description === "string" ? entry.description : product.description,
     catalogDescription: typeof entry.catalogDescription === "string" ? entry.catalogDescription : product.catalogDescription,
     cardLabel: typeof entry.cardLabel === "string" ? entry.cardLabel : product.cardLabel,
+    // Use translated model descriptions from the English CMS content while
+    // retaining the original model images, technical data, and ordering.
+    models: product.models.map((model, index) => {
+      const translated = Array.isArray(entry.models) ? entry.models[index] : undefined;
+      if (!translated || typeof translated !== "object") return model;
+      const description = (translated as Record<string, unknown>).description;
+      return typeof description === "string" ? { ...model, description } : model;
+    }),
   };
 }
 const categoryFallback: Record<string, string> = {
