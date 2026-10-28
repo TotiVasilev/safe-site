@@ -18,7 +18,7 @@ description: >-
 
   Предлаганите модели се отличават с прецизна изработка, надеждни заключващи механизми и възможности за приложение в различни видове сейфове и депозитни системи. Изборът на подходяща депозитна ключалка зависи от конкретните изисквания за сигурност, конструкцията на съоръжението и необходимото ниво на контрол на достъпа.
 lockCollection: false
-image: /products/uploads/mehanichna-brava.png
+image: /products/uploads/witkopp-5367.png
 images:
   - /products/uploads/witkopp-5347.png
   - /products/uploads/dormakaba-deposit.png
@@ -27,7 +27,7 @@ images:
   - /products/uploads/aga-546.png
 models:
   - name: WITTKOPP депозитна ключалка 5367
-    image: /products/uploads/mehanichna-brava.png
+    image: /products/uploads/witkopp-5367.png
     description: >-
       Заключващи механизми за банката и клиента, разположени един над друг, така
       че да се вижда само един отвор за ключ.
