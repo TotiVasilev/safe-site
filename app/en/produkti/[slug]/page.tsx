@@ -154,6 +154,8 @@ export default async function ProductPage({
 
           <p className="mt-5 max-w-xl leading-7 text-white/60">
             Contact us for more information about the models, their specifications, and delivery and installation options.
+            <br />
+            We also offer custom-made solutions, tailored to your specific dimensions, preferences, and requirements.
           </p>
 
           <Link
