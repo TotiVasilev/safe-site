@@ -3,7 +3,8 @@ title: Механични ключалки
 urlSlug: mehanichni-kluchalki
 category: bravi
 order: 50
-catalogDescription: ""
+catalogDescription: В нашия каталог ще откриете механични ключалки от утвърдени
+  производители като Dormakaba, AGA и WITTKOPP
 description: >-
   Механичните ключалки са надеждни заключващи механизми, предназначени за
   осигуряване на високо ниво на сигурност и защита на сейфове, трезори и други
