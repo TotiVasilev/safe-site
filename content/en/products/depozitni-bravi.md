@@ -18,7 +18,7 @@ description: 'The main feature of the deposit locks is the possibility of two-st
   various types of safes and deposit systems. The choice of an appropriate deposit lock depends on the specific security requirements,
   the construction of the facility and the required level of access control.'
 lockCollection: false
-image: /products/uploads/mehanichna-brava.png
+image: /products/uploads/witkopp-5367.png
 images:
 - /products/uploads/witkopp-5347.png
 - /products/uploads/dormakaba-deposit.png
@@ -27,7 +27,7 @@ images:
 - /products/uploads/aga-546.png
 models:
 - name: WITTKOPP Deposit Lock 5367
-  image: /products/uploads/mehanichna-brava.png
+  image: /products/uploads/witkopp-5367.png
   description: 'Locking mechanisms for the bank and the client located above each other so that only one key opening is visible.
 
 
