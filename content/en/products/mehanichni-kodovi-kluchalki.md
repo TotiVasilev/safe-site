@@ -4,8 +4,8 @@ urlSlug: mehanichni-kodovi-kluchalki
 category: bravi
 order: 40
 cardLabel: Class A to C EN 1300
-catalogDescription: The mechanical code locks of the DORMAKABA concern series LA GARD.
-description: Class LA GARD series mechanical code locks of DORMAKABA concern A to class C according to EN 1300 standard are
+catalogDescription: The Dormakaba series mechanical code locks.
+description: Class LA GARD series mechanical code locks of Dormakaba concern A to class C according to EN 1300 standard are
   available in facilities up to VII degree of resistance and provide up to 100 million possible combinations.
 lockCollection: false
 image: /products/uploads/code-locks.png

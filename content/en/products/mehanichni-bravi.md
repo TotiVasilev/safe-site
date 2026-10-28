@@ -29,12 +29,12 @@ images:
 - /products/uploads/aga-b247.png
 models:
 - name: WITTKOPP 1819
-  description: 'Series 18 designed for safety classes of locking mechanisms VdS 1 to 3 (EN 1300 A to C).
+  description: 'Series 18, designed for safety classes of locking mechanisms VdS 1 to 3 (EN 1300 A to C).
 
     Certificates: EN 1300 A; VdS class 1; VdS class A
 
 
-    Main key locking mechanism: The main key is higher rank and activates every lock in the system, while the user keys can
+    Main key locking mechanism: The main key is higher rank and triggers every lock in the system, while the user keys can
     only activate one particular lock.
 
 
@@ -48,7 +48,7 @@ models:
 
     - Safes by standard VDMA A/B
 
-    - Safes according to standard EN 0 '
+    - Safes by standard EN 0 '
   image: /products/uploads/wittkopp-1819-1821-1824.png
 - name: WITTKOPP 1821
   description: 'Series 18 designed for safety classes of locking mechanisms VdS 1 to 3 (EN 1300 A to C).
