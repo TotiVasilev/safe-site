@@ -1,12 +1,12 @@
 "use client";
 
-import { Environment } from "@react-three/drei";
+import { Environment, useGLTF } from "@react-three/drei";
 import {
   Canvas,
   useFrame,
   useThree,
 } from "@react-three/fiber";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 
 type SafeSceneProps = {
@@ -153,6 +153,42 @@ function SafeModel({
   activeIndex,
   mobile,
 }: InternalProps) {
+  const { scene: importedScene } = useGLTF("/models/safe_model.glb");
+
+  // Clone once per Canvas. Never mutate the shared GLTFLoader cache.
+  const model = useMemo(() => {
+    const copy = importedScene.clone(true);
+    const door = copy.getObjectByName("Safe_Door");
+    const handle = copy.getObjectByName("Safe_Handle");
+
+    if (door && door.parent) {
+      // Blender's door origin is at the hinge edge; preserve that origin
+      // when introducing a dedicated animation pivot.
+      const parent = door.parent;
+      const pivot = new THREE.Group();
+      pivot.name = "Website_Door_Hinge_Pivot";
+      pivot.position.copy(door.position);
+      pivot.quaternion.copy(door.quaternion);
+      pivot.scale.copy(door.scale);
+      parent.add(pivot);
+      pivot.add(door);
+      door.position.set(0, 0, 0);
+      door.quaternion.identity();
+      door.scale.set(1, 1, 1);
+
+      if (handle && handle.parent) {
+        const handleParent = handle.parent;
+        const handlePivot = new THREE.Group();
+        handlePivot.name = "Website_Handle_Pivot";
+        handlePivot.position.copy(handle.position);
+        handleParent.add(handlePivot);
+        handlePivot.add(handle);
+        handle.position.set(0, 0, 0);
+      }
+    }
+    return copy;
+  }, [importedScene]);
+
   const safeRef =
     useRef<THREE.Group>(null);
 
@@ -266,6 +302,8 @@ function SafeModel({
     );
 
   useEffect(() => {
+    doorRef.current = model.getObjectByName("Website_Door_Hinge_Pivot") as THREE.Group | null;
+    handleRef.current = model.getObjectByName("Website_Handle_Pivot") as THREE.Group | null;
     if (
       !safeRef.current ||
       !doorRef.current ||
@@ -292,7 +330,7 @@ function SafeModel({
       doorRef.current.rotation.y;
 
     startHandleRotation.current =
-      handleRef.current.rotation.z;
+      handleRef.current.rotation.x;
 
     startPosition.current.copy(
       safeRef.current.position
@@ -510,6 +548,7 @@ function SafeModel({
   }, [
     activeIndex,
     mobile,
+    model,
   ]);
 
   /*
@@ -618,7 +657,7 @@ function SafeModel({
     |--------------------------------------------------------------------------
     */
 
-    handleRef.current.rotation.z =
+    handleRef.current.rotation.x =
       THREE.MathUtils.lerp(
         startHandleRotation.current,
         targetHandleRotation.current,
@@ -649,223 +688,16 @@ function SafeModel({
       doorRef.current.rotation.y =
         targetDoorRotation.current;
 
-      handleRef.current.rotation.z =
+      handleRef.current.rotation.x =
         targetHandleRotation.current;
     }
   });
 
   return (
     <group ref={safeRef}>
-      {/* SAFE BODY */}
-
-      <mesh>
-        <boxGeometry
-          args={[
-            2.5,
-            3.2,
-            1.8,
-          ]}
-        />
-
-        <meshStandardMaterial
-          color="#262a30"
-          metalness={0.8}
-          roughness={0.32}
-        />
-      </mesh>
-
-      {/* INNER OPENING */}
-
-      <mesh
-        position={[
-          0,
-          0,
-          0.93,
-        ]}
-      >
-        <boxGeometry
-          args={[
-            1.95,
-            2.65,
-            0.08,
-          ]}
-        />
-
-        <meshStandardMaterial
-          color="#111317"
-          metalness={0.3}
-          roughness={0.7}
-        />
-      </mesh>
-
-      {/* TOP SHELF */}
-
-      <mesh
-        position={[
-          0,
-          0.3,
-          0.45,
-        ]}
-      >
-        <boxGeometry
-          args={[
-            1.75,
-            0.05,
-            1.1,
-          ]}
-        />
-
-        <meshStandardMaterial
-          color="#30343a"
-          metalness={0.6}
-          roughness={0.4}
-        />
-      </mesh>
-
-      {/* BOTTOM SHELF */}
-
-      <mesh
-        position={[
-          0,
-          -0.34,
-          0.45,
-        ]}
-      >
-        <boxGeometry
-          args={[
-            1.75,
-            0.05,
-            1.1,
-          ]}
-        />
-
-        <meshStandardMaterial
-          color="#30343a"
-          metalness={0.6}
-          roughness={0.4}
-        />
-      </mesh>
-
-      {/* DOOR */}
-
-      <group
-        ref={doorRef}
-        position={[
-          -1.25,
-          0,
-          0.98,
-        ]}
-      >
-        {/* DOOR BODY */}
-
-        <mesh
-          position={[
-            1.25,
-            0,
-            0,
-          ]}
-        >
-          <boxGeometry
-            args={[
-              2.5,
-              3.05,
-              0.18,
-            ]}
-          />
-
-          <meshStandardMaterial
-            color="#343941"
-            metalness={0.9}
-            roughness={0.24}
-          />
-        </mesh>
-
-        {/* LOCK */}
-
-        <mesh
-          position={[
-            1.7,
-            0.35,
-            0.13,
-          ]}
-          rotation={[
-            Math.PI / 2,
-            0,
-            0,
-          ]}
-        >
-          <cylinderGeometry
-            args={[
-              0.28,
-              0.28,
-              0.12,
-              32,
-            ]}
-          />
-
-          <meshStandardMaterial
-            color="#15171b"
-            metalness={0.8}
-            roughness={0.25}
-          />
-        </mesh>
-
-        {/* HANDLE */}
-
-        <group
-          ref={handleRef}
-          position={[
-            1.72,
-            -0.1,
-            0.17,
-          ]}
-        >
-          <mesh
-            position={[
-              0,
-              -0.35,
-              0,
-            ]}
-          >
-            <cylinderGeometry
-              args={[
-                0.07,
-                0.07,
-                0.8,
-                32,
-              ]}
-            />
-
-            <meshStandardMaterial
-              color="#777d85"
-              metalness={1}
-              roughness={0.18}
-            />
-          </mesh>
-
-          <mesh
-            rotation={[
-              Math.PI / 2,
-              0,
-              0,
-            ]}
-          >
-            <cylinderGeometry
-              args={[
-                0.16,
-                0.16,
-                0.16,
-                32,
-              ]}
-            />
-
-            <meshStandardMaterial
-              color="#777d85"
-              metalness={1}
-              roughness={0.18}
-            />
-          </mesh>
-        </group>
+      {/* Original Blender model, rotated so its front faces the camera. */}
+      <group rotation={[0, Math.PI / 2, 0]} scale={1.6}>
+        <primitive object={model} />
       </group>
     </group>
   );
@@ -1145,7 +977,7 @@ export default function SafeScene({
         }}
       >
         <ambientLight
-          intensity={1.8}
+          intensity={0.65}
         />
 
         <directionalLight
@@ -1154,7 +986,7 @@ export default function SafeScene({
             7,
             6,
           ]}
-          intensity={4}
+          intensity={2.0}
         />
 
         <directionalLight
@@ -1163,7 +995,7 @@ export default function SafeScene({
             3,
             2,
           ]}
-          intensity={2.5}
+          intensity={0.9}
         />
 
         <pointLight
@@ -1172,7 +1004,7 @@ export default function SafeScene({
             1,
             4,
           ]}
-          intensity={2}
+          intensity={0.5}
         />
 
         <CameraRig
@@ -1191,6 +1023,7 @@ export default function SafeScene({
 
         <Environment
           preset="studio"
+          environmentIntensity={0.45}
         />
       </Canvas>
     </div>
