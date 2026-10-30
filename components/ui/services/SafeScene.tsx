@@ -984,7 +984,7 @@ export default function SafeScene({
         }}
       >
         <ambientLight
-          intensity={0.65}
+          intensity={0.28}
         />
 
         <directionalLight
@@ -993,7 +993,7 @@ export default function SafeScene({
             7,
             6,
           ]}
-          intensity={2.0}
+          intensity={1.35}
         />
 
         <directionalLight
@@ -1002,7 +1002,7 @@ export default function SafeScene({
             3,
             2,
           ]}
-          intensity={0.9}
+          intensity={0.25}
         />
 
         <pointLight
@@ -1011,7 +1011,7 @@ export default function SafeScene({
             1,
             4,
           ]}
-          intensity={0.5}
+          intensity={0.15}
         />
 
         <CameraRig
@@ -1030,7 +1030,7 @@ export default function SafeScene({
 
         <Environment
           preset="studio"
-          environmentIntensity={0.45}
+          environmentIntensity={0.22}
         />
       </Canvas>
     </div>
