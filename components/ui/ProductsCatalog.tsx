@@ -503,7 +503,7 @@ export default function ProductsCatalog({
               1,
             ],
           }}
-          className="mt-20 space-y-24 max-lg:!pl-0 sm:mt-24 sm:space-y-32"
+          className="tetra-catalog-content mt-20 space-y-24 max-lg:!pl-0 sm:mt-24 sm:space-y-32"
         >
           {categories.map(
             (category) => (

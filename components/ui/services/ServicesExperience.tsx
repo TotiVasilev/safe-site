@@ -356,7 +356,7 @@ export default function ServicesExperience({ englishContent }: { englishContent?
           onClick={(event) =>
             event.stopPropagation()
           }
-          className="absolute left-10 top-1/2 z-30 hidden -translate-y-1/2 xl:block"
+          className="tetra-services-nav absolute left-10 top-1/2 z-30 hidden -translate-y-1/2 xl:block"
         >
           <div className="mb-10">
             <p className="text-[24px] font-semibold leading-none tracking-normal text-[#172033]">
@@ -417,7 +417,7 @@ export default function ServicesExperience({ englishContent }: { englishContent?
             DESKTOP STAGE
         ======================================================= */}
 
-        <div className="relative mx-auto h-[calc(100vh-5rem)] max-w-[1600px] px-12">
+        <div className="tetra-services-stage relative mx-auto h-[calc(100vh-5rem)] max-w-[1600px] px-12">
           {/* SAFE */}
 
           <motion.div
@@ -477,9 +477,9 @@ export default function ServicesExperience({ englishContent }: { englishContent?
                   1,
                 ],
               }}
-              className={`absolute top-1/2 z-20 w-[33%] -translate-y-1/2 ${currentLayout.textClass}`}
+              className={`tetra-services-copy absolute top-1/2 z-20 w-[33%] -translate-y-1/2 ${currentLayout.textClass}`}
             >
-              <h1 data-cms-field={`title${activeIndex + 1}`} className="text-[60px] font-medium leading-[1.04] tracking-[-0.035em] text-[#3f7edb]">
+              <h1 data-cms-field={`title${activeIndex + 1}`} className="tetra-services-title text-[48px] font-medium leading-[1.04] tracking-[-0.035em] text-[#3f7edb]">
                 {
                   activeService.title
                 }
@@ -487,14 +487,14 @@ export default function ServicesExperience({ englishContent }: { englishContent?
 
               <div className="mt-8 h-px w-16 bg-[#3f7edb]" />
 
-              <p data-cms-field={`description${activeIndex + 1}`} className="mt-8 max-w-xl text-[16px] leading-[1.75] text-[#263244]">
+              <p data-cms-field={`description${activeIndex + 1}`} className="tetra-services-description mt-8 max-w-xl text-[16px] leading-[1.75] text-[#263244]">
                 {
                   activeService.description
                 }
               </p>
 
               {/* Service-specific details; preserve the existing three-column row. */}
-              <div className="mt-10 grid max-w-xl grid-cols-3 gap-6 border-t border-black/10 pt-8">
+              <div className="tetra-services-details mt-10 grid max-w-xl grid-cols-3 gap-6 border-t border-black/10 pt-8">
                 {serviceDetails[activeIndex].map(({ icon: Icon, label }, index) => (
                   <div key={`${activeIndex}-${index}`}>
                     <div className="mb-3 flex h-8 w-8 items-center justify-center rounded-full border border-[#3f7edb]/35 text-[#3f7edb]">
