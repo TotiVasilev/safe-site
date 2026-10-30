@@ -471,9 +471,14 @@ function SafeModel({
           Math.PI * 2 +
           difference;
       } else {
+        // Complete a full turn, then finish facing the right diagonal.
+        const desiredFinalOrientation = 1.5;
+        const difference = shortestAngleDifference(
+          startSafeRotation.current,
+          desiredFinalOrientation
+        );
         targetSafeRotation.current =
-          startSafeRotation.current +
-          Math.PI * 2;
+          startSafeRotation.current + Math.PI * 2 + difference;
       }
     }
 
@@ -855,13 +860,17 @@ function CameraRig({
     if (activeIndex === 2) {
       // Preserve the recoding close-up, but show more of the front face
       // and avoid the abrupt crop at the left edge.
-      targetPosition.current.set(4.25, 1.3, 4.05);
-      targetLookAt.current.set(0.7, 0.3, 0.55);
+      targetPosition.current.set(5.1, 1.55, 5.1);
+      targetLookAt.current.set(0.45, 0.15, 0.35);
     } else if (activeIndex === 4) {
       // The opened door extends beyond the closed-safe silhouette.
       // Widen the camera framing and aim toward the door.
-      targetPosition.current.set(6.5, 2.3, 7.65);
+      targetPosition.current.set(7.5, 2.5, 8.7);
       targetLookAt.current.set(-0.45, 0, 0);
+    } else if (activeIndex === 3) {
+      // Extra breathing room at the top when facing the right diagonal.
+      targetPosition.current.set(6.1, 2.25, 7.1);
+      targetLookAt.current.set(0, 0, 0);
     } else {
       targetPosition.current.set(
         5.5,
