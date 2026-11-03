@@ -28,6 +28,8 @@ export default function ProductsCatalog({
     useState(false);
   const [menuHovered, setMenuHovered] =
     useState(false);
+  const [hoveredMenuCategory, setHoveredMenuCategory] =
+    useState<string | null>(null);
   const [mobileStickyMenu, setMobileStickyMenu] =
     useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] =
@@ -875,6 +877,7 @@ export default function ProductsCatalog({
               }
               onMouseLeave={() => {
                 setMenuHovered(false);
+                setHoveredMenuCategory(null);
               }}
               className="fixed left-4 top-28 z-40 hidden lg:block"
             >
@@ -901,13 +904,16 @@ export default function ProductsCatalog({
                       activeCategory ===
                       category.slug;
                     const showSubcategories =
-                      categoryActive ||
-                      menuHovered;
+                      hoveredMenuCategory !== null
+                        ? hoveredMenuCategory === category.slug
+                        : categoryActive;
                     return (
                       <div
                         key={
                           category.id
                         }
+                        onMouseEnter={() => setHoveredMenuCategory(category.slug)}
+                        onMouseLeave={() => setHoveredMenuCategory(null)}
                       >
                         <button
                           type="button"

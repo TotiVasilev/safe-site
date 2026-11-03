@@ -5,6 +5,7 @@ import Image from "next/image";
 import ProductDescription from "@/components/ui/ProductDescription";
 import ModelSelector from "@/components/ui/ModelSelector";
 import LockModelSelector from "@/components/ui/LockModelSelector";
+import RelatedLockCategories from "@/components/ui/RelatedLockCategories";
 import { getEnglishProducts, getEnglishCategories } from "@/data/english";
 
 type ProductPageProps = {
@@ -34,6 +35,10 @@ export default async function ProductPage({
     notFound();
   }
 
+  const otherLockCategories = getEnglishProducts()
+    .filter((item) => item.category?.name === (getEnglishCategories()).find((category) => category.slug === "bravi")?.name)
+    .map((item) => ({ slug: item.slug, name: item.name, image: item.image }));
+
   const parentCategory = product.category?.name ?? "";
   const parentSubcategory =
     product.subcategory?.name ?? "";
@@ -57,6 +62,7 @@ export default async function ProductPage({
             </article>)}
           </div>
           {!(product.lockItems?.length) && <p className="mt-12 text-sm text-black/50">Add locks in Content Manager to display them here.</p>}
+          <RelatedLockCategories locks={otherLockCategories} currentSlug={product.slug} locale="en" />
         </div>
       </main>
     );
@@ -141,6 +147,10 @@ export default async function ProductPage({
 
         {models.length > 0 && (
           category?.slug === "bravi" ? <LockModelSelector models={models} productName={product.name} locale="en" /> : <ModelSelector models={models} drawing={product.modelDrawing} productName={product.name} locale="en" />
+        )}
+
+        {category?.slug === "bravi" && (
+          <RelatedLockCategories locks={otherLockCategories} currentSlug={product.slug} locale="en" />
         )}
 
         <section className="mt-32 rounded-3xl bg-black px-8 py-16 text-white sm:px-12 lg:px-16">

@@ -5,6 +5,7 @@ import Image from "next/image";
 import ProductDescription from "@/components/ui/ProductDescription";
 import ModelSelector from "@/components/ui/ModelSelector";
 import LockModelSelector from "@/components/ui/LockModelSelector";
+import RelatedLockCategories from "@/components/ui/RelatedLockCategories";
 import { getAllProducts, getProductCategories } from "@/data/cms-products";
 
 type ProductPageProps = {
@@ -34,6 +35,10 @@ export default async function ProductPage({
     notFound();
   }
 
+  const otherLockCategories = getAllProducts()
+    .filter((item) => item.category?.name === (getProductCategories()).find((category) => category.slug === "bravi")?.name)
+    .map((item) => ({ slug: item.slug, name: item.name, image: item.image }));
+
   const parentCategory = product.category?.name ?? "";
   const parentSubcategory =
     product.subcategory?.name ?? "";
@@ -57,6 +62,7 @@ export default async function ProductPage({
             </article>)}
           </div>
           {!(product.lockItems?.length) && <p className="mt-12 text-sm text-black/50">Добавете ключалки в Content Manager, за да се покажат тук.</p>}
+          <RelatedLockCategories locks={otherLockCategories} currentSlug={product.slug} locale="bg" />
         </div>
       </main>
     );
@@ -141,6 +147,10 @@ export default async function ProductPage({
 
         {models.length > 0 && (
           category?.slug === "bravi" ? <LockModelSelector models={models} productName={product.name} /> : <ModelSelector models={models} drawing={product.modelDrawing} productName={product.name} />
+        )}
+
+        {category?.slug === "bravi" && (
+          <RelatedLockCategories locks={otherLockCategories} currentSlug={product.slug} locale="bg" />
         )}
 
         <section className="mt-32 rounded-3xl bg-black px-8 py-16 text-white sm:px-12 lg:px-16">
