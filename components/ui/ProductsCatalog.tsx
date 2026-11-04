@@ -912,8 +912,14 @@ export default function ProductsCatalog({
                         key={
                           category.id
                         }
-                        onMouseEnter={() => setHoveredMenuCategory(category.slug)}
-                        onMouseLeave={() => setHoveredMenuCategory(null)}
+                        onMouseEnter={() => {
+                          // Only categories with children can switch the open submenu.
+                          // Keeping the current submenu mounted while crossing other
+                          // parent rows prevents layout-shift hover flicker.
+                          if (category.subcategories?.length) {
+                            setHoveredMenuCategory(category.slug);
+                          }
+                        }}
                       >
                         <button
                           type="button"
