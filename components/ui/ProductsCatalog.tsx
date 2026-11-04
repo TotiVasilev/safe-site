@@ -96,9 +96,7 @@ export default function ProductsCatalog({
     }
     return top;
   }
-  // Before leaving for a product, remove the category hash from THIS history
-  // entry. Otherwise the browser re-applies #category-bravi on Back, even
-  // after a custom scroll restoration has run.
+  // Clear the category fragment before navigating to a product so Back restores the previous scroll position.
   useEffect(() => {
     const onProductClick = (event: MouseEvent) => {
       const target = event.target;

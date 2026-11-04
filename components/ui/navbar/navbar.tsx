@@ -12,7 +12,7 @@ export default function Navbar() {
     <header className="fixed inset-x-0 top-0 z-50">
       <div className="mx-auto max-w-7xl px-6 py-5 lg:px-8">
         <nav className="flex items-center justify-between">
-          {/* Logo */}
+          
           <Link
             href="/"
             className="text-xl font-semibold tracking-tight"
@@ -20,7 +20,7 @@ export default function Navbar() {
             SAFE<span className="font-light">CO.</span>
           </Link>
 
-          {/* Desktop navigation */}
+          
           <div className="hidden items-center gap-8 md:flex">
             {navigation.map((item) => (
               <Link
@@ -33,7 +33,7 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* CTA */}
+          
           <Link
             href="/contact"
             className="hidden rounded-full bg-black px-5 py-2.5 text-sm font-medium text-white transition-transform hover:scale-[1.03] md:block"
@@ -41,7 +41,7 @@ export default function Navbar() {
             Request a quote
           </Link>
 
-          {/* Mobile menu button */}
+          
           <button
             type="button"
             aria-label="Open menu"

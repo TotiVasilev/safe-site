@@ -25,12 +25,6 @@ function easeOutQuint(t: number) {
   return 1 - Math.pow(1 - t, 5);
 }
 
-/*
-|--------------------------------------------------------------------------
-| ANGLE HELPERS
-|--------------------------------------------------------------------------
-*/
-
 function nearestEquivalentAngle(
   targetAngle: number,
   currentAngle: number
@@ -63,76 +57,49 @@ function shortestAngleDifference(
   return difference;
 }
 
-/*
-|--------------------------------------------------------------------------
-| MOBILE SAFE POSITIONS
-|--------------------------------------------------------------------------
-*/
-
 const mobileModelPositions = [
-  /*
-  | 1 - Гаранционен
-  */
+  // Warranty service
   new THREE.Vector3(
     0,
     -0.72,
     0
   ),
 
-  /*
-  | 2 - Монтаж
-  */
+  // Installation
   new THREE.Vector3(
     0,
     1.55,
     0
   ),
 
-  /*
-  | 3 - Прекодиране
-  | Position unchanged.
-  */
+  // Lock recoding
   new THREE.Vector3(
     1.08,
     -1.08,
     0
   ),
 
-  /*
-  | 4 - Профилактика
-  | Position unchanged.
-  | Still lives on the LEFT side.
-  */
+  // Preventive maintenance
   new THREE.Vector3(
     -0.62,
     -1.08,
     0
   ),
 
-  /*
-  | 5 - Аварийно
-  */
+  // Emergency opening
   new THREE.Vector3(
     1.05,
     -0.66,
     0
   ),
 
-  /*
-  | 6 - Консултация
-  */
+  // Consultation
   new THREE.Vector3(
     0,
     1.55,
     0
   ),
 ];
-
-/*
-|--------------------------------------------------------------------------
-| MOBILE SAFE SIZES
-|--------------------------------------------------------------------------
-*/
 
 const mobileModelScales = [
   0.82,
@@ -143,27 +110,20 @@ const mobileModelScales = [
   0.84,
 ];
 
-/*
-|--------------------------------------------------------------------------
-| SAFE MODEL
-|--------------------------------------------------------------------------
-*/
-
 function SafeModel({
   activeIndex,
   mobile,
 }: InternalProps) {
   const { scene: importedScene } = useGLTF("/models/safe_model.glb");
 
-  // Clone once per Canvas. Never mutate the shared GLTFLoader cache.
+  // Clone the model so animation does not modify the shared GLTF cache.
   const model = useMemo(() => {
     const copy = importedScene.clone(true);
     const door = copy.getObjectByName("Safe_Door");
     const handle = copy.getObjectByName("Safe_Handle");
 
     if (door && door.parent) {
-      // Blender's door origin is at the hinge edge; preserve that origin
-      // when introducing a dedicated animation pivot.
+      // Keep the imported hinge transform when creating the door pivot.
       const parent = door.parent;
       const pivot = new THREE.Group();
       pivot.name = "Website_Door_Hinge_Pivot";
@@ -201,27 +161,13 @@ function SafeModel({
   const animationTime =
     useRef(ANIMATION_DURATION);
 
-  /*
-  |--------------------------------------------------------------------------
-  | Y ROTATION
-  |--------------------------------------------------------------------------
-  */
-
   const startSafeRotation =
     useRef(0);
 
   const targetSafeRotation =
     useRef(-0.2);
 
-  /*
-  |--------------------------------------------------------------------------
-  | X ROTATION
-  |--------------------------------------------------------------------------
-  |
-  | Kept in the animation system so any previous tilt
-  | smoothly returns to ZERO.
-  |
-  */
+  // Interpolate pitch back to zero between service states.
 
   const startSafePitch =
     useRef(0);
@@ -229,35 +175,17 @@ function SafeModel({
   const targetSafePitch =
     useRef(0);
 
-  /*
-  |--------------------------------------------------------------------------
-  | DOOR
-  |--------------------------------------------------------------------------
-  */
-
   const startDoorRotation =
     useRef(0);
 
   const targetDoorRotation =
     useRef(-Math.PI * 0.12);
 
-  /*
-  |--------------------------------------------------------------------------
-  | HANDLE
-  |--------------------------------------------------------------------------
-  */
-
   const startHandleRotation =
     useRef(0);
 
   const targetHandleRotation =
     useRef(0);
-
-  /*
-  |--------------------------------------------------------------------------
-  | POSITION
-  |--------------------------------------------------------------------------
-  */
 
   const startPosition =
     useRef(
@@ -276,12 +204,6 @@ function SafeModel({
         0
       )
     );
-
-  /*
-  |--------------------------------------------------------------------------
-  | SCALE
-  |--------------------------------------------------------------------------
-  */
 
   const startScale =
     useRef(
@@ -314,12 +236,6 @@ function SafeModel({
 
     animationTime.current = 0;
 
-    /*
-    |--------------------------------------------------------------------------
-    | CAPTURE CURRENT VALUES
-    |--------------------------------------------------------------------------
-    */
-
     startSafeRotation.current =
       safeRef.current.rotation.y;
 
@@ -340,12 +256,6 @@ function SafeModel({
       safeRef.current.scale
     );
 
-    /*
-    |--------------------------------------------------------------------------
-    | MOBILE POSITION / SCALE
-    |--------------------------------------------------------------------------
-    */
-
     if (mobile) {
       targetPosition.current.copy(
         mobileModelPositions[
@@ -364,16 +274,7 @@ function SafeModel({
         scale
       );
 
-      /*
-      |--------------------------------------------------------------------------
-      | IMPORTANT
-      |--------------------------------------------------------------------------
-      |
-      | No mobile service is tilted on the X axis anymore.
-      |
-      | Especially service 3 - Прекодиране - stays upright.
-      |
-      */
+      // Keep the model upright on mobile, including the recoding view.
 
       targetSafePitch.current = 0;
     } else {
@@ -392,12 +293,6 @@ function SafeModel({
       targetSafePitch.current = 0;
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | SERVICE 1
-    |--------------------------------------------------------------------------
-    */
-
     if (activeIndex === 0) {
       targetSafeRotation.current =
         nearestEquivalentAngle(
@@ -406,12 +301,6 @@ function SafeModel({
         );
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | SERVICE 2
-    |--------------------------------------------------------------------------
-    */
-
     if (activeIndex === 1) {
       targetSafeRotation.current =
         nearestEquivalentAngle(
@@ -419,16 +308,6 @@ function SafeModel({
           startSafeRotation.current
         );
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | SERVICE 3 - ПРЕКОДИРАНЕ
-    |--------------------------------------------------------------------------
-    |
-    | Y rotation stays exactly as before.
-    | X rotation is ZERO.
-    |
-    */
 
     if (activeIndex === 2) {
       targetSafeRotation.current =
@@ -440,20 +319,7 @@ function SafeModel({
       targetSafePitch.current = 0;
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | SERVICE 4 - ПРОФИЛАКТИКА
-    |--------------------------------------------------------------------------
-    |
-    | MOBILE:
-    | - remains physically on LEFT side
-    | - still performs full 360°
-    | - finishes facing RIGHT
-    |
-    | DESKTOP:
-    | - original full 360° behaviour unchanged
-    |
-    */
+    // The maintenance transition completes a full rotation and ends at the right-facing angle.
 
     if (activeIndex === 3) {
       if (mobile) {
@@ -482,12 +348,6 @@ function SafeModel({
       }
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | SERVICE 5 - АВАРИЙНО
-    |--------------------------------------------------------------------------
-    */
-
     if (activeIndex === 4) {
       const desiredFinalOrientation =
         0.25;
@@ -504,12 +364,6 @@ function SafeModel({
         difference;
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | SERVICE 6
-    |--------------------------------------------------------------------------
-    */
-
     if (activeIndex === 5) {
       targetSafeRotation.current =
         nearestEquivalentAngle(
@@ -517,12 +371,6 @@ function SafeModel({
           startSafeRotation.current
         );
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | DOOR
-    |--------------------------------------------------------------------------
-    */
 
     if (activeIndex === 0) {
       targetDoorRotation.current =
@@ -537,12 +385,6 @@ function SafeModel({
         0;
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | HANDLE
-    |--------------------------------------------------------------------------
-    */
-
     if (activeIndex === 1) {
       targetHandleRotation.current =
         Math.PI / 2;
@@ -555,12 +397,6 @@ function SafeModel({
     mobile,
     model,
   ]);
-
-  /*
-  |--------------------------------------------------------------------------
-  | FIXED 0.9 SECOND TRANSITION
-  |--------------------------------------------------------------------------
-  */
 
   useFrame((_, delta) => {
     if (
@@ -593,35 +429,17 @@ function SafeModel({
         rawProgress
       );
 
-    /*
-    |--------------------------------------------------------------------------
-    | POSITION
-    |--------------------------------------------------------------------------
-    */
-
     safeRef.current.position.lerpVectors(
       startPosition.current,
       targetPosition.current,
       progress
     );
 
-    /*
-    |--------------------------------------------------------------------------
-    | SCALE
-    |--------------------------------------------------------------------------
-    */
-
     safeRef.current.scale.lerpVectors(
       startScale.current,
       targetScale.current,
       progress
     );
-
-    /*
-    |--------------------------------------------------------------------------
-    | Y ROTATION
-    |--------------------------------------------------------------------------
-    */
 
     safeRef.current.rotation.y =
       THREE.MathUtils.lerp(
@@ -630,24 +448,12 @@ function SafeModel({
         progress
       );
 
-    /*
-    |--------------------------------------------------------------------------
-    | X ROTATION
-    |--------------------------------------------------------------------------
-    */
-
     safeRef.current.rotation.x =
       THREE.MathUtils.lerp(
         startSafePitch.current,
         targetSafePitch.current,
         progress
       );
-
-    /*
-    |--------------------------------------------------------------------------
-    | DOOR
-    |--------------------------------------------------------------------------
-    */
 
     doorRef.current.rotation.y =
       THREE.MathUtils.lerp(
@@ -656,12 +462,6 @@ function SafeModel({
         progress
       );
 
-    /*
-    |--------------------------------------------------------------------------
-    | HANDLE
-    |--------------------------------------------------------------------------
-    */
-
     handleRef.current.rotation.x =
       THREE.MathUtils.lerp(
         startHandleRotation.current,
@@ -669,11 +469,7 @@ function SafeModel({
         progress
       );
 
-    /*
-    |--------------------------------------------------------------------------
-    | EXACT SNAP
-    |--------------------------------------------------------------------------
-    */
+    // Snap to the target state after interpolation finishes.
 
     if (rawProgress >= 1) {
       safeRef.current.position.copy(
@@ -700,19 +496,13 @@ function SafeModel({
 
   return (
     <group ref={safeRef}>
-      {/* Original Blender model, rotated so its front faces the camera. */}
+      {/* Orient the imported model toward the camera. */}
       <group rotation={[0, Math.PI / 2, 0]} scale={1.6}>
         <primitive object={model} />
       </group>
     </group>
   );
 }
-
-/*
-|--------------------------------------------------------------------------
-| CAMERA
-|--------------------------------------------------------------------------
-*/
 
 function CameraRig({
   activeIndex,
@@ -783,12 +573,6 @@ function CameraRig({
       currentLookAt.current
     );
 
-    /*
-    |--------------------------------------------------------------------------
-    | MOBILE
-    |--------------------------------------------------------------------------
-    */
-
     if (mobile) {
       if (activeIndex === 0) {
         targetPosition.current.set(
@@ -838,9 +622,7 @@ function CameraRig({
         );
       }
 
-      /*
-      | Camera stays centered.
-      */
+      // Keep the camera focused on the model origin.
 
       targetLookAt.current.set(
         0,
@@ -851,14 +633,8 @@ function CameraRig({
       return;
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | DESKTOP - ORIGINAL
-    |--------------------------------------------------------------------------
-    */
-
     if (activeIndex === 2) {
-      // Preserve the recoding close-up, but show more of the front face
+      // Frame the recoding detail while keeping the front face visible
       // and avoid the abrupt crop at the left edge.
       targetPosition.current.set(5.1, 1.55, 5.1);
       targetLookAt.current.set(0.45, 0.15, 0.35);
@@ -889,12 +665,6 @@ function CameraRig({
     camera,
     mobile,
   ]);
-
-  /*
-  |--------------------------------------------------------------------------
-  | CAMERA TRANSITION
-  |--------------------------------------------------------------------------
-  */
 
   useFrame((_, delta) => {
     if (
@@ -952,12 +722,6 @@ function CameraRig({
 
   return null;
 }
-
-/*
-|--------------------------------------------------------------------------
-| CANVAS
-|--------------------------------------------------------------------------
-*/
 
 export default function SafeScene({
   activeIndex,

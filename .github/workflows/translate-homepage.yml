@@ -1,7 +1,7 @@
 name: Free English translation pilot
 on:
   workflow_dispatch:
-  # Start manually. Once translation quality is approved, this can run on CMS updates.
+  # Manual workflow for reviewing homepage translations.
 permissions:
   contents: write
 jobs:

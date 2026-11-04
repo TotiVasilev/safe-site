@@ -12,7 +12,7 @@ function parseDimensions(value?: string) {
   return parts.length === 3 ? parts : [value, "—", "—"];
 }
 
-// Shared color for the model heading and all measurement labels.
+// Shared color for model headings and dimensions.
 const measurementLabelColor = "text-[#374151]";
 
 export default function ModelSelector({ models, drawing, productName, locale = "bg" }: Props) {

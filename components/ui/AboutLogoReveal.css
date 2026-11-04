@@ -1,4 +1,4 @@
-/* About Us logo reveal — PNG artwork is /public/branding/logo-removebg-preview.png */
+/* About section logo reveal */
 .about-logo-reveal {
   min-height: 620px;
   width: 100%;
@@ -41,7 +41,7 @@
   filter: blur(5px);
   will-change: transform, opacity, filter;
 }
-/* One continuous ease-out: no intermediate rotation keyframe to cause a pause. */
+/* Continuous easing for the logo rotation */
 .about-logo-reveal.is-visible .about-logo-reveal__symbol {
   animation: tetraedar-symbol-spin 3s cubic-bezier(.16, 1, .3, 1) forwards;
 }
@@ -71,7 +71,7 @@
   }
 }
 
-/* Match the navigation brand: same family, medium weight, tracking and blue. */
+/* Match the navigation wordmark styling */
 .about-logo-reveal__wordmark {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 500;
@@ -79,7 +79,7 @@
   color: #3f7edb;
 }
 
-/* About Us refinement: tighter lockup and repeatable click animation. */
+/* Logo and wordmark spacing */
 .about-logo-reveal__lockup {
   position: relative;
   isolation: isolate;
@@ -119,7 +119,7 @@
   .about-logo-reveal__shine { animation: none !important; display: none; }
 }
 
-/* Fine tuning: the shine belongs to the shuriken only, not the wordmark. */
+/* Restrict the shine effect to the symbol */
 .about-logo-reveal__symbol-wrap {
   display: block;
   position: relative;
@@ -149,8 +149,7 @@
   .about-logo-reveal__wordmark { margin-top: -34px; }
 }
 
-/* Approved preview: left-to-right metallic polish clipped to the actual symbol.
-   The wordmark is outside the overlay, and click-to-spin is unchanged. */
+/* Clip the metallic sweep to the symbol, excluding the wordmark */
 .about-logo-reveal__polish {
   position: absolute;
   inset: 0;

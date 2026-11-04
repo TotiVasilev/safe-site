@@ -39,9 +39,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
     };
   }, []);
 
-  /* =========================================================
-     HEADER SCROLL STATE
-  ========================================================= */
+  /* HEADER SCROLL STATE. */
 
   useEffect(() => {
     const handleScroll = () => {
@@ -159,7 +157,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
         }`}
       >
         <div className="relative z-30 mx-auto flex h-16 sm:h-20 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-0">
-          {/* LOGO */}
+          
 
           <Link
             href={`${localePrefix}/`}
@@ -177,8 +175,6 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
 
             <span className="text-[20px] font-medium leading-none tracking-[0.005em] text-[#3f7edb] sm:text-[29px]">ТЕТРАЕДЪР</span>
           </Link>
-
-          {/* DESKTOP NAVIGATION */}
 
           <nav className="absolute left-[calc(50%-133px)] hidden shrink-0 items-center gap-1 xl:flex">
             <Link
@@ -224,7 +220,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
 
             </div>
           )}
-          {/* MOBILE BUTTON */}
+          
 
           <button
             type="button"
@@ -258,8 +254,6 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
             </div>
           </button>
         </div>
-
-        {/* MOBILE MENU */}
 
         <div
           className={`relative z-30 overflow-hidden transition-all ${menuOpen ? "duration-300" : "duration-0"} xl:hidden ${
@@ -317,9 +311,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
         </div>
       </header>
 
-      {/* =========================================================
-          OUTSIDE CLICK AREA
-      ========================================================= */}
+      {/* OUTSIDE CLICK AREA. */}
 
       {menuOpen && (
         <button

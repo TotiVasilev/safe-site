@@ -18,7 +18,7 @@ export default function KineticMotion() {
         observer.unobserve(entry.target);
       }
     }, { threshold: 0.08, rootMargin: "0px 0px -6% 0px" });
-    // Activate hidden initial state only after observers are registered.
+    // Register observers before applying the initial hidden state.
     elements.forEach(el => {
       const delay = el.dataset.revealDelay;
       if (delay && !el.style.getPropertyValue("--reveal-delay")) {

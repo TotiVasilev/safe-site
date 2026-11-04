@@ -5,7 +5,7 @@ import type { Partner } from "@/data/cms-homepage";
 
 export default function Partners({ partners }: { partners: Partner[] }) {
   if (!partners.length) return null;
-  // Four copies make the -25% loop seamless; the second row runs backwards.
+  // Repeated logos support a seamless loop in both directions.
   const renderRow = (items: Partner[], reverse: boolean) => (
     <div className="partners-marquee overflow-hidden" aria-label={reverse ? "Partners, second row" : "Partners, first row"}>
       <div className={`partners-track flex w-max items-center ${reverse ? "partners-track-reverse" : ""}`}>

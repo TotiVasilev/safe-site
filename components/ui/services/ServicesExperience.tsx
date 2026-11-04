@@ -31,11 +31,7 @@ type MobileTextLayout = {
 };
 
 const mobileTextLayouts: MobileTextLayout[] = [
-  /*
-  |--------------------------------------------------------------------------
-  | 1 - ГАРАНЦИОНЕН
-  |--------------------------------------------------------------------------
-  */
+  // Warranty service
   {
     className: "left-5 right-5 top-7",
     width: "max-w-[340px]",
@@ -43,11 +39,7 @@ const mobileTextLayouts: MobileTextLayout[] = [
     enterY: -30,
   },
 
-  /*
-  |--------------------------------------------------------------------------
-  | 2 - МОНТАЖ
-  |--------------------------------------------------------------------------
-  */
+  // Installation
   {
     className: "bottom-[19%] left-5 right-5",
     width: "max-w-[340px]",
@@ -55,20 +47,7 @@ const mobileTextLayouts: MobileTextLayout[] = [
     enterY: 30,
   },
 
-  /*
-  |--------------------------------------------------------------------------
-  | 3 - ПРЕКОДИРАНЕ
-  |
-  | IMPORTANT:
-  | Much wider than before.
-  |
-  | Old:
-  | w-[62vw] max-w-[235px]
-  |
-  | New:
-  | w-[78vw] max-w-[330px]
-  |--------------------------------------------------------------------------
-  */
+  // Recoding: wider text area to accommodate the description
   {
     className: "left-5 top-7",
     width: "w-[78vw] max-w-[330px]",
@@ -76,11 +55,7 @@ const mobileTextLayouts: MobileTextLayout[] = [
     enterY: 0,
   },
 
-  /*
-  |--------------------------------------------------------------------------
-  | 4 - ПРОФИЛАКТИКА
-  |--------------------------------------------------------------------------
-  */
+  // Preventive maintenance
   {
     className: "right-5 top-7",
     width: "w-[58vw] max-w-[220px]",
@@ -88,11 +63,7 @@ const mobileTextLayouts: MobileTextLayout[] = [
     enterY: 0,
   },
 
-  /*
-  |--------------------------------------------------------------------------
-  | 5 - АВАРИЙНО
-  |--------------------------------------------------------------------------
-  */
+  // Emergency opening
   {
     className: "left-5 right-5 top-7",
     width: "max-w-[340px]",
@@ -100,11 +71,7 @@ const mobileTextLayouts: MobileTextLayout[] = [
     enterY: -30,
   },
 
-  /*
-  |--------------------------------------------------------------------------
-  | 6 - КОНСУЛТАЦИЯ
-  |--------------------------------------------------------------------------
-  */
+  // Consultation
   {
     className: "bottom-[19%] left-5 right-5",
     width: "max-w-[340px]",
@@ -120,18 +87,7 @@ export default function ServicesExperience({ englishContent }: { englishContent?
   const activeService = localizedServices[activeIndex];
   const mobileText = mobileTextLayouts[activeIndex];
 
-  /*
-  |--------------------------------------------------------------------------
-  | REAL MOBILE VIEWPORT HEIGHT
-  |--------------------------------------------------------------------------
-  |
-  | iOS Safari, Chrome and in-app browsers can all expose slightly
-  | different visible viewport heights because their browser bars are
-  | different.
-  |
-  | visualViewport.height tells us how much space is ACTUALLY visible.
-  |
-  */
+  // Use the visible viewport height to account for mobile browser toolbars.
 
   useEffect(() => {
     function updateViewportHeight() {
@@ -183,12 +139,6 @@ export default function ServicesExperience({ englishContent }: { englishContent?
     };
   }, []);
 
-  /*
-  |--------------------------------------------------------------------------
-  | DESKTOP LAYOUT
-  |--------------------------------------------------------------------------
-  */
-
   const sceneLayouts = [
     {
       safeLeft: "53%",
@@ -222,7 +172,7 @@ export default function ServicesExperience({ englishContent }: { englishContent?
     },
   ];
 
-  // Compact laptop framing only. Full-size desktop positions are unchanged.
+  // Apply separate framing for compact desktop viewports.
   const [compactLaptop, setCompactLaptop] = useState(false);
 
   useEffect(() => {
@@ -264,17 +214,13 @@ export default function ServicesExperience({ englishContent }: { englishContent?
         lg:min-h-screen
       "
     >
-      {/* =========================================================
-          BACKGROUND
-      ========================================================= */}
+      {}
 
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-1/2 top-[52%] h-[620px] w-[620px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/[0.035] blur-[120px]" />
       </div>
 
-      {/* =========================================================
-          MOBILE
-      ========================================================= */}
+      {}
 
       <div
         className="relative w-full overflow-hidden lg:hidden"
@@ -283,9 +229,7 @@ export default function ServicesExperience({ englishContent }: { englishContent?
             "calc(var(--tetra-mobile-height, 100svh) - 5rem)",
         }}
       >
-        {/* =======================================================
-            3D SAFE
-        ======================================================= */}
+        {}
 
         <div className="pointer-events-none absolute inset-0 z-10">
           <SafeScene
@@ -294,9 +238,7 @@ export default function ServicesExperience({ englishContent }: { englishContent?
           />
         </div>
 
-        {/* =======================================================
-            MOBILE TEXT
-        ======================================================= */}
+        {}
 
         <AnimatePresence mode="wait">
           <motion.section
@@ -356,14 +298,8 @@ export default function ServicesExperience({ englishContent }: { englishContent?
         </AnimatePresence>
       </div>
 
-      {/* =========================================================
-          DESKTOP
-      ========================================================= */}
-
       <div className="hidden lg:block">
-        {/* =======================================================
-            LEFT SERVICE MENU
-        ======================================================= */}
+        
 
         <nav
           onClick={(event) =>
@@ -426,12 +362,8 @@ export default function ServicesExperience({ englishContent }: { englishContent?
           </div>
         </nav>
 
-        {/* =======================================================
-            DESKTOP STAGE
-        ======================================================= */}
-
         <div className="relative mx-auto h-[calc(100vh-5rem)] max-w-[1600px] px-12">
-          {/* SAFE */}
+          
 
           <motion.div
             animate={{
@@ -455,8 +387,6 @@ export default function ServicesExperience({ englishContent }: { englishContent?
               }
             />
           </motion.div>
-
-          {/* TEXT */}
 
           <AnimatePresence mode="wait">
             <motion.section
@@ -506,7 +436,7 @@ export default function ServicesExperience({ englishContent }: { englishContent?
                 }
               </p>
 
-              {/* Service-specific details; preserve the existing three-column row. */}
+              {/* Three details for the active service. */}
               <div className="mt-10 grid max-w-xl grid-cols-3 gap-6 border-t border-black/10 pt-8">
                 {serviceDetails[activeIndex].map(({ icon: Icon, label }, index) => (
                   <div key={`${activeIndex}-${index}`}>

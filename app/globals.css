@@ -157,9 +157,7 @@
   }
 }
 
-/* =========================================================
-   GLOBAL VIEWPORT / IOS SAFARI FIXES
-========================================================= */
+/* GLOBAL VIEWPORT / IOS SAFARI FIXES. */
 
 html,
 body {
@@ -180,21 +178,9 @@ body {
   overscroll-behavior-x: none;
 }
 
-/*
-Do NOT add:
-height: 100vh;
-min-height: 100vh;
-height: 100dvh;
+/* Do NOT add: height: 100vh; min-height: 100vh; height: 100dvh; to html/body. Fullscreen mobile sections should control their own viewport using svh/dvh where appropriate. */
 
-to html/body.
-
-Fullscreen mobile sections should control their own viewport
-using svh/dvh where appropriate.
-*/
-
-/* =========================================================
-   TRUSTED PARTNERS MARQUEE
-========================================================= */
+/* TRUSTED PARTNERS MARQUEE. */
 
 @keyframes partners-scroll {
   from {
@@ -227,9 +213,7 @@ using svh/dvh where appropriate.
   color: rgb(0 0 0);
 }
 
-/* =========================================================
-   REDUCED MOTION
-========================================================= */
+/* REDUCED MOTION. */
 
 @media (prefers-reduced-motion: reduce) {
   .partners-track {
@@ -256,7 +240,7 @@ body:has(.blue-site) .site-global-footer-links a:hover{color:#fff}
 @media (max-width: 600px) { .partners-double-marquee .partners-track { animation-duration: 40s; } }
 @media (prefers-reduced-motion: reduce) { .partners-double-marquee .partners-track { animation: none; } }
 
-/* Compact desktop / laptop viewports only. Existing large desktop and mobile layouts remain unchanged. */
+/* Compact desktop / laptop viewports only. Existing large desktop and mobile layouts remain. */
 @media (min-width: 1024px) and (max-width: 1599px) {
   /* Reserve actual room for the fixed catalog navigation (including its hover width). */
   .tetra-catalog-content {
