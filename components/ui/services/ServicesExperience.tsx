@@ -90,56 +90,35 @@ export default function ServicesExperience({ englishContent }: { englishContent?
   const activeService = localizedServices[activeIndex];
   const mobileText = mobileTextLayouts[activeIndex];
 
-  // Use the visible viewport height to account for mobile browser toolbars.
-
+  // Keep mobile dimensions stable when browser chrome expands/collapses during scrolling.
+  // Only remeasure when the physical viewport width changes (e.g. rotation).
   useEffect(() => {
-    function updateViewportHeight() {
-      const viewportHeight =
-        window.visualViewport?.height ??
-        window.innerHeight;
+    let measuredWidth = window.innerWidth;
 
+    function updateViewportHeight() {
+      const viewportHeight = Math.floor(window.innerHeight);
       document.documentElement.style.setProperty(
         "--tetra-mobile-height",
-        `${Math.floor(viewportHeight)}px`
+        `${viewportHeight}px`
       );
-      setMobileHeight(Math.floor(viewportHeight));
+      setMobileHeight(viewportHeight);
+    }
+
+    function handleResize() {
+      // Mobile address-bar animations can fire resize events without changing
+      // the layout width. Ignore those to avoid layout shifts while scrolling.
+      if (Math.abs(window.innerWidth - measuredWidth) < 2) return;
+      measuredWidth = window.innerWidth;
+      updateViewportHeight();
     }
 
     updateViewportHeight();
-
-    const visualViewport =
-      window.visualViewport;
-
-    visualViewport?.addEventListener(
-      "resize",
-      updateViewportHeight
-    );
-
-    window.addEventListener(
-      "resize",
-      updateViewportHeight
-    );
-
-    window.addEventListener(
-      "orientationchange",
-      updateViewportHeight
-    );
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("orientationchange", handleResize);
 
     return () => {
-      visualViewport?.removeEventListener(
-        "resize",
-        updateViewportHeight
-      );
-
-      window.removeEventListener(
-        "resize",
-        updateViewportHeight
-      );
-
-      window.removeEventListener(
-        "orientationchange",
-        updateViewportHeight
-      );
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", handleResize);
     };
   }, []);
 
