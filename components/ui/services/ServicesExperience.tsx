@@ -272,7 +272,7 @@ export default function ServicesExperience({ englishContent }: { englishContent?
             </span>
           </div>
           <div className="relative flex flex-1 flex-col" aria-live="polite">
-            <div className="absolute right-0 top-1 z-10 flex flex-col items-center gap-3" aria-label={englishContent ? "Service position" : "Позиция на услугата"}>
+            <div className="absolute right-0 top-1 z-10 flex flex-col items-center gap-1" aria-label={englishContent ? "Service position" : "Позиция на услугата"}>
               {localizedServices.map((_, index) => (
                 <button
                   type="button"
@@ -280,7 +280,7 @@ export default function ServicesExperience({ englishContent }: { englishContent?
                   aria-label={`${englishContent ? "Service" : "Услуга"} ${index + 1}`}
                   aria-current={index === activeIndex ? "step" : undefined}
                   onClick={() => selectService(index)}
-                  className="flex h-5 w-5 items-center justify-center"
+                  className="flex h-4 w-5 items-center justify-center"
                 >
                   <span className={`h-2 w-2 rounded-full transition-all duration-300 ${index === activeIndex ? "scale-125 bg-[#3f7edb]" : "bg-[#3f7edb]/25"}`} />
                 </button>
@@ -296,11 +296,13 @@ export default function ServicesExperience({ englishContent }: { englishContent?
                 className="flex flex-1 flex-col"
                 style={{ minHeight: `max(0px, ${mobileHeight - 190}px)` }}
               >
-                <h2 data-cms-field={`title${activeIndex + 1}`} className="max-w-[calc(100%-32px)] font-medium leading-[1.08] tracking-[-0.035em] text-[#3f7edb]"
-                  style={{ fontSize: `clamp(26px, ${Math.min(9, Math.max(6.5, mobileHeight / 95))}vw, 48px)` }}>
-                  {activeService.title}
-                </h2>
-                <div className="mt-9 h-px w-16 shrink-0 bg-[#3f7edb]" />
+                <div className="flex h-[160px] shrink-0 flex-col justify-between">
+                  <h2 data-cms-field={`title${activeIndex + 1}`} className="max-w-[calc(100%-32px)] font-medium leading-[1.08] tracking-[-0.035em] text-[#3f7edb]"
+                    style={{ fontSize: `clamp(26px, ${Math.min(9, Math.max(6.5, mobileHeight / 95))}vw, 48px)` }}>
+                    {activeService.title}
+                  </h2>
+                  <div className="h-px w-16 shrink-0 bg-[#3f7edb]" />
+                </div>
                 <div className="flex min-h-0 flex-1 flex-col justify-center py-4">
                   <p data-cms-field={`description${activeIndex + 1}`} className="text-[#263244]"
                     style={{ fontSize: `clamp(12px, ${mobileHeight / 45}px, 16px)`, lineHeight: mobileHeight < 650 ? 1.4 : 1.7 }}>
