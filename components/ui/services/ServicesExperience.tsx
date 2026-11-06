@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import SafeScene from "@/components/ui/services/SafeScene";
 import { ShieldCheck, Wrench, RefreshCw, KeyRound, LockKeyhole, Settings, Hash, SlidersHorizontal, SearchCheck, LockOpen, CircleAlert, Shield, ClipboardList, MessageCircle } from "lucide-react";
@@ -83,6 +83,8 @@ const mobileTextLayouts: MobileTextLayout[] = [
 export default function ServicesExperience({ englishContent }: { englishContent?: typeof servicesContent }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [mobileHeight, setMobileHeight] = useState(700);
+  const swipeStart = useRef<{ x: number; y: number } | null>(null);
+  const suppressSwipeClick = useRef(false);
 
   const localizedServices = englishContent ? Array.from({ length: 6 }, (_, index) => ({ title: englishContent[`title${index + 1}` as keyof typeof englishContent], description: englishContent[`description${index + 1}` as keyof typeof englishContent] })) : services;
   const activeService = localizedServices[activeIndex];
@@ -230,6 +232,10 @@ export default function ServicesExperience({ englishContent }: { englishContent?
         style={{ touchAction: "pan-y" }}
         aria-label={englishContent ? "Services" : "Услуги"}
         onClick={(event) => {
+          if (suppressSwipeClick.current) {
+            suppressSwipeClick.current = false;
+            return;
+          }
           // Never hijack buttons, links, or other interactive elements.
           const target = event.target;
           if (!(target instanceof Element)) return;
@@ -237,41 +243,63 @@ export default function ServicesExperience({ englishContent }: { englishContent?
           // A normal tap advances; scrolling is handled natively by the browser.
           goToNextService();
         }}
+        onTouchStart={(event) => {
+          const touch = event.touches[0];
+          swipeStart.current = { x: touch.clientX, y: touch.clientY };
+          suppressSwipeClick.current = false;
+        }}
+        onTouchEnd={(event) => {
+          const start = swipeStart.current;
+          swipeStart.current = null;
+          if (!start) return;
+          const touch = event.changedTouches[0];
+          const dx = touch.clientX - start.x;
+          const dy = touch.clientY - start.y;
+          // Only horizontal gestures change slides; vertical scrolling remains native.
+          if (Math.abs(dx) < 55 || Math.abs(dx) <= Math.abs(dy) * 1.25) return;
+          suppressSwipeClick.current = true;
+          setActiveIndex((current) =>
+            Math.max(0, Math.min(localizedServices.length - 1, current + (dx < 0 ? 1 : -1)))
+          );
+        }}
+        onTouchCancel={() => {
+          swipeStart.current = null;
+        }}
       >
         <div className="mx-auto flex max-w-xl flex-col" style={{ minHeight: `max(0px, ${mobileHeight - 116}px)` }}>
-          <div className="mb-4 flex items-center justify-between gap-3">
+          <div className="mb-4 flex shrink-0 flex-col items-start gap-3">
             <h1 className="text-xl font-semibold text-[#172033]">
               {englishContent ? "Services & Support" : "Услуги и сервиз"}
             </h1>
-            <span className="text-xs font-semibold tracking-[0.12em] text-[#3f7edb]">
-              {String(activeIndex + 1).padStart(2, "0")} / {String(localizedServices.length).padStart(2, "0")}
-            </span>
+            <div className="flex w-full items-center gap-4" aria-label={englishContent ? "Service navigation" : "Навигация между услугите"}>
+              <span className="shrink-0 text-xs font-semibold tabular-nums tracking-[0.12em] text-[#3f7edb]">
+                {String(activeIndex + 1).padStart(2, "0")} / {String(localizedServices.length).padStart(2, "0")}
+              </span>
+              <div className="flex items-center gap-1" aria-label={englishContent ? "Service position" : "Позиция на услугата"}>
+                {localizedServices.map((_, index) => (
+                  <button
+                    type="button"
+                    key={index}
+                    aria-label={`${englishContent ? "Service" : "Услуга"} ${index + 1}`}
+                    aria-current={index === activeIndex ? "step" : undefined}
+                    onClick={() => selectService(index)}
+                    className="flex h-8 w-8 items-center justify-center"
+                  >
+                    <span className={`h-2 w-2 rounded-full transition-colors duration-200 ${index === activeIndex ? "bg-[#3f7edb]" : "bg-[#3f7edb]/25"}`} />
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
           <div
-            className="relative flex flex-1 flex-col"
+            className="relative flex min-h-0 flex-1 flex-col"
             aria-live="polite"
             style={{
-              // Reserve enough space for the three-line reference heading on every slide.
-              // Dot buttons are 16px high with 4px gaps: the last center is 108px from their top.
+              // One title slot for all slides; shorter titles grow upward from the same divider.
               "--service-title-font-size": `clamp(26px, ${Math.min(9, Math.max(6.5, mobileHeight / 95))}vw, 48px)`,
               "--service-title-slot-height": "calc(3 * var(--service-title-font-size) * 1.08 + 24px)",
             } as React.CSSProperties}
           >
-            {/* The last dot and divider share the bottom edge of the same title slot. */}
-            <div className="absolute right-0 z-10 flex flex-col items-center gap-1" style={{ top: "calc(var(--service-title-slot-height) - 108px)" }} aria-label={englishContent ? "Service position" : "Позиция на услугата"}>
-              {localizedServices.map((_, index) => (
-                <button
-                  type="button"
-                  key={index}
-                  aria-label={`${englishContent ? "Service" : "Услуга"} ${index + 1}`}
-                  aria-current={index === activeIndex ? "step" : undefined}
-                  onClick={() => selectService(index)}
-                  className="flex h-4 w-5 items-center justify-center"
-                >
-                  <span className={`h-2 w-2 rounded-full transition-all duration-300 ${index === activeIndex ? "scale-125 bg-[#3f7edb]" : "bg-[#3f7edb]/25"}`} />
-                </button>
-              ))}
-            </div>
             <AnimatePresence mode="wait" initial={false}>
               <motion.article
                 key={activeIndex}
@@ -279,28 +307,22 @@ export default function ServicesExperience({ englishContent }: { englishContent?
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-                className="flex flex-1 flex-col"
-                style={{ minHeight: `max(0px, ${mobileHeight - 190}px)` }}
+                className="flex min-h-0 flex-1 flex-col"
               >
                 <div className="relative shrink-0" style={{ height: "var(--service-title-slot-height)" }}>
                   <h2
                     data-cms-field={`title${activeIndex + 1}`}
-                    className="absolute bottom-5 left-0 right-8 font-medium leading-[1.08] tracking-[-0.035em] text-[#3f7edb]"
+                    className="absolute bottom-5 left-0 right-0 font-medium leading-[1.08] tracking-[-0.035em] text-[#3f7edb]"
                     style={{ fontSize: "var(--service-title-font-size)" }}
                   >
                     {activeService.title}
                   </h2>
                   <div className="absolute bottom-0 left-0 h-px w-16 bg-[#3f7edb]" />
                 </div>
-                {/* Fixed-height description zone keeps the icon row at identical coordinates
-                    on every slide. The text starts higher; spare viewport height stays below icons. */}
-                <div
-                  className="flex shrink-0 flex-col justify-start"
-                  style={{
-                    height: `clamp(190px, ${Math.round(mobileHeight * 0.4 - 80)}px, 260px)`,
-                    paddingTop: "clamp(24px, 4vh, 44px)",
-                  }}
-                >
+                {/* The description uses the middle space. The icon row is anchored at the
+                    bottom of the viewport-sized section on every slide. Short screens can
+                    grow and scroll rather than overlapping content. */}
+                <div className="flex min-h-[170px] flex-1 flex-col justify-center py-5">
                   <p data-cms-field={`description${activeIndex + 1}`} className="text-[#263244]"
                     style={{ fontSize: `clamp(12px, ${mobileHeight / 45}px, 16px)`, lineHeight: mobileHeight < 650 ? 1.4 : 1.7 }}>
                     {activeService.description}
@@ -324,15 +346,13 @@ export default function ServicesExperience({ englishContent }: { englishContent?
                       >
                         <Icon size={mobileHeight < 650 ? 19 : 24} strokeWidth={1.8} aria-hidden="true" />
                       </motion.div>
-                      <p className="min-h-[44px] break-words leading-[1.35] text-[#172033]"
+                      <p className="min-h-[52px] break-words leading-[1.35] text-[#172033]"
                         style={{ fontSize: `clamp(11px, ${mobileHeight / 45}px, 16px)` }}>
                         {englishContent ? englishServiceDetails[activeIndex][index] : label}
                       </p>
                     </motion.div>
                   ))}
                 </div>
-                {/* Remaining height is below the icons, not between content blocks. */}
-                <div className="min-h-0 flex-1" aria-hidden="true" />
               </motion.article>
             </AnimatePresence>
           </div>
