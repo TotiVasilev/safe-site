@@ -385,13 +385,9 @@ function SafeModel({
         0;
     }
 
-    if (activeIndex === 1) {
-      targetHandleRotation.current =
-        Math.PI / 2;
-    } else {
-      targetHandleRotation.current =
-        0;
-    }
+    // The handle is horizontal with the door open and points down when locked.
+    targetHandleRotation.current =
+      activeIndex === 0 || activeIndex === 4 ? 0 : -Math.PI / 2;
   }, [
     activeIndex,
     mobile,

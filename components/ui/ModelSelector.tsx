@@ -7,9 +7,9 @@ import type { ProductModel } from "@/data/products";
 type Props = { models: ProductModel[]; drawing?: string; productName: string; locale?: "bg" | "en" };
 
 function parseDimensions(value?: string) {
-  if (!value) return ["—", "—", "—"];
+  if (!value) return ["", "", ""];
   const parts = value.split(/\s*[x×хХ;,/]\s*/i).map((part) => part.trim()).filter(Boolean);
-  return parts.length === 3 ? parts : [value, "—", "—"];
+  return parts.length === 3 ? parts : [value, "", ""];
 }
 
 // Shared color for model headings and dimensions.
@@ -77,10 +77,11 @@ export default function ModelSelector({ models, drawing, productName, locale = "
                   [t("Височина H₁", "Height H₁"), internal[0], t("Вътрешен размер", "Internal dimension")],
                   [t("Ширина B₁", "Width B₁"), internal[1], t("Вътрешен размер", "Internal dimension")],
                   [t("Дълбочина L₁", "Depth L₁"), internal[2], t("Вътрешен размер", "Internal dimension")],
-                ].map(([label, value, caption]) => (
+                ].filter(([, value]) => Boolean(value && value.trim() && value.trim() !== "—" && value.trim() !== "-"))
+                  .map(([label, value, caption]) => (
                   <div key={label} className="min-w-0 rounded-xl bg-neutral-50 px-3 py-3">
                     <dt className={`text-xs font-medium ${measurementLabelColor}`}>{label}</dt>
-                    <dd className="mt-1 break-words text-lg font-medium tabular-nums sm:text-xl">{value || "—"}</dd>
+                    <dd className="mt-1 break-words text-lg font-medium tabular-nums sm:text-xl">{value}</dd>
                     <dd className={`text-xs font-medium ${measurementLabelColor}`}>{caption}</dd>
                   </div>
                 ))}

@@ -124,23 +124,20 @@ export default async function ProductPage({
               <ProductDescription description={product.description} attachments={product.attachments} />
             </p>
 
-            <div className="mt-10 flex flex-wrap gap-3">
-              <span className="rounded-full bg-black px-4 py-2 text-sm text-white">
-                {models.length} {models.length === 1 ? "model" : "models"}
-              </span>
-
-              <span className="rounded-full border border-black/10 px-4 py-2 text-sm">
-                Professional security
-              </span>
-            </div>
-
-            <div className="mt-7 flex justify-end sm:block">
-              <a
-                href="mailto:info@tetraedar.com"
-                className="inline-flex items-center gap-3 rounded-full bg-[#3f7edb] px-7 py-3.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#326bc1]"
-              >
-                Contact us <span aria-hidden="true">↗</span>
-              </a>
+            <div className="mt-10 border-t border-black/10 pt-6">
+              <div className="flex flex-wrap items-center justify-start gap-3">
+                <a
+                  href="mailto:info@tetraedar.com"
+                  className="inline-flex items-center justify-center gap-3 rounded-full bg-[#3f7edb] px-7 py-3.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#326bc1]"
+                >
+                  Contact us <span aria-hidden="true">↗</span>
+                </a>
+                {models.length > 1 && (
+                  <span className="rounded-full border border-black/10 px-4 py-2 text-sm text-black/70">
+                    {models.length} models
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         </section>

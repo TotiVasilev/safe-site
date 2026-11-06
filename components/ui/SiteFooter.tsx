@@ -12,7 +12,7 @@ export default function SiteFooter() {
         <span className="site-global-footer-copyright">ТЕТРАЕДЪР © {new Date().getFullYear()}</span>
         <div className="site-global-footer-links">
           <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="site-global-footer-address">
-            <span aria-hidden="true">⌖</span> {address}
+            {address}
           </a>
           <Link href={english ? "/en/politika-za-zashtita-na-lichnite-danni/" : "/politika-za-zashtita-na-lichnite-danni/"}>{english ? "Privacy Policy" : privacyLabel}</Link>
         </div>

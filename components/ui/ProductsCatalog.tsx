@@ -1168,11 +1168,13 @@ function ProductCard({
             <ProductDescription description={product.catalogDescription || product.description} attachments={product.attachments} />
           </p>
 
-          <div className="mt-4 flex items-center justify-between gap-2 border-t border-black/10 pt-3 sm:mt-6 sm:pt-4">
-            <span className="block text-[9px] text-black/35 sm:text-xs">
-              {product.models.length}{" "}
-              {locale === "en" ? (product.models.length === 1 ? "model" : "models") : (product.models.length === 1 ? "модел" : "модела")}
-            </span>
+          <div className="mt-4 flex items-center justify-end gap-2 border-t border-black/10 pt-3 sm:mt-6 sm:pt-4">
+            {product.models.length > 1 && (
+              <span className="mr-auto block text-[9px] text-black/35 sm:text-xs">
+                {product.models.length}{" "}
+                {locale === "en" ? "models" : "модела"}
+              </span>
+            )}
 
             <span className="block shrink-0 text-right text-[10px] font-medium leading-4 transition-colors duration-300 group-hover:text-[#3f7edb] sm:text-xs">
               {locale === "en" ? "View product" : "Виж продукта"}
