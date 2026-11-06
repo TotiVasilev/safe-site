@@ -153,7 +153,7 @@ export default function ServicesExperience({ englishContent }: { englishContent?
     },
     {
       safeLeft: "53%",
-      textClass: "left-[16%]",
+      textClass: "left-[21%]",
       textFromLeft: true,
     },
     {
@@ -163,7 +163,7 @@ export default function ServicesExperience({ englishContent }: { englishContent?
     },
     {
       safeLeft: "53%",
-      textClass: "left-[15%]",
+      textClass: "left-[21%]",
       textFromLeft: true,
     },
     {
