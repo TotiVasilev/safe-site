@@ -83,6 +83,8 @@ const mobileTextLayouts: MobileTextLayout[] = [
 export default function ServicesExperience({ englishContent }: { englishContent?: typeof servicesContent }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const swipeStart = useRef<{ x: number; y: number } | null>(null);
+  const mobileSection = useRef<HTMLElement | null>(null);
+  const [mobileHeight, setMobileHeight] = useState(700);
 
   const localizedServices = englishContent ? Array.from({ length: 6 }, (_, index) => ({ title: englishContent[`title${index + 1}` as keyof typeof englishContent], description: englishContent[`description${index + 1}` as keyof typeof englishContent] })) : services;
   const activeService = localizedServices[activeIndex];
@@ -100,6 +102,7 @@ export default function ServicesExperience({ englishContent }: { englishContent?
         "--tetra-mobile-height",
         `${Math.floor(viewportHeight)}px`
       );
+      setMobileHeight(Math.floor(viewportHeight));
     }
 
     updateViewportHeight();
@@ -207,7 +210,8 @@ export default function ServicesExperience({ englishContent }: { englishContent?
       style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
       className="
         relative
-        overflow-hidden
+        overflow-x-hidden
+        lg:overflow-hidden
         font-[Arial,Helvetica,sans-serif]
         bg-white
         pt-20
@@ -224,7 +228,9 @@ export default function ServicesExperience({ englishContent }: { englishContent?
       {}
 
       <section
-        className="relative z-20 touch-none px-5 pb-14 pt-6 sm:px-8 lg:hidden"
+        ref={mobileSection}
+        className="relative z-20 px-5 pb-5 pt-4 sm:px-8 lg:hidden"
+        style={{ touchAction: activeIndex === localizedServices.length - 1 ? "pan-y" : "none" }}
         aria-label={englishContent ? "Services" : "Услуги"}
         onClick={(event) => event.stopPropagation()}
         onTouchStart={(event) => {
@@ -232,7 +238,12 @@ export default function ServicesExperience({ englishContent }: { englishContent?
           swipeStart.current = { x: touch.clientX, y: touch.clientY };
         }}
         onTouchMove={(event) => {
-          if (swipeStart.current && event.cancelable) event.preventDefault();
+          if (!swipeStart.current || !event.cancelable) return;
+          const touch = event.touches[0];
+          const dy = touch.clientY - swipeStart.current.y;
+          const dx = touch.clientX - swipeStart.current.x;
+          if (activeIndex === localizedServices.length - 1 && dy < -8 && Math.abs(dy) > Math.abs(dx)) return;
+          event.preventDefault();
         }}
         onTouchEnd={(event) => {
           const start = swipeStart.current;
@@ -244,14 +255,15 @@ export default function ServicesExperience({ englishContent }: { englishContent?
           const horizontal = Math.abs(dx) >= Math.abs(dy);
           const distance = horizontal ? dx : dy;
           if (Math.abs(distance) < 55) return;
+          if (!horizontal && distance < 0 && activeIndex === localizedServices.length - 1) return;
           setActiveIndex((current) => Math.max(0, Math.min(localizedServices.length - 1, current + (distance < 0 ? 1 : -1))));
         }}
         onTouchCancel={() => {
           swipeStart.current = null;
         }}
       >
-        <div className="mx-auto max-w-xl">
-          <div className="mb-7 flex items-center justify-between gap-3">
+        <div className="mx-auto flex max-w-xl flex-col" style={{ minHeight: `max(0px, ${mobileHeight - 116}px)` }}>
+          <div className="mb-4 flex items-center justify-between gap-3">
             <h1 className="text-xl font-semibold text-[#172033]">
               {englishContent ? "Services & Support" : "Услуги и сервиз"}
             </h1>
@@ -259,45 +271,62 @@ export default function ServicesExperience({ englishContent }: { englishContent?
               {String(activeIndex + 1).padStart(2, "0")} / {String(localizedServices.length).padStart(2, "0")}
             </span>
           </div>
-          <div className="relative min-h-[490px]" aria-live="polite">
+          <div className="relative flex flex-1 flex-col" aria-live="polite">
             <div className="absolute right-0 top-1 z-10 flex flex-col items-center gap-3" aria-label={englishContent ? "Service position" : "Позиция на услугата"}>
               {localizedServices.map((_, index) => (
-                <span
+                <button
+                  type="button"
                   key={index}
-                  aria-hidden="true"
-                  className={`h-2 w-2 rounded-full transition-all duration-300 ${index === activeIndex ? "scale-125 bg-[#3f7edb]" : "bg-[#3f7edb]/25"}`}
-                />
+                  aria-label={`${englishContent ? "Service" : "Услуга"} ${index + 1}`}
+                  aria-current={index === activeIndex ? "step" : undefined}
+                  onClick={() => selectService(index)}
+                  className="flex h-5 w-5 items-center justify-center"
+                >
+                  <span className={`h-2 w-2 rounded-full transition-all duration-300 ${index === activeIndex ? "scale-125 bg-[#3f7edb]" : "bg-[#3f7edb]/25"}`} />
+                </button>
               ))}
             </div>
             <AnimatePresence mode="wait" initial={false}>
               <motion.article
                 key={activeIndex}
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -14 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
                 transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                className="flex min-h-[490px] flex-col"
+                className="flex flex-1 flex-col"
+                style={{ minHeight: `max(0px, ${mobileHeight - 190}px)` }}
               >
-                <h2 data-cms-field={`title${activeIndex + 1}`} className="max-w-[calc(100%-32px)] text-[clamp(32px,9vw,48px)] font-medium leading-[1.08] tracking-[-0.035em] text-[#3f7edb]">
+                <h2 data-cms-field={`title${activeIndex + 1}`} className="max-w-[calc(100%-32px)] font-medium leading-[1.08] tracking-[-0.035em] text-[#3f7edb]"
+                  style={{ fontSize: `clamp(26px, ${Math.min(9, Math.max(6.5, mobileHeight / 95))}vw, 48px)` }}>
                   {activeService.title}
                 </h2>
-                <div className="mt-6 h-px w-16 bg-[#3f7edb]" />
-                <p data-cms-field={`description${activeIndex + 1}`} className="mt-6 text-[16px] leading-[1.7] text-[#263244]">
-                  {activeService.description}
-                </p>
-                <div className="mt-auto grid grid-cols-3 gap-3 border-t border-black/10 pt-6 text-center">
+                <div className="mt-9 h-px w-16 shrink-0 bg-[#3f7edb]" />
+                <div className="flex min-h-0 flex-1 flex-col justify-center py-4">
+                  <p data-cms-field={`description${activeIndex + 1}`} className="text-[#263244]"
+                    style={{ fontSize: `clamp(12px, ${mobileHeight / 45}px, 16px)`, lineHeight: mobileHeight < 650 ? 1.4 : 1.7 }}>
+                    {activeService.description}
+                  </p>
+                </div>
+                <div className="grid shrink-0 grid-cols-3 gap-2 border-y border-black/10 py-3 text-center">
                   {serviceDetails[activeIndex].map(({ icon: Icon, label }, index) => (
                     <motion.div
                       key={`${activeIndex}-${index}`}
-                      initial={{ opacity: 0, scale: 0.75, y: 12 }}
-                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
                       transition={{ duration: 0.38, delay: 0.12 + index * 0.09, ease: [0.22, 1, 0.36, 1] }}
                       className="flex min-w-0 flex-col items-center"
                     >
-                      <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-[#3f7edb]/35 text-[#3f7edb]">
-                        <Icon size={24} strokeWidth={1.8} aria-hidden="true" />
-                      </div>
-                      <p className="break-words text-[16px] leading-[1.5] text-[#172033]">
+                      <motion.div
+                        initial={{ scale: 0.82 }}
+                        animate={{ scale: 1 }}
+                        transition={{ duration: 0.38, delay: 0.12 + index * 0.09, ease: [0.22, 1, 0.36, 1] }}
+                        className="mb-2 flex items-center justify-center rounded-full border border-[#3f7edb]/35 text-[#3f7edb]"
+                        style={{ width: `clamp(34px, ${mobileHeight / 13}px, 48px)`, height: `clamp(34px, ${mobileHeight / 13}px, 48px)` }}
+                      >
+                        <Icon size={mobileHeight < 650 ? 19 : 24} strokeWidth={1.8} aria-hidden="true" />
+                      </motion.div>
+                      <p className="break-words leading-[1.35] text-[#172033]"
+                        style={{ fontSize: `clamp(11px, ${mobileHeight / 45}px, 16px)` }}>
                         {englishContent ? englishServiceDetails[activeIndex][index] : label}
                       </p>
                     </motion.div>
