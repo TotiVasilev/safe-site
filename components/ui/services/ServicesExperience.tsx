@@ -267,13 +267,13 @@ export default function ServicesExperience({ englishContent }: { englishContent?
                 <p data-cms-field={`description${activeIndex + 1}`} className="mt-6 text-[16px] leading-[1.7] text-[#263244]">
                   {activeService.description}
                 </p>
-                <div className="mt-8 grid grid-cols-3 gap-3 border-t border-black/10 pt-6">
+                <div className="mt-8 grid grid-cols-3 gap-3 border-t border-black/10 pt-6 text-center">
                   {serviceDetails[activeIndex].map(({ icon: Icon, label }, index) => (
-                    <div key={`${activeIndex}-${index}`} className="min-w-0">
-                      <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-full border border-[#3f7edb]/35 text-[#3f7edb]">
-                        <Icon size={18} strokeWidth={1.8} aria-hidden="true" />
+                    <div key={`${activeIndex}-${index}`} className="flex min-w-0 flex-col items-center">
+                      <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-[#3f7edb]/35 text-[#3f7edb]">
+                        <Icon size={24} strokeWidth={1.8} aria-hidden="true" />
                       </div>
-                      <p className="break-words text-[12px] leading-[1.4] text-[#172033]">
+                      <p className="break-words text-[16px] leading-[1.5] text-[#172033]">
                         {englishContent ? englishServiceDetails[activeIndex][index] : label}
                       </p>
                     </div>
@@ -282,16 +282,6 @@ export default function ServicesExperience({ englishContent }: { englishContent?
               </motion.article>
             </AnimatePresence>
           </div>
-          <div className="mt-8 flex items-center justify-between gap-4 border-t border-black/10 pt-5">
-            <button type="button" onClick={() => setActiveIndex((i) => Math.max(0, i - 1))} disabled={activeIndex === 0} aria-label={englishContent ? "Previous service" : "Предишна услуга"} className="rounded-full border border-black/15 px-4 py-2 text-lg disabled:opacity-30">←</button>
-            <div className="flex items-center gap-2" role="group" aria-label={englishContent ? "Select service" : "Избор на услуга"}>
-              {localizedServices.map((service, index) => (
-                <button key={index} type="button" onClick={() => setActiveIndex(index)} aria-label={`${index + 1}: ${service.title}`} aria-current={index === activeIndex ? "step" : undefined} className={`h-2.5 rounded-full transition-all ${index === activeIndex ? "w-6 bg-[#3f7edb]" : "w-2.5 bg-[#aeb9c9]"}`} />
-              ))}
-            </div>
-            <button type="button" onClick={() => setActiveIndex((i) => Math.min(localizedServices.length - 1, i + 1))} disabled={activeIndex === localizedServices.length - 1} aria-label={englishContent ? "Next service" : "Следваща услуга"} className="rounded-full border border-black/15 px-4 py-2 text-lg disabled:opacity-30">→</button>
-          </div>
-          <p className="mt-3 text-center text-xs text-[#7a8698]">{englishContent ? "Swipe left or right to explore services" : "Плъзнете наляво или надясно за още услуги"}</p>
         </div>
       </section>
 

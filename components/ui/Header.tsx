@@ -17,7 +17,6 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
   const [scrolled, setScrolled] =
     useState(false);
 
-  const touchOpenedMenu = useRef(false);
   const [menuOpen, setMenuOpen] =
     useState(false);
 
@@ -72,14 +71,6 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
   useEffect(() => {
     setMenuOpen(false);
   }, [pathname]);
-
-  // Prevent background scrolling while the mobile navigation is open.
-  useEffect(() => {
-    if (!menuOpen) return;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = previousOverflow; };
-  }, [menuOpen]);
 
   function closeMenu() {
     setMenuOpen(false);
@@ -233,20 +224,12 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
             aria-expanded={
               menuOpen
             }
-            onPointerDown={(event) => {
-              if (event.pointerType === "touch") {
-                touchOpenedMenu.current = true;
-                toggleMenu();
-              }
-            }}
-            onClick={() => {
-              if (touchOpenedMenu.current) {
-                touchOpenedMenu.current = false;
-                return;
-              }
+            onTouchEnd={(event) => {
+              event.preventDefault();
               toggleMenu();
             }}
-            className="relative z-50 flex h-10 w-10 items-center justify-center ml-auto xl:hidden"
+            onClick={toggleMenu}
+            className="relative z-50 -mr-2 flex h-12 w-12 shrink-0 touch-manipulation items-center justify-center ml-auto xl:hidden"
           >
             <div className="flex w-5 flex-col gap-1.5">
               <span
@@ -269,13 +252,10 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
         </div>
 
         <div
-          className={`relative z-30 overflow-hidden transition-all ${menuOpen ? "duration-300" : "duration-0"} xl:hidden ${
-            menuOpen
-              ? "max-h-[420px]"
-              : "max-h-0"
-          }`}
+          className={`relative z-30 grid transition-[grid-template-rows,opacity] ease-out xl:hidden ${menuOpen ? "grid-rows-[1fr] opacity-100 duration-300" : "grid-rows-[0fr] opacity-0 duration-0"}`}
         >
-          <nav className="bg-[#f3f3f2] px-6 py-6 shadow-[0_16px_30px_rgba(0,0,0,0.06)]">
+          <nav className="min-h-0 overflow-hidden bg-[#f3f3f2] px-6 shadow-[0_16px_30px_rgba(0,0,0,0.06)]">
+            <div className="py-6">
             <div className="flex flex-col gap-2">
               <Link
                 href={`${localePrefix}/`}
@@ -320,6 +300,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
               </div>}
               <Link href={languageTarget} onClick={closeMenu} className="self-start px-4 pt-5 text-xs font-medium tracking-[0.2em] text-black/65 transition-colors hover:text-[#3f7edb]">{english ? "БЪЛГАРСКИ" : "ENGLISH"}</Link>
             </div>
+            </div>
           </nav>
         </div>
       </header>
@@ -331,6 +312,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
           type="button"
           aria-label="Затвори менюто"
           onClick={closeMenu}
+          onTouchMove={closeMenu}
           className="fixed inset-x-0 bottom-0 top-16 sm:top-20 z-[90] bg-black/[0.04] xl:hidden"
         />
       )}
