@@ -6,8 +6,8 @@ models:
     depth: "500"
     weight: "90"
 slug: depozit-seyf-typ-multiseyf
-title: Тип Мултисейф(Таймбокс)
-urlSlug: depozit-seyf-lyulka-vutreshen
+title: Тип Мултисейф (Таймбокс)
+urlSlug: typ-multiseyf
 category: seyfove
 subcategory: depozitni-seyfove
 order: 30

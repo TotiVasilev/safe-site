@@ -6,8 +6,8 @@ models:
   depth: '500'
   weight: '90'
 slug: depozit-seyf-typ-multiseyf
-title: Type Multisafe(Timebox)
-urlSlug: depozit-seyf-lyulka-vutreshen
+title: Type Multisafe (Tymbox)
+urlSlug: typ-multiseyf
 category: seyfove
 subcategory: depozitni-seyfove
 order: 30
