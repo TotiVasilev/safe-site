@@ -1170,8 +1170,10 @@ function ProductCard({
 
           <div className="mt-4 flex items-center justify-between gap-2 border-t border-black/10 pt-3 sm:mt-6 sm:pt-4">
             <span className="block text-[9px] text-black/35 sm:text-xs">
-              {product.models.length}{" "}
-              {locale === "en" ? (product.models.length === 1 ? "model" : "models") : (product.models.length === 1 ? "модел" : "модела")}
+              <span className={product.models.length === 0 ? "hidden lg:inline" : ""}>
+                {product.models.length}{" "}
+                {locale === "en" ? (product.models.length === 1 ? "model" : "models") : (product.models.length === 1 ? "модел" : "модела")}
+              </span>
             </span>
 
             <span className="block shrink-0 text-right text-[10px] font-medium leading-4 transition-colors duration-300 group-hover:text-[#3f7edb] sm:text-xs">

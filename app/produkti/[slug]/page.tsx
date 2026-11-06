@@ -130,7 +130,7 @@ export default async function ProductPage({
                   href="mailto:info@tetraedar.com"
                   className="inline-flex items-center justify-center gap-3 rounded-full bg-[#3f7edb] px-7 py-3.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#326bc1]"
                 >
-                  Свържете се с нас <span aria-hidden="true">↗</span>
+                  Свържете се с нас <span aria-hidden="true" className="hidden lg:inline">↗</span>
                 </a>
                 {models.length > 1 && (
                   <span className="rounded-full border border-black/10 px-4 py-2 text-sm text-black/70">

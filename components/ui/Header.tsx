@@ -19,6 +19,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
 
   const [menuOpen, setMenuOpen] =
     useState(false);
+  const lastTouchTime = useRef(0);
 
   // Let the browser restore the previous scroll position on Back/Forward.
   useEffect(() => {
@@ -224,11 +225,16 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
             aria-expanded={
               menuOpen
             }
-            onTouchEnd={(event) => {
+            onTouchStart={(event) => {
+              // Handle the initial touch before iOS consumes it to stop momentum scrolling.
               event.preventDefault();
+              lastTouchTime.current = Date.now();
               toggleMenu();
             }}
-            onClick={toggleMenu}
+            onClick={() => {
+              if (Date.now() - lastTouchTime.current < 700) return;
+              toggleMenu();
+            }}
             className="relative z-50 -mr-2 flex h-12 w-12 shrink-0 touch-manipulation items-center justify-center ml-auto xl:hidden"
           >
             <div className="flex w-5 flex-col gap-1.5">

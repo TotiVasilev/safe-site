@@ -224,12 +224,15 @@ export default function ServicesExperience({ englishContent }: { englishContent?
       {}
 
       <section
-        className="relative z-20 px-5 pb-14 pt-6 sm:px-8 lg:hidden"
+        className="relative z-20 touch-none px-5 pb-14 pt-6 sm:px-8 lg:hidden"
         aria-label={englishContent ? "Services" : "Услуги"}
         onClick={(event) => event.stopPropagation()}
         onTouchStart={(event) => {
           const touch = event.touches[0];
           swipeStart.current = { x: touch.clientX, y: touch.clientY };
+        }}
+        onTouchMove={(event) => {
+          if (swipeStart.current && event.cancelable) event.preventDefault();
         }}
         onTouchEnd={(event) => {
           const start = swipeStart.current;
@@ -238,8 +241,13 @@ export default function ServicesExperience({ englishContent }: { englishContent?
           const touch = event.changedTouches[0];
           const dx = touch.clientX - start.x;
           const dy = touch.clientY - start.y;
-          if (Math.abs(dx) < 55 || Math.abs(dx) < Math.abs(dy) * 1.3) return;
-          setActiveIndex((current) => Math.max(0, Math.min(localizedServices.length - 1, current + (dx < 0 ? 1 : -1))));
+          const horizontal = Math.abs(dx) >= Math.abs(dy);
+          const distance = horizontal ? dx : dy;
+          if (Math.abs(distance) < 55) return;
+          setActiveIndex((current) => Math.max(0, Math.min(localizedServices.length - 1, current + (distance < 0 ? 1 : -1))));
+        }}
+        onTouchCancel={() => {
+          swipeStart.current = null;
         }}
       >
         <div className="mx-auto max-w-xl">
@@ -251,32 +259,48 @@ export default function ServicesExperience({ englishContent }: { englishContent?
               {String(activeIndex + 1).padStart(2, "0")} / {String(localizedServices.length).padStart(2, "0")}
             </span>
           </div>
-          <div className="min-h-[385px]" aria-live="polite">
+          <div className="relative min-h-[490px]" aria-live="polite">
+            <div className="absolute right-0 top-1 z-10 flex flex-col items-center gap-3" aria-label={englishContent ? "Service position" : "Позиция на услугата"}>
+              {localizedServices.map((_, index) => (
+                <span
+                  key={index}
+                  aria-hidden="true"
+                  className={`h-2 w-2 rounded-full transition-all duration-300 ${index === activeIndex ? "scale-125 bg-[#3f7edb]" : "bg-[#3f7edb]/25"}`}
+                />
+              ))}
+            </div>
             <AnimatePresence mode="wait" initial={false}>
               <motion.article
                 key={activeIndex}
-                initial={{ opacity: 0, x: 22 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -22 }}
-                transition={{ duration: 0.22 }}
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -14 }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                className="flex min-h-[490px] flex-col"
               >
-                <h2 data-cms-field={`title${activeIndex + 1}`} className="max-w-lg text-[clamp(32px,9vw,48px)] font-medium leading-[1.08] tracking-[-0.035em] text-[#3f7edb]">
+                <h2 data-cms-field={`title${activeIndex + 1}`} className="max-w-[calc(100%-32px)] text-[clamp(32px,9vw,48px)] font-medium leading-[1.08] tracking-[-0.035em] text-[#3f7edb]">
                   {activeService.title}
                 </h2>
                 <div className="mt-6 h-px w-16 bg-[#3f7edb]" />
                 <p data-cms-field={`description${activeIndex + 1}`} className="mt-6 text-[16px] leading-[1.7] text-[#263244]">
                   {activeService.description}
                 </p>
-                <div className="mt-8 grid grid-cols-3 gap-3 border-t border-black/10 pt-6 text-center">
+                <div className="mt-auto grid grid-cols-3 gap-3 border-t border-black/10 pt-6 text-center">
                   {serviceDetails[activeIndex].map(({ icon: Icon, label }, index) => (
-                    <div key={`${activeIndex}-${index}`} className="flex min-w-0 flex-col items-center">
+                    <motion.div
+                      key={`${activeIndex}-${index}`}
+                      initial={{ opacity: 0, scale: 0.75, y: 12 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      transition={{ duration: 0.38, delay: 0.12 + index * 0.09, ease: [0.22, 1, 0.36, 1] }}
+                      className="flex min-w-0 flex-col items-center"
+                    >
                       <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-[#3f7edb]/35 text-[#3f7edb]">
                         <Icon size={24} strokeWidth={1.8} aria-hidden="true" />
                       </div>
                       <p className="break-words text-[16px] leading-[1.5] text-[#172033]">
                         {englishContent ? englishServiceDetails[activeIndex][index] : label}
                       </p>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </motion.article>
