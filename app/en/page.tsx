@@ -22,7 +22,7 @@ export default function Home(){
      <div className="b-hero-text">
       <h1 data-reveal="fade" data-cms-field="heroTitle">{h.heroTitle}</h1>
       <p data-reveal="fade" data-reveal-delay="1" data-cms-field="heroDescription">{h.heroDescription}</p>
-      <div className="b-actions" data-reveal="up" data-reveal-delay="2"><Link href={h.primaryLink.startsWith("/") ? `/en${h.primaryLink}` : h.primaryLink} className="b-primary"><span data-cms-field="primaryButton">{h.primaryButton}</span><span>↗</span></Link><Link href={h.secondaryLink.startsWith("/") ? `/en${h.secondaryLink}` : h.secondaryLink} className="b-secondary"><span data-cms-field="secondaryButton">{h.secondaryButton}</span> ↗</Link></div>
+      <div className="b-actions" data-reveal="up" data-reveal-delay="2"><Link href={h.primaryLink.startsWith("/") ? `/en${h.primaryLink}` : h.primaryLink} className="b-primary"><span data-cms-field="primaryButton">{h.primaryButton}</span><span>↗</span></Link><Link href={h.secondaryLink.startsWith("/") ? `/en${h.secondaryLink}` : h.secondaryLink} className="b-secondary"><span data-cms-field="secondaryButton">{h.secondaryButton}</span><span className="hidden md:inline" aria-hidden="true">↗</span></Link></div>
      </div>
      <div className="b-hero-media-reveal" data-reveal="right" data-reveal-delay="1"><HeroImageStack slides={h.heroSlides}/></div>
     </div>
@@ -36,7 +36,7 @@ export default function Home(){
     <div className="b-about-features">{[["feature1Title","feature1Description"],["feature2Title","feature2Description"],["feature3Title","feature3Description"]].map(([a,b],i)=><div className="b-about-feature" data-reveal="fade" style={{"--reveal-delay": `${i * 110}ms`} as React.CSSProperties} key={a}><span className="b-about-feature-number">0{i+1}</span><div><strong data-cms-field={a}>{h[a as keyof typeof h] as string}</strong><p data-cms-field={b}>{h[b as keyof typeof h] as string}</p></div></div>)}</div>
     </div></section>
 
-  <section className="b-range" id="b-products"><div className="b-shell"><div className="b-range-top" data-reveal="fade"><div><span className="b-overline" data-cms-field="productsLabel">{sectionLabel(h.productsLabel)}</span><h2 data-cms-field="productsTitle">{h.productsTitle}</h2></div><div><Link href={h.primaryLink.startsWith("/") ? `/en${h.primaryLink}` : h.primaryLink} className="b-white-button"><span data-cms-field="catalogButton">{h.catalogButton}</span> ↗</Link></div></div>
+  <section className="b-range" id="b-products"><div className="b-shell"><div className="b-range-top" data-reveal="fade"><div><span className="b-overline" data-cms-field="productsLabel">{sectionLabel(h.productsLabel)}</span><h2 data-cms-field="productsTitle">{h.productsTitle}</h2></div><div><Link href={h.primaryLink.startsWith("/") ? `/en${h.primaryLink}` : h.primaryLink} className="b-white-button"><span data-cms-field="catalogButton">{h.catalogButton}</span><span className="hidden md:inline" aria-hidden="true">↗</span></Link></div></div>
    <div className="b-range-list" data-reveal-group="catalog">{categories.map((c,i)=><Link key={c.id} href={`/en/produkti#category-${c.slug}`} className="b-range-item"><span className="b-range-index">{String(i+1).padStart(2,"0")}</span><span className="b-range-name">{c.name}</span><span className="b-range-arrow">↗</span></Link>)}</div>
   </div></section>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import SafeScene from "@/components/ui/services/SafeScene";
 import { ShieldCheck, Wrench, RefreshCw, KeyRound, LockKeyhole, Settings, Hash, SlidersHorizontal, SearchCheck, LockOpen, CircleAlert, Shield, ClipboardList, MessageCircle } from "lucide-react";
@@ -82,6 +82,7 @@ const mobileTextLayouts: MobileTextLayout[] = [
 
 export default function ServicesExperience({ englishContent }: { englishContent?: typeof servicesContent }) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const swipeStart = useRef<{ x: number; y: number } | null>(null);
 
   const localizedServices = englishContent ? Array.from({ length: 6 }, (_, index) => ({ title: englishContent[`title${index + 1}` as keyof typeof englishContent], description: englishContent[`description${index + 1}` as keyof typeof englishContent] })) : services;
   const activeService = localizedServices[activeIndex];
@@ -152,7 +153,7 @@ export default function ServicesExperience({ englishContent }: { englishContent?
     },
     {
       safeLeft: "53%",
-      textClass: "left-[21%]",
+      textClass: "left-[16%]",
       textFromLeft: true,
     },
     {
@@ -162,7 +163,7 @@ export default function ServicesExperience({ englishContent }: { englishContent?
     },
     {
       safeLeft: "53%",
-      textClass: "left-[21%]",
+      textClass: "left-[15%]",
       textFromLeft: true,
     },
     {
@@ -202,7 +203,7 @@ export default function ServicesExperience({ englishContent }: { englishContent?
 
   return (
     <main
-      onClick={goToNextService}
+      onClick={() => { if (window.innerWidth >= 1024) goToNextService(); }}
       style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
       className="
         relative
@@ -222,81 +223,77 @@ export default function ServicesExperience({ englishContent }: { englishContent?
 
       {}
 
-      <div
-        className="relative w-full overflow-hidden lg:hidden"
-        style={{
-          height:
-            "calc(var(--tetra-mobile-height, 100svh) - 5rem)",
+      <section
+        className="relative z-20 px-5 pb-14 pt-6 sm:px-8 lg:hidden"
+        aria-label={englishContent ? "Services" : "Услуги"}
+        onClick={(event) => event.stopPropagation()}
+        onTouchStart={(event) => {
+          const touch = event.touches[0];
+          swipeStart.current = { x: touch.clientX, y: touch.clientY };
+        }}
+        onTouchEnd={(event) => {
+          const start = swipeStart.current;
+          swipeStart.current = null;
+          if (!start) return;
+          const touch = event.changedTouches[0];
+          const dx = touch.clientX - start.x;
+          const dy = touch.clientY - start.y;
+          if (Math.abs(dx) < 55 || Math.abs(dx) < Math.abs(dy) * 1.3) return;
+          setActiveIndex((current) => Math.max(0, Math.min(localizedServices.length - 1, current + (dx < 0 ? 1 : -1))));
         }}
       >
-        {}
-
-        <div className="pointer-events-none absolute inset-0 z-10">
-          <SafeScene
-            activeIndex={activeIndex}
-            mobile
-          />
-        </div>
-
-        {}
-
-        <AnimatePresence mode="wait">
-          <motion.section
-            key={`mobile-service-${activeIndex}`}
-            initial={{
-              opacity: 0,
-              x: mobileText.enterX,
-              y: mobileText.enterY,
-            }}
-            animate={{
-              opacity: 1,
-              x: 0,
-              y: 0,
-            }}
-            exit={{
-              opacity: 0,
-              x:
-                mobileText.enterX *
-                0.6,
-              y:
-                mobileText.enterY *
-                0.6,
-            }}
-            transition={{
-              duration: 0.5,
-              ease: [
-                0.22,
-                1,
-                0.36,
-                1,
-              ],
-            }}
-            className={`absolute z-30 ${mobileText.className}`}
-          >
-            <div
-              className={
-                mobileText.width
-              }
-            >
-              <p className="text-base font-semibold tracking-normal text-[#172033]">
-                {englishContent ? "Services & Support" : "Услуги и сервиз"}
-              </p>
-
-              <h1 data-cms-field={`title${activeIndex + 1}`} className="mt-4 text-[42px] font-medium leading-[1.02] tracking-[-0.045em] text-[#3f7edb]">
-                {activeService.title}
-              </h1>
-
-              <div className="mt-5 h-px w-12 bg-[#3f7edb]" />
-
-              <p data-cms-field={`description${activeIndex + 1}`} className="mt-5 text-[15px] leading-[1.7] text-[#263244]">
-                {
-                  activeService.description
-                }
-              </p>
+        <div className="mx-auto max-w-xl">
+          <div className="mb-7 flex items-center justify-between gap-3">
+            <h1 className="text-xl font-semibold text-[#172033]">
+              {englishContent ? "Services & Support" : "Услуги и сервиз"}
+            </h1>
+            <span className="text-xs font-semibold tracking-[0.12em] text-[#3f7edb]">
+              {String(activeIndex + 1).padStart(2, "0")} / {String(localizedServices.length).padStart(2, "0")}
+            </span>
+          </div>
+          <div className="min-h-[385px]" aria-live="polite">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.article
+                key={activeIndex}
+                initial={{ opacity: 0, x: 22 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -22 }}
+                transition={{ duration: 0.22 }}
+              >
+                <h2 data-cms-field={`title${activeIndex + 1}`} className="max-w-lg text-[clamp(32px,9vw,48px)] font-medium leading-[1.08] tracking-[-0.035em] text-[#3f7edb]">
+                  {activeService.title}
+                </h2>
+                <div className="mt-6 h-px w-16 bg-[#3f7edb]" />
+                <p data-cms-field={`description${activeIndex + 1}`} className="mt-6 text-[16px] leading-[1.7] text-[#263244]">
+                  {activeService.description}
+                </p>
+                <div className="mt-8 grid grid-cols-3 gap-3 border-t border-black/10 pt-6">
+                  {serviceDetails[activeIndex].map(({ icon: Icon, label }, index) => (
+                    <div key={`${activeIndex}-${index}`} className="min-w-0">
+                      <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-full border border-[#3f7edb]/35 text-[#3f7edb]">
+                        <Icon size={18} strokeWidth={1.8} aria-hidden="true" />
+                      </div>
+                      <p className="break-words text-[12px] leading-[1.4] text-[#172033]">
+                        {englishContent ? englishServiceDetails[activeIndex][index] : label}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </motion.article>
+            </AnimatePresence>
+          </div>
+          <div className="mt-8 flex items-center justify-between gap-4 border-t border-black/10 pt-5">
+            <button type="button" onClick={() => setActiveIndex((i) => Math.max(0, i - 1))} disabled={activeIndex === 0} aria-label={englishContent ? "Previous service" : "Предишна услуга"} className="rounded-full border border-black/15 px-4 py-2 text-lg disabled:opacity-30">←</button>
+            <div className="flex items-center gap-2" role="group" aria-label={englishContent ? "Select service" : "Избор на услуга"}>
+              {localizedServices.map((service, index) => (
+                <button key={index} type="button" onClick={() => setActiveIndex(index)} aria-label={`${index + 1}: ${service.title}`} aria-current={index === activeIndex ? "step" : undefined} className={`h-2.5 rounded-full transition-all ${index === activeIndex ? "w-6 bg-[#3f7edb]" : "w-2.5 bg-[#aeb9c9]"}`} />
+              ))}
             </div>
-          </motion.section>
-        </AnimatePresence>
-      </div>
+            <button type="button" onClick={() => setActiveIndex((i) => Math.min(localizedServices.length - 1, i + 1))} disabled={activeIndex === localizedServices.length - 1} aria-label={englishContent ? "Next service" : "Следваща услуга"} className="rounded-full border border-black/15 px-4 py-2 text-lg disabled:opacity-30">→</button>
+          </div>
+          <p className="mt-3 text-center text-xs text-[#7a8698]">{englishContent ? "Swipe left or right to explore services" : "Плъзнете наляво или надясно за още услуги"}</p>
+        </div>
+      </section>
 
       <div className="hidden lg:block">
         

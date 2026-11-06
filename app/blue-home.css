@@ -680,3 +680,16 @@
   .blue-site .b-hero-layout > .b-hero-text { z-index: 3; }
   .blue-site .b-hero-layout > .b-hero-media-reveal { z-index: 1; }
 }
+
+/* Mobile homepage links use text and card affordances without arrow glyphs. */
+@media (max-width: 767px) {
+  .blue-site .b-primary > span:last-child:not([data-cms-field]),
+  .blue-site .b-contact-action > span:last-child:not([data-cms-field]),
+  .blue-site .b-range-arrow { display: none; }
+  .blue-site .b-range-item { grid-template-columns: 12% 1fr; }
+}
+
+/* Center the mobile inquiry button label without changing desktop alignment. */
+@media (max-width: 767px) {
+  .blue-site .b-contact-action { justify-content: center; text-align: center; }
+}
