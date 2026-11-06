@@ -271,8 +271,18 @@ export default function ServicesExperience({ englishContent }: { englishContent?
               {String(activeIndex + 1).padStart(2, "0")} / {String(localizedServices.length).padStart(2, "0")}
             </span>
           </div>
-          <div className="relative flex flex-1 flex-col" aria-live="polite">
-            <div className="absolute right-0 top-1 z-10 flex flex-col items-center gap-1" aria-label={englishContent ? "Service position" : "Позиция на услугата"}>
+          <div
+            className="relative flex flex-1 flex-col"
+            aria-live="polite"
+            style={{
+              // Reserve enough space for the three-line reference heading on every slide.
+              // Dot buttons are 16px high with 4px gaps: the last center is 108px from their top.
+              "--service-title-font-size": `clamp(26px, ${Math.min(9, Math.max(6.5, mobileHeight / 95))}vw, 48px)`,
+              "--service-title-slot-height": "calc(3 * var(--service-title-font-size) * 1.08 + 24px)",
+            } as React.CSSProperties}
+          >
+            {/* The last dot and divider share the bottom edge of the same title slot. */}
+            <div className="absolute right-0 z-10 flex flex-col items-center gap-1" style={{ top: "calc(var(--service-title-slot-height) - 108px)" }} aria-label={englishContent ? "Service position" : "Позиция на услугата"}>
               {localizedServices.map((_, index) => (
                 <button
                   type="button"
@@ -296,12 +306,15 @@ export default function ServicesExperience({ englishContent }: { englishContent?
                 className="flex flex-1 flex-col"
                 style={{ minHeight: `max(0px, ${mobileHeight - 190}px)` }}
               >
-                <div className="flex h-[160px] shrink-0 flex-col justify-between">
-                  <h2 data-cms-field={`title${activeIndex + 1}`} className="max-w-[calc(100%-32px)] font-medium leading-[1.08] tracking-[-0.035em] text-[#3f7edb]"
-                    style={{ fontSize: `clamp(26px, ${Math.min(9, Math.max(6.5, mobileHeight / 95))}vw, 48px)` }}>
+                <div className="relative shrink-0" style={{ height: "var(--service-title-slot-height)" }}>
+                  <h2
+                    data-cms-field={`title${activeIndex + 1}`}
+                    className="absolute bottom-5 left-0 right-8 font-medium leading-[1.08] tracking-[-0.035em] text-[#3f7edb]"
+                    style={{ fontSize: "var(--service-title-font-size)" }}
+                  >
                     {activeService.title}
                   </h2>
-                  <div className="h-px w-16 shrink-0 bg-[#3f7edb]" />
+                  <div className="absolute bottom-0 left-0 h-px w-16 bg-[#3f7edb]" />
                 </div>
                 <div className="flex min-h-0 flex-1 flex-col justify-center py-4">
                   <p data-cms-field={`description${activeIndex + 1}`} className="text-[#263244]"
