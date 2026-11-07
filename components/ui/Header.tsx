@@ -154,7 +154,15 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
 
           <Link
             href={`${localePrefix}/`}
-            onClick={closeMenu}
+            onClick={(event) => {
+              closeMenu();
+              // On the homepage, Next.js will not necessarily scroll for a same-route link.
+              // Handle that click directly; on other pages preserve normal navigation.
+              if (pathname === "/" || pathname === "/en" || pathname === "/en/") {
+                event.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }
+            }}
             className="flex w-max items-center gap-1.5"
           >
             <Image
