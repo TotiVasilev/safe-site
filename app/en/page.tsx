@@ -26,6 +26,7 @@ export default function Home(){
      </div>
      <div className="b-hero-media-reveal" data-reveal="right" data-reveal-delay="1"><HeroImageStack slides={h.heroSlides}/></div>
     </div>
+    <div className="b-desktop-hero-stats" aria-label="Company highlights"><div className="b-desktop-hero-stat"><strong>35+</strong><span>Years of manufacturing</span></div><div className="b-desktop-hero-stat"><strong>4,500 m²</strong><span>Own production base</span></div><div className="b-desktop-hero-stat"><strong>Certified</strong><span>International security standards</span></div><div className="b-desktop-hero-stat"><strong>100+</strong><span>Projects delivered</span></div></div>
    </div>
   </section>
 

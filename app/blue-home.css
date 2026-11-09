@@ -693,3 +693,70 @@
 @media (max-width: 767px) {
   .blue-site .b-contact-action { justify-content: center; text-align: center; }
 }
+
+/* Desktop-only vault hero enhancement. Existing typography, header, buttons and mobile hero stay intact. */
+.b-desktop-hero-stats { display:none; }
+@media (min-width: 1024px) {
+  .blue-site .b-hero {
+    background-color:#07111f;
+    background-image:linear-gradient(90deg,rgba(4,12,23,.95) 0%,rgba(5,14,27,.87) 27%,rgba(5,15,29,.56) 48%,rgba(5,14,26,.17) 73%,rgba(5,13,24,.22) 100%),url('/hero/vault-desktop-background.webp');
+    background-position:center center, right center;
+    background-repeat:no-repeat;
+    background-size:cover,cover;
+  }
+  .blue-site .b-hero-grain { background:none; animation:none; }
+  .blue-site .b-hero-kicker { color:#dbe8fb; border-bottom-color:rgba(255,255,255,.16); }
+  .blue-site .b-hero-kicker-right { color:#b9c9df; }
+  .blue-site .b-hero-text h1 { color:#fff; }
+  .blue-site .b-hero-text > p { color:#d2ddec; }
+  .blue-site .b-hero .b-secondary { color:#fff; border-color:rgba(255,255,255,.48); }
+  .blue-site .b-hero-media-reveal { visibility:hidden; pointer-events:none; }
+  .blue-site .b-desktop-hero-stats {
+    position:relative; z-index:2; display:grid; grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:clamp(12px,2.5vw,38px); border-top:1px solid rgba(255,255,255,.24);
+    padding:22px 0 25px; margin-top:-115px; color:#fff;
+  }
+  .blue-site .b-desktop-hero-stat { display:flex; flex-direction:column; gap:7px; min-width:0; }
+  .blue-site .b-desktop-hero-stat strong { font-size:clamp(17px,1.5vw,23px); font-weight:600; line-height:1.2; }
+  .blue-site .b-desktop-hero-stat span { font-size:11px; line-height:1.5; color:#c0cde0; }
+}
+@media (min-width:1024px) and (max-width:1250px) {
+  .blue-site .b-hero { background-position:center center, 62% center; }
+  .blue-site .b-desktop-hero-stats { margin-top:-90px; }
+}
+
+/* Final desktop viewport fit: no clipping, no next section visible at 1080p. */
+@media (min-width: 1024px) {
+  .blue-site .b-hero {
+    box-sizing: border-box;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    background-color: #07111f;
+    background-image: linear-gradient(90deg,rgba(4,12,23,.96),rgba(5,14,27,.84) 29%,rgba(5,15,29,.36) 64%,rgba(5,14,26,.12)), url('/hero/vault-desktop-background.webp');
+    background-size: 100% 100%, auto 100%;
+    background-position: center, right center;
+    background-repeat: no-repeat;
+  }
+  .blue-site .b-hero > .b-shell {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+    width: min(100% - 10vw, 1440px);
+  }
+  .blue-site .b-hero-layout {
+    min-height: 0;
+    flex: 1 1 auto;
+  }
+  .blue-site .b-desktop-hero-stats {
+    flex: 0 0 auto;
+    margin-top: 0;
+    padding-top: 16px;
+    padding-bottom: 18px;
+  }
+}
+/* Laptop-height safeguard: preserve original font sizes, allow content to determine height if needed. */
+@media (min-width: 1024px) and (max-height: 740px) {
+  .blue-site .b-hero-layout { min-height: 560px; }
+}
