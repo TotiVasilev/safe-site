@@ -82,6 +82,33 @@ const mobileTextLayouts: MobileTextLayout[] = [
 
 export default function ServicesExperience({ englishContent }: { englishContent?: typeof servicesContent }) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [mobileDetail, setMobileDetail] = useState<number | null>(null);
+  useEffect(() => {
+    const syncFromUrl = () => {
+      const raw = new URLSearchParams(window.location.search).get("service");
+      const value = raw ? Number(raw) : 0;
+      setMobileDetail(Number.isInteger(value) && value >= 1 && value <= 6 ? value - 1 : null);
+    };
+    syncFromUrl();
+    window.addEventListener("popstate", syncFromUrl);
+    return () => window.removeEventListener("popstate", syncFromUrl);
+  }, []);
+
+  function openMobileDetail(index: number) {
+    const url = new URL(window.location.href);
+    url.searchParams.set("service", String(index + 1));
+    window.history.pushState({}, "", url.toString());
+    setMobileDetail(index);
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }
+
+  function closeMobileDetail() {
+    const url = new URL(window.location.href);
+    url.searchParams.delete("service");
+    window.history.pushState({}, "", url.toString());
+    setMobileDetail(null);
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }
   const [mobileHeight, setMobileHeight] = useState(700);
   const swipeStart = useRef<{ x: number; y: number } | null>(null);
   const suppressSwipeClick = useRef(false);
@@ -206,136 +233,78 @@ export default function ServicesExperience({ englishContent }: { englishContent?
 
       {}
 
-      <section
-        className="relative z-20 px-5 pb-5 pt-4 sm:px-8 lg:hidden"
-        style={{ touchAction: "pan-y" }}
-        aria-label={englishContent ? "Services" : "Услуги"}
-        onClick={(event) => {
-          if (suppressSwipeClick.current) {
-            suppressSwipeClick.current = false;
-            return;
-          }
-          // Never hijack buttons, links, or other interactive elements.
-          const target = event.target;
-          if (!(target instanceof Element)) return;
-          if (target.closest('button, a, input, select, textarea, [role="button"], [data-no-service-advance]')) return;
-          // A normal tap advances; scrolling is handled natively by the browser.
-          goToNextService();
-        }}
-        onTouchStart={(event) => {
-          const touch = event.touches[0];
-          swipeStart.current = { x: touch.clientX, y: touch.clientY };
-          suppressSwipeClick.current = false;
-        }}
-        onTouchEnd={(event) => {
-          const start = swipeStart.current;
-          swipeStart.current = null;
-          if (!start) return;
-          const touch = event.changedTouches[0];
-          const dx = touch.clientX - start.x;
-          const dy = touch.clientY - start.y;
-          // Only horizontal gestures change slides; vertical scrolling remains native.
-          if (Math.abs(dx) < 55 || Math.abs(dx) <= Math.abs(dy) * 1.25) return;
-          suppressSwipeClick.current = true;
-          setActiveIndex((current) =>
-            Math.max(0, Math.min(localizedServices.length - 1, current + (dx < 0 ? 1 : -1)))
-          );
-        }}
-        onTouchCancel={() => {
-          swipeStart.current = null;
-        }}
-      >
-        <div className="mx-auto flex max-w-xl flex-col" style={{ minHeight: `max(0px, ${mobileHeight - 116}px)` }}>
-          <div className="mb-4 flex shrink-0 flex-col items-start gap-3">
-            <h1 className="text-xl font-semibold text-[#172033]">
-              {englishContent ? "Services & Support" : "Услуги и сервиз"}
-            </h1>
-            <div className="flex w-full items-center gap-4" aria-label={englishContent ? "Service navigation" : "Навигация между услугите"}>
-              <span className="shrink-0 text-xs font-semibold tabular-nums tracking-[0.12em] text-[#3f7edb]">
-                {String(activeIndex + 1).padStart(2, "0")} / {String(localizedServices.length).padStart(2, "0")}
-              </span>
-              <div className="flex items-center gap-1" aria-label={englishContent ? "Service position" : "Позиция на услугата"}>
-                {localizedServices.map((_, index) => (
-                  <button
-                    type="button"
+      {/* Mobile-only service directory; desktop presentation remains untouched. */}
+      <section className="relative z-20 mx-auto w-full max-w-xl px-4 pb-12 pt-5 sm:px-8 lg:hidden" aria-label={englishContent ? "Services" : "Услуги"}>
+        <AnimatePresence mode="popLayout" initial={false}>
+          {mobileDetail === null ? (
+            <motion.div key="service-directory" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: 0.12 } }}>
+              <div className="mb-5">
+                <h1 className="text-[clamp(29px,7.7vw,39px)] font-semibold leading-[1.07] tracking-[-0.06em] text-[#172033]">
+                  {englishContent ? "Services & Support" : "Услуги и сервиз"}
+                </h1>
+                <div className="mt-4 h-[2px] w-12 bg-[#3f7edb]" />
+              </div>
+              <div className="grid grid-cols-2 items-stretch gap-3 sm:gap-4">
+                {localizedServices.map((service, index) => (
+                  <motion.button
+                    layoutId={`mobile-service-card-${index}`}
                     key={index}
-                    aria-label={`${englishContent ? "Service" : "Услуга"} ${index + 1}`}
-                    aria-current={index === activeIndex ? "step" : undefined}
-                    onClick={() => selectService(index)}
-                    className="flex h-8 w-8 items-center justify-center"
+                    type="button"
+                    onClick={() => openMobileDetail(index)}
+                    transition={{ layout: { duration: 0.48, ease: [0.22, 1, 0.36, 1] } }}
+                    className="group flex min-w-0 flex-col overflow-hidden rounded-2xl border border-[#dce5f1] bg-white text-left shadow-[0_5px_18px_rgba(24,57,104,0.07)]"
+                    style={{ height: 200, minHeight: 200, maxHeight: 200 }}
+                    aria-label={service.title}
                   >
-                    <span className={`h-2 w-2 rounded-full transition-colors duration-200 ${index === activeIndex ? "bg-[#3f7edb]" : "bg-[#3f7edb]/25"}`} />
-                  </button>
+                    <motion.div className="relative w-full shrink-0 overflow-hidden bg-[#edf3fa]" style={{ height: 125, minHeight: 125, maxHeight: 125, display: "block" }}>
+                      <img src={`/services/mobile-service-${index + 1}.jpg`} alt="" className="absolute inset-0 h-full w-full object-cover" style={{ display: "block", width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", transform: index === 1 ? "scale(1.28)" : "none" }} loading={index < 2 ? "eager" : "lazy"} />
+                    </motion.div>
+                    <div className="flex min-h-0 flex-1 items-start px-3 py-3" style={{ height: 75, minHeight: 75 }}>
+                      <h2 data-cms-field={`title${index + 1}`} className="text-[13px] font-semibold leading-[1.35] text-[#172033] sm:text-[15px]">{service.title}</h2>
+                    </div>
+                  </motion.button>
                 ))}
               </div>
-            </div>
-          </div>
-          <div
-            className="relative flex min-h-0 flex-1 flex-col"
-            aria-live="polite"
-            style={{
-              // One title slot for all slides; shorter titles grow upward from the same divider.
-              "--service-title-font-size": `clamp(26px, ${Math.min(9, Math.max(6.5, mobileHeight / 95))}vw, 48px)`,
-              "--service-title-slot-height": "calc(3 * var(--service-title-font-size) * 1.08 + 24px)",
-            } as React.CSSProperties}
-          >
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.article
-                key={activeIndex}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-                className="flex min-h-0 flex-1 flex-col"
-              >
-                <div className="relative shrink-0" style={{ height: "var(--service-title-slot-height)" }}>
-                  <h2
-                    data-cms-field={`title${activeIndex + 1}`}
-                    className="absolute bottom-5 left-0 right-0 font-medium leading-[1.08] tracking-[-0.035em] text-[#3f7edb]"
-                    style={{ fontSize: "var(--service-title-font-size)" }}
-                  >
-                    {activeService.title}
-                  </h2>
-                  <div className="absolute bottom-0 left-0 h-px w-16 bg-[#3f7edb]" />
-                </div>
-                {/* The description uses the middle space. The icon row is anchored at the
-                    bottom of the viewport-sized section on every slide. Short screens can
-                    grow and scroll rather than overlapping content. */}
-                <div className="flex min-h-[170px] flex-1 flex-col justify-center py-5">
-                  <p data-cms-field={`description${activeIndex + 1}`} className="text-[#263244]"
-                    style={{ fontSize: `clamp(12px, ${mobileHeight / 45}px, 16px)`, lineHeight: mobileHeight < 650 ? 1.4 : 1.7 }}>
-                    {activeService.description}
-                  </p>
-                </div>
-                <div className="grid shrink-0 grid-cols-3 gap-2 border-y border-black/10 py-3 text-center">
-                  {serviceDetails[activeIndex].map(({ icon: Icon, label }, index) => (
-                    <motion.div
-                      key={`${activeIndex}-${index}`}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.38, delay: 0.12 + index * 0.09, ease: [0.22, 1, 0.36, 1] }}
-                      className="flex min-w-0 flex-col items-center"
-                    >
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.38, delay: 0.12 + index * 0.09, ease: [0.22, 1, 0.36, 1] }}
-                        className="mb-2 flex items-center justify-center rounded-full border border-[#3f7edb]/35 text-[#3f7edb]"
-                        style={{ width: `clamp(34px, ${mobileHeight / 13}px, 48px)`, height: `clamp(34px, ${mobileHeight / 13}px, 48px)` }}
-                      >
-                        <Icon size={mobileHeight < 650 ? 19 : 24} strokeWidth={1.8} aria-hidden="true" />
-                      </motion.div>
-                      <p className="min-h-[52px] break-words leading-[1.35] text-[#172033]"
-                        style={{ fontSize: `clamp(11px, ${mobileHeight / 45}px, 16px)` }}>
-                        {englishContent ? englishServiceDetails[activeIndex][index] : label}
-                      </p>
-                    </motion.div>
+            </motion.div>
+          ) : (
+            <motion.article
+              key={`service-detail-${mobileDetail}`}
+              layoutId={`mobile-service-card-${mobileDetail}`}
+              transition={{ layout: { duration: 0.48, ease: [0.22, 1, 0.36, 1] } }}
+              className="overflow-hidden rounded-2xl bg-white pb-3"
+            >
+              <button type="button" onClick={closeMobileDetail} className="mb-4 inline-flex min-h-10 items-center gap-2 text-sm font-semibold text-[#3f7edb]">
+                <span aria-hidden="true">←</span> {englishContent ? "All services" : "Всички услуги"}
+              </button>
+              <motion.div className="relative w-full overflow-hidden rounded-2xl bg-[#edf3fa] shadow-[0_8px_25px_rgba(24,57,104,0.08)]" style={{ height: 215, minHeight: 215 }}>
+                <img src={`/services/mobile-service-${mobileDetail + 1}.jpg`} alt="" className="h-full w-full object-cover" style={{ display: "block", width: "100%", height: "100%", objectFit: "cover", transform: mobileDetail === 1 ? "scale(1.18)" : "none" }} />
+              </motion.div>
+              <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0, transition: { delay: 0.22, duration: 0.3 } }}>
+                <h1 data-cms-field={`title${mobileDetail + 1}`} className="mt-7 text-[29px] font-semibold leading-[1.13] tracking-[-0.035em] text-[#172033]">
+                  {localizedServices[mobileDetail].title}
+                </h1>
+                <p data-cms-field={`description${mobileDetail + 1}`} className="text-[15px] leading-[1.8] text-[#263244]">
+                  {localizedServices[mobileDetail].description}
+                </p>
+                <div className="mt-8 grid grid-cols-3 gap-2 py-5">
+                  {serviceDetails[mobileDetail].map(({ icon: Icon, label }, index) => (
+                    <div key={index} className="flex min-w-0 flex-col items-center text-center">
+                      <span className="mb-3 flex h-11 w-11 items-center justify-center rounded-full border border-[#3f7edb]/35 text-[#3f7edb]">
+                        <Icon size={22} strokeWidth={1.8} aria-hidden="true" />
+                      </span>
+                      <span className="break-words text-[12px] font-medium leading-[1.4] text-[#172033]">
+                        {englishContent ? englishServiceDetails[mobileDetail][index] : label}
+                      </span>
+                    </div>
                   ))}
                 </div>
-              </motion.article>
-            </AnimatePresence>
-          </div>
-        </div>
+                <button type="button" onClick={closeMobileDetail} className="mx-auto mt-6 flex min-h-10 w-fit items-center justify-center rounded-lg bg-[#3f7edb] px-5 py-2.5 text-sm font-semibold text-white shadow-sm">
+                  {englishContent ? "Back to all services" : "Обратно към всички услуги"}
+                </button>
+              </motion.div>
+            </motion.article>
+          )}
+        </AnimatePresence>
       </section>
 
       <div className="hidden lg:block">

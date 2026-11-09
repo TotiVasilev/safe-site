@@ -295,3 +295,11 @@ body:has(.blue-site) .site-global-footer-links a:hover{color:#fff}
     padding-left: 250px !important;
   }
 }
+
+/* Mobile Services: hide the footer separator beneath the service cards. */
+@media (max-width: 1023px) {
+  body:has(section[aria-label="Услуги"]) .site-global-footer-inner,
+  body:has(section[aria-label="Services"]) .site-global-footer-inner {
+    border-top: none;
+  }
+}
