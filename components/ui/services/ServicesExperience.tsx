@@ -479,7 +479,7 @@ export default function ServicesExperience({ englishContent }: { englishContent?
               {/* Three details for the active service. */}
               <div className="mt-10 grid max-w-xl grid-cols-3 gap-6 border-t border-black/10 pt-8">
                 {serviceDetails[activeIndex].map(({ icon: Icon, label }, index) => (
-                  <div key={`${activeIndex}-${index}`}>
+                  <div key={`${activeIndex}-${index}`} className="flex flex-col items-center text-center">
                     <div className="mb-3 flex h-8 w-8 items-center justify-center rounded-full border border-[#3f7edb]/35 text-[#3f7edb]">
                       <Icon size={17} strokeWidth={1.8} aria-hidden="true" />
                     </div>
