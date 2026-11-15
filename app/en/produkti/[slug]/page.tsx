@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ProductContact from "@/components/ui/ProductContact";
 import { notFound } from "next/navigation";
 import ProductGallery from "@/components/ui/ProductGallery";
 import Image from "next/image";
@@ -63,6 +64,7 @@ export default async function ProductPage({
           </div>
           {!(product.lockItems?.length) && <p className="mt-12 text-sm text-black/50">Add locks in Content Manager to display them here.</p>}
           <RelatedLockCategories locks={otherLockCategories} currentSlug={product.slug} locale="en" />
+          <ProductContact productName={product.name} locale="en" desktopOnly />
         </div>
       </main>
     );
@@ -150,29 +152,7 @@ export default async function ProductPage({
           <RelatedLockCategories locks={otherLockCategories} currentSlug={product.slug} locale="en" />
         )}
 
-        <section className="mt-32 rounded-3xl bg-black px-8 py-16 text-white sm:px-12 lg:px-16">
-          <p className="text-xs uppercase tracking-[0.3em] text-white/40">
-            Have questions?
-          </p>
-
-          <h2 className="mt-5 max-w-2xl text-3xl font-medium tracking-tight sm:text-4xl">
-            Let us find the right solution for your needs.
-          </h2>
-
-          <p className="mt-5 max-w-xl leading-7 text-white/60">
-            Contact us for more information about the models, their specifications, and delivery and installation options.
-            <br />
-            <br />
-            We also offer custom-made solutions, tailored to your specific dimensions, preferences, and requirements.
-          </p>
-
-          <Link
-            href="mailto:info@tetraedar.com"
-            className="mt-8 flex w-fit ml-auto sm:ml-0 rounded-full bg-white px-6 py-3 text-sm font-medium text-black transition-transform hover:scale-105"
-          >
-            Contact us
-          </Link>
-        </section>
+        <ProductContact productName={product.name} locale="en" />
       </div>
     </main>
   );

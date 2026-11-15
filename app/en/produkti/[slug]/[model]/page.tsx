@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ProductContact from "@/components/ui/ProductContact";
 import { notFound } from "next/navigation";
 import { getEnglishProducts } from "@/data/english";
 
@@ -201,26 +202,7 @@ export default async function ModelPage({
           </div>
         </section>
 
-        <section className="mt-32 rounded-3xl bg-black px-8 py-16 text-white sm:px-12 lg:px-16">
-          <p className="text-xs uppercase tracking-[0.3em] text-white/40">
-            Need more information?
-          </p>
-
-          <h2 className="mt-5 max-w-2xl text-3xl font-medium tracking-tight sm:text-4xl">
-            Contact us for more information.
-          </h2>
-
-          <p className="mt-5 max-w-xl leading-7 text-white/60">
-            Our team can help you choose the right model and provide additional information.
-          </p>
-
-          <Link
-            href="mailto:info@tetraedar.com"
-            className="mt-8 flex w-fit ml-auto sm:ml-0 rounded-full bg-white px-6 py-3 text-sm font-medium text-black transition-transform hover:scale-105"
-          >
-            Contact us
-          </Link>
-        </section>
+        <ProductContact productName={`${product.name} — ${model.name}`} variant="model" locale="en" />
 
         <div className="mt-16">
           <Link

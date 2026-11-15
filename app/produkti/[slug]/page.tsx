@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ProductContact from "@/components/ui/ProductContact";
 import { notFound } from "next/navigation";
 import ProductGallery from "@/components/ui/ProductGallery";
 import Image from "next/image";
@@ -63,6 +64,7 @@ export default async function ProductPage({
           </div>
           {!(product.lockItems?.length) && <p className="mt-12 text-sm text-black/50">Добавете ключалки в Content Manager, за да се покажат тук.</p>}
           <RelatedLockCategories locks={otherLockCategories} currentSlug={product.slug} locale="bg" />
+          <ProductContact productName={product.name} desktopOnly />
         </div>
       </main>
     );
@@ -150,29 +152,7 @@ export default async function ProductPage({
           <RelatedLockCategories locks={otherLockCategories} currentSlug={product.slug} locale="bg" />
         )}
 
-        <section className="mt-32 rounded-3xl bg-black px-8 py-16 text-white sm:px-12 lg:px-16">
-          <p className="text-xs uppercase tracking-[0.3em] text-white/40">
-            Имате въпроси?
-          </p>
-
-          <h2 className="mt-5 max-w-2xl text-3xl font-medium tracking-tight sm:text-4xl">
-            Нека намерим правилното решение за вашите нужди.
-          </h2>
-
-          <p className="mt-5 max-w-xl leading-7 text-white/60">
-            Свържете се с нас за повече информация относно моделите, характеристиките и възможностите за доставка и монтаж. 
-            <br />
-            <br />
-            Предлагаме и възможност за изработка по индивидуална поръчка, съобразена с вашите размери, предпочитания и специфични изисквания.
-          </p>
-
-          <Link
-            href="mailto:info@tetraedar.com"
-            className="mt-8 flex w-fit ml-auto sm:ml-0 rounded-full bg-white px-6 py-3 text-sm font-medium text-black transition-transform hover:scale-105"
-          >
-            Свържете се с нас
-          </Link>
-        </section>
+        <ProductContact productName={product.name} />
       </div>
     </main>
   );
