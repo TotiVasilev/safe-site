@@ -31,7 +31,7 @@ Useful commands:
 npm run dev      # Local development
 npm run build    # Generate the static site in out/
 npm run lint     # Run ESLint
-npm run start    # Next.js production server (not used for static hosting)
+npm run start    # Next.js production server (not used for static hostings)
 ```
 
 For this project, **`npm run build`** is the production build command. The generated `out/` directory is the deployable artifact. The `start` command is included in the package scripts but is not the deployment method for a static export.
