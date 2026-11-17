@@ -22,12 +22,12 @@ descriptionBlocks:
 
 
     It complies with BNB Regulation No 8121z-444 for safes.'
-- kind: intro
-  text: Type safes A standard is produced with 2 mechanical key locks class B.
 - kind: features
   title: Configuration options
   items:
   - Additional locking, colors and protective measures are offered according to customer requirements.
+- kind: intro
+  text: Type safes A standard is produced with 2 mechanical key locks class B.
 models:
 - name: A-802
   height: 550
