@@ -5,17 +5,7 @@ category: bravi
 order: 50
 catalogDescription: In our catalogue you will find mechanical locks from established manufacturers such as Dormakaba, AGA
   and WITTKOPP.
-description: 'The mechanical locks are reliable locking mechanisms designed to ensure a high level of security and protection
-  of safes, vaults and other valuable storage facilities.
-
-
-  The main advantage of mechanical locks is their independence from electronic components and external power supply.
-
-
-  In our catalogue you will find mechanical locks from established manufacturers such as , and offering high quality locking
-  systems for professional use.
-
-  '
+description: ' '
 descriptionBlocks:
 - kind: paragraph
   title: Description
