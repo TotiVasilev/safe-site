@@ -9,15 +9,34 @@ description: 'The mechanical locks are reliable locking mechanisms designed to e
   of safes, vaults and other valuable storage facilities.
 
 
-  The main advantage of mechanical locks is their independence from electronic components and external power supply. Depending
-  on the specific model, locking and unlocking are performed by means of a mechanical key or code combination, making them
-  a practical and reliable solution for different applications.
+  The main advantage of mechanical locks is their independence from electronic components and external power supply.
 
 
-  In our catalogue you will find mechanical locks from established manufacturers such as Dormakaba, AGA and WITTKOP, offering
-  high quality locking systems for professional use.
+  In our catalogue you will find mechanical locks from established manufacturers such as , and offering high quality locking
+  systems for professional use.
 
   '
+descriptionBlocks:
+- kind: paragraph
+  title: Description
+  text: 'The mechanical locks are reliable locking mechanisms designed to ensure a high level of security and protection of
+    safes, vaults and other valuable storage facilities.
+
+
+    Depending on the specific model, locking and unlocking are performed by means of a mechanical key or code combination,
+    making them a practical and reliable solution for different applications.'
+- kind: paragraph
+  title: Available manufacturers
+  text: 'In our catalogue you will find mechanical locks from established manufacturers such as:'
+  items:
+  - Dormakaba
+  - AGA
+  - WITTKOPP
+- kind: features
+  title: Configuration options
+  items:
+  - The choice of suitable mechanical lock depends on the specific security requirements, the construction of the facility
+    and the required level of access control.
 lockCollection: false
 image: /products/uploads/wittkopp-1819-1821-1824.png
 images:
