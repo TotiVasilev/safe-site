@@ -85,15 +85,15 @@ attachments:
 modelDrawing: /products/uploads/fixed-typearazmeri-skica-1.png
 descriptionBlocks:
 - kind: intro
-  text: Type A safes are standardly manufactured with 2 mechanical key locks, class B.
+  text: Type safes A standard is produced with 2 mechanical key locks class B.
 - kind: features
   title: Configuration options
   items:
   - Additional locking, colors and protective measures are offered according to customer requirements.
 - kind: certification
   title: Certification and compliance
-  text: 'The safe has been tested and, with the exception of A-802, holds a certificate for resistance
-    grade IV under EN 1143-1.
+  text: 'The safety deposit box has been tested and with the exception of A-802 there is a certificate for the IV degree of
+    resistance according to EN 1143-1.
 
 
     It complies with BNB Regulation No 8121z-444 for safes.'

@@ -38,18 +38,17 @@ images:
 modelDrawing: /products/uploads/fixed-typ-ed-skica.png
 descriptionBlocks:
 - kind: intro
-  text: The safe is intended for small bank offices without specially constructed vault rooms.
+  text: The safe is designed for small bank offices where there are no special rooms equipped as a civil vault.
 - kind: paragraph
   title: Deposit system
-  text: Modular deposit safes are installed in it with a two-stage unlocking procedure involving bank
-    authorization and a single unlocking and locking action by the client.
+  text: 'In the safe are installed modular safe deposit boxes with unlocking mode '
 - kind: features
-  title: Locking
+  title: Lock
   items:
-  - The outer door is fitted with at least two class B locks under EN 1300.
+  - The outer door shall be fitted with a minimum of two locks of class In on EN 1300.
 - kind: certification
   title: Certification and compliance
-  text: 'The safe holds a certificate for resistance grade V under EN 1143-1.
+  text: 'The safe holds a V degree of resistance certificate within the meaning of EN 1143-1.
 
 
     It complies with BNB Regulation No 8121z-444 for safes.'
