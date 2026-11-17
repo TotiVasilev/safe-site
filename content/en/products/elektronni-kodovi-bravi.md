@@ -20,6 +20,11 @@ descriptionBlocks:
   items:
   - 'KABA '
   - STUV
+- kind: features
+  title: Configuration options
+  items:
+  - The choice of an appropriate electronic code lock depends on the specific security requirements, the construction of the
+    facility and the required level of access control.
 lockCollection: false
 image: /products/uploads/elektronni-obshta-snimka.png
 images:
