@@ -6,9 +6,21 @@ subcategory: stenni
 order: 20
 cardLabel: BDS Class II EN 1143-1
 catalogDescription: Wall safe with category II and electronic or mechanical code lock class A according to EN 1300.
-description: The construction is designed to meet the second degree of resistance under BDS EN 1143-1. Locking with one mechanical
-  lock class A according to EN 1300. Colors and additional protections are agreed according to the individual requirements
-  of the client.
+description: ' '
+descriptionBlocks:
+- kind: certification
+  title: Certification and compliance
+  items: []
+  text: 'The construction is designed to meet the second degree of resistance under BDS EN 1143-1.
+
+
+    Locking with one mechanical lock class A according to EN 1300.
+
+
+    '
+- kind: features
+  items:
+  - Colors and additional protections are agreed according to the individual requirements of the client.
 models:
 - name: CTMK-1
   height: '375'
