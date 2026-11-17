@@ -8,12 +8,22 @@ cardLabel: BDS Class V EN 1143-1
 catalogDescription: 'A combination of two horizontal safes type B with a V degree of resistance.
 
   It complies with BNB Regulation No 8121z-444 for safes.'
-description: 'United structure of two horizontally positioned safe types C. The Safe holds a certificate for V degree of resistance
-  under BDS EN 1143-1. The executions regarding lock, color and additional protection are agreed according to the individual
-  requirements of the client.
+description: ' '
+descriptionBlocks:
+- kind: paragraph
+  title: Description
+  text: United structure of two horizontally positioned safe types C.
+- kind: features
+  items:
+  - The executions regarding locking, colors and additional protections are agreed according to the individual requirements
+    of the client.
+  title: Configuration options
+- kind: certification
+  title: Certification and compliance
+  text: 'The safety deposit box holds a V degree of resistance certificate under BDS EN 1143-1.
 
 
-  It complies with BNB Regulation No 8121z-444 for safes.'
+    It complies with BNB Regulation No 8121z-44 for safes.'
 models:
 - name: WH1200
   height: '600'
