@@ -5,18 +5,28 @@ category: bravi
 order: 20
 cardLabel: ''
 catalogDescription: 'Reliable locks for personal and professional storage of valuables. Manufacturer: Dormakaba, AGA, Witkopp.'
-description: 'The main feature of the deposit locks is the possibility of two-stage access control using two separate keys.
-  In this type of lock, the opening requires the participation of two authorised parties, which provides additional protection
-  against unauthorised access.
+description: " \n"
+descriptionBlocks:
+- kind: paragraph
+  title: Description
+  text: 'In this type of locking, the opening requires the participation of two authorised parties, providing additional protection
+    against unauthorised access.
 
 
-  In our catalogue you will find deposit locks from established manufacturers such as Dormakaba, AGA and WITTKOPP, offering
-  reliable solutions for professional security systems.
-
-
-  The proposed models are distinguished by precision craftsmanship, reliable locking mechanisms and application options in
-  various types of safes and deposit systems. The choice of an appropriate deposit lock depends on the specific security requirements,
-  the construction of the facility and the required level of access control.'
+    The offered models are distinguished by precision craftsmanship, reliable locking mechanisms and application options in
+    different types of safes and deposit systems.'
+- kind: features
+  title: Available manufacturers
+  text: 'In our catalogue you will find deposit locks from established manufacturers such as:'
+  items:
+  - Dormakaba
+  - AGA
+  - WITTKOPP
+- kind: features
+  title: Configuration options
+  items:
+  - The choice of an appropriate safety lock depends on the specific security requirements, the construction of the facility
+    and the required level of access control.
 lockCollection: false
 image: /products/uploads/witkopp-5367.png
 images:
