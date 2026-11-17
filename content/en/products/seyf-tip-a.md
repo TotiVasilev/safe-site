@@ -1,7 +1,9 @@
 ---
+title: Safe Type A
 urlSlug: seyf-tip-a
 category: seyfove
 subcategory: svobodnostoyashti
+order: 10
 cardLabel: EN 1143-1 class IV
 catalogDescription: 'High class safe with IV resistance level EN 1143-1.
 
@@ -12,13 +14,20 @@ description: 'Type safes A standard is produced with 2 mechanical key locks clas
 
 
   It complies with BNB Regulation No 8121z-444 for safes.'
-image: /products/uploads/fixed-typea-main.png
-images:
-- /products/uploads/typea-2-.png
-- /products/uploads/typea-4-.png
-- /products/uploads/typea-5-.png
-- /products/uploads/typea-3-.png
-- /products/uploads/typea.png
+descriptionBlocks:
+- kind: certification
+  title: Certification and compliance
+  text: 'The safety deposit box has been tested and with the exception of A-802 there is a certificate for the IV degree of
+    resistance according to EN 1143-1.
+
+
+    It complies with BNB Regulation No 8121z-444 for safes.'
+- kind: intro
+  text: Type safes A standard is produced with 2 mechanical key locks class B.
+- kind: features
+  title: Configuration options
+  items:
+  - Additional locking, colors and protective measures are offered according to customer requirements.
 models:
 - name: A-802
   height: 550
@@ -69,8 +78,6 @@ models:
   innerDepth: 496
   weight: 1150 kg
 slug: seyf-tip-a
-title: Safe Type A
-order: 10
 attachments:
 - phrase: BNB No 8121h-444
   file: /products/uploads/employment-job-application-791x1024.png
@@ -82,19 +89,12 @@ attachments:
   file: /products/uploads/сейф-тип-а.png
 - phrase: IV degree of resistance according to EN 1143-1
   file: /products/uploads/safe-а.png
+image: /products/uploads/fixed-typea-main.png
+images:
+- /products/uploads/typea-2-.png
+- /products/uploads/typea-4-.png
+- /products/uploads/typea-5-.png
+- /products/uploads/typea-3-.png
+- /products/uploads/typea.png
 modelDrawing: /products/uploads/fixed-typearazmeri-skica-1.png
-descriptionBlocks:
-- kind: intro
-  text: Type safes A standard is produced with 2 mechanical key locks class B.
-- kind: features
-  title: Configuration options
-  items:
-  - Additional locking, colors and protective measures are offered according to customer requirements.
-- kind: certification
-  title: Certification and compliance
-  text: 'The safety deposit box has been tested and with the exception of A-802 there is a certificate for the IV degree of
-    resistance according to EN 1143-1.
-
-
-    It complies with BNB Regulation No 8121z-444 for safes.'
 ---
