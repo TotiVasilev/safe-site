@@ -174,7 +174,7 @@ export default function Header({ contact }: { contact: {phone:string;email:strin
               className="h-9 sm:h-12 w-auto object-contain"
             />
 
-            <span className="text-[20px] font-medium leading-none tracking-[0.005em] text-[#3f7edb] sm:text-[29px]">ТЕТРАЕДЪР</span>
+            <span className="text-[20px] font-medium leading-none tracking-[0.005em] text-[#3f7edb] sm:text-[29px]">{english ? "TETRAEDAR" : "ТЕТРАЕДЪР"}</span>
           </Link>
 
           <nav className="absolute left-[calc(50%-133px)] hidden shrink-0 items-center gap-1 xl:flex">

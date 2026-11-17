@@ -1,10 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import "./AboutLogoReveal.css";
 
 /** Plays once when the About section enters the viewport. */
 export default function AboutLogoReveal() {
+  const english = usePathname().startsWith("/en");
+  const companyName = english ? "TETRAEDAR" : "ТЕТРАЕДЪР";
   const rootRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   const [spinKey, setSpinKey] = useState(0);
@@ -31,11 +34,11 @@ export default function AboutLogoReveal() {
   }, []);
 
   return (
-    <div ref={rootRef} className={`about-logo-reveal${visible ? " is-visible" : ""}`} aria-label="ТЕТРАЕДЪР">
+    <div ref={rootRef} className={`about-logo-reveal${visible ? " is-visible" : ""}`} aria-label={companyName}>
       <button
         type="button"
         className="about-logo-reveal__lockup"
-        aria-label="Завърти логото на ТЕТРАЕДЪР"
+        aria-label={english ? "Spin the TETRAEDAR logo" : "Завърти логото на ТЕТРАЕДЪР"}
         onClick={() => { setSpinFinished(false); setSpinKey((key) => key + 1); }}
       >
         <span className="about-logo-reveal__symbol-wrap">
@@ -53,7 +56,7 @@ export default function AboutLogoReveal() {
           />
           <span aria-hidden="true" className={`about-logo-reveal__hover-reflection${spinFinished ? " is-ready" : ""}`} />
         </span>
-        <div className="about-logo-reveal__wordmark">ТЕТРАЕДЪР</div>
+        <div className="about-logo-reveal__wordmark">{companyName}</div>
       </button>
     </div>
   );
