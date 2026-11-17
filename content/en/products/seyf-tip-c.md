@@ -8,12 +8,21 @@ cardLabel: EN 1143-1 Class VI
 catalogDescription: 'High-end safety deposit box with models certified to level VI under EN 1143-1.
 
   It complies with BNB Regulation No 8121z-444 for safes.'
-description: 'Safe Type C has protected the VI degree of resistance according to EN 1143-1 and has a test report in an authorised
-  laboratory. Standardly available with two type C mechanical locks according to EN 1300. Additional locking, colors and protective
-  measures are offered according to customer requirements.
+description: ' '
+descriptionBlocks:
+- kind: paragraph
+  title: Description
+  text: Standardly available with two mechanical locks type C of EN 1300.
+- kind: features
+  title: Configuration options
+  text: ''
+  items:
+  - Additional locking, colors and protective measures are offered according to customer requirements.
+- kind: certification
+  text: 'High-end safe with models certified to VI EN 1143-1.
 
 
-  It complies with BNB Regulation No 8121z-444 for safes.'
+    It complies with BNB Regulation No 8121z-44 for safes.'
 models:
 - name: C-801
   height: '600'
