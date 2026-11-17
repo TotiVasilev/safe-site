@@ -20,6 +20,42 @@ export function getProductImageSources(src: string) {
   };
 }
 
+// The product-page gallery is at most 520 CSS px wide on desktop.
+// On mobile/tablet it fills the page minus the 24px padding on both sides.
+// Share this with hover preloads and the server-rendered image preload hint.
+export const PRODUCT_DETAIL_IMAGE_SIZES =
+  "(max-width: 1023px) calc(100vw - 48px), 520px";
+
+// Warm only images for cards the visitor actively approaches, not the whole catalog.
+// Keep in-flight images alive until load, then rely on the browser's HTTP cache.
+const inFlightDetails = new Map<string, HTMLImageElement>();
+const warmedDetails = new Set<string>();
+
+export function preloadProductDetailImage(originalSrc: string) {
+  if (
+    typeof window === "undefined" ||
+    !originalSrc ||
+    inFlightDetails.has(originalSrc) ||
+    warmedDetails.has(originalSrc)
+  ) return;
+
+  const { src, srcSet } = getProductImageSources(originalSrc);
+  // Don't speculatively download a potentially large unoptimized CMS upload.
+  if (!srcSet) return;
+
+  const image = new window.Image();
+  inFlightDetails.set(originalSrc, image);
+  image.onload = () => {
+    inFlightDetails.delete(originalSrc);
+    warmedDetails.add(originalSrc);
+  };
+  image.onerror = () => inFlightDetails.delete(originalSrc);
+  image.decoding = "async";
+  image.sizes = PRODUCT_DETAIL_IMAGE_SIZES;
+  image.srcset = srcSet;
+  image.src = src;
+}
+
 type Props = Omit<ImgHTMLAttributes<HTMLImageElement>, "src" | "srcSet"> & {
   src: string;
   priority?: boolean;

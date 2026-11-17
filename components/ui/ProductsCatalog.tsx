@@ -1,6 +1,9 @@
 "use client";
 import ProductDescription from "@/components/ui/ProductDescription";
-import OptimizedProductImage, { getProductImageSources } from "@/components/ui/OptimizedProductImage";
+import OptimizedProductImage, {
+  getProductImageSources,
+  preloadProductDetailImage,
+} from "@/components/ui/OptimizedProductImage";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -1067,6 +1070,40 @@ function ProductCard({
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [hovered, setHovered] = useState(false);
+  const heroPreloadTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Give the visitor a moment to hover before requesting the larger hero.
+  // A real click/touch or keyboard focus preloads immediately instead.
+  function warmHeroImmediately() {
+    if (heroPreloadTimer.current !== null) {
+      window.clearTimeout(heroPreloadTimer.current);
+      heroPreloadTimer.current = null;
+    }
+    const hero = product.image || galleryImages[0];
+    if (hero) preloadProductDetailImage(hero);
+  }
+
+  function scheduleHeroPreload() {
+    if (heroPreloadTimer.current !== null) return;
+    heroPreloadTimer.current = window.setTimeout(() => {
+      heroPreloadTimer.current = null;
+      const hero = product.image || galleryImages[0];
+      if (hero) preloadProductDetailImage(hero);
+    }, 180);
+  }
+
+  function cancelHeroPreload() {
+    if (heroPreloadTimer.current !== null) {
+      window.clearTimeout(heroPreloadTimer.current);
+      heroPreloadTimer.current = null;
+    }
+  }
+
+  useEffect(() => () => {
+    if (heroPreloadTimer.current !== null) {
+      window.clearTimeout(heroPreloadTimer.current);
+    }
+  }, []);
 
   // Hover can cycle through the gallery, but preload just its next frame.
   useEffect(() => {
@@ -1111,7 +1148,19 @@ function ProductCard({
       className="group relative min-w-0 overflow-hidden rounded-[18px] border border-black/10 bg-white shadow-[0_1px_0_rgba(0,0,0,0.02)] transition-shadow duration-300 hover:shadow-[0_16px_40px_rgba(63,126,219,0.18)] sm:rounded-2xl"
     >
       <div className="relative h-full w-full text-left">
-        <Link href={`${locale === "en" ? "/en" : ""}/produkti/${product.slug}`} aria-label={`${locale === "en" ? "View" : "Виж"} ${product.name}`} className="absolute inset-0 z-10" />
+        <Link
+          href={`${locale === "en" ? "/en" : ""}/produkti/${product.slug}`}
+          aria-label={`${locale === "en" ? "View" : "Виж"} ${product.name}`}
+          className="absolute inset-0 z-10"
+          onPointerEnter={(event) => {
+            if (event.pointerType === "mouse" || event.pointerType === "pen") {
+              scheduleHeroPreload();
+            }
+          }}
+          onPointerLeave={cancelHeroPreload}
+          onPointerDown={warmHeroImmediately}
+          onFocus={warmHeroImmediately}
+        />
         <div className="relative aspect-[5/4] sm:aspect-[4/3] overflow-hidden bg-neutral-100">
           {galleryImages.length > 0 ? (
             <AnimatePresence mode="sync" initial={false}>

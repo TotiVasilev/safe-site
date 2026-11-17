@@ -1,8 +1,12 @@
 import Link from "next/link";
+import { preload } from "react-dom";
 import ProductContact from "@/components/ui/ProductContact";
 import { notFound } from "next/navigation";
 import ProductGallery from "@/components/ui/ProductGallery";
-import OptimizedProductImage from "@/components/ui/OptimizedProductImage";
+import OptimizedProductImage, {
+  getProductImageSources,
+  PRODUCT_DETAIL_IMAGE_SIZES,
+} from "@/components/ui/OptimizedProductImage";
 import ProductDescriptionBlocks from "@/components/ui/ProductDescriptionBlocks";
 import ModelSelector from "@/components/ui/ModelSelector";
 import LockModelSelector from "@/components/ui/LockModelSelector";
@@ -34,6 +38,21 @@ export default async function ProductPage({
 
   if (!product) {
     notFound();
+  }
+
+  // Start the responsive main image request as soon as this static page is
+  // discovered, before the client gallery code has initialized.
+  if (!product.lockCollection) {
+    const mainImage = product.image || product.images?.[0];
+    if (mainImage) {
+      const { src, srcSet } = getProductImageSources(mainImage);
+      preload(src, {
+        as: "image",
+        imageSrcSet: srcSet,
+        imageSizes: PRODUCT_DETAIL_IMAGE_SIZES,
+        fetchPriority: "high",
+      });
+    }
   }
 
   const otherLockCategories = getAllProducts()

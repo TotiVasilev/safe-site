@@ -1,6 +1,9 @@
 "use client";
 
-import OptimizedProductImage, { getProductImageSources } from "@/components/ui/OptimizedProductImage";
+import OptimizedProductImage, {
+  getProductImageSources,
+  PRODUCT_DETAIL_IMAGE_SIZES,
+} from "@/components/ui/OptimizedProductImage";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useMemo, useState } from "react";
 
@@ -45,7 +48,7 @@ export default function ProductGallery({
       const { src, srcSet } = getProductImageSources(nextImage);
       const preload = new window.Image();
       if (srcSet) preload.srcset = srcSet;
-      preload.sizes = "(max-width: 1024px) 100vw, 50vw";
+      preload.sizes = PRODUCT_DETAIL_IMAGE_SIZES;
       preload.src = src;
     }, 600);
     return () => window.clearTimeout(timer);
@@ -88,7 +91,7 @@ export default function ProductGallery({
             <OptimizedProductImage
               src={galleryImages[activeIndex]}
               alt={activeIndex === 0 ? productName : `${productName} - изображение ${activeIndex + 1}`}
-              sizes="(max-width: 1024px) 100vw, 50vw"
+              sizes={PRODUCT_DETAIL_IMAGE_SIZES}
               priority={activeIndex === 0}
               className="absolute inset-0 h-full w-full object-contain p-4 sm:p-6"
             />
