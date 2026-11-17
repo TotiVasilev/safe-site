@@ -15,14 +15,14 @@ description: 'Weapons and ammunition storage cabinets. To be performed in the fo
   All three types of three-layer doors , appropriately ribbed and equipped with cash locks with triangular locking pins. 2
   holes in the back for anchoring are provided.'
 descriptionBlocks:
-- kind: paragraph
+- kind: features
   title: Description
   text: The fire cabinet protects your expensive weapons, ammunition, and accessories while documents, money and other valuables
     are stored in the built-in V category safe type B802.
   items:
   - Three-layer doors , appropriately ribbed and equipped with cash locks with triangular locking pins.
   - There are 2 holes in the back for anchoring.
-- kind: paragraph
+- kind: features
   title: Configuration options
   items:
   - Additional locking, colors and protective measures are offered according to customer requirements.
