@@ -29,11 +29,19 @@ export type ProductAttachment = {
   file: string;
 };
 
+export type ProductDescriptionBlock = {
+  kind: "intro" | "paragraph" | "heading" | "features" | "certification";
+  title?: string;
+  text?: string;
+  items?: string[];
+};
+
 export type ProductFamily = {
   id: string;
   name: string;
   slug: string;
   description: string;
+  descriptionBlocks?: ProductDescriptionBlock[];
   catalogDescription?: string;
   attachments?: ProductAttachment[];
   image?: string;
@@ -63,6 +71,7 @@ export type ProductSubcategory = {
 
 export type ProductCategory = {
 
+  homepageImage?: string;
   id: string;
 
   name: string;

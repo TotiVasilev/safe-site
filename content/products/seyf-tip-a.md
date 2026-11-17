@@ -85,4 +85,17 @@ attachments:
   - phrase: IV degree of resistance according to EN 1143-1
     file: /products/uploads/safe-а.png
 modelDrawing: /products/uploads/fixed-typearazmeri-skica-1.png
+descriptionBlocks:
+- kind: intro
+  text: Сейфовете Тип А стандартно се произвеждат с 2 механични ключови брави клас B.
+- kind: features
+  title: Възможности за конфигурация
+  items:
+  - Допълнително заключване, цветове и защитни мерки се предлагат според изискванията на клиента.
+- kind: certification
+  title: Сертификация и съответствие
+  text: 'Сейфът е изпитан и с изключение на А-802 има сертификат за IV степен на съпротивление по EN 1143-1.
+
+
+    Отговаря на наредба на БНБ №8121з-444 за сейфове.'
 ---

@@ -283,7 +283,7 @@ export default function ServicesExperience({ englishContent }: { englishContent?
                 <h1 data-cms-field={`title${mobileDetail + 1}`} className="mt-7 text-[29px] font-semibold leading-[1.13] tracking-[-0.035em] text-[#172033]">
                   {localizedServices[mobileDetail].title}
                 </h1>
-                <p data-cms-field={`description${mobileDetail + 1}`} className="text-[15px] leading-[1.8] text-[#263244]">
+                <p data-cms-field={`description${mobileDetail + 1}`} className="mt-5 text-[15px] leading-[1.8] text-[#263244]">
                   {localizedServices[mobileDetail].description}
                 </p>
                 <div className="mt-8 grid grid-cols-3 gap-2 py-5">

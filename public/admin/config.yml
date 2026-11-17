@@ -29,6 +29,11 @@ collections:
     default: 100
     min: 0
     hint: По-малко число = по-напред. Ако два записа имат еднакъв номер, подреждат се по постоянния си идентификатор.
+  - label: Снимка за категорията на началната страница (мобилна)
+    name: homepageImage
+    widget: image
+    required: false
+    hint: По желание може да изберете друга представителна снимка. Пропорциите се запазват (не се изрязва).
 - name: subcategories
   label: Подкатегории
   label_singular: Подкатегория
@@ -119,6 +124,31 @@ collections:
   - label: Подробно описание за страницата на продукта
     name: description
     widget: text
+  - label: Секции на подробното описание (по избор)
+    name: descriptionBlocks
+    widget: list
+    required: false
+    collapsed: true
+    summary: '{{fields.kind}}'
+    hint: 'Добавяйте и пренареждайте секции свободно. Ако списъкът е празен, сайтът показва старото поле „Подробно описание“. Кликаемите фрази от „Прикачени файлове“ работят и тук.'
+    fields:
+    - label: Вид на секцията
+      name: kind
+      widget: select
+      options:
+      - {label: Въведение, value: intro}
+      - {label: Обикновен текст, value: paragraph}
+      - {label: Самостоятелно заглавие, value: heading}
+      - {label: Списък с характеристики, value: features}
+      - {label: Сертификация / стандарт, value: certification}
+      default: paragraph
+    - {label: Заглавие на секцията (по избор), name: title, widget: string, required: false}
+    - {label: Текст (по избор), name: text, widget: text, required: false}
+    - label: Точки / характеристики (по избор)
+      name: items
+      widget: list
+      required: false
+      field: {label: Точка, name: item, widget: string}
   - label: Специална страница с карти за ключалки
     name: lockCollection
     widget: boolean

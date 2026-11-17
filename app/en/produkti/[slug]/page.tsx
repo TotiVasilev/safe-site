@@ -3,7 +3,7 @@ import ProductContact from "@/components/ui/ProductContact";
 import { notFound } from "next/navigation";
 import ProductGallery from "@/components/ui/ProductGallery";
 import Image from "next/image";
-import ProductDescription from "@/components/ui/ProductDescription";
+import ProductDescriptionBlocks from "@/components/ui/ProductDescriptionBlocks";
 import ModelSelector from "@/components/ui/ModelSelector";
 import LockModelSelector from "@/components/ui/LockModelSelector";
 import RelatedLockCategories from "@/components/ui/RelatedLockCategories";
@@ -55,7 +55,7 @@ export default async function ProductPage({
           <Link href="/en/produkti#category-bravi" className="text-sm text-black/50 hover:text-black">← Locks</Link>
           <p className="mt-10 text-xs uppercase tracking-[0.3em] text-[#3f7edb]">{product.cardLabel || "Locks"}</p>
           <h1 className="mt-3 text-4xl font-medium tracking-tight sm:text-5xl">{product.name}</h1>
-          <p className="mt-5 max-w-3xl text-black/60"><ProductDescription description={product.description} attachments={product.attachments} /></p>
+          <div className="mt-5 max-w-3xl"><ProductDescriptionBlocks description={product.description} blocks={product.descriptionBlocks} attachments={product.attachments} locale="en" /></div>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {(product.lockItems || []).map((item, index) => <article key={`${item.name}-${index}`} className="overflow-hidden rounded-2xl border border-black/10 bg-white transition-shadow hover:shadow-lg">
               <div className="relative aspect-[4/3] bg-neutral-50">{item.image ? <Image src={item.image} alt={item.name} fill unoptimized sizes="(max-width: 640px) 100vw, 33vw" className="object-contain p-5"/> : <div className="flex h-full items-center justify-center text-sm text-black/35">No image available</div>}</div>
@@ -122,9 +122,9 @@ export default async function ProductPage({
               {product.name}
             </h1>
 
-            <p className="mt-7 max-w-xl whitespace-pre-line text-lg leading-8 text-black/60">
-              <ProductDescription description={product.description} attachments={product.attachments} />
-            </p>
+            <div className="mt-7 max-w-xl">
+              <ProductDescriptionBlocks description={product.description} blocks={product.descriptionBlocks} attachments={product.attachments} locale="en" />
+            </div>
 
             <div className="mt-10 border-t border-black/10 pt-6">
               <div className="flex flex-wrap items-center justify-start gap-3">

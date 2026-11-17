@@ -36,4 +36,21 @@ image: /products/uploads/typ-ed-3-.png
 images:
 - /products/uploads/typ-ed-2-.png
 modelDrawing: /products/uploads/fixed-typ-ed-skica.png
+descriptionBlocks:
+- kind: intro
+  text: The safe is intended for small bank offices without specially constructed vault rooms.
+- kind: paragraph
+  title: Deposit system
+  text: Modular deposit safes are installed in it with a two-stage unlocking procedure involving bank
+    authorization and a single unlocking and locking action by the client.
+- kind: features
+  title: Locking
+  items:
+  - The outer door is fitted with at least two class B locks under EN 1300.
+- kind: certification
+  title: Certification and compliance
+  text: 'The safe holds a certificate for resistance grade V under EN 1143-1.
+
+
+    It complies with BNB Regulation No 8121z-444 for safes.'
 ---

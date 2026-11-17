@@ -3,6 +3,7 @@ import "server-only";
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
+import { parseDescriptionBlocks } from "@/data/description-blocks";
 import type {
   ProductCategory,
   ProductFamily,
@@ -77,6 +78,7 @@ function product(entry: Entry): ProductFamily {
     slug: entry._id,
     name: text(entry.title) || entry._id,
     description: text(entry.description),
+    descriptionBlocks: parseDescriptionBlocks(entry.descriptionBlocks),
     catalogDescription: text(entry.catalogDescription) || undefined,
     attachments: Array.isArray(entry.attachments)
       ? entry.attachments.flatMap((raw) => {
@@ -144,6 +146,7 @@ export function getProductCategories(): ProductCategory[] {
       id: categorySlug,
       slug: categorySlug,
       name: text(category.title) || categorySlug,
+      homepageImage: text(category.homepageImage) || undefined,
       subcategories: subs.length ? subs : undefined,
       products: productEntries
         .filter((item) => text(item.category) === categorySlug && !text(item.subcategory))

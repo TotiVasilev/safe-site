@@ -2,6 +2,7 @@ import "server-only";
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
+import { parseDescriptionBlocks } from "@/data/description-blocks";
 import type { ProductCategory, ProductFamily } from "@/data/products";
 import type { Homepage } from "@/data/cms-homepage";
 import { getHomepage } from "@/data/cms-homepage";
@@ -28,6 +29,17 @@ function localizeProduct(product: ProductFamily): ProductFamily {
     ...product,
     name: typeof entry.title === "string" ? entry.title : product.name,
     description: typeof entry.description === "string" ? entry.description : product.description,
+    // Never show untranslated Bulgarian blocks on the English product page.
+    // Until the translation workflow writes English blocks, show legacy English text.
+    descriptionBlocks: parseDescriptionBlocks(entry.descriptionBlocks),
+    attachments: Array.isArray(entry.attachments)
+      ? entry.attachments.flatMap((item): {phrase: string;file: string}[] => {
+          if (!item || typeof item !== "object") return [];
+          const attachment = item as Record<string, unknown>;
+          return typeof attachment.phrase === "string" && typeof attachment.file === "string"
+            ? [{ phrase: attachment.phrase, file: attachment.file }] : [];
+        })
+      : product.attachments,
     catalogDescription: typeof entry.catalogDescription === "string" ? entry.catalogDescription : product.catalogDescription,
     cardLabel: typeof entry.cardLabel === "string" ? entry.cardLabel : product.cardLabel,
     // Use translated model descriptions from the English CMS content while
