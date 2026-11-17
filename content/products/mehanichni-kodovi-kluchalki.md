@@ -5,9 +5,25 @@ category: bravi
 order: 40
 cardLabel: Клас А до C по EN 1300
 catalogDescription: Механичните кодови ключалки на концерна Dormakaba от серията LA GARD.
-description: Механичните кодови ключалки на концерна Dormakaba  от серията LA
-  GARD от клас A до клас C по стандарта EN 1300 се предлагат в съоръжения до VII
-  степен на съпротивление и осигуряват до 100 милиона възможни комбинации.
+description: " "
+descriptionBlocks:
+  - kind: certification
+    text: Клас A до клас C по стандарта EN 1300 се предлагат в съоръжения до VII
+      степен на съпротивление.
+    title: Сертификация и съответствие
+    items: []
+  - kind: paragraph
+    title: Описание
+    text: Механичните кодови ключалки на Dormakaba от серията LA GARD, осигуряващи
+      до 100 милиона възможни комбинации.
+    items: []
+  - kind: features
+    title: Възможности за конфигурация
+    text: ""
+    items:
+      - Изборът на подходяща механична кодова ключалка зависи от конкретните
+        изисквания за сигурност, конструкцията на съоръжението и необходимото
+        ниво на контрол на достъпа.
 lockCollection: false
 image: /products/uploads/code-locks.png
 images:
