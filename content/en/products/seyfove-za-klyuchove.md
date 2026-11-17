@@ -5,9 +5,17 @@ category: bankovi-produkti
 order: 10
 cardLabel: EN 1143-1 Class V
 catalogDescription: Specially designed key safes.
-description: Specially designed for storage of keys. A safety deposit box model B-802 of the V degree of resistance of EN
-  1143-1 has been used with rigid hooks marked with consecutive numbers for unique identification of the locations of the
-  relevant keys. Two Class B locks according to EN 1300 shall be installed on all safes.
+description: '    '
+descriptionBlocks:
+- kind: features
+  title: Description
+  text: Specially designed key safes.
+  items:
+  - Fixed hooks marked with consecutive numbers for unique determination of the locations of the relevant keys.
+  - Two Class B locks according to EN 1300 shall be installed on all safes.
+- kind: certification
+  title: Certification and compliance
+  text: A safety deposit box model B-802 of the V resistance level EN 1143-1 has been used.
 image: /products/uploads/kluchove.png
 models:
 - name: K-280
