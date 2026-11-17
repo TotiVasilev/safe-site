@@ -9,9 +9,15 @@ descriptionBlocks:
 - kind: certification
   text: It complies with a BNB safety deposit box regulation.
   title: Certification and compliance
+- kind: paragraph
+  title: Description
+  text: This type of safes is mainly used in banks, financial institutions, exchange offices, cash centres and other large
+    cash holdings.
 - kind: features
   title: Configuration options
   items:
+  - Strong metal structure.
+  - Time lock mechanism or delayed unlocking. Protection against unauthorized access and attempted robbery.
   - Additional locking, colors and protective measures are offered according to customer requirements.
 image: /products/uploads/typ-multiseyf.png
 images:
