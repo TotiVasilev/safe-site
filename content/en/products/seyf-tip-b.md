@@ -8,11 +8,24 @@ cardLabel: EN 1143-1 Class V
 catalogDescription: 'High class safe with V resistance level EN 1143-1.
 
   It complies with BNB Regulation No 8121z-444 for safes.'
-description: 'Safe Type B standard is produced with 2 locks class B and all models are certified as EN 1143-1 V degree of
-  resistance. Additional locking, colors and protective measures are offered according to customer requirements.
+description: 'and Additional locking, colors and protective measures are offered according to customer requirements.
 
 
-  It complies with BNB Regulation No 8121z-444 for safes.'
+  It complies with BNB Regulation No 8121z-44 for safes.'
+descriptionBlocks:
+- kind: paragraph
+  title: Description
+  text: Safe Type B is normally produced with 2 Class B locks.
+- kind: features
+  title: Configuration options
+  text: ''
+  items:
+  - Additional locking, colors and protective measures are offered according to customer requirements.
+- kind: certification
+  text: 'All models are certified as EN 1143-1 V degree of resistance.
+
+
+    It complies with BNB Regulation No 8121z-44 for safes.'
 models:
 - name: B-801
   height: '600'
