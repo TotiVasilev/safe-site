@@ -21,6 +21,12 @@ descriptionBlocks:
     items:
       - "KABA "
       - STUV
+  - kind: features
+    title: Възможности за конфигурация
+    items:
+      - Изборът на подходяща електронна кодова брава зависи от конкретните
+        изисквания за сигурност, конструкцията на съоръжението и необходимото
+        ниво на контрол на достъпа.
 lockCollection: false
 image: /products/uploads/elektronni-obshta-snimka.png
 images:
