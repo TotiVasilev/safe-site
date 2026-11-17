@@ -13,6 +13,10 @@ descriptionBlocks:
   items:
   - Fixed hooks marked with consecutive numbers for unique determination of the locations of the relevant keys.
   - Two Class B locks according to EN 1300 shall be installed on all safes.
+- kind: features
+  title: Configuration options
+  items:
+  - Additional locking, colors and protective measures are offered according to customer requirements.
 - kind: certification
   title: Certification and compliance
   text: A safety deposit box model B-802 of the V resistance level EN 1143-1 has been used.
