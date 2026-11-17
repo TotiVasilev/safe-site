@@ -5,7 +5,7 @@ import OptimizedProductImage, {
   PRODUCT_DETAIL_IMAGE_SIZES,
 } from "@/components/ui/OptimizedProductImage";
 import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 const EMPTY_IMAGES: string[] = [];
 
@@ -13,12 +13,14 @@ type ProductGalleryProps = {
   productName: string;
   mainImage?: string;
   images?: string[];
+  stickyUntilContact?: boolean;
 };
 
 export default function ProductGallery({
   productName,
   mainImage,
   images = EMPTY_IMAGES,
+  stickyUntilContact = false,
 }: ProductGalleryProps) {
   const galleryImages = useMemo(
     () =>
@@ -33,6 +35,51 @@ export default function ProductGallery({
   );
 
   const [activeIndex, setActiveIndex] = useState(0);
+  const galleryRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!stickyUntilContact) return;
+    const gallery = galleryRef.current;
+    const contact = document.getElementById("product-description-contact-button");
+    if (!gallery || !contact) return;
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      if (window.innerWidth < 1024) {
+        gallery.style.transform = "";
+        return;
+      }
+      // Remove the previous translation when measuring the gallery's original position.
+      const previous = Number(gallery.dataset.stickyOffset || 0);
+      const originalTop = gallery.getBoundingClientRect().top + window.scrollY - previous;
+      const height = gallery.offsetHeight;
+      const buttonBottom = contact.getBoundingClientRect().bottom + window.scrollY;
+      // Stop when the gallery bottom reaches the description contact button.
+      // If the description is shorter than the gallery, do not move it.
+      const topOffset = Math.min(112, Math.max(16, window.innerHeight - height - 16));
+      const travel = Math.max(0, Math.min(window.scrollY + topOffset - originalTop, buttonBottom - height - originalTop));
+      gallery.dataset.stickyOffset = String(travel);
+      gallery.style.transform = travel ? `translateY(${travel}px)` : "";
+    };
+    const schedule = () => {
+      if (!frame) frame = window.requestAnimationFrame(update);
+    };
+    const observer = new ResizeObserver(schedule);
+    observer.observe(gallery);
+    observer.observe(contact);
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    schedule();
+    return () => {
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      observer.disconnect();
+      if (frame) window.cancelAnimationFrame(frame);
+      gallery.style.transform = "";
+      delete gallery.dataset.stickyOffset;
+    };
+  }, [stickyUntilContact]);
+
 
   useEffect(() => {
     if (activeIndex >= galleryImages.length) {
@@ -77,7 +124,7 @@ export default function ProductGallery({
   };
 
   return (
-    <div>
+    <div ref={galleryRef}>
       <div className="group relative aspect-square overflow-hidden rounded-3xl bg-neutral-100">
         <AnimatePresence mode="sync" initial={false}>
           <motion.div

@@ -67,6 +67,7 @@ export default function ModelSelector({ models, drawing, productName, locale = "
             <h3 className="min-w-0 break-words text-lg font-medium">{t("Размери на", "Dimensions of")} {model.name}</h3>
             <span className="shrink-0 text-xs text-black/40">mm</span>
           </div>
+          {model.description && <p className="mt-4 whitespace-pre-line text-sm leading-6 text-black/65">{model.description}</p>}
           {hasMeasurements ? (
             <>
               <dl className="mt-4 grid grid-cols-3 gap-2">

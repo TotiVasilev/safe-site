@@ -128,6 +128,7 @@ export default async function ProductPage({
             productName={product.name}
             mainImage={product.image}
             images={product.images}
+            stickyUntilContact
           />
 
           <div className="flex flex-col justify-center lg:sticky lg:top-28 lg:pt-4">
@@ -148,6 +149,7 @@ export default async function ProductPage({
             <div className="mt-10 border-t border-black/10 pt-6">
               <div className="flex flex-wrap items-center justify-start gap-3">
                 <a
+                  id="product-description-contact-button"
                   href="mailto:info@tetraedar.com"
                   className="inline-flex items-center justify-center gap-3 rounded-full bg-[#3f7edb] px-7 py-3.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#326bc1]"
                 >

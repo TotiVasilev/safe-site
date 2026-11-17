@@ -76,7 +76,7 @@ export default function ProductContact({ productName, locale = "bg", variant = "
   }
 
   return (
-    <section className={`mt-32 rounded-3xl bg-black px-8 py-16 text-white sm:px-12 lg:px-16 ${desktopOnly ? "hidden lg:block" : ""}`}>
+    <section id={variant === "product" ? "product-contact" : undefined} className={`mt-32 rounded-3xl bg-black px-8 py-16 text-white sm:px-12 lg:px-16 ${desktopOnly ? "hidden lg:block" : ""}`}>
       <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-12 xl:gap-16">
         <div className="min-w-0">
           <p className="text-xs uppercase tracking-[0.3em] text-white/40">
