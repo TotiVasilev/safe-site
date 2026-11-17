@@ -1070,7 +1070,7 @@ function ProductCard({
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [hovered, setHovered] = useState(false);
-  const heroPreloadTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const heroPreloadTimer = useRef<number | null>(null);
 
   // Give the visitor a moment to hover before requesting the larger hero.
   // A real click/touch or keyboard focus preloads immediately instead.
