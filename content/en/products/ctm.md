@@ -6,6 +6,19 @@ subcategory: stenni
 order: 10
 cardLabel: BDS Class II EN 1143-1
 catalogDescription: Wall safe with category II resistance and mechanical lock class A according to EN 1300.
+description: ' '
+descriptionBlocks:
+- kind: certification
+  title: Certification and compliance
+  items: []
+  text: 'The construction is designed to meet the second degree of resistance under BDS EN 1143-1.
+
+
+    Locking with one mechanical lock class A according to EN 1300.'
+- kind: features
+  title: Configuration options
+  items:
+  - Colors and additional protections are agreed according to the individual requirements of the client.
 models:
 - name: CTM-1
   height: '375'
@@ -56,9 +69,6 @@ models:
   innerDepth: '285'
   weight: '80'
 slug: ctm
-description: The construction is designed to meet the second degree of resistance under BDS EN 1143-1. Locking with one mechanical
-  lock class A according to EN 1300. Colors and additional protections are agreed according to the individual requirements
-  of the client.
 image: /products/uploads/main-typ-ctm.png
 modelDrawing: /products/uploads/fixed-typ-ctm-skica.png
 ---
