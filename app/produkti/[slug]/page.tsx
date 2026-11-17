@@ -2,7 +2,7 @@ import Link from "next/link";
 import ProductContact from "@/components/ui/ProductContact";
 import { notFound } from "next/navigation";
 import ProductGallery from "@/components/ui/ProductGallery";
-import Image from "next/image";
+import OptimizedProductImage from "@/components/ui/OptimizedProductImage";
 import ProductDescriptionBlocks from "@/components/ui/ProductDescriptionBlocks";
 import ModelSelector from "@/components/ui/ModelSelector";
 import LockModelSelector from "@/components/ui/LockModelSelector";
@@ -58,7 +58,7 @@ export default async function ProductPage({
           <div className="mt-5 max-w-3xl"><ProductDescriptionBlocks description={product.description} blocks={product.descriptionBlocks} attachments={product.attachments} /></div>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {(product.lockItems || []).map((item, index) => <article key={`${item.name}-${index}`} className="overflow-hidden rounded-2xl border border-black/10 bg-white transition-shadow hover:shadow-lg">
-              <div className="relative aspect-[4/3] bg-neutral-50">{item.image ? <Image src={item.image} alt={item.name} fill unoptimized sizes="(max-width: 640px) 100vw, 33vw" className="object-contain p-5"/> : <div className="flex h-full items-center justify-center text-sm text-black/35">Няма снимка</div>}</div>
+              <div className="relative aspect-[4/3] bg-neutral-50">{item.image ? <OptimizedProductImage src={item.image} alt={item.name} sizes="(max-width: 640px) 100vw, 33vw" className="absolute inset-0 h-full w-full object-contain p-5"/> : <div className="flex h-full items-center justify-center text-sm text-black/35">Няма снимка</div>}</div>
               <div className="p-6">{item.cardLabel && <p className="text-xs uppercase tracking-widest text-[#3f7edb]">{item.cardLabel}</p>}<h2 className="mt-2 text-xl font-medium">{item.name}</h2>{item.description && <p className="mt-3 whitespace-pre-line text-sm leading-6 text-black/60">{item.description}</p>}</div>
             </article>)}
           </div>

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import OptimizedProductImage from "@/components/ui/OptimizedProductImage";
 import Link from "next/link";
 
 type RelatedLock = {
@@ -33,7 +33,7 @@ export default function RelatedLockCategories({
           >
             <div className="relative aspect-[4/3] bg-neutral-50">
               {lock.image ? (
-                <Image src={lock.image} alt="" fill unoptimized sizes="(max-width: 639px) 50vw, (max-width: 1023px) 25vw, 300px" className="object-contain p-4 transition-transform duration-300 group-hover:scale-[1.04]" />
+                <OptimizedProductImage src={lock.image} alt="" sizes="(max-width: 639px) 50vw, (max-width: 1023px) 25vw, 300px" className="absolute inset-0 h-full w-full object-contain p-4 transition-transform duration-300 group-hover:scale-[1.04]" />
               ) : (
                 <div className="flex h-full items-center justify-center text-sm text-black/35">
                   {locale === "en" ? "No image available" : "Няма снимка"}

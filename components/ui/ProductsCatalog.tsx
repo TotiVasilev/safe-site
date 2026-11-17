@@ -1,8 +1,8 @@
 "use client";
 import ProductDescription from "@/components/ui/ProductDescription";
-import Image from "next/image";
+import OptimizedProductImage, { getProductImageSources } from "@/components/ui/OptimizedProductImage";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   AnimatePresence,
   LayoutGroup,
@@ -1057,16 +1057,27 @@ function ProductCard({
   category,
   subcategory,
 }: ProductCardProps) {
-  const galleryImages = Array.from(
+  const galleryImages = useMemo(() => Array.from(
     new Set(
       [product.image, ...(product.images ?? [])].filter(
         (image): image is string => Boolean(image)
       )
     )
-  );
+  ), [product.image, product.images]);
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [hovered, setHovered] = useState(false);
+
+  // Hover can cycle through the gallery, but preload just its next frame.
+  useEffect(() => {
+    if (!hovered || galleryImages.length < 2) return;
+    const next = galleryImages[(activeImageIndex + 1) % galleryImages.length];
+    const { src, srcSet } = getProductImageSources(next);
+    const preload = new window.Image();
+    if (srcSet) preload.srcset = srcSet;
+    preload.sizes = "(max-width: 1024px) 50vw, 33vw";
+    preload.src = src;
+  }, [hovered, activeImageIndex, galleryImages]);
 
   useEffect(() => {
     if (!hovered || galleryImages.length < 2) {
@@ -1103,24 +1114,23 @@ function ProductCard({
         <Link href={`${locale === "en" ? "/en" : ""}/produkti/${product.slug}`} aria-label={`${locale === "en" ? "View" : "Виж"} ${product.name}`} className="absolute inset-0 z-10" />
         <div className="relative aspect-[5/4] sm:aspect-[4/3] overflow-hidden bg-neutral-100">
           {galleryImages.length > 0 ? (
-            galleryImages.map((image, imageIndex) => (
-              <Image
-                key={`${image}-${imageIndex}`}
-                src={image}
-                alt={
-                  imageIndex === 0
-                    ? product.name
-                    : `${product.name} - ${imageIndex + 1}`
-                }
-                fill
-                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
-                className={`object-contain p-1.5 transition-all duration-500 sm:p-4 ${
-                  imageIndex === activeImageIndex
-                    ? "scale-100 opacity-100"
-                    : "scale-[1.015] opacity-0"
-                }`}
-              />
-            ))
+            <AnimatePresence mode="sync" initial={false}>
+              <motion.div
+                key={galleryImages[activeImageIndex]}
+                initial={{ opacity: 0, scale: 1.015 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.015 }}
+                transition={{ duration: 0.5 }}
+                className="absolute inset-0"
+              >
+                <OptimizedProductImage
+                  src={galleryImages[activeImageIndex]}
+                  alt={activeImageIndex === 0 ? product.name : `${product.name} - ${activeImageIndex + 1}`}
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
+                  className="absolute inset-0 h-full w-full object-contain p-1.5 sm:p-4"
+                />
+              </motion.div>
+            </AnimatePresence>
           ) : (
             <div className="flex h-full items-center justify-center">
               <span className="text-[8px] uppercase tracking-[0.3em] text-black/20 sm:text-xs">

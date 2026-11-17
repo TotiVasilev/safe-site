@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import OptimizedProductImage from "@/components/ui/OptimizedProductImage";
 import type { ProductModel } from "@/data/products";
 
 type Props = { models: ProductModel[]; productName: string; locale?: "bg" | "en" };
@@ -33,7 +33,7 @@ export default function LockModelSelector({ models, productName, locale = "bg" }
           <div className="min-w-0 overflow-hidden rounded-2xl border border-black/10 bg-neutral-50">
             <div className="border-b border-black/10 px-5 py-4 text-sm font-medium text-black/65">{t("Снимка на модела", "Model Image")}</div>
             <div className="relative aspect-[4/3] w-full">
-              {model.image ? <Image src={model.image} alt={`${productName} — ${model.name}`} fill unoptimized sizes="(max-width: 767px) 100vw, 50vw" className="object-contain p-5" /> :
+              {model.image ? <OptimizedProductImage src={model.image} alt={`${productName} — ${model.name}`} sizes="(max-width: 767px) 100vw, 50vw" className="absolute inset-0 h-full w-full object-contain p-5" /> :
                 <div className="flex h-full items-center justify-center px-8 text-center text-sm text-black/45">{t("Добавете снимка за този модел в CMS.", "Add an image for this model in the CMS.")}</div>}
             </div>
           </div>

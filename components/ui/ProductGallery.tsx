@@ -1,7 +1,10 @@
 "use client";
 
-import Image from "next/image";
+import OptimizedProductImage, { getProductImageSources } from "@/components/ui/OptimizedProductImage";
+import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useMemo, useState } from "react";
+
+const EMPTY_IMAGES: string[] = [];
 
 type ProductGalleryProps = {
   productName: string;
@@ -12,7 +15,7 @@ type ProductGalleryProps = {
 export default function ProductGallery({
   productName,
   mainImage,
-  images = [],
+  images = EMPTY_IMAGES,
 }: ProductGalleryProps) {
   const galleryImages = useMemo(
     () =>
@@ -33,6 +36,20 @@ export default function ProductGallery({
       setActiveIndex(0);
     }
   }, [activeIndex, galleryImages.length]);
+
+  // Preload only the next full-size frame; never download the whole gallery.
+  useEffect(() => {
+    if (galleryImages.length < 2) return;
+    const timer = window.setTimeout(() => {
+      const nextImage = galleryImages[(activeIndex + 1) % galleryImages.length];
+      const { src, srcSet } = getProductImageSources(nextImage);
+      const preload = new window.Image();
+      if (srcSet) preload.srcset = srcSet;
+      preload.sizes = "(max-width: 1024px) 100vw, 50vw";
+      preload.src = src;
+    }, 600);
+    return () => window.clearTimeout(timer);
+  }, [activeIndex, galleryImages]);
 
   if (galleryImages.length === 0) {
     return (
@@ -59,25 +76,24 @@ export default function ProductGallery({
   return (
     <div>
       <div className="group relative aspect-square overflow-hidden rounded-3xl bg-neutral-100">
-        {galleryImages.map((image, index) => (
-          <Image
-            key={`${image}-${index}`}
-            src={image}
-            alt={
-              index === 0
-                ? productName
-                : `${productName} - изображение ${index + 1}`
-            }
-            fill
-            sizes="(max-width: 1024px) 100vw, 50vw"
-            priority={index === 0}
-            className={`object-contain p-4 transition-opacity duration-300 sm:p-6 ${
-              index === activeIndex
-                ? "opacity-100"
-                : "pointer-events-none opacity-0"
-            }`}
-          />
-        ))}
+        <AnimatePresence mode="sync" initial={false}>
+          <motion.div
+            key={galleryImages[activeIndex]}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="absolute inset-0"
+          >
+            <OptimizedProductImage
+              src={galleryImages[activeIndex]}
+              alt={activeIndex === 0 ? productName : `${productName} - изображение ${activeIndex + 1}`}
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              priority={activeIndex === 0}
+              className="absolute inset-0 h-full w-full object-contain p-4 sm:p-6"
+            />
+          </motion.div>
+        </AnimatePresence>
 
         {galleryImages.length > 1 && (
           <>
@@ -120,12 +136,11 @@ export default function ProductGallery({
                   : "border-black/10 hover:border-black/35"
               }`}
             >
-              <Image
+              <OptimizedProductImage
                 src={image}
                 alt=""
-                fill
-                sizes="120px"
-                className="object-contain p-1.5"
+                sizes="(max-width: 640px) 20vw, 120px"
+                className="absolute inset-0 h-full w-full object-contain p-1.5"
               />
             </button>
           ))}
