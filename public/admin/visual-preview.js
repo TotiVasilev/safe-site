@@ -38,6 +38,8 @@
     this.attach = this.attach.bind(this);
     this.onInput = this.onInput.bind(this);
     this.onFocus = this.onFocus.bind(this);
+    this.onPreviewNavigation = this.onPreviewNavigation.bind(this);
+    this.previewDoc = null;
   }
 
   HomepagePreview.prototype.isReactComponent = {};
@@ -227,16 +229,21 @@
     if (!field) return;
 
     var targets = this.targets(field);
+    function visibleTarget(node) {
+      var rect = node.getBoundingClientRect();
+      return rect.width > 0 && rect.height > 0 && doc.defaultView.getComputedStyle(node).visibility !== "hidden";
+    }
+    if (targets.length && !targets.some(visibleTarget)) {
+      var other = this.previewDevice === "mobile" ? "desktop" : "mobile";
+      this.setPreviewDevice(other);
+    }
 
     targets.forEach(function (node) {
       node.style.outline = "3px solid #3b82f6";
       node.style.outlineOffset = "4px";
     });
 
-    var visible = targets.find(function (node) {
-      var rect = node.getBoundingClientRect();
-      return rect.width > 0 && rect.height > 0;
-    });
+    var visible = targets.find(visibleTarget);
 
     if (visible) {
       visible.scrollIntoView({
@@ -253,7 +260,19 @@
     this.apply(values);
   };
 
+  HomepagePreview.prototype.onPreviewNavigation = function (event) {
+    var anchor = event.target && event.target.closest && event.target.closest("a[href]");
+    if (!anchor) return;
+    // The CMS preview is a read-only representation of this entry, not a site browser.
+    event.preventDefault();
+    event.stopPropagation();
+  };
+
   HomepagePreview.prototype.onLoad = function () {
+    var doc = this.document();
+    if (this.previewDoc) this.previewDoc.removeEventListener("click", this.onPreviewNavigation, true);
+    this.previewDoc = doc;
+    if (doc) doc.addEventListener("click", this.onPreviewNavigation, true);
     this.sync();
     this.highlight(this.activeField);
   };
@@ -350,6 +369,7 @@
 
   HomepagePreview.prototype.componentWillUnmount = function () {
     if (this.timer) clearInterval(this.timer);
+    if (this.previewDoc) this.previewDoc.removeEventListener("click", this.onPreviewNavigation, true);
     if (this.previewObserver) this.previewObserver.disconnect();
 
     try {
@@ -418,16 +438,39 @@
   ServicesPreview.prototype.highlight = function (field) {
     var doc = this.document();
     if (!doc) return;
-    if (field && /^(title|description)[1-6]$/.test(field)) {
-      var index = Number(field.match(/[1-6]$/)[0]) - 1;
-      var selector = '[data-cms-service-index="' + index + '"]';
-      var button = doc.querySelector(selector);
-      if (button && this.currentService !== index) {
-        this.currentService = index;
-        button.click();
+    var match = field && /^(?:title|description|mobileImage)([1-6])$/.exec(field);
+    if (match) {
+      var index = Number(match[1]) - 1;
+      if (this.previewDevice === "mobile") {
+        var detail = doc.querySelector('[data-cms-field="description' + (index + 1) + '"]');
+        if (!detail || !detail.getBoundingClientRect().height) {
+          var back = Array.from(doc.querySelectorAll('button')).find(function (node) {
+            return /всички услуги|all services/i.test(node.textContent || "");
+          });
+          function openCard() {
+            var cardTitle = Array.from(doc.querySelectorAll('[data-cms-field="title' + (index + 1) + '"]')).find(function (node) {
+              return node.closest('button');
+            });
+            if (cardTitle) cardTitle.closest('button').click();
+          }
+          if (back) {
+            back.click();
+            setTimeout(openCard, 250);
+          } else openCard();
+        }
+      } else {
+        var button = doc.querySelector('[data-cms-service-index="' + index + '"]');
+        if (button && this.currentService !== index) {
+          this.currentService = index;
+          button.click();
+        }
       }
     }
     HomepagePreview.prototype.highlight.call(this, field);
+    if (match && this.previewDevice === "mobile") {
+      var self = this;
+      setTimeout(function () { HomepagePreview.prototype.highlight.call(self, field); }, 350);
+    }
   };
 
   ServicesPreview.prototype.render = function () {
@@ -508,6 +551,40 @@
         description.replaceChildren(outer);
       }
     }
+  };
+
+  ProductPreview.prototype.targets = function (field) {
+    var doc = this.document();
+    if (!doc) return [];
+    var main = doc.querySelector("main");
+    if (!main) return [];
+    var right = main.querySelector("section.grid > div:nth-child(2)") || main;
+    var selectors = {
+      name: "h1", title: "h1", cardLabel: "p", description: "div.mt-7", descriptionBlocks: "div.mt-7",
+      models: "#available-models", images: "section.grid > div:first-child", gallery: "section.grid > div:first-child"
+    };
+    var selector = selectors[field];
+    if (!selector) return [];
+    var target = (field === "images" || field === "gallery" || field === "models") ? main.querySelector(selector) : right.querySelector(selector);
+    return target ? [target] : [];
+  };
+
+  ProductPreview.prototype.highlight = function (field) {
+    var doc = this.document();
+    if (!doc) return;
+    doc.querySelectorAll("[data-cms-preview-highlight]").forEach(function (node) {
+      node.style.outline = "";
+      node.style.outlineOffset = "";
+      node.removeAttribute("data-cms-preview-highlight");
+    });
+    if (!field) return;
+    var targets = this.targets(field);
+    targets.forEach(function (node) {
+      node.setAttribute("data-cms-preview-highlight", "1");
+      node.style.outline = "3px solid #3b82f6";
+      node.style.outlineOffset = "4px";
+    });
+    if (targets[0]) targets[0].scrollIntoView({behavior:"smooth",block:"center"});
   };
 
   ProductPreview.prototype.render = function () {
