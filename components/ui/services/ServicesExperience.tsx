@@ -7,6 +7,14 @@ import { ShieldCheck, Wrench, RefreshCw, KeyRound, LockKeyhole, Settings, Hash, 
 
 import servicesContent from "@/content/services.json";
 
+const mobileServiceImage = (index: number) => {
+  const key = `mobileImage${index + 1}` as keyof typeof servicesContent;
+  const configured = servicesContent[key];
+  return typeof configured === "string" && configured.trim()
+    ? configured
+    : `/services/mobile-service-${index + 1}.jpg`;
+};
+
 const services = Array.from({ length: 6 }, (_, index) => ({
   title: servicesContent[`title${index + 1}` as keyof typeof servicesContent],
   description: servicesContent[`description${index + 1}` as keyof typeof servicesContent],
@@ -257,7 +265,7 @@ export default function ServicesExperience({ englishContent }: { englishContent?
                     aria-label={service.title}
                   >
                     <motion.div className="relative w-full shrink-0 overflow-hidden bg-[#edf3fa]" style={{ height: 125, minHeight: 125, maxHeight: 125, display: "block" }}>
-                      <img src={`/services/mobile-service-${index + 1}.jpg`} alt="" className="absolute inset-0 h-full w-full object-cover" style={{ display: "block", width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", transform: index === 1 ? "scale(1.28)" : "none" }} loading={index < 2 ? "eager" : "lazy"} />
+                      <img src={mobileServiceImage(index)} data-cms-mobile-image={index + 1} alt="" className="absolute inset-0 h-full w-full object-cover" style={{ display: "block", width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", transform: index === 1 ? "scale(1.28)" : "none" }} loading={index < 2 ? "eager" : "lazy"} />
                     </motion.div>
                     <div className="flex min-h-0 flex-1 items-start px-3 py-3" style={{ height: 75, minHeight: 75 }}>
                       <h2 data-cms-field={`title${index + 1}`} className="text-[13px] font-semibold leading-[1.35] text-[#172033] sm:text-[15px]">{service.title}</h2>
@@ -277,7 +285,7 @@ export default function ServicesExperience({ englishContent }: { englishContent?
                 <span aria-hidden="true">←</span> {englishContent ? "All services" : "Всички услуги"}
               </button>
               <motion.div className="relative w-full overflow-hidden rounded-2xl bg-[#edf3fa] shadow-[0_8px_25px_rgba(24,57,104,0.08)]" style={{ height: 215, minHeight: 215 }}>
-                <img src={`/services/mobile-service-${mobileDetail + 1}.jpg`} alt="" className="h-full w-full object-cover" style={{ display: "block", width: "100%", height: "100%", objectFit: "cover", transform: mobileDetail === 1 ? "scale(1.18)" : "none" }} />
+                <img src={mobileServiceImage(mobileDetail)} data-cms-mobile-image={mobileDetail + 1} alt="" className="h-full w-full object-cover" style={{ display: "block", width: "100%", height: "100%", objectFit: "cover", transform: mobileDetail === 1 ? "scale(1.18)" : "none" }} />
               </motion.div>
               <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0, transition: { delay: 0.22, duration: 0.3 } }}>
                 <h1 data-cms-field={`title${mobileDetail + 1}`} className="mt-7 text-[29px] font-semibold leading-[1.13] tracking-[-0.035em] text-[#172033]">

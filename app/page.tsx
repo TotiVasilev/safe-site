@@ -24,7 +24,7 @@ export default function Home(){
       <p data-reveal="fade" data-reveal-delay="1" data-cms-field="heroDescription">{h.heroDescription}</p>
       <div className="b-actions" data-reveal="up" data-reveal-delay="2"><Link href={h.primaryLink} className="b-primary"><span data-cms-field="primaryButton">{h.primaryButton}</span><span>↗</span></Link><Link href={h.secondaryLink} className="b-secondary"><span data-cms-field="secondaryButton">{h.secondaryButton}</span><span className="hidden md:inline" aria-hidden="true">↗</span></Link></div>
      </div>
-     <div className="b-hero-media-reveal" data-reveal="right" data-reveal-delay="1"><HeroImageStack slides={h.heroSlides}/></div>
+     <div className="b-hero-media-reveal" data-reveal="right" data-reveal-delay="1"><HeroImageStack slides={h.heroSlides} mobileImage={h.mobileHeroImage}/></div>
     </div>
     <div className="b-desktop-hero-stats" aria-label="Company highlights"><div className="b-desktop-hero-stat"><strong>35+</strong><span>Години производство</span></div><div className="b-desktop-hero-stat"><strong>4 500 m²</strong><span>Собствена производствена база</span></div><div className="b-desktop-hero-stat"><strong>Сертифицирани</strong><span>Международни стандарти</span></div><div className="b-desktop-hero-stat"><strong>100+</strong><span>Реализирани проекти</span></div></div>
    </div>

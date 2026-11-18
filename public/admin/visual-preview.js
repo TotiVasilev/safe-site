@@ -28,6 +28,8 @@
     this.timer = null;
     this.activeField = null;
     this.lastValues = {};
+    this.previewDevice = "desktop";
+    this.setPreviewDevice = this.setPreviewDevice.bind(this);
     this.onLoad = this.onLoad.bind(this);
     this.attach = this.attach.bind(this);
     this.onInput = this.onInput.bind(this);
@@ -39,6 +41,37 @@
   HomepagePreview.prototype.attach = function (frame) {
     this.frame = frame;
   };
+
+  HomepagePreview.prototype.setPreviewDevice = function (device) {
+    this.previewDevice = device;
+    this.forceUpdate();
+  };
+
+  function previewToolbar(preview, title) {
+    return element("div", {
+      style: { padding: "10px 14px", fontSize: "12px", background: "#fff", borderBottom: "1px solid #ddd", display: "flex", gap: "10px", alignItems: "center", justifyContent: "space-between" },
+      children: [
+        element("span", { children: title }),
+        element("div", { style: { display: "flex", gap: "5px" }, children: ["desktop", "mobile"].map(function (device) {
+          return element("button", {
+            type: "button",
+            onClick: function () { preview.setPreviewDevice(device); },
+            style: { padding: "5px 9px", cursor: "pointer", borderRadius: "5px", border: "1px solid #bbb", background: preview.previewDevice === device ? "#dbeafe" : "#fff" },
+            children: device === "mobile" ? "Мобилна" : "Десктоп"
+          });
+        }) })
+      ]
+    });
+  }
+
+  function previewFrameStyle(preview) {
+    return { width: preview.previewDevice === "mobile" ? "390px" : "100%", maxWidth: "100%", flex: "1 1 auto", minHeight: "75vh", border: 0, background: "#fff", margin: "0 auto" };
+  }
+
+  function previewMediaUrl(value) {
+    if (typeof value !== "string" || !value.trim()) return "";
+    return value.trim();
+  }
 
   HomepagePreview.prototype.values = function () {
     var entry = this.props.entry;
@@ -69,6 +102,12 @@
     var doc = this.document();
 
     if (!doc || !doc.querySelector("[data-cms-field]")) return;
+
+    var mobileHero = doc.querySelector('[data-cms-field="mobileHeroImage"]');
+    if (mobileHero) {
+      var image = previewMediaUrl(values.mobileHeroImage);
+      if (image) mobileHero.style.backgroundImage = "url(" + JSON.stringify(image) + ")";
+    }
 
     Object.keys(values).forEach(function (key) {
       var value = values[key];
@@ -276,28 +315,13 @@
         background: "#f5f5f5"
       },
       children: [
-        element("div", {
-          style: {
-            padding: "10px 14px",
-            fontSize: "12px",
-            background: "#fff",
-            borderBottom: "1px solid #ddd"
-          },
-          children:
-            "Начална страница - преглед преди публикуване"
-        }),
+        previewToolbar(this, "Начална страница - преглед преди публикуване"),
         element("iframe", {
           ref: this.attach,
           onLoad: this.onLoad,
           title: "Начална страница - преглед на живо",
           src: "/?cms_preview=1",
-          style: {
-            width: "100%",
-            flex: "1 1 auto",
-            minHeight: "75vh",
-            border: 0,
-            background: "#fff"
-          }
+          style: previewFrameStyle(this)
         })
       ]
     });
@@ -316,6 +340,14 @@
     if (!doc || !doc.querySelector('[data-cms-service-index]')) return;
     var self = this;
     Object.keys(values).forEach(function (key) {
+      var match = /^mobileImage([1-6])$/.exec(key);
+      if (match) {
+        var url = previewMediaUrl(values[key]) || "/services/mobile-service-" + match[1] + ".jpg";
+        doc.querySelectorAll('[data-cms-mobile-image="' + match[1] + '"]').forEach(function (image) {
+          if (image.getAttribute("src") !== url) image.setAttribute("src", url);
+        });
+        return;
+      }
       if (!/^(title|description)[1-6]$/.test(key)) return;
       var value = values[key];
       if (typeof value !== 'string') return;
@@ -344,16 +376,13 @@
     return element('div', {
       style: {height:'100%',minHeight:'80vh',display:'flex',flexDirection:'column',background:'#f5f5f5'},
       children: [
-        element('div', {
-          style: {padding:'10px 14px',fontSize:'12px',background:'#fff',borderBottom:'1px solid #ddd'},
-          children: 'Услуги и сервиз - преглед преди публикуване'
-        }),
+        previewToolbar(this, "Услуги и сервиз - преглед преди публикуване"),
         element('iframe', {
           ref: this.attach,
           onLoad: this.onLoad,
           title: 'Услуги и сервиз - преглед на живо',
           src: '/uslugi/?cms_preview=1',
-          style: {width:'100%',flex:'1 1 auto',minHeight:'75vh',border:0,background:'#fff'}
+          style: previewFrameStyle(this)
         })
       ]
     });

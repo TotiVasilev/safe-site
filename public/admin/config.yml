@@ -219,31 +219,6 @@ collections:
       widget: text
       required: false
       hint: За ключалки текстът се показва вдясно от снимката; за сейфове — под „Размери на“ избрания модел.
-    - label: Секции на описанието на модела (по избор)
-      name: descriptionBlocks
-      widget: list
-      required: false
-      collapsed: true
-      summary: '{{fields.kind}}'
-      hint: 'Същите секции като в основното описание на продукта. Ако няма секции, използва се обикновеното описание на модела.'
-      fields:
-      - label: Вид на секцията
-        name: kind
-        widget: select
-        options:
-        - {label: Въведение, value: intro}
-        - {label: Обикновен текст, value: paragraph}
-        - {label: Самостоятелно заглавие, value: heading}
-        - {label: Списък с характеристики, value: features}
-        - {label: Сертификация / стандарт, value: certification}
-        default: paragraph
-      - {label: Заглавие на секцията (по избор), name: title, widget: string, required: false}
-      - {label: Текст (по избор), name: text, widget: text, required: false}
-      - label: Точки / характеристики (по избор)
-        name: items
-        widget: list
-        required: false
-        field: {label: Точка, name: item, widget: string}
     - label: Външна височина (H), мм
       name: height
       widget: string
@@ -292,6 +267,11 @@ collections:
       name: title1
       widget: string
       required: true
+    - label: Услуга 1 - Снимка за мобилна версия
+      name: mobileImage1
+      widget: image
+      required: false
+      hint: Ако е празно, се използва досегашната снимка за тази услуга.
     - label: Услуга 1 - Описание
       name: description1
       widget: text
@@ -300,6 +280,11 @@ collections:
       name: title2
       widget: string
       required: true
+    - label: Услуга 2 - Снимка за мобилна версия
+      name: mobileImage2
+      widget: image
+      required: false
+      hint: Ако е празно, се използва досегашната снимка за тази услуга.
     - label: Услуга 2 - Описание
       name: description2
       widget: text
@@ -308,6 +293,11 @@ collections:
       name: title3
       widget: string
       required: true
+    - label: Услуга 3 - Снимка за мобилна версия
+      name: mobileImage3
+      widget: image
+      required: false
+      hint: Ако е празно, се използва досегашната снимка за тази услуга.
     - label: Услуга 3 - Описание
       name: description3
       widget: text
@@ -316,6 +306,11 @@ collections:
       name: title4
       widget: string
       required: true
+    - label: Услуга 4 - Снимка за мобилна версия
+      name: mobileImage4
+      widget: image
+      required: false
+      hint: Ако е празно, се използва досегашната снимка за тази услуга.
     - label: Услуга 4 - Описание
       name: description4
       widget: text
@@ -324,6 +319,11 @@ collections:
       name: title5
       widget: string
       required: true
+    - label: Услуга 5 - Снимка за мобилна версия
+      name: mobileImage5
+      widget: image
+      required: false
+      hint: Ако е празно, се използва досегашната снимка за тази услуга.
     - label: Услуга 5 - Описание
       name: description5
       widget: text
@@ -332,6 +332,11 @@ collections:
       name: title6
       widget: string
       required: true
+    - label: Услуга 6 - Снимка за мобилна версия
+      name: mobileImage6
+      widget: image
+      required: false
+      hint: Ако е празно, се използва досегашната снимка за тази услуга.
     - label: Услуга 6 - Описание
       name: description6
       widget: text
@@ -383,6 +388,11 @@ collections:
         name: alt
         widget: string
         required: false
+    - label: Снимка за начален екран (мобилна версия)
+      name: mobileHeroImage
+      widget: image
+      required: false
+      hint: Една статична снимка за мобилния начален екран. Ако не е избрана, се запазва текущата първа снимка от слайдшоуто.
     - label: Описание
       name: heroDescription
       widget: text

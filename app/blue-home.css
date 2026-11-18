@@ -851,3 +851,17 @@
     align-items: flex-end;
   }
 }
+
+/* CMS-editable single mobile hero image; desktop slideshow remains unchanged. */
+.blue-site .b-stack-mobile-image { display: none; }
+@media (max-width: 600px) {
+  .blue-site .b-stack-fade { display: none; }
+  .blue-site .b-stack-mobile-image {
+    display: block;
+    position: absolute;
+    inset: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}

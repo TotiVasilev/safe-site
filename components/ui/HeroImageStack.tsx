@@ -9,7 +9,7 @@ const defaultSlides: Slide[] = [
   { image: "/hero/stack/slide-3.webp", alt: "Отворена трезорна врата със светлина" },
 ];
 
-export default function HeroImageStack({ slides: configuredSlides }: { slides?: Slide[] }) {
+export default function HeroImageStack({ slides: configuredSlides, mobileImage }: { slides?: Slide[]; mobileImage?: string }) {
   const slides = configuredSlides?.filter((slide) => slide?.image?.trim()) ?? defaultSlides;
   const [active, setActive] = useState(0);
   const activeIndex = slides.length ? active % slides.length : 0;
@@ -22,6 +22,7 @@ export default function HeroImageStack({ slides: configuredSlides }: { slides?: 
 
   return (
     <div className="b-stack" role="img" aria-label="Снимки на решения за сигурност от ТЕТРАЕДЪР">
+      <div className="b-stack-mobile-image" data-cms-field="mobileHeroImage" style={{ backgroundImage: `url(${JSON.stringify(mobileImage?.trim() || slides[0]?.image || defaultSlides[0].image)})` }} aria-hidden="true" />
       {slides.map((slide, index) => (
         <div
           key={`${slide.image}-${index}`}

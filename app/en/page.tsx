@@ -25,7 +25,7 @@ export default function Home(){
       <p data-reveal="fade" data-reveal-delay="1" data-cms-field="heroDescription">{h.heroDescription}</p>
       <div className="b-actions" data-reveal="up" data-reveal-delay="2"><Link href={h.primaryLink.startsWith("/") ? `/en${h.primaryLink}` : h.primaryLink} className="b-primary"><span data-cms-field="primaryButton">{h.primaryButton}</span><span>↗</span></Link><Link href={h.secondaryLink.startsWith("/") ? `/en${h.secondaryLink}` : h.secondaryLink} className="b-secondary"><span data-cms-field="secondaryButton">{h.secondaryButton}</span><span className="hidden md:inline" aria-hidden="true">↗</span></Link></div>
      </div>
-     <div className="b-hero-media-reveal" data-reveal="right" data-reveal-delay="1"><HeroImageStack slides={h.heroSlides}/></div>
+     <div className="b-hero-media-reveal" data-reveal="right" data-reveal-delay="1"><HeroImageStack slides={h.heroSlides} mobileImage={h.mobileHeroImage}/></div>
     </div>
     <div className="b-desktop-hero-stats" aria-label="Company highlights"><div className="b-desktop-hero-stat"><strong>35+</strong><span>Years of manufacturing</span></div><div className="b-desktop-hero-stat"><strong>4,500 m²</strong><span>Own production base</span></div><div className="b-desktop-hero-stat"><strong>Certified</strong><span>International security standards</span></div><div className="b-desktop-hero-stat"><strong>100+</strong><span>Projects delivered</span></div></div>
    </div>

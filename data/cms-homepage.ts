@@ -7,6 +7,7 @@ export type Partner = { name: string; image?: string; url?: string };
 export type Homepage = {
   heroTitle: string;
   heroSlides?: HeroSlide[];
+  mobileHeroImage?: string;
   heroDescription: string;
   primaryButton: string;
   secondaryButton: string;
