@@ -5,7 +5,6 @@ category: bravi
 order: 40
 cardLabel: Class A to C EN 1300
 catalogDescription: The Dormakaba series mechanical code locks.
-description: ' '
 descriptionBlocks:
 - kind: paragraph
   title: Description
@@ -37,6 +36,20 @@ models:
 
     UL2, optional: VdS class 1 (without UL certificate) - standard mounting dimensions, possibility to change the code, blocking
     language (rigel), language and drop lever of cast metal.'
+  descriptionBlocks:
+  - kind: paragraph
+    title: Description
+    text: LA GARD 3330 is a mechanical, recalibrated 3-D code lock with a language mechanism designed for safes of the classes
+      CEN 0
+    items: []
+  - kind: paragraph
+    title: Configuration options
+    items:
+    - Standard mounting dimensions, possibility to change the code, blocking language (rigel), language and drop lever of
+      cast metal.
+  - kind: certification
+    title: Certification and compliance
+    text: 'UL2, optional: VdS class 1 (without UL certificate)'
 - name: LA GARD 1985
   description: 'Certificates: EN 1300 B, VdS class 2, UL 1
 
@@ -58,4 +71,5 @@ models:
     EN 1300 B, ECB-S, VdS class 2, UL 2M, 3-disc code mechanism, standard mounting dimensions, possibility to recode, fixed
     language, language and block bar of cast metal.'
   image: /products/uploads/la-gard-3390.png
+description: ' '
 ---
