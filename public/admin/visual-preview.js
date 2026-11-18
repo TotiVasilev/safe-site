@@ -595,6 +595,7 @@
         }
       }
     }
+    this.applyModelDraft(values);
   };
 
   ProductPreview.prototype.targets = function (field) {
@@ -605,7 +606,7 @@
     var right = main.querySelector("section.grid > div:nth-child(2)") || main;
     var selectors = {
       name: "h1", title: "h1", cardLabel: "p", description: "div.mt-7", descriptionBlocks: "div.mt-7",
-      models: "#available-models", images: "section.grid > div:first-child", gallery: "section.grid > div:first-child"
+      models: "#modeli", images: "section.grid > div:first-child", gallery: "section.grid > div:first-child"
     };
     var selector = selectors[field];
     if (!selector) return [];
@@ -615,8 +616,124 @@
 
   // Resolve Decap's nested list controls by their actual editor structure.
   // Decap does not put data-field-name on the nested controls in this editor.
+  // Identify a model from its enclosing Decap sortable item, rather than
+  // treating its nested "name" or "description" as a top-level product field.
+  ProductPreview.prototype.modelContext = function (target) {
+    var models = this.values().models;
+    if (!Array.isArray(models) || !target || !target.closest) return null;
+    var control = target.closest('input, textarea, select, [contenteditable="true"]') || target;
+    var itemSelector = '[class*="ListItem-listControlItem"], [class*="ListItem-listItem"], [data-testid="list-item"]';
+    var ancestors = [];
+    for (var node = control.parentElement; node; node = node.parentElement) {
+      if (node.matches && node.matches(itemSelector)) ancestors.push(node);
+    }
+    var modelIndex = -1, modelItem = null;
+    ancestors.forEach(function (item) {
+      if (modelIndex >= 0) return;
+      // A model item contains its name input; nested description sections do not.
+      var inputs = Array.from(item.querySelectorAll('input[type="text"], input:not([type]), textarea'));
+      for (var i = 0; i < models.length; i++) {
+        if (!models[i] || !models[i].name) continue;
+        if (inputs.some(function (input) { return input.value && input.value.trim() === String(models[i].name).trim(); })) {
+          modelIndex = i;
+          modelItem = item;
+          break;
+        }
+      }
+    });
+    if (modelIndex < 0) return null;
+    var model = models[modelIndex] || {};
+    var field = control.closest('[aria-label$=" field"]');
+    var fieldLabel = field && field.getAttribute('aria-label');
+    var value = typeof control.value === 'string' ? control.value.trim() : '';
+    var blockIndex = -1, part = '';
+    var blocks = Array.isArray(model.descriptionBlocks) ? model.descriptionBlocks : [];
+    // First resolve the nested description block, if present.
+    for (var j = 0; j < blocks.length; j++) {
+      var block = blocks[j] || {};
+      if (value && fieldLabel === 'text field' && String(block.text || '').trim() === value) { blockIndex=j;part='text';break; }
+      if (value && fieldLabel === 'string field' && String(block.title || '').trim() === value) { blockIndex=j;part='title';break; }
+      if (value && Array.isArray(block.items) && block.items.some(function (v) { return String(v).trim() === value; })) { blockIndex=j;part='items';break; }
+    }
+    var fieldName = '';
+    // Identify top-level model fields by the actual input values and DOM position.
+    if (blockIndex < 0) {
+      var keys = ['name','description','height','width','depth','innerHeight','innerWidth','innerDepth','weight','volume','resistance'];
+      for (var k=0;k<keys.length;k++) {
+        if (value && String(model[keys[k]] || '').trim() === value) { fieldName=keys[k];break; }
+      }
+      if (!fieldName && fieldLabel === 'image field') fieldName='image';
+      if (!fieldName && fieldLabel === 'text field') fieldName='description';
+    }
+    return {index:modelIndex, item:modelItem, field:fieldName, blockIndex:blockIndex, part:part};
+  };
+
+  ProductPreview.prototype.modelDescriptionRoot = function () {
+    var doc = this.document();
+    var section = doc && doc.querySelector('#modeli');
+    if (!section) return null;
+    var grid = section.querySelector('.mt-7.grid');
+    return grid && grid.lastElementChild && grid.lastElementChild.querySelector('.mt-5.break-words');
+  };
+
+  ProductPreview.prototype.selectModel = function (index) {
+    var doc = this.document();
+    var section = doc && doc.querySelector('#modeli');
+    var group = section && section.querySelector('[role="group"]');
+    var buttons = group && group.querySelectorAll('button');
+    if (!buttons || !buttons[index]) return;
+    if (buttons[index].getAttribute('aria-pressed') !== 'true') buttons[index].click();
+  };
+
+  ProductPreview.prototype.applyModelDraft = function (values) {
+    if (!this.activeModel || !Array.isArray(values.models)) return;
+    var model = values.models[this.activeModel.index];
+    var root = this.modelDescriptionRoot();
+    if (!model || !root) return;
+    var section = root.closest('#modeli');
+    var buttons = section && section.querySelectorAll('[role="group"] button');
+    if (!buttons || !buttons[this.activeModel.index] || buttons[this.activeModel.index].getAttribute('aria-pressed') !== 'true') return;
+    var signature = JSON.stringify([this.activeModel.index, model.description, model.descriptionBlocks]);
+    if (root.dataset.cmsModelSignature === signature) return;
+    root.dataset.cmsModelSignature = signature;
+    var blocks = Array.isArray(model.descriptionBlocks) ? model.descriptionBlocks : [];
+    // Preserve existing public styling: only replace the preview's description content.
+    var wrapper = root.ownerDocument.createElement('div');
+    wrapper.className = blocks.length ? 'space-y-6 sm:space-y-7' : 'whitespace-pre-line text-sm leading-7 text-black/65';
+    if (!blocks.length) wrapper.textContent = model.description || '';
+    blocks.forEach(function (block, i) {
+      var node = root.ownerDocument.createElement('div');
+      node.className = 'space-y-3';
+      node.setAttribute('data-cms-model-block',String(i));
+      if (block.title || (block.kind === 'heading' && block.text)) {
+        var h = root.ownerDocument.createElement('h3');
+        h.className = 'text-[19px] font-semibold leading-tight text-[#172033] sm:text-[21px]';
+        h.textContent = block.title || block.text;
+        h.setAttribute('data-cms-model-part','title');node.appendChild(h);
+      }
+      if (block.kind !== 'heading' && block.text) {
+        String(block.text).split(/\n\s*\n/).forEach(function (part) {
+          if (!part.trim()) return;
+          var p = root.ownerDocument.createElement('p');
+          p.className = 'text-[16px] leading-[1.75] text-[#4b5665] sm:text-[17px]';
+          p.textContent = part.trim();p.setAttribute('data-cms-model-part','text');node.appendChild(p);
+        });
+      }
+      if (Array.isArray(block.items) && block.items.length) {
+        var ul = root.ownerDocument.createElement('ul');ul.className='space-y-2 pl-5';
+        ul.setAttribute('data-cms-model-part','items');
+        block.items.forEach(function (item) {var li=root.ownerDocument.createElement('li');li.className='list-disc text-[16px] leading-[1.7] text-[#4b5665] sm:text-[17px]';li.textContent=String(item);ul.appendChild(li);});
+        node.appendChild(ul);
+      }
+      wrapper.appendChild(node);
+    });
+    root.replaceChildren(wrapper);
+  };
+
   ProductPreview.prototype.findField = function (target) {
     this.activeBlock = null;
+    this.activeModel = this.modelContext(target);
+    if (this.activeModel) return 'models';
     if (!target || !target.closest) return HomepagePreview.prototype.findField.call(this, target);
     var values = this.values();
     var blocks = Array.isArray(values.descriptionBlocks) ? values.descriptionBlocks : [];
@@ -700,6 +817,37 @@
       node.removeAttribute("data-cms-preview-highlight");
     });
     if (!field) return;
+    if (field === 'models' && this.activeModel) {
+      var self = this;
+      var context = this.activeModel;
+      this.selectModel(context.index);
+      function markModel() {
+        var doc = self.document();
+        if (!doc || self.activeModel !== context) return;
+        self.applyModelDraft(self.values());
+        doc.querySelectorAll('[data-cms-preview-highlight]').forEach(function (node) {
+          node.style.outline='';node.style.outlineOffset='';node.removeAttribute('data-cms-preview-highlight');
+        });
+        var section = doc.querySelector('#modeli');
+        if (!section) return;
+        var target = null;
+        var root = self.modelDescriptionRoot();
+        if (context.blockIndex >= 0 && root) {
+          var block = root.querySelector('[data-cms-model-block="' + context.blockIndex + '"]');
+          target = block && (block.querySelector('[data-cms-model-part="' + context.part + '"]') || block);
+        } else if (context.field === 'description') target = root;
+        else if (context.field === 'name') target = section.querySelector('.mt-7.grid h3');
+        else if (context.field === 'image') target = section.querySelector('.mt-7.grid img');
+        else if (context.field) target = section.querySelector('.mt-7.grid > div:last-child');
+        if (!target) target = section;
+        target.setAttribute('data-cms-preview-highlight','1');
+        target.style.outline='3px solid #3b82f6';target.style.outlineOffset='4px';
+        target.scrollIntoView({behavior:'smooth',block:'center'});
+      }
+      markModel();
+      setTimeout(markModel, 120);
+      return;
+    }
     var targets = this.targets(field);
     if (field === "descriptionBlocks" && this.activeBlock) {
       var info = this.activeBlock;

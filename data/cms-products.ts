@@ -57,6 +57,7 @@ function models(value: unknown): ProductModel[] {
       name,
       image: text(item.image) || undefined,
       description: text(item.description) || undefined,
+      descriptionBlocks: parseDescriptionBlocks(item.descriptionBlocks),
       dimensions: measurement(item.dimensions) || undefined,
       height: measurement(item.height) || undefined,
       width: measurement(item.width) || undefined,
