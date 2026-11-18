@@ -121,9 +121,6 @@ collections:
     widget: text
     required: false
     hint: Показва се в малките продуктови карти. Ако е празно, използва се основното описание.
-  - label: Подробно описание за страницата на продукта
-    name: description
-    widget: text
   - label: Секции на подробното описание (по избор)
     name: descriptionBlocks
     widget: list
@@ -272,6 +269,10 @@ collections:
       widget: image
       required: false
       hint: Ако е празно, се използва досегашната снимка за тази услуга.
+    - label: Услуга 1 - Описание
+      name: description1
+      widget: text
+      required: true
     - label: Услуга 1 - Текст под икона 1
       name: detail1_1
       widget: string
@@ -287,10 +288,6 @@ collections:
       widget: string
       required: false
       hint: Ако е празно, се показва досегашният текст.
-    - label: Услуга 1 - Описание
-      name: description1
-      widget: text
-      required: true
     - label: Услуга 2 - Заглавие
       name: title2
       widget: string
@@ -300,6 +297,10 @@ collections:
       widget: image
       required: false
       hint: Ако е празно, се използва досегашната снимка за тази услуга.
+    - label: Услуга 2 - Описание
+      name: description2
+      widget: text
+      required: true
     - label: Услуга 2 - Текст под икона 1
       name: detail2_1
       widget: string
@@ -315,10 +316,6 @@ collections:
       widget: string
       required: false
       hint: Ако е празно, се показва досегашният текст.
-    - label: Услуга 2 - Описание
-      name: description2
-      widget: text
-      required: true
     - label: Услуга 3 - Заглавие
       name: title3
       widget: string
@@ -328,6 +325,10 @@ collections:
       widget: image
       required: false
       hint: Ако е празно, се използва досегашната снимка за тази услуга.
+    - label: Услуга 3 - Описание
+      name: description3
+      widget: text
+      required: true
     - label: Услуга 3 - Текст под икона 1
       name: detail3_1
       widget: string
@@ -343,10 +344,6 @@ collections:
       widget: string
       required: false
       hint: Ако е празно, се показва досегашният текст.
-    - label: Услуга 3 - Описание
-      name: description3
-      widget: text
-      required: true
     - label: Услуга 4 - Заглавие
       name: title4
       widget: string
@@ -356,6 +353,10 @@ collections:
       widget: image
       required: false
       hint: Ако е празно, се използва досегашната снимка за тази услуга.
+    - label: Услуга 4 - Описание
+      name: description4
+      widget: text
+      required: true
     - label: Услуга 4 - Текст под икона 1
       name: detail4_1
       widget: string
@@ -371,10 +372,6 @@ collections:
       widget: string
       required: false
       hint: Ако е празно, се показва досегашният текст.
-    - label: Услуга 4 - Описание
-      name: description4
-      widget: text
-      required: true
     - label: Услуга 5 - Заглавие
       name: title5
       widget: string
@@ -384,6 +381,10 @@ collections:
       widget: image
       required: false
       hint: Ако е празно, се използва досегашната снимка за тази услуга.
+    - label: Услуга 5 - Описание
+      name: description5
+      widget: text
+      required: true
     - label: Услуга 5 - Текст под икона 1
       name: detail5_1
       widget: string
@@ -399,10 +400,6 @@ collections:
       widget: string
       required: false
       hint: Ако е празно, се показва досегашният текст.
-    - label: Услуга 5 - Описание
-      name: description5
-      widget: text
-      required: true
     - label: Услуга 6 - Заглавие
       name: title6
       widget: string
@@ -412,6 +409,10 @@ collections:
       widget: image
       required: false
       hint: Ако е празно, се използва досегашната снимка за тази услуга.
+    - label: Услуга 6 - Описание
+      name: description6
+      widget: text
+      required: true
     - label: Услуга 6 - Текст под икона 1
       name: detail6_1
       widget: string
@@ -427,10 +428,6 @@ collections:
       widget: string
       required: false
       hint: Ако е празно, се показва досегашният текст.
-    - label: Услуга 6 - Описание
-      name: description6
-      widget: text
-      required: true
   - name: siteHeader
     label: Контакти в менюто
     file: content/header.json
