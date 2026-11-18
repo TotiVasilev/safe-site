@@ -4,11 +4,9 @@ urlSlug: trezorni-paneli
 category: trezorni-resheniya
 order: 20
 cardLabel: Съпротивление по EN 1143-1
-catalogDescription: >-
+catalogDescription: >
   Многослойни панели за изграждане и повишаване на защитата на трезорни
   помещения.
-
-  Панелите са потвърждавали многократно при тестови изпитвания съгласно EN 1143-1.
 description: " "
 descriptionBlocks:
   - kind: paragraph
