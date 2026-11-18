@@ -30,12 +30,7 @@ images:
 models:
 - name: LA GARD 3330
   image: /products/uploads/la-gard-3330.png
-  description: 'LA GARD 3330 is a mechanical, re-setable 3-disc code lock with a language mechanism designed for safes of
-    classes CEN 0
-
-
-    UL2, optional: VdS class 1 (without UL certificate) - standard mounting dimensions, possibility to change the code, blocking
-    language (rigel), language and drop lever of cast metal.'
+  description: '  '
   descriptionBlocks:
   - kind: paragraph
     title: Description
@@ -51,25 +46,50 @@ models:
     title: Certification and compliance
     text: 'UL2, optional: VdS class 1 (without UL certificate)'
 - name: LA GARD 1985
-  description: 'Certificates: EN 1300 B, VdS class 2, UL 1
-
-
-    UL1, optional: Class VdS 3-disc code mechanism; standard mounting dimensions; possibility to change the code; fixed language;
-    language and locking lever made by casting pressure.'
+  description: ' '
   image: /products/uploads/la-gard-1985.png
+  descriptionBlocks:
+  - kind: paragraph
+    title: Description
+    text: ''
+    items:
+    - Class VdS 2 combination lock
+    - Standard mounting dimensions.
+    - Opportunity to change the code.
+    - Fixed language; language and blocking lever made by pressure casting.
+  - kind: certification
+    text: EN 1300 B, VdS class 2, UL 1.
+    title: Certification and compliance
 - name: LA GARD 1947
-  description: 'Certificates: EN 1300 C, VdS class 3, UL 1
-
-
-    UL1, optional: code lock with 4 disks (VdS Class 3), standard mounting dimensions, possibility to change the code, blocking
-    language, language and lock lever - fly under pressure.'
+  description: ' '
   image: /products/uploads/la-gard-1947.png
+  descriptionBlocks:
+  - kind: paragraph
+    title: Description
+    text: ''
+    items:
+    - Code lock with 4 disks (VdS Class 3).
+    - Standard mounting dimensions.
+    - Opportunity to change the code.
+    - Blocking language, language and locking lever - fly away under pressure.
+  - kind: certification
+    title: Certificates and conformity
+    text: EN 1300 C, VdS class 3, UL 1.
 - name: LA GARD 3390
-  description: 'Certificates: EN 1300 B, VdS class 2, UL 1
-
-
-    EN 1300 B, ECB-S, VdS class 2, UL 2M, 3-disc code mechanism, standard mounting dimensions, possibility to recode, fixed
-    language, language and block bar of cast metal.'
+  description: ' '
   image: /products/uploads/la-gard-3390.png
+  descriptionBlocks:
+  - kind: paragraph
+    title: Description
+    text: ''
+    items:
+    - 3-D code mechanism.
+    - Standard mounting dimensions.
+    - Opportunity to recode.
+    - Fixed tongue.
+    - Language and blocking lever of cast metal.
+  - kind: certification
+    title: Certification and compliance
+    text: EN 1300 B, ECB-S, VdS class 2, UL 2M
 description: ' '
 ---
