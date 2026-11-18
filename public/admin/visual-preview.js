@@ -57,7 +57,7 @@
       var width = node.clientWidth;
       if (width > 0 && Math.abs(width - self.previewWidth) > 1) {
         self.previewWidth = width;
-        self.forceUpdate();
+        self.updateViewport();
       }
     }
     if (typeof ResizeObserver !== "undefined") {
@@ -69,7 +69,30 @@
 
   HomepagePreview.prototype.setPreviewDevice = function (device) {
     this.previewDevice = device;
-    this.forceUpdate();
+    this.updateViewport();
+    if (this.previewContainer && this.previewContainer.parentNode) {
+      var buttons = this.previewContainer.parentNode.querySelectorAll('[data-preview-device]');
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].style.background = buttons[i].getAttribute('data-preview-device') === device ? '#dbeafe' : '#fff';
+      }
+    }
+  };
+
+  HomepagePreview.prototype.updateViewport = function () {
+    var container = this.previewContainer;
+    if (!container) return;
+    var frame = container.querySelector('iframe');
+    if (!frame) return;
+    var width = this.previewDevice === 'mobile' ? 390 : 1280;
+    var height = this.previewDevice === 'mobile' ? 844 : 900;
+    var available = Math.max(1, (container.clientWidth || 600) - 24);
+    var scale = Math.min(1, available / width);
+    var holder = frame.parentNode;
+    holder.style.width = Math.round(width * scale) + 'px';
+    holder.style.height = Math.round(height * scale) + 'px';
+    frame.style.width = width + 'px';
+    frame.style.height = height + 'px';
+    frame.style.transform = 'scale(' + scale + ')';
   };
 
   function previewToolbar(preview, title) {
@@ -80,6 +103,7 @@
         element("div", { style: { display: "flex", gap: "5px" }, children: ["desktop", "mobile"].map(function (device) {
           return element("button", {
             type: "button",
+            "data-preview-device": device,
             onClick: function () { preview.setPreviewDevice(device); },
             style: { padding: "5px 9px", cursor: "pointer", borderRadius: "5px", border: "1px solid #bbb", background: preview.previewDevice === device ? "#dbeafe" : "#fff" },
             children: device === "mobile" ? "Мобилна" : "Десктоп"
