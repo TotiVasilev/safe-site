@@ -9,6 +9,10 @@ catalogDescription: Стенен сейф с II категория и елект
   брава клас A по EN 1300.
 description: " "
 descriptionBlocks:
+  - kind: features
+    items:
+      - Цветове и допълнителни защити се договарят според индивидуалните
+        изисквания на клиента.
   - kind: certification
     title: Сертификация и съответствие
     items: []
@@ -19,10 +23,6 @@ descriptionBlocks:
 
       Заключване с една механична брава клас А по EN 1300.
 
-  - kind: features
-    items:
-      - Цветове и допълнителни защити се договарят според индивидуалните
-        изисквания на клиента.
 models:
   - name: CTMK-1
     height: "375"
