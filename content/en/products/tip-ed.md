@@ -14,6 +14,23 @@ description: 'The safe is designed for small bank offices where there are no spe
 
 
   It complies with BNB Regulation No 8121z-444 for safes.'
+descriptionBlocks:
+- kind: intro
+  text: The safe is designed for small bank offices where there are no special rooms equipped as a civil vault.
+  title: Description
+- kind: paragraph
+  title: Deposit system
+  text: 'In the safe are installed modular safe deposit boxes with unlocking mode '
+- kind: features
+  title: Lock
+  items:
+  - The outer door shall be fitted with a minimum of two locks of class In on EN 1300.
+- kind: certification
+  title: Certification and compliance
+  text: 'The safe holds a V degree of resistance certificate within the meaning of EN 1143-1.
+
+
+    It complies with BNB Regulation No 8121z-444 for safes.'
 models:
 - name: ED1
   height: '1900'
@@ -36,20 +53,4 @@ image: /products/uploads/typ-ed-3-.png
 images:
 - /products/uploads/typ-ed-2-.png
 modelDrawing: /products/uploads/fixed-typ-ed-skica.png
-descriptionBlocks:
-- kind: intro
-  text: The safe is designed for small bank offices where there are no special rooms equipped as a civil vault.
-- kind: paragraph
-  title: Deposit system
-  text: 'In the safe are installed modular safe deposit boxes with unlocking mode '
-- kind: features
-  title: Lock
-  items:
-  - The outer door shall be fitted with a minimum of two locks of class In on EN 1300.
-- kind: certification
-  title: Certification and compliance
-  text: 'The safe holds a V degree of resistance certificate within the meaning of EN 1143-1.
-
-
-    It complies with BNB Regulation No 8121z-444 for safes.'
 ---

@@ -14,7 +14,24 @@ description: 'The safe is designed to store money and documents in small bank of
   executed according to customer requirements.
 
 
-  It complies with BNB Regulation No 8121z-444 for safes.'
+  '
+descriptionBlocks:
+- kind: paragraph
+  title: Description
+  text: The safe is designed to store money and documents in small bank offices where there are no special rooms equipped
+    as a bank vault.
+  items:
+  - The outer door shall be fitted with a minimum of two locks of class In on EN 1300.
+- kind: features
+  title: Configuration options
+  items:
+  - Additional locking, colors and protective measures are offered according to customer requirements.
+- kind: certification
+  title: Certification and compliance
+  text: 'Safe Type ET holds a V degree of resistance certificate within the meaning of EN1143-1.
+
+
+    It complies with BNB Regulation No 8121z-44 for safes.'
 models:
 - name: ET
   height: '1800'
