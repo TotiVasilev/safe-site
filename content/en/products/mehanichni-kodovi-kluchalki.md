@@ -7,10 +7,6 @@ cardLabel: Class A to C EN 1300
 catalogDescription: The Dormakaba series mechanical code locks.
 description: ' '
 descriptionBlocks:
-- kind: certification
-  text: Class A to Class C according to EN 1300 standard are available in facilities up to the level of resistance VII.
-  title: Certification and compliance
-  items: []
 - kind: paragraph
   title: Description
   text: The Dormakaba mechanical lock from the LA GARD series provides up to 100 million possible combinations.
@@ -21,6 +17,10 @@ descriptionBlocks:
   items:
   - The choice of suitable mechanical lock depends on the specific security requirements, the construction of the facility
     and the required level of access control.
+- kind: certification
+  text: Class A to Class C according to EN 1300 standard are available in facilities up to the level of resistance VII.
+  title: Certification and compliance
+  items: []
 lockCollection: false
 image: /products/uploads/code-locks.png
 images:
