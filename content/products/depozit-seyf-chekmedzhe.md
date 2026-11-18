@@ -4,9 +4,8 @@ urlSlug: depozit-seyf-chekmedzhe
 category: seyfove
 subcategory: depozitni-seyfove
 order: 20
-catalogDescription: Предназначен за депозиране на пари и документи в работно и
-  извън работно време. Вратата на сейфа се оборудва при стандартно изпълнение с
-  два броя брави клас В по EN 1300.
+catalogDescription: "Предназначен за депозиране на пари и документи в работно и
+  извънработно време. "
 description: "   "
 descriptionBlocks:
   - kind: certification
