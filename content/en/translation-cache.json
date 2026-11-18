@@ -300,5 +300,22 @@
   "За депозиране на пари и документи в неработно време, при липса на специално оборудвано помещение за нощен трезор. ": "For depositing money and documents in the off-time, in the absence of a specially equipped room for a night vault.",
   "Сейфът е предназначен за депозиране на пари и документи в работно и извънработно време на банката.\n\nВратата за депозиране се комплектова при стандартното изпълнение с 10 бр. клиентски ключа.": "The safe is intended for depositing money and documents in working and off-duty times of the bank.\n\nThe deposit door is complete with the standard execution with 10 client keys.",
   "Сейфът е предназначен за съхранение на пари и документи в малки банкови офиси, в които няма изградени специални помещения оборудвани като банков трезор. Представлява сейф проектиран за V степен на съпротивление по смисъла на EN 1143-1. Стандартно заключване е с две брави клас В по EN 1300.": "The safe is designed to store money and documents in small bank offices where there are no special rooms equipped as a bank vault. It is a safe designed for a V degree of resistance within the meaning of EN 1143-1. Standard lock with two locks class EN 1300.",
-  "Многослойни панели за изграждане и повишаване на защитата на трезорни помещения.\n": "Multilayer panels for building and increasing the protection of vault spaces.\n"
+  "Многослойни панели за изграждане и повишаване на защитата на трезорни помещения.\n": "Multilayer panels for building and increasing the protection of vault spaces.\n",
+  "Гаранционно обслужване": "Guarantee service",
+  "Диагностика и ремонт": "Diagnosis and repair",
+  "Подмяна на компоненти": "Replace components",
+  "Електронни ключалки": "Electronic locks",
+  "Монтаж и настройка": "Installation and setting",
+  "Промяна на кодове": "Change Codes",
+  "Контрол на достъпа": "Access control",
+  "Настройка на системи": "Setup Systems",
+  "Технически преглед": "Technical review",
+  "Проверка и настройка": "Checking and setting",
+  "Превенция на повреди": "Prevention of damage",
+  "Възстановяване на достъпа": "Restore access",
+  "Блокирали механизми": "Blocked mechanisms",
+  "Внимателна намеса": "Careful intervention",
+  "Оценка на нуждите": "Need assessment",
+  "Избор на защита": "Select Protection",
+  "Индивидуално решение": "Individual Decision"
 }
