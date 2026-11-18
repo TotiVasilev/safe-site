@@ -543,16 +543,28 @@
           });
         }
         if (blocks.length) {
-          blocks.forEach(function (block) {
+          blocks.forEach(function (block, blockIndex) {
+            var section = doc.createElement("div");
+            section.setAttribute("data-cms-product-block", String(blockIndex));
+            section.className = "space-y-3";
             if (!block || typeof block !== "object") return;
             var heading = block.title || (block.kind === "heading" ? block.text : "");
             if (heading) {
               var h = doc.createElement("h2");
               h.className = "text-[19px] font-semibold leading-tight text-[#172033] sm:text-[21px]";
               h.textContent = heading;
-              outer.appendChild(h);
+              h.setAttribute("data-cms-block-part", "title");
+              section.appendChild(h);
             }
-            if (block.kind !== "heading" && block.text) paragraph(block.text, block.kind === "intro");
+            if (block.kind !== "heading" && block.text) {
+              var before = outer.childNodes.length;
+              paragraph(block.text, block.kind === "intro");
+              while (outer.childNodes.length > before) {
+                var p = outer.childNodes[before];
+                p.setAttribute("data-cms-block-part", "text");
+                section.appendChild(p);
+              }
+            }
             if (Array.isArray(block.items) && block.items.length) {
               var ul = doc.createElement("ul");
               ul.className = "space-y-2 pl-5";
@@ -562,8 +574,10 @@
                 li.textContent = typeof item === "string" ? item : String(item || "");
                 ul.appendChild(li);
               });
-              outer.appendChild(ul);
+              ul.setAttribute("data-cms-block-part", "items");
+              section.appendChild(ul);
             }
+            outer.appendChild(section);
           });
         } else {
           paragraph(values.description || "", false);
@@ -589,24 +603,59 @@
     return target ? [target] : [];
   };
 
+  // Decap list items contain nested fields (title, text, items). The nearest
+  // field name alone is ambiguous with the product's top-level title.
   ProductPreview.prototype.findField = function (target) {
-    if (target && target.closest) {
-      var node = target;
-      var inBlocks = false;
-      while (node && node !== window.top.document.body) {
-        if (node.getAttribute && node.getAttribute("data-field-name") === "descriptionBlocks") {
-          inBlocks = true;
-          break;
-        }
-        node = node.parentElement;
+    this.activeBlock = null;
+    if (!target || !target.closest) return HomepagePreview.prototype.findField.call(this, target);
+    var node = target;
+    var names = [];
+    while (node && node.nodeType === 1) {
+      if (node.getAttribute) {
+        var name = node.getAttribute("data-field-name");
+        if (name) names.push(name);
       }
-      if (inBlocks) {
-        this.activeBlockText = (target.value || "").trim();
-        return "descriptionBlocks";
+      node = node.parentElement;
+    }
+    var values = this.values();
+    var blocks = Array.isArray(values.descriptionBlocks) ? values.descriptionBlocks : [];
+    var part = names.find(function (name) { return /^(title|text|items|kind)$/.test(name); }) || "";
+    var inBlocks = names.indexOf("descriptionBlocks") !== -1;
+    var inputName = (target.getAttribute("name") || target.id || "");
+    if (/descriptionBlocks/i.test(inputName)) inBlocks = true;
+    var typed = typeof target.value === "string" ? target.value.trim() : "";
+    // Some Decap versions omit data-field-name on the outer list container.
+    // Resolve a nested field against the draft's actual blocks in that case.
+    if (!inBlocks && part && typed) {
+      inBlocks = blocks.some(function (block) {
+        return block && (String(block[part] || "").trim() === typed ||
+          (part === "items" && Array.isArray(block.items) && block.items.some(function (item) { return String(item).trim() === typed; })));
+      });
+    }
+    if (!inBlocks) return HomepagePreview.prototype.findField.call(this, target);
+    if (!part) part = "text";
+    var matches = [];
+    blocks.forEach(function (block, index) {
+      if (!block) return;
+      var value = block[part];
+      if (typed && (String(value || "").trim() === typed ||
+          (part === "items" && Array.isArray(value) && value.some(function (item) { return String(item).trim() === typed; })))) matches.push(index);
+    });
+    // Prefer the list item's index if Decap exposes it in the input name.
+    var pathMatch = inputName.match(/descriptionBlocks(?:\.|\[|\/)(\d+)/);
+    var index = pathMatch ? Number(pathMatch[1]) : (matches.length === 1 ? matches[0] : -1);
+    if (index < 0 || index >= blocks.length) {
+      // For duplicated or empty values, use the enclosing Decap list item's
+      // order instead of accidentally highlighting the product title.
+      var listItem = target.closest('[data-testid="list-item"], [data-slate-editor], [class*="ListItem"]');
+      if (listItem && listItem.parentElement) {
+        var siblings = Array.from(listItem.parentElement.children);
+        var candidate = siblings.indexOf(listItem);
+        if (candidate >= 0 && candidate < blocks.length) index = candidate;
       }
     }
-    this.activeBlockText = "";
-    return HomepagePreview.prototype.findField.call(this, target);
+    this.activeBlock = { index: index, part: part };
+    return "descriptionBlocks";
   };
 
   ProductPreview.prototype.highlight = function (field) {
@@ -619,14 +668,17 @@
     });
     if (!field) return;
     var targets = this.targets(field);
-    if (field === "descriptionBlocks" && this.activeBlockText) {
-      var matches = [];
-      targets.forEach(function (root) {
-        root.querySelectorAll("h2,p,li").forEach(function (node) {
-          if ((node.textContent || "").trim() === this.activeBlockText) matches.push(node);
-        }, this);
-      }, this);
-      if (matches.length) targets = matches;
+    if (field === "descriptionBlocks" && this.activeBlock) {
+      var info = this.activeBlock;
+      var root = targets[0];
+      if (root && info.index >= 0) {
+        var block = root.querySelector('[data-cms-product-block="' + info.index + '"]');
+        if (block) {
+          var specific = block.querySelector('[data-cms-block-part="' + info.part + '"]');
+          targets = [specific || block];
+        }
+      }
+      // Never redirect a nested description field to the product title.
     }
     targets.forEach(function (node) {
       node.setAttribute("data-cms-preview-highlight", "1");
