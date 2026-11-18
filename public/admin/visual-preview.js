@@ -416,6 +416,92 @@
     });
   };
 
+
+  // Products use the real public product page, rather than Decap's raw field dump.
+  function ProductPreview(props) {
+    HomepagePreview.call(this, props);
+    this.productSlug = "";
+  }
+  ProductPreview.prototype = Object.create(HomepagePreview.prototype);
+  ProductPreview.prototype.constructor = ProductPreview;
+
+  ProductPreview.prototype.apply = function (values) {
+    var doc = this.document();
+    if (!doc || !doc.querySelector("main")) return;
+    var main = doc.querySelector("main");
+    var title = main.querySelector("h1");
+    if (title && typeof values.title === "string") title.textContent = values.title;
+
+    var label = main.querySelector("section.grid > div:nth-child(2) > p");
+    if (label && typeof values.cardLabel === "string" && values.cardLabel.trim()) {
+      label.textContent = values.cardLabel;
+    }
+
+    // Preserve the real site's typography, spacing, and description block styling.
+    var description = main.querySelector("section.grid > div:nth-child(2) > div.mt-7");
+    if (description) {
+      var signature = JSON.stringify([values.description, values.descriptionBlocks]);
+      if (description.dataset.cmsSignature !== signature) {
+        description.dataset.cmsSignature = signature;
+        var blocks = Array.isArray(values.descriptionBlocks) ? values.descriptionBlocks : [];
+        var outer = doc.createElement("div");
+        outer.className = blocks.length ? "space-y-6 sm:space-y-7" : "space-y-5";
+        function paragraph(text, intro) {
+          String(text || "").split(/\n\s*\n/).forEach(function (part) {
+            if (!part.trim()) return;
+            var p = doc.createElement("p");
+            p.className = intro ? "text-[16px] font-medium leading-[1.72] text-[#263244] sm:text-[18px]" : "text-[16px] leading-[1.75] text-[#4b5665] sm:text-[17px]";
+            p.textContent = part.trim();
+            outer.appendChild(p);
+          });
+        }
+        if (blocks.length) {
+          blocks.forEach(function (block) {
+            if (!block || typeof block !== "object") return;
+            var heading = block.title || (block.kind === "heading" ? block.text : "");
+            if (heading) {
+              var h = doc.createElement("h2");
+              h.className = "text-[19px] font-semibold leading-tight text-[#172033] sm:text-[21px]";
+              h.textContent = heading;
+              outer.appendChild(h);
+            }
+            if (block.kind !== "heading" && block.text) paragraph(block.text, block.kind === "intro");
+            if (Array.isArray(block.items) && block.items.length) {
+              var ul = doc.createElement("ul");
+              ul.className = "space-y-2 pl-5";
+              block.items.forEach(function (item) {
+                var li = doc.createElement("li");
+                li.className = "list-disc text-[16px] leading-[1.7] text-[#4b5665] sm:text-[17px]";
+                li.textContent = typeof item === "string" ? item : String(item || "");
+                ul.appendChild(li);
+              });
+              outer.appendChild(ul);
+            }
+          });
+        } else {
+          paragraph(values.description || "", false);
+        }
+        description.replaceChildren(outer);
+      }
+    }
+  };
+
+  ProductPreview.prototype.render = function () {
+    var values = this.values();
+    var slug = String(values.urlSlug || "").trim();
+    var url = slug && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)
+      ? "/produkti/" + encodeURIComponent(slug) + "/?cms_preview=1"
+      : "";
+    return element("div", {
+      style: {height:"100%",minHeight:"80vh",display:"flex",flexDirection:"column",background:"#f5f5f5"},
+      children: [
+        previewToolbar(this, "Продукт - преглед на реалната страница"),
+        url ? previewViewport(this, url, "Продукт - преглед на живо") :
+          element("div", {style:{padding:"24px",fontSize:"14px"},children:"Въведете URL адрес (Slug), за да видите страницата."})
+      ]
+    });
+  };
+
   var attempts = 0;
 
   function register() {
@@ -429,6 +515,9 @@
       );
       window.CMS.registerPreviewTemplate(
         "services", ServicesPreview
+      );
+      window.CMS.registerPreviewTemplate(
+        "products", ProductPreview
       );
       return;
     }
