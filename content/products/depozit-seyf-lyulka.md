@@ -4,7 +4,7 @@ urlSlug: depozit-seyf-lyulka
 category: seyfove
 subcategory: depozitni-seyfove
 order: 10
-catalogDescription: "За депозиране на пари и документи в не работно време, при
+catalogDescription: "За депозиране на пари и документи в неработно време, при
   липса на специално оборудвано помещение за нощен трезор. "
 description: "  "
 descriptionBlocks:
