@@ -18,7 +18,7 @@ descriptionBlocks:
   title: Configuration options
   items:
   - Additional locking, colors and protective measures are offered according to customer requirements.
-- kind: features
+- kind: certification
   title: Certification and compliance
   text: Safe Type DT is designed for a V degree of resistance within the meaning of EN 1143-1.
 models:

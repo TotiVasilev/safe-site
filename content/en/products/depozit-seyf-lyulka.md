@@ -8,9 +8,6 @@ catalogDescription: For depositing money and documents in the off-time, in the a
   night vault.
 description: '  '
 descriptionBlocks:
-- kind: certification
-  title: Certification and compliance
-  text: The door of the safe shall be equipped with a standard performance with two Class B locks according to EN 1300.
 - kind: paragraph
   title: Description
   text: 'The construction is designed for depositing money and documents in the bank''s worktime, in the absence of a specially
@@ -24,6 +21,9 @@ descriptionBlocks:
   items:
   - Colors, position dimensions, number of locks, keys, types of protection, and other individual customer requirements outside
     those are agreed further.
+- kind: certification
+  title: Certification and compliance
+  text: The door of the safe shall be equipped with a standard performance with two Class B locks according to EN 1300.
 models:
 - name: L-1
   height: '1700'

@@ -6,7 +6,7 @@ order: 20
 cardLabel: Resistance to EN 1143-1
 catalogDescription: 'Multilayer panels for building and increasing the protection of vault spaces.
 
-  Panels have repeatedly confirmed in testing according to EN 1143-1.'
+  '
 description: ' '
 descriptionBlocks:
 - kind: paragraph
