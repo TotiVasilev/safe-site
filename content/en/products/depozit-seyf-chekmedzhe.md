@@ -4,19 +4,14 @@ urlSlug: depozit-seyf-chekmedzhe
 category: seyfove
 subcategory: depozitni-seyfove
 order: 20
-catalogDescription: Designed to deposit money and documents in working hours and off-duty. The safe door is equipped with
-  a standard performance with two locks class EN 1300.
+catalogDescription: Designed for depositing money and documents in working and off-duty hours.
 description: '   '
 descriptionBlocks:
-- kind: certification
-  title: Certification and compliance
-  items: []
-  text: The safe door is equipped with a standard performance with two locks class EN 1300.
 - kind: paragraph
-  text: 'The safe is intended for depositing money and documents in working hours and outside the bank.
+  text: 'The safe is intended for depositing money and documents in working and off-duty times of the bank.
 
 
-    The deposit door is set for the standard execution with 10 client keys.'
+    The deposit door is complete with the standard execution with 10 client keys.'
   title: Description
   items: []
 - kind: features
@@ -24,6 +19,10 @@ descriptionBlocks:
   items:
   - Colors, position dimensions, number of locks, keys, types of protection, and other individual customer requirements outside
     those are agreed further.
+- kind: certification
+  title: Certification and compliance
+  items: []
+  text: The safe door is equipped with a standard performance with two locks class EN 1300.
 models:
 - name: SH-1
   height: '1500'

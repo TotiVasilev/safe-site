@@ -15,13 +15,6 @@ description: 'Type safes A standard is produced with 2 mechanical key locks clas
 
   It complies with BNB Regulation No 8121z-444 for safes.'
 descriptionBlocks:
-- kind: certification
-  title: Certification and compliance
-  text: 'The safety deposit box has been tested and with the exception of A-802 there is a certificate for the IV degree of
-    resistance according to EN 1143-1.
-
-
-    It complies with BNB Regulation No 8121z-444 for safes.'
 - kind: intro
   text: Type safes A standard is produced with 2 mechanical key locks class B.
   title: Description
@@ -29,6 +22,13 @@ descriptionBlocks:
   title: Configuration options
   items:
   - Additional locking, colors and protective measures are offered according to customer requirements.
+- kind: certification
+  title: Certification and compliance
+  text: 'The safety deposit box has been tested and with the exception of A-802 there is a certificate for the IV degree of
+    resistance according to EN 1143-1.
+
+
+    It complies with BNB Regulation No 8121z-444 for safes.'
 models:
 - name: A-802
   height: 550

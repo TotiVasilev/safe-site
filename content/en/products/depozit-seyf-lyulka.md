@@ -4,8 +4,8 @@ urlSlug: depozit-seyf-lyulka
 category: seyfove
 subcategory: depozitni-seyfove
 order: 10
-catalogDescription: For depositing money and documents in non-working hours, in the absence of a specially equipped room for
-  a night vault.
+catalogDescription: For depositing money and documents in the off-time, in the absence of a specially equipped room for a
+  night vault.
 description: '  '
 descriptionBlocks:
 - kind: certification

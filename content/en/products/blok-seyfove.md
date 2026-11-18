@@ -4,7 +4,7 @@ urlSlug: blok-seyfove
 category: bankovi-produkti
 order: 20
 catalogDescription: Personal safes for valuable storage. They are installed in specially constructed secure bank vaults.
-description: None
+description: ' '
 descriptionBlocks:
 - kind: paragraph
   text: Block safes are personal safes for storage of valuables. They are installed in specially constructed secure bank vaults.
