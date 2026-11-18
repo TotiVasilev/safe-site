@@ -29,6 +29,10 @@
     this.activeField = null;
     this.lastValues = {};
     this.previewDevice = "desktop";
+    this.previewWidth = 0;
+    this.previewContainer = null;
+    this.previewObserver = null;
+    this.attachContainer = this.attachContainer.bind(this);
     this.setPreviewDevice = this.setPreviewDevice.bind(this);
     this.onLoad = this.onLoad.bind(this);
     this.attach = this.attach.bind(this);
@@ -40,6 +44,27 @@
 
   HomepagePreview.prototype.attach = function (frame) {
     this.frame = frame;
+  };
+
+  HomepagePreview.prototype.attachContainer = function (node) {
+    if (this.previewContainer === node) return;
+    if (this.previewObserver) this.previewObserver.disconnect();
+    this.previewContainer = node;
+    this.previewObserver = null;
+    if (!node) return;
+    var self = this;
+    function updateWidth() {
+      var width = node.clientWidth;
+      if (width > 0 && Math.abs(width - self.previewWidth) > 1) {
+        self.previewWidth = width;
+        self.forceUpdate();
+      }
+    }
+    if (typeof ResizeObserver !== "undefined") {
+      this.previewObserver = new ResizeObserver(updateWidth);
+      this.previewObserver.observe(node);
+    }
+    updateWidth();
   };
 
   HomepagePreview.prototype.setPreviewDevice = function (device) {
@@ -64,8 +89,22 @@
     });
   }
 
-  function previewFrameStyle(preview) {
-    return { width: preview.previewDevice === "mobile" ? "390px" : "100%", maxWidth: "100%", flex: "1 1 auto", minHeight: "75vh", border: 0, background: "#fff", margin: "0 auto" };
+  function previewViewport(preview, src, title) {
+    var width = preview.previewDevice === "mobile" ? 390 : 1280;
+    var height = preview.previewDevice === "mobile" ? 844 : 900;
+    var available = Math.max(1, (preview.previewWidth || 600) - 24);
+    var scale = Math.min(1, available / width);
+    return element("div", {
+      ref: preview.attachContainer,
+      style: { flex: "1 1 auto", minHeight: "75vh", overflow: "auto", padding: "12px", boxSizing: "border-box", background: "#e9ecef" },
+      children: element("div", {
+        style: { position: "relative", width: Math.round(width * scale) + "px", height: Math.round(height * scale) + "px", margin: "0 auto", background: "#fff", boxShadow: "0 2px 14px rgba(0,0,0,.12)" },
+        children: element("iframe", {
+          ref: preview.attach, onLoad: preview.onLoad, title: title, src: src, scrolling: "yes",
+          style: { display: "block", width: width + "px", height: height + "px", border: 0, background: "#fff", transform: "scale(" + scale + ")", transformOrigin: "top left" }
+        })
+      })
+    });
   }
 
   function previewMediaUrl(value) {
@@ -287,6 +326,7 @@
 
   HomepagePreview.prototype.componentWillUnmount = function () {
     if (this.timer) clearInterval(this.timer);
+    if (this.previewObserver) this.previewObserver.disconnect();
 
     try {
       window.top.document.removeEventListener(
@@ -316,13 +356,7 @@
       },
       children: [
         previewToolbar(this, "Начална страница - преглед преди публикуване"),
-        element("iframe", {
-          ref: this.attach,
-          onLoad: this.onLoad,
-          title: "Начална страница - преглед на живо",
-          src: "/?cms_preview=1",
-          style: previewFrameStyle(this)
-        })
+        previewViewport(this, "/?cms_preview=1", "Начална страница - преглед на живо")
       ]
     });
   };
@@ -377,13 +411,7 @@
       style: {height:'100%',minHeight:'80vh',display:'flex',flexDirection:'column',background:'#f5f5f5'},
       children: [
         previewToolbar(this, "Услуги и сервиз - преглед преди публикуване"),
-        element('iframe', {
-          ref: this.attach,
-          onLoad: this.onLoad,
-          title: 'Услуги и сервиз - преглед на живо',
-          src: '/uslugi/?cms_preview=1',
-          style: previewFrameStyle(this)
-        })
+        previewViewport(this, '/uslugi/?cms_preview=1', 'Услуги и сервиз - преглед на живо')
       ]
     });
   };
