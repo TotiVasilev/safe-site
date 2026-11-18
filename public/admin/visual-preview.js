@@ -583,6 +583,16 @@
           paragraph(values.description || "", false);
         }
         description.replaceChildren(outer);
+        if (this.activeField === 'descriptionBlocks') {
+          var info = this.activeBlock;
+          var selected = info && info.index >= 0 && outer.querySelector('[data-cms-product-block="' + info.index + '"]');
+          var marked = selected && (selected.querySelector('[data-cms-block-part="' + info.part + '"]') || selected);
+          if (marked) {
+            marked.setAttribute('data-cms-preview-highlight', '1');
+            marked.style.outline = '3px solid #3b82f6';
+            marked.style.outlineOffset = '4px';
+          }
+        }
       }
     }
   };
@@ -603,59 +613,82 @@
     return target ? [target] : [];
   };
 
-  // Decap list items contain nested fields (title, text, items). The nearest
-  // field name alone is ambiguous with the product's top-level title.
+  // Resolve Decap's nested list controls by their actual editor structure.
+  // Decap does not put data-field-name on the nested controls in this editor.
   ProductPreview.prototype.findField = function (target) {
     this.activeBlock = null;
     if (!target || !target.closest) return HomepagePreview.prototype.findField.call(this, target);
-    var node = target;
-    var names = [];
-    while (node && node.nodeType === 1) {
-      if (node.getAttribute) {
-        var name = node.getAttribute("data-field-name");
-        if (name) names.push(name);
-      }
-      node = node.parentElement;
-    }
     var values = this.values();
     var blocks = Array.isArray(values.descriptionBlocks) ? values.descriptionBlocks : [];
-    var part = names.find(function (name) { return /^(title|text|items|kind)$/.test(name); }) || "";
-    var inBlocks = names.indexOf("descriptionBlocks") !== -1;
-    var inputName = (target.getAttribute("name") || target.id || "");
-    if (/descriptionBlocks/i.test(inputName)) inBlocks = true;
-    var typed = typeof target.value === "string" ? target.value.trim() : "";
-    // Some Decap versions omit data-field-name on the outer list container.
-    // Resolve a nested field against the draft's actual blocks in that case.
-    if (!inBlocks && part && typed) {
-      inBlocks = blocks.some(function (block) {
-        return block && (String(block[part] || "").trim() === typed ||
-          (part === "items" && Array.isArray(block.items) && block.items.some(function (item) { return String(item).trim() === typed; })));
-      });
+    var control = target.closest('input, textarea, select, [contenteditable="true"]') || target;
+    var fieldContainer = control.closest('[aria-label$=" field"]');
+    var fieldType = fieldContainer && fieldContainer.getAttribute('aria-label');
+    var typed = typeof control.value === 'string' ? control.value.trim() :
+      (control.isContentEditable ? (control.textContent || '').trim() : '');
+    var item = control.closest('[class*="ListItem-listControlItem"], [class*="ListItem-listItem"], [data-testid="list-item"]');
+    // A nested items list may introduce another list item. Select the enclosing
+    // description block by checking which list item contains kind/title/text.
+    var outerItem = null;
+    for (var ancestor = item; ancestor; ancestor = ancestor.parentElement && ancestor.parentElement.closest('[class*="ListItem-listControlItem"], [class*="ListItem-listItem"], [data-testid="list-item"]')) {
+      var fields = ancestor.querySelectorAll('[aria-label="select field"], [aria-label="text field"], [aria-label="string field"]');
+      if (fields.length >= 3) outerItem = ancestor;
     }
-    if (!inBlocks) return HomepagePreview.prototype.findField.call(this, target);
-    if (!part) part = "text";
-    var matches = [];
+    var part = '';
+    if (outerItem) {
+      var directFields = Array.from(outerItem.querySelectorAll('[aria-label="select field"], [aria-label="string field"], [aria-label="text field"], [aria-label="list field"]'))
+        .filter(function (node) { return !node.parentElement.closest('[aria-label="list field"]'); });
+      var controlField = fieldContainer;
+      var position = directFields.indexOf(controlField);
+      if (position === 0) part = 'kind';
+      else if (position === 1) part = 'title';
+      else if (position === 2) part = 'text';
+      else if (position >= 3) part = 'items';
+    }
+    // Textareas in description blocks are unique to the nested 'text' field.
+    // Match the saved draft value first; this also works when Decap omits list metadata.
+    var candidates = [];
     blocks.forEach(function (block, index) {
       if (!block) return;
-      var value = block[part];
-      if (typed && (String(value || "").trim() === typed ||
-          (part === "items" && Array.isArray(value) && value.some(function (item) { return String(item).trim() === typed; })))) matches.push(index);
+      if (typed && String(block.text || '').trim() === typed && fieldType === 'text field') candidates.push({index:index, part:'text'});
+      if (typed && String(block.title || '').trim() === typed && fieldType === 'string field') candidates.push({index:index, part:'title'});
+      if (typed && Array.isArray(block.items) && block.items.some(function (v) {return String(v).trim() === typed;})) candidates.push({index:index, part:'items'});
     });
-    // Prefer the list item's index if Decap exposes it in the input name.
-    var pathMatch = inputName.match(/descriptionBlocks(?:\.|\[|\/)(\d+)/);
-    var index = pathMatch ? Number(pathMatch[1]) : (matches.length === 1 ? matches[0] : -1);
-    if (index < 0 || index >= blocks.length) {
-      // For duplicated or empty values, use the enclosing Decap list item's
-      // order instead of accidentally highlighting the product title.
-      var listItem = target.closest('[data-testid="list-item"], [data-slate-editor], [class*="ListItem"]');
-      if (listItem && listItem.parentElement) {
-        var siblings = Array.from(listItem.parentElement.children);
-        var candidate = siblings.indexOf(listItem);
-        if (candidate >= 0 && candidate < blocks.length) index = candidate;
+    var index = -1;
+    if (outerItem) {
+      // The surrounding Decap sortable list gives us the actual block order.
+      var parent = outerItem.parentElement;
+      if (parent) {
+        var peers = Array.from(parent.children).filter(function (node) {
+          return node.matches('[class*="ListItem-listControlItem"], [class*="ListItem-listItem"], [data-testid="list-item"]');
+        });
+        var ordinal = peers.indexOf(outerItem);
+        if (ordinal >= 0 && ordinal < blocks.length) index = ordinal;
       }
     }
-    this.activeBlock = { index: index, part: part };
-    return "descriptionBlocks";
+    if (index < 0 && candidates.length === 1) {
+      index = candidates[0].index;
+      part = candidates[0].part;
+    }
+    // An exact match is more reliable than an unverified DOM position.
+    if (index >= 0 && candidates.length && !candidates.some(function (c) {return c.index === index;})) {
+      if (candidates.length === 1) index = candidates[0].index;
+    }
+    if (index >= 0 || candidates.length) {
+      if (!part) part = candidates.length ? candidates[0].part : 'text';
+      this.activeBlock = {index:index, part:part};
+      return 'descriptionBlocks';
+    }
+    // If the editor is inside the description list but no block can be
+    // resolved, highlight its container, NEVER the product's h1.
+    var labels = [];
+    for (var node = control; node && node.nodeType === 1; node = node.parentElement) {
+      if (node.getAttribute && node.getAttribute('data-field-name')) labels.push(node.getAttribute('data-field-name'));
+    }
+    if (labels.indexOf('descriptionBlocks') !== -1 || (outerItem && blocks.length)) {
+      this.activeBlock = {index:-1, part:part || 'text'};
+      return 'descriptionBlocks';
+    }
+    return HomepagePreview.prototype.findField.call(this, target);
   };
 
   ProductPreview.prototype.highlight = function (field) {
