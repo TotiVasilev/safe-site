@@ -5,7 +5,7 @@ category: bankovi-produkti
 order: 20
 catalogDescription: Лични сейфове за съхранение на ценности. Монтират се в
   специално изградени охраняеми банкови трезори.
-description: Няма
+description: " "
 descriptionBlocks:
   - kind: paragraph
     text: "Блок сейфовете са лични сейфове за съхранение на ценности. Монтират се в
