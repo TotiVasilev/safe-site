@@ -21,7 +21,7 @@ descriptionBlocks:
   - The dimensions and structural holes are adapted during the definition of requirements and preparation of a tender, and
     we can add additional protection.
   - Additional locking, colors and protective measures are offered according to customer requirements.
-- kind: paragraph
+- kind: certification
   title: Certification and compliance
   text: 'The door model 320 achieved a level VII resistance according to EN 1143-1.
 

@@ -8,6 +8,9 @@ cardLabel: BDS Class II EN 1143-1
 catalogDescription: Wall safe with category II and electronic or mechanical code lock class A according to EN 1300.
 description: ' '
 descriptionBlocks:
+- kind: features
+  items:
+  - Colors and additional protections are agreed according to the individual requirements of the client.
 - kind: certification
   title: Certification and compliance
   items: []
@@ -18,9 +21,6 @@ descriptionBlocks:
 
 
     '
-- kind: features
-  items:
-  - Colors and additional protections are agreed according to the individual requirements of the client.
 models:
 - name: CTMK-1
   height: '375'

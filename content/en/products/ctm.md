@@ -8,6 +8,10 @@ cardLabel: BDS Class II EN 1143-1
 catalogDescription: Wall safe with category II resistance and mechanical lock class A according to EN 1300.
 description: ' '
 descriptionBlocks:
+- kind: features
+  title: Configuration options
+  items:
+  - Colors and additional protections are agreed according to the individual requirements of the client.
 - kind: certification
   title: Certification and compliance
   items: []
@@ -15,10 +19,6 @@ descriptionBlocks:
 
 
     Locking with one mechanical lock class A according to EN 1300.'
-- kind: features
-  title: Configuration options
-  items:
-  - Colors and additional protections are agreed according to the individual requirements of the client.
 models:
 - name: CTM-1
   height: '375'
