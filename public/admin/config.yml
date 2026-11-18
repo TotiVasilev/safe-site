@@ -272,6 +272,21 @@ collections:
       widget: image
       required: false
       hint: Ако е празно, се използва досегашната снимка за тази услуга.
+    - label: Услуга 1 - Текст под икона 1
+      name: detail1_1
+      widget: string
+      required: false
+      hint: Ако е празно, се показва досегашният текст.
+    - label: Услуга 1 - Текст под икона 2
+      name: detail1_2
+      widget: string
+      required: false
+      hint: Ако е празно, се показва досегашният текст.
+    - label: Услуга 1 - Текст под икона 3
+      name: detail1_3
+      widget: string
+      required: false
+      hint: Ако е празно, се показва досегашният текст.
     - label: Услуга 1 - Описание
       name: description1
       widget: text
@@ -285,6 +300,21 @@ collections:
       widget: image
       required: false
       hint: Ако е празно, се използва досегашната снимка за тази услуга.
+    - label: Услуга 2 - Текст под икона 1
+      name: detail2_1
+      widget: string
+      required: false
+      hint: Ако е празно, се показва досегашният текст.
+    - label: Услуга 2 - Текст под икона 2
+      name: detail2_2
+      widget: string
+      required: false
+      hint: Ако е празно, се показва досегашният текст.
+    - label: Услуга 2 - Текст под икона 3
+      name: detail2_3
+      widget: string
+      required: false
+      hint: Ако е празно, се показва досегашният текст.
     - label: Услуга 2 - Описание
       name: description2
       widget: text
@@ -298,6 +328,21 @@ collections:
       widget: image
       required: false
       hint: Ако е празно, се използва досегашната снимка за тази услуга.
+    - label: Услуга 3 - Текст под икона 1
+      name: detail3_1
+      widget: string
+      required: false
+      hint: Ако е празно, се показва досегашният текст.
+    - label: Услуга 3 - Текст под икона 2
+      name: detail3_2
+      widget: string
+      required: false
+      hint: Ако е празно, се показва досегашният текст.
+    - label: Услуга 3 - Текст под икона 3
+      name: detail3_3
+      widget: string
+      required: false
+      hint: Ако е празно, се показва досегашният текст.
     - label: Услуга 3 - Описание
       name: description3
       widget: text
@@ -311,6 +356,21 @@ collections:
       widget: image
       required: false
       hint: Ако е празно, се използва досегашната снимка за тази услуга.
+    - label: Услуга 4 - Текст под икона 1
+      name: detail4_1
+      widget: string
+      required: false
+      hint: Ако е празно, се показва досегашният текст.
+    - label: Услуга 4 - Текст под икона 2
+      name: detail4_2
+      widget: string
+      required: false
+      hint: Ако е празно, се показва досегашният текст.
+    - label: Услуга 4 - Текст под икона 3
+      name: detail4_3
+      widget: string
+      required: false
+      hint: Ако е празно, се показва досегашният текст.
     - label: Услуга 4 - Описание
       name: description4
       widget: text
@@ -324,6 +384,21 @@ collections:
       widget: image
       required: false
       hint: Ако е празно, се използва досегашната снимка за тази услуга.
+    - label: Услуга 5 - Текст под икона 1
+      name: detail5_1
+      widget: string
+      required: false
+      hint: Ако е празно, се показва досегашният текст.
+    - label: Услуга 5 - Текст под икона 2
+      name: detail5_2
+      widget: string
+      required: false
+      hint: Ако е празно, се показва досегашният текст.
+    - label: Услуга 5 - Текст под икона 3
+      name: detail5_3
+      widget: string
+      required: false
+      hint: Ако е празно, се показва досегашният текст.
     - label: Услуга 5 - Описание
       name: description5
       widget: text
@@ -337,6 +412,21 @@ collections:
       widget: image
       required: false
       hint: Ако е празно, се използва досегашната снимка за тази услуга.
+    - label: Услуга 6 - Текст под икона 1
+      name: detail6_1
+      widget: string
+      required: false
+      hint: Ако е празно, се показва досегашният текст.
+    - label: Услуга 6 - Текст под икона 2
+      name: detail6_2
+      widget: string
+      required: false
+      hint: Ако е празно, се показва досегашният текст.
+    - label: Услуга 6 - Текст под икона 3
+      name: detail6_3
+      widget: string
+      required: false
+      hint: Ако е празно, се показва досегашният текст.
     - label: Услуга 6 - Описание
       name: description6
       widget: text

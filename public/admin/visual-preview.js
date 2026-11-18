@@ -426,6 +426,11 @@
         });
         return;
       }
+      if (/^detail[1-6]_[1-3]$/.test(key)) {
+        var label = doc.querySelectorAll('[data-cms-field="' + key + '"]');
+        label.forEach(function (node) { if (typeof values[key] === "string") node.textContent = values[key]; });
+        return;
+      }
       if (!/^(title|description)[1-6]$/.test(key)) return;
       var value = values[key];
       if (typeof value !== 'string') return;
@@ -438,7 +443,7 @@
   ServicesPreview.prototype.highlight = function (field) {
     var doc = this.document();
     if (!doc) return;
-    var match = field && /^(?:title|description|mobileImage)([1-6])$/.exec(field);
+    var match = field && /^(?:title|description|mobileImage|detail)([1-6])(?:_[1-3])?$/.exec(field);
     if (match) {
       var index = Number(match[1]) - 1;
       if (this.previewDevice === "mobile") {
@@ -466,11 +471,26 @@
         }
       }
     }
-    HomepagePreview.prototype.highlight.call(this, field);
-    if (match && this.previewDevice === "mobile") {
-      var self = this;
-      setTimeout(function () { HomepagePreview.prototype.highlight.call(self, field); }, 350);
+    var self = this;
+    function highlightVisible() {
+      var current = self.document();
+      if (!current) return;
+      current.querySelectorAll("[data-cms-field]").forEach(function (node) {
+        node.style.outline = "";
+        node.style.outlineOffset = "";
+      });
+      var visible = self.targets(field).find(function (node) {
+        var rect = node.getBoundingClientRect();
+        return rect.width > 0 && rect.height > 0;
+      });
+      if (visible) {
+        visible.style.outline = "3px solid #3b82f6";
+        visible.style.outlineOffset = "4px";
+        visible.scrollIntoView({behavior:"smooth",block:"center"});
+      }
     }
+    highlightVisible();
+    if (match && this.previewDevice === "mobile") setTimeout(highlightVisible, 400);
   };
 
   ServicesPreview.prototype.render = function () {
@@ -569,6 +589,26 @@
     return target ? [target] : [];
   };
 
+  ProductPreview.prototype.findField = function (target) {
+    if (target && target.closest) {
+      var node = target;
+      var inBlocks = false;
+      while (node && node !== window.top.document.body) {
+        if (node.getAttribute && node.getAttribute("data-field-name") === "descriptionBlocks") {
+          inBlocks = true;
+          break;
+        }
+        node = node.parentElement;
+      }
+      if (inBlocks) {
+        this.activeBlockText = (target.value || "").trim();
+        return "descriptionBlocks";
+      }
+    }
+    this.activeBlockText = "";
+    return HomepagePreview.prototype.findField.call(this, target);
+  };
+
   ProductPreview.prototype.highlight = function (field) {
     var doc = this.document();
     if (!doc) return;
@@ -579,6 +619,15 @@
     });
     if (!field) return;
     var targets = this.targets(field);
+    if (field === "descriptionBlocks" && this.activeBlockText) {
+      var matches = [];
+      targets.forEach(function (root) {
+        root.querySelectorAll("h2,p,li").forEach(function (node) {
+          if ((node.textContent || "").trim() === this.activeBlockText) matches.push(node);
+        }, this);
+      }, this);
+      if (matches.length) targets = matches;
+    }
     targets.forEach(function (node) {
       node.setAttribute("data-cms-preview-highlight", "1");
       node.style.outline = "3px solid #3b82f6";

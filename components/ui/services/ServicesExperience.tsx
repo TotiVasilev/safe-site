@@ -31,6 +31,13 @@ const serviceDetails = [
 
 const englishServiceDetails = [["Warranty service", "Diagnostics and repair", "Component replacement"], ["Mechanical locks", "Electronic locks", "Installation and configuration"], ["Code changes", "Access control", "System configuration"], ["Technical inspection", "Inspection and adjustment", "Fault prevention"], ["Restoring access", "Jammed mechanisms", "Careful intervention"], ["Needs assessment", "Choosing protection", "Tailored solution"]];
 
+const serviceDetailLabel = (index: number, detail: number, fallback: string, englishContent?: typeof servicesContent) => {
+  const key = `detail${index + 1}_${detail + 1}` as keyof typeof servicesContent;
+  const source = englishContent || servicesContent;
+  const value = source[key];
+  return typeof value === "string" && value.trim() ? value : fallback;
+};
+
 type MobileTextLayout = {
   className: string;
   width: string;
@@ -300,8 +307,8 @@ export default function ServicesExperience({ englishContent }: { englishContent?
                       <span className="mb-3 flex h-11 w-11 items-center justify-center rounded-full border border-[#3f7edb]/35 text-[#3f7edb]">
                         <Icon size={22} strokeWidth={1.8} aria-hidden="true" />
                       </span>
-                      <span className="break-words text-[12px] font-medium leading-[1.4] text-[#172033]">
-                        {englishContent ? englishServiceDetails[mobileDetail][index] : label}
+                      <span data-cms-field={`detail${mobileDetail + 1}_${index + 1}`} className="break-words text-[12px] font-medium leading-[1.4] text-[#172033]">
+                        {serviceDetailLabel(mobileDetail, index, englishContent ? englishServiceDetails[mobileDetail][index] : label, englishContent)}
                       </span>
                     </div>
                   ))}
@@ -460,7 +467,7 @@ export default function ServicesExperience({ englishContent }: { englishContent?
                     <div className="mb-3 flex h-8 w-8 items-center justify-center rounded-full border border-[#3f7edb]/35 text-[#3f7edb]">
                       <Icon size={17} strokeWidth={1.8} aria-hidden="true" />
                     </div>
-                    <p className="text-sm font-medium leading-5">{englishContent ? englishServiceDetails[activeIndex][index] : label}</p>
+                    <p data-cms-field={`detail${activeIndex + 1}_${index + 1}`} className="text-sm font-medium leading-5">{serviceDetailLabel(activeIndex, index, englishContent ? englishServiceDetails[activeIndex][index] : label, englishContent)}</p>
                   </div>
                 ))}
               </div>
