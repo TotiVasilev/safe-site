@@ -8,6 +8,21 @@ cardLabel: EN 1143-1 Class V
 catalogDescription: 'Two-wing safe category V with modular safe deposit boxes.
 
   A minimum of two locks class In on EN 1300.'
+description: ' '
+descriptionBlocks:
+- kind: paragraph
+  title: Description
+  text: 'The safe is designed for small bank offices where there are no special rooms equipped as a civil vault.
+
+
+    A safety deposit box with two doors of which one of the roofs is fitted with two locks class In on EN 1300.'
+- kind: features
+  title: Configuration options
+  items:
+  - Additional locking, colors and protective measures are offered according to customer requirements.
+- kind: certification
+  title: Certification and compliance
+  text: Safe Type DD is designed for a V degree of resistance within the meaning of EN 1143-1.
 models:
 - depth: '650'
   width: '1550'
@@ -19,10 +34,6 @@ models:
   volume: ''
   innerHeight: '1622'
 slug: tip-dd
-description: 'The safe is designed for small bank offices where there are no special rooms equipped as a civil vault. It is
-  a two-door safety deposit box of which one of the cover doors is assembled with a minimum of two Class B locks according
-  to EN 1300. The safe is designed for a V degree of resistance within the meaning of EN 1143-1. In it are installed modular
-  deposit boxes with unlocking mode '
 image: /products/uploads/main-typ-dd.png
 modelDrawing: /products/uploads/fixed-typ-dd-skica.png
 ---
