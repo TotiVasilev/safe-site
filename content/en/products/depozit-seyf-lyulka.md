@@ -5,8 +5,7 @@ category: seyfove
 subcategory: depozitni-seyfove
 order: 10
 catalogDescription: For depositing money and documents in non-working hours, in the absence of a specially equipped room for
-  a night vault. The door of the safe shall be equipped with a standard performance with two Class B locks according to EN
-  1300.
+  a night vault.
 description: '  '
 descriptionBlocks:
 - kind: certification
