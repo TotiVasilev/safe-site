@@ -4,9 +4,8 @@ urlSlug: depozit-seyf-lyulka
 category: seyfove
 subcategory: depozitni-seyfove
 order: 10
-catalogDescription: За депозиране на пари и документи в не работно време, при
-  липса на специално оборудвано помещение за нощен трезор. Вратата на сейфа се
-  оборудва при стандартно изпълнение с два броя брави клас B по EN 1300.
+catalogDescription: "За депозиране на пари и документи в не работно време, при
+  липса на специално оборудвано помещение за нощен трезор. "
 description: "  "
 descriptionBlocks:
   - kind: certification
