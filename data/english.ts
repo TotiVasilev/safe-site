@@ -48,7 +48,12 @@ function localizeProduct(product: ProductFamily): ProductFamily {
       const translated = Array.isArray(entry.models) ? entry.models[index] : undefined;
       if (!translated || typeof translated !== "object") return model;
       const description = (translated as Record<string, unknown>).description;
-      return typeof description === "string" ? { ...model, description } : model;
+      const translatedBlocks = (translated as Record<string, unknown>).descriptionBlocks;
+      return {
+        ...model,
+        ...(typeof description === "string" ? { description } : {}),
+        ...(Array.isArray(translatedBlocks) ? { descriptionBlocks: translatedBlocks as typeof model.descriptionBlocks } : {}),
+      };
     }),
   };
 }

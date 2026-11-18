@@ -3,6 +3,7 @@ export type ProductModel = {
   name: string;
   image?: string;
   description?: string;
+  descriptionBlocks?: ProductDescriptionBlock[];
 
   dimensions?: string;
   height?: string;

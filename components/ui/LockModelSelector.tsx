@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import OptimizedProductImage from "@/components/ui/OptimizedProductImage";
+import ProductDescriptionBlocks from "@/components/ui/ProductDescriptionBlocks";
 import type { ProductModel } from "@/data/products";
 
 type Props = { models: ProductModel[]; productName: string; locale?: "bg" | "en" };
@@ -39,8 +40,14 @@ export default function LockModelSelector({ models, productName, locale = "bg" }
           </div>
           <div className="min-w-0">
             <h3 className="border-b border-black/10 pb-4 text-lg font-medium">{model.name}</h3>
-            <div className="mt-5 whitespace-pre-line break-words text-sm leading-7 text-black/65">
-              {model.description || t("Добавете информация за този модел в CMS.", "Add information about this model in the CMS.")}
+            <div className="mt-5 break-words">
+              {model.descriptionBlocks?.length ? (
+                <ProductDescriptionBlocks description={model.description || ""} blocks={model.descriptionBlocks} locale={locale} />
+              ) : (
+                <div className="whitespace-pre-line text-sm leading-7 text-black/65">
+                  {model.description || t("Добавете информация за този модел в CMS.", "Add information about this model in the CMS.")}
+                </div>
+              )}
             </div>
           </div>
         </div>
