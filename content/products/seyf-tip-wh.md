@@ -8,7 +8,6 @@ cardLabel: Степен V по БДС EN 1143-1
 catalogDescription: |-
   Комбинация от два хоризонтални сейфа тип B с V степен на съпротивление.
   Отговаря на наредба на БНБ №8121з-444 за сейфове.
-description: " "
 descriptionBlocks:
   - kind: paragraph
     title: Описание
@@ -21,7 +20,7 @@ descriptionBlocks:
   - kind: certification
     title: Сертификация и съответствие
     text: >-
-      Сейфа притежава  сертификат за V степен на съпротивление по БДС ЕN
+      Сейфът притежава  сертификат за V степен на съпротивление по БДС ЕN
       1143-1. 
 
 
@@ -55,4 +54,5 @@ slug: seyf-tip-wh
 image: /products/uploads/main-tipwh.png
 images: []
 modelDrawing: /products/uploads/fixed-typ-wh-skica.png
+description: " "
 ---
