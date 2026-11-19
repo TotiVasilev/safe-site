@@ -7,12 +7,11 @@ cardLabel: Степен VII по EN 1143-1
 catalogDescription: |-
   Многослойни трезорни врати за банкови трезори и защитени помещения.
   Отговаря на наредба на БНБ за трезорни помещения.
-description: "\ \n"
 descriptionBlocks:
   - kind: paragraph
     title: Описание
     text: Трезорните врати са предназначени за банкови трезори и сигурни помещения и
-      са с многослойна архитектура интегрираща различни материали с висока
+      са с многослойна архитектура, интегрираща различни материали с висока
       степен на съпротивление срещу различни атаки.
     items:
       - Освен задължителните по БДС ЕN 1143 брави, стандартното изпълнение
@@ -48,4 +47,5 @@ models:
 slug: trezorni-vrati
 image: /products/uploads/trezorni-vrati.png
 modelDrawing: /products/uploads/fixed-trezorni-vrati-skica.png
+description: "\ \n"
 ---
