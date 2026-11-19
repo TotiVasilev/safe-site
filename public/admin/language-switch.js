@@ -38,10 +38,21 @@
     document.body.appendChild(bar);
   }
 
+  function hideUnusedPreviewLink() {
+    var controls = document.querySelectorAll("a, button");
+    for (var i = 0; i < controls.length; i++) {
+      if (controls[i].textContent.trim() === "Check for Preview") {
+        controls[i].style.display = "none";
+      }
+    }
+  }
+
   function init() {
     if (!window.CMS || !window.TETRAEDAR_CMS_CONFIG) return;
     window.CMS.init({config: window.TETRAEDAR_CMS_CONFIG[language]});
     mount();
+    hideUnusedPreviewLink();
+    new MutationObserver(hideUnusedPreviewLink).observe(document.body, { childList: true, subtree: true });
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();

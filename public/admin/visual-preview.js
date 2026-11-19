@@ -102,7 +102,7 @@
       style: { padding: "10px 14px", fontSize: "12px", background: "#fff", borderBottom: "1px solid #ddd", display: "flex", gap: "10px", alignItems: "center", justifyContent: "space-between" },
       children: [
         element("span", { children: title }),
-        element("div", { style: { display: "flex", gap: "5px" }, children: ["desktop", "mobile"].map(function (device) {
+        element("div", { style: { display: "flex", gap: "5px", marginRight: "58px" }, children: ["desktop", "mobile"].map(function (device) {
           return element("button", {
             type: "button",
             "data-preview-device": device,
