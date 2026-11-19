@@ -400,7 +400,7 @@
       },
       children: [
         previewToolbar(this, "Начална страница - преглед преди публикуване"),
-        previewViewport(this, window.location.hash.indexOf("/website_en/") !== -1 ? "/en/?cms_preview=1" : "/?cms_preview=1", "Начална страница - преглед на живо")
+        previewViewport(this, window.TETRAEDAR_CMS_LANGUAGE === "en" ? "/en/?cms_preview=1" : "/?cms_preview=1", "Начална страница - преглед на живо")
       ]
     });
   };
@@ -498,7 +498,7 @@
       style: {height:'100%',minHeight:'80vh',display:'flex',flexDirection:'column',background:'#f5f5f5'},
       children: [
         previewToolbar(this, "Услуги и сервиз - преглед преди публикуване"),
-        previewViewport(this, window.location.hash.indexOf('/website_en/') !== -1 ? '/en/uslugi/?cms_preview=1' : '/uslugi/?cms_preview=1', 'Услуги и сервиз - преглед на живо')
+        previewViewport(this, window.TETRAEDAR_CMS_LANGUAGE === "en" ? '/en/uslugi/?cms_preview=1' : '/uslugi/?cms_preview=1', 'Услуги и сервиз - преглед на живо')
       ]
     });
   };
@@ -873,7 +873,7 @@
     var values = this.values();
     var slug = String(values.urlSlug || "").trim();
     var url = slug && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)
-      ? (window.location.hash.indexOf("/products_en/") !== -1 ? "/en/produkti/" : "/produkti/") + encodeURIComponent(slug) + "/?cms_preview=1"
+      ? (window.TETRAEDAR_CMS_LANGUAGE === "en" ? "/en/produkti/" : "/produkti/") + encodeURIComponent(slug) + "/?cms_preview=1"
       : "";
     return element("div", {
       style: {height:"100%",minHeight:"80vh",display:"flex",flexDirection:"column",background:"#f5f5f5"},
