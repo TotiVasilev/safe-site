@@ -1,136 +1,159 @@
-# TETRAEDAR website
+# TETRAEDAR
 
-Source code and content for the TETRAEDAR website, including the Bulgarian and English pages, product catalog, services section and content editor.
+## English
 
-## Project setup
+Next.js 16 / React 19 / TypeScript project with static export to Cloudflare Pages. Bulgarian is the source language for Decap CMS; English content is maintained through a GitHub Actions translation workflow.
 
-The site uses Next.js 16, React 19, TypeScript and Tailwind CSS 4. The services section uses Three.js and React Three Fiber. Content is managed with Decap CMS and stored in GitHub. Cloudflare Pages hosts the site, with a separate Cloudflare Worker handling GitHub login for the editor.
+### Local development
 
-The site is built as a static export. It does not need a running Next.js server in production.
-
-To run it locally, install Node.js 20.9 or later and npm, then run:
+Requires Node.js 20.9+.
 
 ```bash
 npm ci
 npm run dev
-```
-
-The development site opens at `http://localhost:3000`.
-
-To build the deployable site:
-
-```bash
 npm run build
 ```
 
-The build output is in `out/`. The build also runs the image optimization script. `npm run lint` checks the source code. `npm run start` is not used for this static deployment.
+`npm run build` generates `out/` and runs image optimization.
 
-## Main directories
+### Project files
 
-| Path | Contents |
+| Path | Purpose |
 | --- | --- |
-| `app/` | Pages, routes, styles and metadata |
-| `components/ui/` | Site components, navigation, catalog and galleries |
-| `components/ui/services/` | 3D model and services presentation |
-| `data/` | Content loading, product data and types |
-| `content/` | Bulgarian content managed through the CMS |
-| `content/en/` | English content and translation support files |
-| `public/` | Images, 3D assets and CMS admin files |
-| `public/admin/config.yml` | CMS settings and editable collections |
-| `scripts/` | Translation and image processing scripts |
-| `.github/workflows/` | GitHub Actions for translations |
-| `functions/api/contact.ts` | Contact form email handler |
+| `app/` | Routes and pages |
+| `components/ui/` | Interface, product catalog and services components |
+| `content/` | Bulgarian source content |
+| `content/en/` | English translations |
+| `public/admin/config.yml` | Decap CMS collections, GitHub repository and authentication configuration |
+| `public/admin/visual-preview.js` | CMS preview logic |
+| `.github/workflows/translate-all.yml` | Bulgarian-to-English translation workflow |
+| `scripts/optimize-product-images.cjs` | Image optimization |
+| `functions/api/contact.ts` | Cloudflare Pages contact form function |
 
-## Editing website content
+### Content management
 
-The content editor is available at `/admin/`. On the current test site, the address is `https://tetraedar.pages.dev/admin/`. Once the official domain is connected, editors should use the same path on that domain.
+CMS: `/admin/` (current test URL: `https://tetraedar.pages.dev/admin/`).
 
-Editors sign in with a GitHub account that has access to the repository. The CMS writes changes directly to GitHub; it does not have a separate content database.
+Decap CMS saves published changes as commits to GitHub. The repository update triggers Cloudflare Pages deployment. Bulgarian content is edited in the CMS; the translation workflow updates `content/en/`.
 
-To update content:
+Current configuration in `public/admin/config.yml`:
 
-1. Sign in at `/admin/`.
-2. Open the relevant section, such as the homepage, services, product categories or products.
-3. Edit the text, images or product information. Use the built-in preview where available.
-4. Save or publish the changes. The CMS commits the updated files to GitHub.
-5. Wait for the Cloudflare Pages build to finish, then check the public site.
+- Repository: `TotiVasilev/safe-site`
+- Branch: `master`
+- OAuth endpoint: `https://tetraedar-cms-auth.todorvasilev0144.workers.dev`
+- Media uploads: `public/products/uploads/`
 
-The CMS preview is not the published site. If an edit does not appear online, check the latest GitHub commit and the Cloudflare deployment log.
+The GitHub OAuth Worker is a separate Cloudflare resource, not included in this repository. If the repository ownership or domain changes, review `public/admin/config.yml`, the OAuth Worker, GitHub OAuth app callback settings and Cloudflare Git integration.
 
-Bulgarian is the source language. Content is stored in `content/`, mainly as JSON and Markdown files. The English version is under `content/en/`. GitHub Actions translates relevant Bulgarian changes and commits the resulting English content. The main workflow is `.github/workflows/translate-all.yml`; it also supports manual runs. Technical descriptions and product specifications should be checked after translation.
+### Deployment and domain
 
-Images uploaded through the editor are stored in `public/products/uploads/`. During a build, `scripts/optimize-product-images.cjs` creates optimized images in `public/products/optimized/` and updates `data/optimized-images.json`. Keep the original uploads as well as the generated assets.
+Cloudflare Pages build command: `npm run build`; output: `out/`. The expected production branch is `master`; confirm in the Pages dashboard.
 
-The CMS interface is defined in `public/admin/index.html`, `public/admin/config.yml` and the scripts in `public/admin/`. The custom previews use `public/admin/visual-preview.js`. Changes to these files can affect the editing interface even if the public pages still work.
+Add the final domain in Cloudflare Pages > Custom domains. The domain administrator handles the required DNS changes. Preserve existing email DNS records. Connecting the domain does not require access to the source repository.
 
-## CMS login and GitHub configuration
+### Contact form
 
-The supplied configuration currently uses:
+`functions/api/contact.ts` uses Resend. Cloudflare Pages environment variables:
 
-| Setting | Current value |
+- `RESEND_API_KEY`
+- `CONTACT_EMAIL_TO`
+- `CONTACT_EMAIL_FROM`
+
+The local `.dev.vars` file is not included. Check sender-domain verification in Resend.
+
+### Handover checks
+
+- GitHub repository and Cloudflare Pages access
+- CMS OAuth Worker and GitHub OAuth app access
+- Repository, OAuth callback and CMS configuration after any ownership/domain change
+- GitHub-to-Cloudflare deployment from `master`
+- CMS login, content editing and publishing on the final domain
+- BG-to-EN translation workflow
+- Contact form and Resend variables
+- Domain, HTTPS and existing email DNS records
+
+### Additional paths
+
+- Product URLs depend on content filenames/slugs.
+- CMS uploads: `public/products/uploads/`; optimized images: `public/products/optimized/`.
+- Services 3D model: `public/models/safe_model.glb`; related components: `components/ui/services/`.
+- Cloudflare account settings, DNS, OAuth Worker source and credentials are managed outside this repository.
+
+## Български
+
+Проект на Next.js 16 / React 19 / TypeScript със static export към Cloudflare Pages. Българското съдържание е основното за Decap CMS, а английската версия се поддържа чрез translation workflow в GitHub Actions.
+
+### Локална среда
+
+Необходим е Node.js 20.9+.
+
+```bash
+npm ci
+npm run dev
+npm run build
+```
+
+`npm run build` генерира `out/` и изпълнява image optimization.
+
+### Основни файлове
+
+| Път | Предназначение |
 | --- | --- |
-| GitHub repository | `TotiVasilev/safe-site` |
-| Content branch | `master` |
-| CMS authentication Worker | `https://tetraedar-cms-auth.todorvasilev0144.workers.dev` |
-| Test site | `tetraedar.pages.dev` |
-| Media uploads | `public/products/uploads/` |
+| `app/` | Routes и страници |
+| `components/ui/` | UI компоненти, продуктов каталог и услуги |
+| `content/` | Основно съдържание на български |
+| `content/en/` | Английски преводи |
+| `public/admin/config.yml` | Decap CMS collections, GitHub repository и authentication настройки |
+| `public/admin/visual-preview.js` | CMS preview логика |
+| `.github/workflows/translate-all.yml` | Translation workflow от български към английски |
+| `scripts/optimize-product-images.cjs` | Image optimization |
+| `functions/api/contact.ts` | Contact form функция за Cloudflare Pages |
 
-These values will need reviewing if the repository or domain is moved to company-controlled accounts.
+### Управление на съдържанието
 
-The CMS login depends on a separate Cloudflare Worker and a GitHub OAuth application. The Worker source, its settings and the OAuth secret are not included in this repository. Whoever takes over maintenance will need the appropriate access to both services. After changing the domain or repository, check the CMS configuration, GitHub OAuth callback, Worker settings and permitted origins. Test login and publishing from the final domain before removing the original administrator's access.
+CMS: `/admin/` (текущ тестов адрес: `https://tetraedar.pages.dev/admin/`).
 
-## Deployment and domain
+При публикуване Decap CMS записва промените като commits в GitHub. Това задейства нов deployment в Cloudflare Pages. Българското съдържание се редактира през CMS, а translation workflow обновява `content/en/`.
 
-The current hosting arrangement is Cloudflare Pages connected to GitHub. Changes to the production branch trigger a new deployment. The expected build settings are:
+Текущи настройки в `public/admin/config.yml`:
 
-| Setting | Value |
-| --- | --- |
-| Build command | `npm run build` |
-| Output directory | `out` |
-| Production branch | `master` |
+- Repository: `TotiVasilev/safe-site`
+- Branch: `master`
+- OAuth endpoint: `https://tetraedar-cms-auth.todorvasilev0144.workers.dev`
+- Media uploads: `public/products/uploads/`
 
-Confirm these settings in Cloudflare, since the dashboard configuration is not part of the repository.
+GitHub OAuth Worker е отделен ресурс в Cloudflare и не е включен в repository. При промяна на собствеността на repository или домейна трябва да се проверят `public/admin/config.yml`, OAuth Worker, callback настройките на GitHub OAuth app и Cloudflare Git integration.
 
-The official domain is configured under Custom domains in Cloudflare Pages. The domain administrator should apply the DNS records requested by Cloudflare. The exact records depend on whether the site uses the root domain or a `www` hostname and where DNS is hosted. Existing mail records and other DNS services must be preserved.
+### Deployment и домейн
 
-Once the domain is connected, check HTTPS, the homepage, product and services pages, `/en/`, `/admin/` and the contact form. Also check any redirect between the root and `www` hostnames.
+Cloudflare Pages build command: `npm run build`; output: `out/`. Очакваният production branch е `master`; настройките се проверяват в Pages dashboard.
 
-Pointing a domain to Cloudflare does not require GitHub repository access. Repository and Cloudflare access are separate matters for ongoing maintenance and ownership transfer.
+Крайният домейн се добавя в Cloudflare Pages > Custom domains. Необходимите DNS промени се правят от администратора на домейна, като се запазват съществуващите email DNS записи. За самото насочване на домейна не е необходим достъп до source repository.
 
-## Contact form
+### Контактна форма
 
-The contact form is handled by `functions/api/contact.ts`, a Cloudflare Pages Function using Resend. The Pages environment needs these variables:
+`functions/api/contact.ts` използва Resend. Environment variables в Cloudflare Pages:
 
-| Variable | Purpose |
-| --- | --- |
-| `RESEND_API_KEY` | Resend API credential |
-| `CONTACT_EMAIL_TO` | Recipient address |
-| `CONTACT_EMAIL_FROM` | Approved sender address |
+- `RESEND_API_KEY`
+- `CONTACT_EMAIL_TO`
+- `CONTACT_EMAIL_FROM`
 
-The local `.dev.vars` file is not included in this handover because it contains a private credential. Set the variables securely in Cloudflare Pages and verify the sending domain in Resend. Send a test message after the handover or any domain change.
+Локалният `.dev.vars` не е включен. Трябва да се провери sender-domain verification в Resend.
 
-## Handover checks
+### Проверки при предаване
 
-1. Confirm who owns and administers the GitHub repository, Cloudflare Pages project and domain DNS.
-2. Arrange access to the CMS authentication Worker and its GitHub OAuth application.
-3. Confirm the production branch, GitHub integration and build settings in Cloudflare.
-4. If the repository is transferred, update the CMS repository setting and reconnect any integrations that require it.
-5. Connect the official domain without disrupting existing email DNS records.
-6. Test CMS login on the official domain with the intended editor's GitHub account.
-7. Make a small CMS edit, publish it, verify the live page and restore the original content.
-8. Confirm that a Bulgarian content change triggers the translation workflow and that the English version is deployed.
-9. Test the contact form and confirm the recipient receives the message.
-10. Check the main pages on desktop and mobile in both languages.
-11. Confirm access to Resend and any other external services needed for maintenance.
-12. Record account owners, project names and recovery contacts privately. Do not put passwords, API keys or recovery codes in Git.
-13. Remove the previous administrator's access only after the site, CMS and integrations have been tested.
+- Достъп до GitHub repository и Cloudflare Pages
+- Достъп до CMS OAuth Worker и GitHub OAuth app
+- Repository, OAuth callback и CMS настройки при смяна на собственост или домейн
+- GitHub-to-Cloudflare deployment от `master`
+- CMS login, редактиране и публикуване през крайния домейн
+- BG-to-EN translation workflow
+- Contact form и Resend variables
+- Домейн, HTTPS и съществуващи email DNS записи
 
-## Maintenance notes
+### Допълнителни пътища
 
-- Product URLs depend on content filenames and slugs. Renaming them may break existing links.
-- Product images are referenced by paths in the content files. Keep those assets when moving or editing content.
-- The services section uses `/models/safe_model.glb`. Replacing the model may require changes to `SafeScene.tsx` if its object structure differs.
-- English translations can be adjusted through the translation override files. Direct changes to generated English content may be overwritten by later runs.
-- A successful CMS save does not guarantee a successful deployment. Check the GitHub and Cloudflare logs if content is missing.
-
-This archive contains the site source and content, but not the live Cloudflare account settings, DNS configuration, OAuth Worker source or private service credentials. Those need to be handed over separately through the relevant accounts.
+- Product URLs зависят от имената на content файловете и slugs.
+- CMS uploads: `public/products/uploads/`; optimized images: `public/products/optimized/`.
+- 3D модел за услугите: `public/models/safe_model.glb`; компоненти: `components/ui/services/`.
+- Cloudflare account settings, DNS, OAuth Worker source и credentials се управляват извън repository.
