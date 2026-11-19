@@ -4,7 +4,6 @@ urlSlug: trezori
 category: trezorni-resheniya
 order: 30
 catalogDescription: Модулни трезорни помещения, изградени със сертифицирани компоненти.
-description: " "
 descriptionBlocks:
   - kind: paragraph
     title: Описание
@@ -13,7 +12,7 @@ descriptionBlocks:
   - kind: features
     title: Възможности за конфигурация
     items:
-      - Монтажа е бърз и удобен за съществуващи помещения и обикновено
+      - Монтажът е бърз и удобен за съществуващи помещения и обикновено
         приключва  през почивните дни без да прекъсва работата на обекта.
       - Допълнително заключване, цветове и защитни мерки се предлагат според
         изискванията на клиента.
@@ -27,4 +26,5 @@ attachments:
   - phrase: сертифицирани
     file: /products/uploads/модулни-панели-e-chb.png
 image: /products/uploads/main-trezor.png
+description: " "
 ---
