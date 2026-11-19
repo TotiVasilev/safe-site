@@ -1,15 +1,54 @@
 {
-  "feature2Description": "Production base in Stara Zagora with an area of 4500 sq. m.",
-  "feature1Description": "Products tested and certified by international security standards.",
+  "heroTitle": "Securityyyy,\ncreated\nto endure\n",
+  "heroSlides": [
+    {
+      "alt": "Old Calendar photo",
+      "image": "/products/uploads/image-1-1.jpg"
+    },
+    {
+      "image": "/hero/stack/slide-1.webp",
+      "alt": "Details of safe door and locking mechanism"
+    },
+    {
+      "image": "/hero/stack/slide-2.webp",
+      "alt": "Bank vaults"
+    },
+    {
+      "image": "/hero/stack/slide-3.webp",
+      "alt": "Opened vault door with light"
+    }
+  ],
+  "mobileHeroImage": "",
   "heroDescription": "Since 1990 TETRAEDAR offers reliable solutions\nto protect values, documents and money.",
-  "catalogDescription": "Look at the main categories of our portfolio.",
-  "pointerLeft": "Strong construction",
+  "primaryButton": "Look at the products",
+  "primaryLink": "/produkti",
   "secondaryButton": "Services and service",
+  "secondaryLink": "/uslugi",
   "aboutLabel": "For us.",
-  "heroBackground": "",
+  "aboutTitle": "Decades of experience",
+  "aboutParagraph1": "Founded in 1990 in Stara Zagora, TETRAEDAR is a Bulgarian company specializing in the production of high-end safes and banking, professional and personal equipment.\n\nWe combine our own production, tested technologies and individual approach to each project.",
+  "aboutParagraph2": ".",
+  "feature1Title": "Proven reliability",
+  "feature1Description": "Products tested and certified by international security standards.",
+  "feature2Title": "Own production",
+  "feature2Description": "Production base in Stara Zagora with an area of 4500 sq. m.",
+  "feature3Title": "Solutions according to the client",
+  "feature3Description": "Options for choosing locking mechanisms, sizes and additional protections.",
   "partnersLabel": "Trusted Partners",
-  "featuredTitle": "Safety deposit boxes and physical security systems",
+  "partnersTitle": "Trust proven in practice",
+  "partnersDescription": "With extensive experience and hundreds of implemented projects in different industries, we build long-term partnerships based on quality solutions, technical expertise and reliable professional support.",
+  "productsLabel": "Our catalog.",
+  "productsTitle": "Decisions for each level of security",
   "catalogButton": "Look at the whole catalog.",
+  "servicesLabel": "Services and service",
+  "servicesTitle": "Security does not end with delivery",
+  "servicesDescription": "We provide professional advice, transport, installation and maintenance of equipment. From the choice of suitable product to its long-term operation.",
+  "servicesButton": "See services",
+  "contactLabel": "Request",
+  "contactTitle": "Let's find the right solution for you.",
+  "contactDescription": "Each object has different security requirements. Contact us to discuss your needs and offer you appropriate equipment.\n\nOpportunity for customized orders!\n",
+  "contactButton": "Send an inquiry",
+  "contactLink": "mailto:info@tetraedar.com",
   "partners": [
     {
       "name": "Fibank",
@@ -52,53 +91,14 @@
       "url": "https://www.sot.bg/"
     }
   ],
-  "aboutTitle": "Decades of experience",
-  "partnersTitle": "Trust proven in practice",
+  "catalogDescription": "Look at the main categories of our portfolio.",
+  "pointerLeft": "Strong construction",
+  "heroBackground": "",
+  "featuredTitle": "Safety deposit boxes and physical security systems",
   "featuredDescription": "Product solutions for the protection of values, documents and specialized premises.",
-  "secondaryLink": "/uslugi",
   "typography": {},
-  "servicesButton": "See services",
-  "aboutParagraph1": "Founded in 1990 in Stara Zagora, TETRAEDAR is a Bulgarian company specializing in the production of high-end safes and banking, professional and personal equipment.\n\nWe combine our own production, tested technologies and individual approach to each project.",
-  "productsLabel": "Our catalog.",
-  "partnersDescription": "With extensive experience and hundreds of implemented projects in different industries, we build long-term partnerships based on quality solutions, technical expertise and reliable professional support.",
-  "aboutParagraph2": ".",
-  "contactButton": "Send an inquiry",
-  "contactLabel": "Request",
-  "productsTitle": "Decisions for each level of security",
-  "primaryButton": "Look at the products",
-  "servicesLabel": "Services and service",
-  "contactTitle": "Let's find the right solution for you.",
   "productsDescription": "From safe deposit boxes to vault doors and specialized banking systems. Explore our product categories and find the appropriate solution for your requirements.",
-  "contactLink": "mailto:info@tetraedar.com",
-  "servicesTitle": "Security does not end with delivery",
-  "feature3Title": "Solutions according to the client",
   "catalogLabel": "Catalogue",
-  "primaryLink": "/produkti",
-  "heroSlides": [
-    {
-      "alt": "Old Calendar photo",
-      "image": "/products/uploads/image-1-1.jpg"
-    },
-    {
-      "image": "/hero/stack/slide-1.webp",
-      "alt": "Details of safe door and locking mechanism"
-    },
-    {
-      "image": "/hero/stack/slide-2.webp",
-      "alt": "Bank vaults"
-    },
-    {
-      "image": "/hero/stack/slide-3.webp",
-      "alt": "Opened vault door with light"
-    }
-  ],
-  "contactDescription": "Each object has different security requirements. Contact us to discuss your needs and offer you appropriate equipment.\n\nOpportunity for customized orders!\n",
-  "feature2Title": "Own production",
-  "feature1Title": "Proven reliability",
-  "servicesDescription": "We provide professional advice, transport, installation and maintenance of equipment. From the choice of suitable product to its long-term operation.",
-  "heroTitle": "Security,\ncreated\nto endure\n",
   "catalogTitle": "Main categories",
-  "pointerRight": "Locking system",
-  "feature3Description": "Options for choosing locking mechanisms, sizes and additional protections.",
-  "mobileHeroImage": ""
+  "pointerRight": "Locking system"
 }
