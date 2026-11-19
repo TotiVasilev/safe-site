@@ -4,11 +4,17 @@
   var language = params.get("lang") === "en" ? "en" : "bg";
   window.TETRAEDAR_CMS_LANGUAGE = language;
 
+  var originalConfirm = window.confirm.bind(window);
+  window.confirm = function (message) {
+    if (typeof message === "string" &&
+        /a local backup was recovered for this entry/i.test(message)) {
+      return false;
+    }
+    return originalConfirm(message);
+  };
+
   function navigate(next) {
     if (next === language) return;
-    if (!window.confirm(language === "bg"
-      ? "Запазете промените преди смяна на езика. Продължаване?"
-      : "Save your changes before switching languages. Continue?")) return;
     var url = new URL(window.location.href);
     url.searchParams.set("lang", next);
     window.location.assign(url.toString());
