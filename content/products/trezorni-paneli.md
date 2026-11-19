@@ -7,13 +7,12 @@ cardLabel: Съпротивление по EN 1143-1
 catalogDescription: >
   Многослойни панели за изграждане и повишаване на защитата на трезорни
   помещения.
-description: " "
 descriptionBlocks:
   - kind: paragraph
     title: Описание
-    text: "Нашите панели са предназначени, както за увеличаване на степента на
+    text: "Нашите панели са предназначени както за увеличаване на степента на
       съпротивление по смисъла на EN 1143-1 на съществуващи трезорни помещения,
-      също и за модулно изграждане на самостоятелни трезорни помещения. "
+      така и за модулно изграждане на самостоятелни трезорни помещения. "
   - kind: features
     title: Възможности за конфигурация
     text: ""
@@ -38,4 +37,5 @@ models:
 slug: trezorni-paneli
 image: /products/uploads/main-trezorni-paneli.png
 modelDrawing: /products/uploads/fixed-trezorni-paneli-skica.png
+description: " "
 ---
