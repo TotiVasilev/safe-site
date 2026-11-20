@@ -22,7 +22,7 @@ descriptionBlocks:
     text: |-
       All models are certified with class V resistance level EN 1143-1.
 
-      It complies with BNB Regulation No 8121z-44 for safes.
+      It complies with BNB Regulation №8121z-444 for safes.
 models:
   - name: B-801
     height: "600"
