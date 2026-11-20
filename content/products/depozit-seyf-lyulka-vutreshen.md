@@ -25,6 +25,7 @@ descriptionBlocks:
   - kind: certification
     text: |
       Отговаря на наредба на БНБ за сейфове.
+
       БДС EN 1143-2 za D-0 клас на устойчивост.
     title: Сертификация и съответствие
 models:
