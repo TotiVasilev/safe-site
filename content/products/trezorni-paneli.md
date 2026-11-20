@@ -47,6 +47,8 @@ attachments:
     file: /products/uploads/î«ñπ½¡«-γαñº«α¡«-»«¼ñθñ¡¿ñ-γ¿»-s.png
   - phrase: БДС EN 1143-1 за IX клас на устойчивост
     file: /products/uploads/î«ñπ½¡«-γαñº«α¡«-»«¼ñθñ¡¿ñ-γ¿»-s-ii.png
+  - phrase: наредба на БНБ
+    file: https://www.bnb.bg/bnbweb/groups/public/documents/bnb_law/regulations_organizationand_bg.pdf#page=13
 image: /products/uploads/main-trezorni-paneli.png
 modelDrawing: /products/uploads/fixed-trezorni-paneli-skica.png
 description: " "
