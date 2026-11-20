@@ -37,6 +37,11 @@ models:
     volume: ""
     innerHeight: "1622"
 slug: tip-dd
+attachments:
+  - phrase: категория V
+    file: /products/uploads/æñ⌐σ-γ¿»-é.png
+  - phrase: V степен на съпротивление по смисъла на EN 1143-1
+    file: /products/uploads/æñ⌐σ-γ¿»-é.png
 image: /products/uploads/main-typ-dd.png
 modelDrawing: /products/uploads/fixed-typ-dd-skica.png
 description: " "
