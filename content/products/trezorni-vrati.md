@@ -51,6 +51,8 @@ attachments:
     file: /products/uploads/æαñº«α¡á-óαáγá-¼«ññ½-320.png
   - phrase: VII степен на съпротивление според EN 1143-1
     file: /products/uploads/æαñº«α¡á-óαáγá-¼«ññ½-320.png
+  - phrase: наредба на БНБ
+    file: https://www.bnb.bg/bnbweb/groups/public/documents/bnb_law/regulations_organizationand_bg.pdf#page=13
 image: /products/uploads/trezorni-vrati.png
 modelDrawing: /products/uploads/fixed-trezorni-vrati-skica.png
 description: "\ \n"
