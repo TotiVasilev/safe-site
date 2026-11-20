@@ -2,7 +2,7 @@
 title: Door Type BL
 urlSlug: vrata-typ-bl
 category: trezorni-resheniya
-order: 38
+order: 30
 cardLabel: BDS EN 1627
 catalogDescription: RC4 Class according to BDS EN 1627.
 descriptionBlocks:
