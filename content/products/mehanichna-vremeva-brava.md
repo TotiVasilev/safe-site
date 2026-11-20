@@ -1,11 +1,10 @@
 ---
 title: Механични времеви ключалки
-urlSlug: mehanichni-vremevi-kluchaki
+urlSlug: mehanichna-vremeva-kluchalka
 category: bravi
 order: 30
 cardLabel: Модел STB 1600X
 catalogDescription: Заключващи механизми с таймер и три независими механизма.
-description: " "
 descriptionBlocks:
   - kind: paragraph
     title: Описание
@@ -26,4 +25,5 @@ descriptionBlocks:
     text: Съответства на стандарта UL.
 lockCollection: false
 image: /products/uploads/stb_1600m.png
+description: " "
 ---
