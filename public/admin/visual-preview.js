@@ -871,7 +871,10 @@
 
   ProductPreview.prototype.render = function () {
     var values = this.values();
-    var slug = String(values.urlSlug || "").trim();
+    var entry = this.props.entry;
+    var path = entry && typeof entry.get === "function" ? String(entry.get("path") || "") : "";
+    var filename = path.replace(/\\/g, "/").split("/").pop().replace(/\.[^.]+$/, "");
+    var slug = filename || String(entry && entry.get && entry.get("slug") || values.urlSlug || "").trim();
     var url = slug && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)
       ? (window.TETRAEDAR_CMS_LANGUAGE === "en" ? "/en/produkti/" : "/produkti/") + encodeURIComponent(slug) + "/?cms_preview=1"
       : "";
