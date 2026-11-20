@@ -7,7 +7,7 @@ order: 50
 cardLabel: BDS Class V EN 1143-1
 catalogDescription: |-
   A combination of two horizontal safes type B with a V degree of resistance.
-  It complies with BNB Regulation No 8121z-444 for safes.
+  It complies with BNB Regulation №8121z-444 for safes.
 descriptionBlocks:
   - kind: paragraph
     title: Description
@@ -24,7 +24,7 @@ descriptionBlocks:
       BDS EN 1143-1.
 
 
-      It complies with BNB Regulation No 8121z-44 for safes.
+      It complies with BNB Regulation №8121z-444 for safes.
 models:
   - name: WH1200
     height: "600"
@@ -56,6 +56,8 @@ attachments:
     file: /products/uploads/safe-type-b.png
   - phrase: V degree of resistance
     file: /products/uploads/safe-type-b.png
+  - phrase: BNB Regulation №8121z-444
+    file: https://www.bnb.bg/bnbweb/groups/public/documents/bnb_law/regulations_organizationand_bg.pdf#page=13
 image: /products/uploads/main-tipwh.png
 images: []
 modelDrawing: /products/uploads/fixed-typ-wh-skica.png
