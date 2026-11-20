@@ -56,6 +56,8 @@ attachments:
     file: /products/uploads/æñ⌐σ-γ¿»-é.png
   - phrase: V степен на съпротивление по БДС ЕN 1143-1
     file: /products/uploads/æñ⌐σ-γ¿»-é.png
+  - file: https://www.bnb.bg/bnbweb/groups/public/documents/bnb_law/regulations_organizationand_bg.pdf#page=13
+    phrase: БНБ №8121з-444
 image: /products/uploads/main-tipwv.png
 images:
   - /products/uploads/new-tipwv.png
