@@ -7,7 +7,7 @@ order: 10
 cardLabel: EN 1143-1 class IV
 catalogDescription: |-
   High class safe withI V degree of resistance according to EN 1143-1.
-  It complies with BNB Regulation No 8121z-444 for safes.
+  It complies with BNB Regulation №8121z-444 for safes.
 descriptionBlocks:
   - kind: intro
     text: Type safes A standard is produced with 2 mechanical key locks class B.
@@ -25,7 +25,7 @@ descriptionBlocks:
       1143-1.
 
 
-      It complies with BNB Regulation No 8121z-444 for safes.
+      It complies with BNB Regulation №8121z-444 for safes.
 models:
   - name: A-802
     height: 550
