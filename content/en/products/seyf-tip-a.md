@@ -77,7 +77,7 @@ models:
     weight: 1150 kg
 slug: seyf-tip-a
 attachments:
-  - phrase: BNB Regulation No 8121z-444
+  - phrase: BNB Regulation №8121z-444
     file: https://www.bnb.bg/bnbweb/groups/public/documents/bnb_law/regulations_organizationand_bg.pdf#page=13
   - phrase: IV degree of resistance according to EN 1143-1
     file: /products/uploads/safe-type-ç.png
