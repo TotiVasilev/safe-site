@@ -7,7 +7,7 @@ order: 20
 cardLabel: EN 1143-1 Class V
 catalogDescription: |-
   Single-wing safe category V with reinforced metal policies.
-  It complies with BNB Regulation No 8121z-444 for safes.
+  It complies with BNB Regulation №8121z-444 for safes.
 descriptionBlocks:
   - kind: paragraph
     title: Description
@@ -28,7 +28,7 @@ descriptionBlocks:
       of EN1143-1.
 
 
-      It complies with BNB Regulation No 8121z-44 for safes.
+      It complies with BNB Regulation №8121z-444 for safes.
 models:
   - name: ET
     height: "1800"
@@ -44,11 +44,13 @@ attachments:
     file: /products/uploads/safe-type-b.png
   - phrase: V degree of resistance certificate within the meaning of EN1143-1
     file: /products/uploads/safe-type-b.png
+  - phrase: BNB Regulation №8121z-444
+    file: https://www.bnb.bg/bnbweb/groups/public/documents/bnb_law/regulations_organizationand_bg.pdf#page=13
 image: /products/uploads/main-typ-et-2-.png
 images:
   - /products/uploads/typ-et-2-.png
 modelDrawing: /products/uploads/fixed-typ-et-skica.png
-description: >+
+description: >
   The safe is designed to store money and documents in small bank offices where
   there are no special rooms equipped as a bank vault. Represents a safe type C
   and holds a V degree of resistance certificate within the meaning of EN1143-1.
