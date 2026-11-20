@@ -4,10 +4,9 @@ urlSlug: ctm
 category: seyfove
 subcategory: stenni
 order: 10
-cardLabel: Степен II по БДС EN 1143-1
+cardLabel: ""
 catalogDescription: Стенен сейф с II категория на съпротивление и механична
   брава клас A по EN 1300.
-description: " "
 descriptionBlocks:
   - kind: features
     title: Възможности за конфигурация
@@ -75,4 +74,5 @@ models:
 slug: ctm
 image: /products/uploads/main-typ-ctm.png
 modelDrawing: /products/uploads/fixed-typ-ctm-skica.png
+description: " "
 ---
