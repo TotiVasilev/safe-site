@@ -4,9 +4,10 @@ urlSlug: trezorni-vrati
 category: trezorni-resheniya
 order: 10
 cardLabel: Степен VII по EN 1143-1
-catalogDescription: |-
+catalogDescription: >-
   Многослойни трезорни врати за банкови трезори и защитени помещения.
-  Отговаря на наредба на БНБ за трезорни помещения.
+
+  Отговаря на наредба на БНБ за трезорни помещения. Съответства на БДС EN 1143-1.
 descriptionBlocks:
   - kind: paragraph
     title: Описание
@@ -45,6 +46,11 @@ models:
     weight: "1450"
     resistance: VII
 slug: trezorni-vrati
+attachments:
+  - phrase: БДС EN 1143-1
+    file: /products/uploads/æαñº«α¡á-óαáγá-¼«ññ½-320.png
+  - phrase: VII степен на съпротивление според EN 1143-1
+    file: /products/uploads/æαñº«α¡á-óαáγá-¼«ññ½-320.png
 image: /products/uploads/trezorni-vrati.png
 modelDrawing: /products/uploads/fixed-trezorni-vrati-skica.png
 description: "\ \n"
