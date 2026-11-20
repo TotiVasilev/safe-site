@@ -7,7 +7,7 @@ order: 10
 cardLabel: EN 1143-1 Class V
 catalogDescription: |-
   One-wing safe-deposit box category V for small bank offices.
-  It complies with BNB Regulation No 8121z-444 for safes.
+  It complies with BNB Regulation №8121z-444 for safes.
 descriptionBlocks:
   - kind: intro
     text: The safe is designed for small bank offices where there are no special
@@ -28,7 +28,7 @@ descriptionBlocks:
       EN 1143-1.
 
 
-      It complies with BNB Regulation No 8121z-444 for safes.
+      It complies with BNB Regulation №8121z-444 for safes.
 models:
   - name: ED1
     height: "1900"
@@ -52,6 +52,8 @@ attachments:
     file: /products/uploads/safe-type-b.png
   - phrase: V degree of resistance certificate within the meaning of EN 1143-1
     file: /products/uploads/safe-type-b.png
+  - file: https://www.bnb.bg/bnbweb/groups/public/documents/bnb_law/regulations_organizationand_bg.pdf#page=13
+    phrase: BNB Regulation №8121z-444
 image: /products/uploads/typ-ed-3-.png
 images:
   - /products/uploads/typ-ed-2-.png
