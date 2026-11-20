@@ -50,6 +50,8 @@ attachments:
     file: /products/uploads/strongroom-door-model-320.png
   - phrase: level VII resistance according to EN 1143-1
     file: /products/uploads/strongroom-door-model-320.png
+  - phrase: BNB ordinance
+    file: https://www.bnb.bg/bnbweb/groups/public/documents/bnb_law/regulations_organizationand_bg.pdf#page=13
 image: /products/uploads/trezorni-vrati.png
 modelDrawing: /products/uploads/fixed-trezorni-vrati-skica.png
 description: "\ \n"
