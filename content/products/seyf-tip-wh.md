@@ -56,6 +56,8 @@ attachments:
     file: /products/uploads/æñ⌐σ-γ¿»-é.png
   - phrase: V степен на съпротивление
     file: /products/uploads/æñ⌐σ-γ¿»-é.png
+  - phrase: БНБ №8121з-444
+    file: https://www.bnb.bg/bnbweb/groups/public/documents/bnb_law/regulations_organizationand_bg.pdf#page=13
 image: /products/uploads/main-tipwh.png
 images: []
 modelDrawing: /products/uploads/fixed-typ-wh-skica.png
