@@ -18,7 +18,7 @@ descriptionBlocks:
         изискванията на клиента.
   - kind: certification
     title: Сертификация и съответствие
-    text: Сертифицирани с II,V и VI степен на съпротивление по EN 1143-1.
+    text: Сертифицирани с II,V, VI и IX степен на съпротивление по EN 1143-1.
 lockItems: []
 models: []
 slug: trezori
