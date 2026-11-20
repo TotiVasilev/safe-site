@@ -54,6 +54,8 @@ slug: seyf-tip-wh
 attachments:
   - phrase: V degree of resistance certificate under BDS EN 1143-1
     file: /products/uploads/safe-type-b.png
+  - phrase: V degree of resistance
+    file: /products/uploads/safe-type-b.png
 image: /products/uploads/main-tipwh.png
 images: []
 modelDrawing: /products/uploads/fixed-typ-wh-skica.png
