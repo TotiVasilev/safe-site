@@ -1,6 +1,6 @@
 ---
 title: Тип Мултисейф (Таймбокс)
-urlSlug: typ-multiseyf
+urlSlug: tip-multiseyf
 category: seyfove
 subcategory: depozitni-seyfove
 order: 30
