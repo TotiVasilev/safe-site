@@ -2,7 +2,7 @@
 title: Врата Тип BL
 urlSlug: vrata-typ-bl
 category: trezorni-resheniya
-order: 40
+order: 30
 cardLabel: БДС EN 1627
 catalogDescription: Блиндирана врата BL IV. Висок клас метална блиндирана врата
   с клас на устойчивост на взлом по БДС EN 1627.
