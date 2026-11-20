@@ -52,6 +52,8 @@ attachments:
     file: /products/uploads/æñ⌐σ-γ¿»-é.png
   - phrase: V степен на съпротивление по смисъла на EN 1143-1
     file: /products/uploads/æñ⌐σ-γ¿»-é.png
+  - phrase: БНБ №8121з-444
+    file: https://www.bnb.bg/bnbweb/groups/public/documents/bnb_law/regulations_organizationand_bg.pdf#page=13
 image: /products/uploads/typ-ed-3-.png
 images:
   - /products/uploads/typ-ed-2-.png
