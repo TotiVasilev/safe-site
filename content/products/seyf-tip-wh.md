@@ -54,6 +54,8 @@ slug: seyf-tip-wh
 attachments:
   - phrase: V степен на съпротивление по БДС ЕN 1143-1
     file: /products/uploads/æñ⌐σ-γ¿»-é.png
+  - phrase: V степен на съпротивление
+    file: /products/uploads/æñ⌐σ-γ¿»-é.png
 image: /products/uploads/main-tipwh.png
 images: []
 modelDrawing: /products/uploads/fixed-typ-wh-skica.png
