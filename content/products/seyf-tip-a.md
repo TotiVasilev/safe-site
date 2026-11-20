@@ -78,7 +78,7 @@ models:
 slug: seyf-tip-a
 attachments:
   - phrase: БНБ №8121з-444
-    file: /products/uploads/employment-job-application-791x1024.png
+    file: https://www.bnb.bg/bnbweb/groups/public/documents/bnb_law/regulations_organizationand_bg.pdf#page=13
   - phrase: IV степен на съпротивление по EN 1143-1
     file: /products/uploads/æñ⌐σ-γ¿»-ç.png
 image: /products/uploads/fixed-typea-main.png
