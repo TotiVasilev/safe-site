@@ -46,6 +46,8 @@ attachments:
     file: /products/uploads/modular-strongroom-without-a-door-s-.png
   - phrase: BDS EN 1143-1 for IX resistance grade
     file: /products/uploads/modular-strongroom-without-a-door-s-ii.png
+  - phrase: BNB ordinance
+    file: https://www.bnb.bg/bnbweb/groups/public/documents/bnb_law/regulations_organizationand_bg.pdf#page=13
 image: /products/uploads/main-trezorni-paneli.png
 modelDrawing: /products/uploads/fixed-trezorni-paneli-skica.png
 description: " "
