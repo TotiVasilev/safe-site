@@ -140,7 +140,7 @@ slug: seyf-tip-b
 attachments:
   - phrase: V resistance level EN 1143-1
     file: /products/uploads/safe-type-b.png
-  - phrase: №8121z-444
+  - phrase: BNB Regulation №8121z-444
     file: https://www.bnb.bg/bnbweb/groups/public/documents/bnb_law/regulations_organizationand_bg.pdf#page=13
 image: /products/uploads/fixed-typea-main.png
 images:
