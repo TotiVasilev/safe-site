@@ -47,6 +47,11 @@ models:
     innerDepth: "426"
     weight: "1600"
 slug: tip-ed
+attachments:
+  - phrase: категория V
+    file: /products/uploads/æñ⌐σ-γ¿»-é.png
+  - phrase: V степен на съпротивление по смисъла на EN 1143-1
+    file: /products/uploads/æñ⌐σ-γ¿»-é.png
 image: /products/uploads/typ-ed-3-.png
 images:
   - /products/uploads/typ-ed-2-.png
