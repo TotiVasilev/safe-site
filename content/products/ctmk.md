@@ -4,10 +4,9 @@ urlSlug: ctmk
 category: seyfove
 subcategory: stenni
 order: 20
-cardLabel: Степен II по БДС EN 1143-1
+cardLabel: ""
 catalogDescription: Стенен сейф с II категория и електронна или механична кодова
   брава клас A по EN 1300.
-description: " "
 descriptionBlocks:
   - kind: features
     items:
@@ -77,4 +76,5 @@ image: /products/uploads/main-typ-ctmk.png
 images:
   - /products/uploads/typ-ctmk-new.png
 modelDrawing: /products/uploads/fixed-typ-ctmk-skica.png
+description: " "
 ---
