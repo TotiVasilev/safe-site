@@ -22,7 +22,7 @@ descriptionBlocks:
     text: |-
       High-end safe with models certified to VI EN 1143-1.
 
-      It complies with BNB Regulation No 8121z-44 for safes.
+      It complies with BNB Regulation №8121z-444 for safes.
 lockItems: []
 models:
   - name: C-801
