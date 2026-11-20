@@ -7,7 +7,6 @@ order: 10
 catalogDescription: |-
   Компактно решение за съхранение на лични ценности и документи.
   Отговаря на наредба на БНБ за сейфове.
-description: " "
 descriptionBlocks:
   - kind: certification
     text: Отговаря на наредба на БНБ за сейфове.
@@ -22,6 +21,10 @@ descriptionBlocks:
       - Допълнително заключване, размери, цветове и защитни мерки се предлагат
         според изискванията на клиента.
     title: Възможности за конфигурация
+image: /products/uploads/domashen-seyf.png
+images:
+  - /products/uploads/domashen-seyf-2-.png
+modelDrawing: /products/uploads/fixed-domashen-seyf-skica.png
 models:
   - name: Домашен сейф
     height: "350"
@@ -32,8 +35,8 @@ models:
     innerDepth: "225"
     weight: "90"
 slug: domashen-seyf
-image: /products/uploads/domashen-seyf.png
-images:
-  - /products/uploads/domashen-seyf-2-.png
-modelDrawing: /products/uploads/fixed-domashen-seyf-skica.png
+attachments:
+  - phrase: наредба на БНБ
+    file: https://www.bnb.bg/bnbweb/groups/public/documents/bnb_law/regulations_organizationand_bg.pdf#page=13
+description: " "
 ---
