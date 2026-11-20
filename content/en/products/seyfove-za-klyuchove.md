@@ -5,33 +5,39 @@ category: bankovi-produkti
 order: 10
 cardLabel: EN 1143-1 Class V
 catalogDescription: Specially designed key safes.
-description: '    '
 descriptionBlocks:
-- kind: features
-  title: Description
-  text: Specially designed key safes.
-  items:
-  - Fixed hooks marked with consecutive numbers for unique determination of the locations of the relevant keys.
-  - Two Class B locks according to EN 1300 shall be installed on all safes.
-- kind: features
-  title: Configuration options
-  items:
-  - Additional locking, colors and protective measures are offered according to customer requirements.
-- kind: certification
-  title: Certification and compliance
-  text: A safety deposit box model B-802 of the V resistance level EN 1143-1 has been used.
-image: /products/uploads/kluchove.png
+  - kind: features
+    title: Description
+    text: Specially designed key safes.
+    items:
+      - Fixed hooks marked with consecutive numbers for unique determination of
+        the locations of the relevant keys.
+      - Two Class B locks according to EN 1300 shall be installed on all safes.
+  - kind: features
+    title: Configuration options
+    items:
+      - Additional locking, colors and protective measures are offered according
+        to customer requirements.
+  - kind: certification
+    title: Certification and compliance
+    text: A safety deposit box model B-802 of the V resistance level EN 1143-1 has
+      been used.
 models:
-- name: K-280
-  height: '700'
-  width: '600'
-  depth: '600'
-  innerHeight: ''
-  weight: '460'
-- name: K-420
-  height: '700'
-  width: '600'
-  depth: '600'
-  weight: '465'
+  - name: K-280
+    height: "700"
+    width: "600"
+    depth: "600"
+    innerHeight: ""
+    weight: "460"
+  - name: K-420
+    height: "700"
+    width: "600"
+    depth: "600"
+    weight: "465"
 slug: seyfove-za-klyuchove
+attachments:
+  - phrase: V resistance level EN 1143-1
+    file: /products/uploads/safe-type-b.png
+image: /products/uploads/kluchove.png
+description: "    "
 ---
