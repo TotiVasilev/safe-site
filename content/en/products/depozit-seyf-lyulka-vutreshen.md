@@ -37,6 +37,8 @@ slug: depozit-seyf-typ-multiseyf
 attachments:
   - phrase: BDS EN 1143-2
     file: /products/uploads/deposit-safe-type-dc.png
+  - phrase: BNB safety deposit box regulation
+    file: https://www.bnb.bg/bnbweb/groups/public/documents/bnb_law/regulations_organizationand_bg.pdf#page=13
 image: /products/uploads/typ-multiseyf.png
 images:
   - /products/uploads/typ-multiseyf-2-.png
