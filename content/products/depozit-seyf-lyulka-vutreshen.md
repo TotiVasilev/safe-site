@@ -4,10 +4,10 @@ urlSlug: typ-multiseyf
 category: seyfove
 subcategory: depozitni-seyfove
 order: 30
-cardLabel: БДС EN 1143-2:2024
+cardLabel: D-0 по БДС EN 1143-2
 catalogDescription: Предназначен за банки, финансови институции, обменни бюра,
   касови центрове и други обекти, работещи с големи парични наличности. Отговаря
-  на БДС EN 1143-2:2024.
+  на БДС EN 1143-2.
 descriptionBlocks:
   - kind: paragraph
     title: Описание
@@ -25,7 +25,7 @@ descriptionBlocks:
   - kind: certification
     text: |
       Отговаря на наредба на БНБ за сейфове.
-      БДС EN 1143-2:2024 za D-0 клас на устойчивост.
+      БДС EN 1143-2 za D-0 клас на устойчивост.
     title: Сертификация и съответствие
 models:
   - name: DC
@@ -35,7 +35,7 @@ models:
     weight: "90"
 slug: depozit-seyf-typ-multiseyf
 attachments:
-  - phrase: БДС EN 1143-2:2024
+  - phrase: БДС EN 1143-2
     file: /products/uploads/äñ»«º¿γñ¡-ßñ⌐σ-γ¿»-dc.png
 image: /products/uploads/typ-multiseyf.png
 images:
