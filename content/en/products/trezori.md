@@ -2,7 +2,7 @@
 title: Vaults
 urlSlug: trezori
 category: trezorni-resheniya
-order: 30
+order: 40
 catalogDescription: Modular vault spaces constructed with certified components.
 descriptionBlocks:
   - kind: paragraph
