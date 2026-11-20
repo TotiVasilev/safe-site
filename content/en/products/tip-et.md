@@ -1,49 +1,58 @@
 ---
-title: ET type
+title: "Type ET "
 urlSlug: tip-et
 category: seyfove
 subcategory: ednokrilni-trezorni-seyfove
 order: 20
 cardLabel: EN 1143-1 Class V
-catalogDescription: 'Single-wing safe category V with reinforced metal policies.
-
-  It complies with BNB Regulation No 8121z-444 for safes.'
-description: 'The safe is designed to store money and documents in small bank offices where there are no special rooms equipped
-  as a bank vault. Represents a safe type C and holds a V degree of resistance certificate within the meaning of EN1143-1.
-  The outer door shall be fitted with a minimum of two Class B locks per EN 1300. Additional locks, blockages and colors are
-  executed according to customer requirements.
-
-
-  '
+catalogDescription: |-
+  Single-wing safe category V with reinforced metal policies.
+  It complies with BNB Regulation No 8121z-444 for safes.
 descriptionBlocks:
-- kind: paragraph
-  title: Description
-  text: The safe is designed to store money and documents in small bank offices where there are no special rooms equipped
-    as a bank vault.
-  items:
-  - The outer door shall be fitted with a minimum of two locks of class In on EN 1300.
-- kind: features
-  title: Configuration options
-  items:
-  - Additional locking, colors and protective measures are offered according to customer requirements.
-- kind: certification
-  title: Certification and compliance
-  text: 'Safe Type ET holds a V degree of resistance certificate within the meaning of EN1143-1.
+  - kind: paragraph
+    title: Description
+    text: The safe is designed to store money and documents in small bank offices
+      where there are no special rooms equipped as a bank vault.
+    items:
+      - The outer door shall be fitted with a minimum of two locks of class In
+        on EN 1300.
+  - kind: features
+    title: Configuration options
+    items:
+      - Additional locking, colors and protective measures are offered according
+        to customer requirements.
+  - kind: certification
+    title: Certification and compliance
+    text: >-
+      Safe Type ET holds a V degree of resistance certificate within the meaning
+      of EN1143-1.
 
 
-    It complies with BNB Regulation No 8121z-44 for safes.'
+      It complies with BNB Regulation No 8121z-44 for safes.
 models:
-- name: ET
-  height: '1800'
-  width: '900'
-  depth: '650'
-  innerHeight: '1622'
-  innerWidth: '722'
-  innerDepth: '426'
-  weight: '1430'
+  - name: ET
+    height: "1800"
+    width: "900"
+    depth: "650"
+    innerHeight: "1622"
+    innerWidth: "722"
+    innerDepth: "426"
+    weight: "1430"
 slug: tip-et
+attachments:
+  - phrase: "category V "
+    file: /products/uploads/safe-type-b.png
+  - phrase: V degree of resistance certificate within the meaning of EN1143-1
+    file: /products/uploads/safe-type-b.png
 image: /products/uploads/main-typ-et-2-.png
 images:
-- /products/uploads/typ-et-2-.png
+  - /products/uploads/typ-et-2-.png
 modelDrawing: /products/uploads/fixed-typ-et-skica.png
+description: >+
+  The safe is designed to store money and documents in small bank offices where
+  there are no special rooms equipped as a bank vault. Represents a safe type C
+  and holds a V degree of resistance certificate within the meaning of EN1143-1.
+  The outer door shall be fitted with a minimum of two Class B locks per EN
+  1300. Additional locks, blockages and colors are executed according to
+  customer requirements.
 ---
