@@ -4,7 +4,7 @@ urlSlug: typ-multiseyf
 category: seyfove
 subcategory: depozitni-seyfove
 order: 30
-cardLabel: BDS EN 1143-2:2024
+cardLabel: BDS EN 1143-2
 catalogDescription: Designed for banks, financial institutions, exchange
   offices, cash centres and other large cash holdings. Certified by BDS EN
   1143-2.
@@ -35,7 +35,7 @@ models:
     weight: "90"
 slug: depozit-seyf-typ-multiseyf
 attachments:
-  - phrase: BDS EN 1143-2:2024
+  - phrase: BDS EN 1143-2
     file: /products/uploads/deposit-safe-type-dc.png
 image: /products/uploads/typ-multiseyf.png
 images:
