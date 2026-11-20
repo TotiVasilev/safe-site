@@ -21,10 +21,11 @@ descriptionBlocks:
         изискванията на клиента.
   - kind: certification
     title: Сертификация и съответствие
-    text: >-
-      Панелите са потвърждавали многократно при тестови изпитвания съгласно EN
-      1143-1.
-
+    text: |-
+      Панел T съответсва на БДС EN 1143-1 за II клас на устойчивост.
+      Панел E съответсва на БДС EN 1143-1 за V клас на устойчивост. 
+      Панел S съответсва на БДС EN 1143-1 за VI клас на устойчивост.
+      Панел S II съответсва на БДС EN 1143-1 за IX клас на устойчивост.
 
       Отговаря на наредба на БНБ за трезорни помещения.
 models:
@@ -33,8 +34,19 @@ models:
     weight: "67"
     resistance: II
   - name: Тип E
-  - name: Тип Sx
+    resistance: V
+  - name: Тип S
+    resistance: VI
+  - name: Тип S II
+    resistance: IX
 slug: trezorni-paneli
+attachments:
+  - phrase: БДС EN 1143-1 за V клас на устойчивост
+    file: /products/uploads/î«ñπ½¡¿-»á¡ñ½¿-e-chb.png
+  - phrase: БДС EN 1143-1 за VI клас на устойчивост
+    file: /products/uploads/î«ñπ½¡«-γαñº«α¡«-»«¼ñθñ¡¿ñ-γ¿»-s.png
+  - phrase: БДС EN 1143-1 за IX клас на устойчивост
+    file: /products/uploads/î«ñπ½¡«-γαñº«α¡«-»«¼ñθñ¡¿ñ-γ¿»-s-ii.png
 image: /products/uploads/main-trezorni-paneli.png
 modelDrawing: /products/uploads/fixed-trezorni-paneli-skica.png
 description: " "
