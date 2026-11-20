@@ -8,10 +8,6 @@ cardLabel: Степен V по EN 1143-1
 catalogDescription: |-
   Висок клас сейф с V степен на съпротивление по EN 1143-1.
   Отговаря на наредба на БНБ №8121з-444 за сейфове.
-description: >-2
-   и  Допълнително заключване, цветове и защитни мерки се предлагат според изискванията на клиента.
-
-  Отговаря на наредба на БНБ №8121з-444 за сейфове.
 descriptionBlocks:
   - kind: paragraph
     title: Описание
@@ -24,7 +20,7 @@ descriptionBlocks:
         изискванията на клиента.
   - kind: certification
     text: |-
-      Всички модели са  сертифицирани като EN 1143-1 V степен на съпротивление.
+      Всички модели са сертифицирани с V степен на съпротивление по EN 1143-1.
 
       Отговаря на наредба на БНБ №8121з-444 за сейфове.
 models:
@@ -141,6 +137,9 @@ models:
     innerDepth: "476"
     weight: "1515"
 slug: seyf-tip-b
+attachments:
+  - phrase: V степен на съпротивление по EN 1143-1
+    file: /products/uploads/æñ⌐σ-γ¿»-é.png
 image: /products/uploads/fixed-typea-main.png
 images:
   - /products/uploads/tipb-5-.png
@@ -149,4 +148,8 @@ images:
   - /products/uploads/tipb-4-.png
   - /products/uploads/tipb-6-.png
 modelDrawing: /products/uploads/fixed-typb-skica.png
+description: >-2
+   и  Допълнително заключване, цветове и защитни мерки се предлагат според изискванията на клиента.
+
+  Отговаря на наредба на БНБ №8121з-444 за сейфове.
 ---
