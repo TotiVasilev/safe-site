@@ -1,0 +1,36 @@
+name: Duplicate both language versions of CMS products
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'content/products/*.md'
+      - 'content/en/products/*.md'
+
+permissions:
+  contents: write
+
+jobs:
+  duplicate-counterpart:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - name: Create the matching manual-language copy for newly duplicated products
+        id: copy
+        run: python3 scripts/duplicate-bilingual-products.py "$BASE" "$HEAD"
+        env:
+          BASE: ${{ github.event.before }}
+          HEAD: ${{ github.sha }}
+      - name: Commit new language copies
+        if: steps.copy.outputs.created == 'true'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add content/products content/en/products
+          git commit -m 'Copy manually edited language counterpart for duplicated products'
+          git pull --rebase origin master
+          git push origin HEAD:master
