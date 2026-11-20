@@ -8,14 +8,6 @@ cardLabel: Степен IV по EN 1143-1
 catalogDescription: |-
   Висок клас сейф с IV степен на съпротивление по EN 1143-1.
   Отговаря на наредба на БНБ №8121з-444 за сейфове.
-description: >-
-  Сейфовете Тип А стандартно се произвеждат с 2 механични ключови брави клас B.
-  Сейфът е изпитан и с изключение на А-802 има  сертификат за IV степен на
-  съпротивление по EN 1143-1. Допълнително заключване, цветове и защитни мерки
-  се предлагат според изискванията на клиента.
-
-
-  Отговаря на наредба на БНБ №8121з-444 за сейфове.
 descriptionBlocks:
   - kind: intro
     text: Сейфовете Тип А стандартно се произвеждат с 2 механични ключови брави клас
@@ -87,14 +79,8 @@ slug: seyf-tip-a
 attachments:
   - phrase: БНБ №8121з-444
     file: /products/uploads/employment-job-application-791x1024.png
-  - phrase: механични
-    file: /products/uploads/tetraedarcatalog.pdf
-  - phrase: BNB Regulation No 8121z-444
-    file: /products/uploads/elektronni-kodovi-bravi.png
   - phrase: IV степен на съпротивление по EN 1143-1
-    file: /products/uploads/сейф-тип-а.png
-  - phrase: IV degree of resistance according to EN 1143-1
-    file: /products/uploads/safe-а.png
+    file: /products/uploads/æñ⌐σ-γ¿»-ç.png
 image: /products/uploads/fixed-typea-main.png
 images:
   - /products/uploads/typea-2-.png
@@ -103,4 +89,12 @@ images:
   - /products/uploads/typea-3-.png
   - /products/uploads/typea.png
 modelDrawing: /products/uploads/fixed-typearazmeri-skica-1.png
+description: >-
+  Сейфовете Тип А стандартно се произвеждат с 2 механични ключови брави клас B.
+  Сейфът е изпитан и с изключение на А-802 има  сертификат за IV степен на
+  съпротивление по EN 1143-1. Допълнително заключване, цветове и защитни мерки
+  се предлагат според изискванията на клиента.
+
+
+  Отговаря на наредба на БНБ №8121з-444 за сейфове.
 ---
