@@ -8,7 +8,6 @@ cardLabel: Степен VI по EN 1143-1
 catalogDescription: |-
   Висок клас сейф с модели, сертифицирани до VI степен по EN 1143-1.
   Отговаря на наредба на БНБ №8121з-444 за сейфове.
-description: " "
 descriptionBlocks:
   - kind: paragraph
     title: Описание
@@ -138,6 +137,9 @@ models:
     innerDepth: "440"
     weight: "1920"
 slug: seyf-tip-c
+attachments:
+  - phrase: БНБ №8121з-444
+    file: https://www.bnb.bg/bnbweb/groups/public/documents/bnb_law/regulations_organizationand_bg.pdf#page=13
 image: /products/uploads/fixed-typea-main.png
 images:
   - /products/uploads/tipb-5-.png
@@ -146,4 +148,5 @@ images:
   - /products/uploads/tipb-4-.png
   - /products/uploads/tipb-6-.png
 modelDrawing: /products/uploads/fixed-typearazmeri-skica-1.png
+description: " "
 ---
