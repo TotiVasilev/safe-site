@@ -7,7 +7,7 @@ order: 20
 cardLabel: EN 1143-1 Class V
 catalogDescription: |-
   High class safe with V resistance level EN 1143-1.
-  It complies with BNB Regulation No 8121z-444 for safes.
+  It complies with BNB Regulation №8121z-444 for safes.
 descriptionBlocks:
   - kind: paragraph
     title: Description
@@ -140,6 +140,8 @@ slug: seyf-tip-b
 attachments:
   - phrase: V resistance level EN 1143-1
     file: /products/uploads/safe-type-b.png
+  - phrase: №8121z-444
+    file: https://www.bnb.bg/bnbweb/groups/public/documents/bnb_law/regulations_organizationand_bg.pdf#page=13
 image: /products/uploads/fixed-typea-main.png
 images:
   - /products/uploads/tipb-5-.png
