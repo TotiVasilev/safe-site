@@ -140,6 +140,8 @@ slug: seyf-tip-b
 attachments:
   - phrase: V степен на съпротивление по EN 1143-1
     file: /products/uploads/æñ⌐σ-γ¿»-é.png
+  - file: https://www.bnb.bg/bnbweb/groups/public/documents/bnb_law/regulations_organizationand_bg.pdf#page=13
+    phrase: БНБ №8121з-444
 image: /products/uploads/fixed-typea-main.png
 images:
   - /products/uploads/tipb-5-.png
