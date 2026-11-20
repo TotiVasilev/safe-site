@@ -20,7 +20,7 @@ descriptionBlocks:
   - kind: certification
     title: Сертификация и съответствие
     text: >-
-      Сейфът притежава  сертификат за V степен на съпротивление по БДС ЕN
+      Сейфът притежава сертификат за V степен на съпротивление по БДС ЕN
       1143-1. 
 
 
@@ -51,6 +51,9 @@ models:
     innerDepth: "376"
     weight: "1030"
 slug: seyf-tip-wh
+attachments:
+  - phrase: V степен на съпротивление по БДС ЕN 1143-1
+    file: /products/uploads/æñ⌐σ-γ¿»-é.png
 image: /products/uploads/main-tipwh.png
 images: []
 modelDrawing: /products/uploads/fixed-typ-wh-skica.png
