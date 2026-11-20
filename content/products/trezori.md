@@ -2,7 +2,7 @@
 title: Трезори
 urlSlug: trezori
 category: trezorni-resheniya
-order: 30
+order: 40
 catalogDescription: Модулни трезорни помещения, изградени със сертифицирани компоненти.
 descriptionBlocks:
   - kind: paragraph
