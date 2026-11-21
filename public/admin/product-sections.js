@@ -76,7 +76,16 @@
   function createNav(){
     nav=document.createElement('nav');nav.id='tetra-product-sections';nav.setAttribute('aria-label','Секции на продукта');
     var title=document.createElement('div');title.className='tetra-sections-heading';title.textContent='Редактиране на продукт';nav.appendChild(title);
-    sections.forEach(function(s){var b=document.createElement('button');b.type='button';b.textContent=s.label;b.dataset.section=s.id;b.addEventListener('click',function(){selected=s.id;apply();});nav.appendChild(b);});
+    sections.forEach(function(s){var b=document.createElement('button');b.type='button';b.textContent=s.label;b.dataset.section=s.id;b.addEventListener('click',function(){selected=s.id;resetEditorScroll();apply();requestAnimationFrame(resetEditorScroll);});nav.appendChild(b);});
+  }
+  // Reset only the left editor's scrollable ancestors, not the live preview or page.
+  function resetEditorScroll(){
+    if(!frame) return;
+    var node=frame;
+    while(node && node!==document.body && node!==document.documentElement){
+      if(/^(auto|scroll)$/.test(getComputedStyle(node).overflowY)) node.scrollTop=0;
+      node=node.parentElement;
+    }
   }
   function apply(){
     if(!isProduct()){cleanup();return;}
