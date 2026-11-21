@@ -24,5 +24,5 @@
    Transform moves the complete left form (menu and fields) together. */
 body:has(#cms-language-switch button:first-child[aria-pressed="true"])
   .tetra-section-form:has(#tetra-product-sections button.is-active:not([data-section="basic"])) {
-  transform: translateY(19px) !important;
+  transform: translateY(20px) !important;
 }
