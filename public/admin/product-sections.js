@@ -1,129 +1,84 @@
-/* Product editor section navigation. Presentation only: never changes Decap's data. */
+/* TETRAEDAR product editor sections — presentation only; Decap fields stay mounted. */
 (function () {
   'use strict';
-
-  var SECTIONS = [
-    { id: 'basic', label: 'Основна информация', fields: ['title', 'urlSlug', 'category', 'subcategory', 'order', 'cardLabel'] },
-    { id: 'descriptions', label: 'Описания', fields: ['catalogDescription', 'descriptionBlocks', 'attachments'] },
-    { id: 'photos', label: 'Снимки', fields: ['image', 'images', 'modelDrawing'] },
-    { id: 'specifications', label: 'Характеристики', fields: ['models'] },
-    { id: 'settings', label: 'Настройки', fields: ['lockCollection', 'lockItems'] }
+  var sections = [
+    {id:'basic',label:'Основна информация',fields:['title','urlSlug','category','subcategory','order','cardLabel']},
+    {id:'descriptions',label:'Описания',fields:['catalogDescription','descriptionBlocks','attachments']},
+    {id:'photos',label:'Снимки',fields:['image','images','modelDrawing']},
+    {id:'specifications',label:'Характеристики',fields:['models']},
+    {id:'settings',label:'Настройки',fields:['lockCollection','lockItems']}
   ];
-  var fieldSection = {};
-  SECTIONS.forEach(function (section) {
-    section.fields.forEach(function (field) { fieldSection[field] = section.id; });
-  });
-  var selected = 'basic';
-  var nav = null;
-  var activeFields = [];
-  var scheduled = false;
-
-  function isProductRoute() {
-    // Decap uses /#/collections/products/entries/... and /#/collections/products/new.
-    return /(?:^|\/)collections\/(?:products|products_en)(?:\/|$)/.test(location.hash.replace(/^#\/?/, ''));
+  var labels = {
+    title:['Име на продукта'],urlSlug:['URL адрес (Slug)'],category:['Категория'],
+    subcategory:['Подкатегория (по избор)'],order:['Ред на показване'],
+    cardLabel:['Кратък надпис над името'],catalogDescription:['Кратко описание за каталога'],
+    descriptionBlocks:['Секции на подробното описание (по избор)'],
+    attachments:['Кликаеми думи и прикачени файлове'],image:['Основна снимка'],
+    images:['Допълнителни снимки'],modelDrawing:['Обща техническа схема за моделите (H, B, L)'],
+    models:['Модели и технически характеристики'],lockCollection:['Специална страница с карти за ключалки'],
+    lockItems:['Ключалки в специалната страница']
+  };
+  var fieldToSection = {}, labelToField = {};
+  sections.forEach(function(s){s.fields.forEach(function(f){fieldToSection[f]=s.id; (labels[f]||[]).forEach(function(l){labelToField[normalize(l)]=f;});});});
+  var selected='basic', nav=null, tracked=[], frame=null, scheduled=false;
+  function normalize(s){return String(s||'').replace(/\s*\(optional\)\s*/ig,'').replace(/\s+/g,' ').trim().toLocaleLowerCase();}
+  function isProduct(){return /(?:^|\/)collections\/(?:products|products_en)\/(?:entries\/[^/]+|new)(?:\/|$)/.test(location.hash.replace(/^#\/?/,''));}
+  function fieldFor(node){
+    var name=node.getAttribute('data-field-name');
+    if(name && fieldToSection[name]) return name;
+    // Decap v3 renders its actual field widgets as aria-label="string field", "list field", etc.
+    // The human-readable label is a child of that widget, not a data-field-name attribute.
+    var candidates=node.querySelectorAll('label, [class*="FieldLabel"], [class*="fieldLabel"]');
+    for(var i=0;i<candidates.length;i++){
+      var label=candidates[i];
+      if(label.closest('[aria-label$=" field"]')!==node) continue;
+      var text=normalize(label.textContent);
+      // Decap adds '(optional)' and sometimes a required asterisk.
+      text=text.replace(/\s*\*$/,'');
+      if(labelToField[text]) return labelToField[text];
+    }
+    return null;
   }
-
-  function getFields() {
-    var nodes = Array.prototype.slice.call(document.querySelectorAll('[data-field-name]'));
-    return nodes.filter(function (node) {
-      var name = node.getAttribute('data-field-name');
-      if (!Object.prototype.hasOwnProperty.call(fieldSection, name)) return false;
-      // Exclude nested list controls: a nested model description is not the top-level description.
-      if (node.parentElement && node.parentElement.closest('[data-field-name]')) return false;
-      if (!node.isConnected) return false;
-      return true;
+  function collect(){
+    var found=[], used={};
+    document.querySelectorAll('[aria-label$=" field"], [data-field-name]').forEach(function(node){
+      if(node.closest('#tetra-product-sections')) return;
+      // Never hide nested controls within list widgets.
+      if(node.parentElement && node.parentElement.closest('[aria-label$=" field"], [data-field-name]')) return;
+      var field=fieldFor(node);
+      if(!field || used[field]) return;
+      used[field]=true; found.push({node:node,field:field});
     });
+    return found;
   }
-
-  function clear() {
-    activeFields.forEach(function (field) {
-      field.classList.remove('tetra-section-field', 'tetra-section-hidden');
-      field.style.removeProperty('--tetra-nav-offset');
-    });
-    activeFields = [];
-    if (nav) { nav.remove(); nav = null; }
+  function cleanup(){
+    tracked.forEach(function(x){x.node.classList.remove('tetra-section-field','tetra-section-hidden');});
+    tracked=[];
+    if(frame){frame.classList.remove('tetra-section-form');frame.style.removeProperty('--tetra-nav-width');frame=null;}
+    if(nav){nav.remove();nav=null;}
   }
-
-  function makeNav() {
-    nav = document.createElement('nav');
-    nav.id = 'tetra-product-sections';
-    nav.setAttribute('aria-label', 'Секции на продукта');
-    var heading = document.createElement('div');
-    heading.className = 'tetra-sections-heading';
-    heading.textContent = 'Редактиране на продукт';
-    nav.appendChild(heading);
-    SECTIONS.forEach(function (section) {
-      var button = document.createElement('button');
-      button.type = 'button';
-      button.dataset.section = section.id;
-      button.textContent = section.label;
-      button.addEventListener('click', function () {
-        selected = section.id;
-        apply();
-      });
-      nav.appendChild(button);
-    });
-    document.body.appendChild(nav);
+  function createNav(){
+    nav=document.createElement('nav');nav.id='tetra-product-sections';nav.setAttribute('aria-label','Секции на продукта');
+    var title=document.createElement('div');title.className='tetra-sections-heading';title.textContent='Редактиране на продукт';nav.appendChild(title);
+    sections.forEach(function(s){var b=document.createElement('button');b.type='button';b.textContent=s.label;b.dataset.section=s.id;b.addEventListener('click',function(){selected=s.id;apply();});nav.appendChild(b);});
   }
-
-  function apply() {
-    if (!isProductRoute()) { clear(); return; }
-    var fields = getFields();
-    // Do not modify the editor until the product form is mounted.
-    if (!fields.length) { clear(); return; }
-    if (!nav) makeNav();
-    activeFields.forEach(function (field) {
-      if (fields.indexOf(field) === -1) {
-        field.classList.remove('tetra-section-field', 'tetra-section-hidden');
-        field.style.removeProperty('--tetra-nav-offset');
-      }
-    });
-    activeFields = fields;
-    fields.forEach(function (field) {
-      field.classList.add('tetra-section-field');
-      field.classList.toggle('tetra-section-hidden', fieldSection[field.getAttribute('data-field-name')] !== selected);
-    });
-    Array.prototype.forEach.call(nav.querySelectorAll('button'), function (button) {
-      var on = button.dataset.section === selected;
-      button.classList.toggle('is-active', on);
-      button.setAttribute('aria-current', on ? 'true' : 'false');
-    });
-    position();
+  function apply(){
+    if(!isProduct()){cleanup();return;}
+    var next=collect();
+    if(next.length<3){cleanup();return;}
+    var parent=next[0].node.parentElement;
+    // Attach menu to the editor's own field column; never change preview's column.
+    // Find the nearest common ancestor of top-level fields.
+    while(parent && !next.every(function(x){return parent.contains(x.node);})){parent=parent.parentElement;}
+    if(!parent || parent===document.body || parent===document.documentElement){cleanup();return;}
+    if(frame!==parent){cleanup();frame=parent;frame.classList.add('tetra-section-form');}
+    if(!nav){createNav();frame.insertBefore(nav,frame.firstChild);}
+    tracked.forEach(function(x){if(!next.some(function(y){return y.node===x.node;}))x.node.classList.remove('tetra-section-field','tetra-section-hidden');});
+    tracked=next;
+    next.forEach(function(x){x.node.classList.add('tetra-section-field');x.node.classList.toggle('tetra-section-hidden',fieldToSection[x.field]!==selected);});
+    nav.querySelectorAll('button').forEach(function(b){var on=b.dataset.section===selected;b.classList.toggle('is-active',on);b.setAttribute('aria-current',on?'true':'false');});
   }
-
-  function position() {
-    if (!nav || !activeFields.length) return;
-    // Measure the form's original column. The preview is left in Decap's own column.
-    var rects = activeFields.filter(function (field) { return !field.classList.contains('tetra-section-hidden'); }).map(function (field) { return field.getBoundingClientRect(); });
-    if (!rects.length) return;
-    var left = Math.min.apply(null, rects.map(function (r) { return r.left; }));
-    var right = Math.max.apply(null, rects.map(function (r) { return r.right; }));
-    var width = right - left;
-    if (!isFinite(width) || width < 250) return;
-    var navWidth = Math.max(130, Math.min(210, Math.round(width * 0.25)));
-    var top = Math.max(70, Math.min.apply(null, rects.map(function (r) { return r.top; })));
-    // Keep menu visible even when the field list is scrolled.
-    nav.style.left = Math.max(0, left) + 'px';
-    nav.style.top = Math.min(top, 115) + 'px';
-    nav.style.width = navWidth + 'px';
-    nav.style.maxHeight = 'calc(100vh - ' + (Math.min(top, 115) + 16) + 'px)';
-    activeFields.forEach(function (field) { field.style.setProperty('--tetra-nav-offset', navWidth + 12 + 'px'); });
-  }
-
-  function schedule() {
-    if (scheduled) return;
-    scheduled = true;
-    requestAnimationFrame(function () { scheduled = false; apply(); });
-  }
-
-  function start() {
-    // Observe structural changes only; input changes and editor values are untouched.
-    new MutationObserver(schedule).observe(document.body, { childList: true, subtree: true });
-    window.addEventListener('hashchange', function () { selected = 'basic'; schedule(); });
-    window.addEventListener('resize', position);
-    document.addEventListener('scroll', position, true);
-    schedule();
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
-  else start();
+  function schedule(){if(scheduled)return;scheduled=true;requestAnimationFrame(function(){scheduled=false;apply();});}
+  function start(){new MutationObserver(schedule).observe(document.body,{childList:true,subtree:true});window.addEventListener('hashchange',function(){selected='basic';schedule();});schedule();}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 })();
