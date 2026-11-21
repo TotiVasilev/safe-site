@@ -3,7 +3,8 @@
   position: relative !important;
   box-sizing: border-box !important;
   padding-left: clamp(145px, 25%, 230px) !important;
-  min-height: 70vh;
+  /* Keep the editor the same viewport-sized height even for short sections. */
+  min-height: calc(100vh - 94px) !important;
   align-self: flex-start !important;
   margin-top: 0 !important;
   overflow-anchor: none !important;
@@ -18,10 +19,3 @@
 .tetra-section-form > .tetra-section-field { box-sizing:border-box !important; max-width:100% !important; }
 .tetra-section-hidden { display:none !important; }
 @media(max-width:900px){#tetra-product-sections{font-size:11px;min-width:115px;} .tetra-section-form{padding-left:135px !important;}#tetra-product-sections button{padding:9px 5px;}}
-
-/* BG only: the other four sections render 15px above the initial Basic section.
-   Keep the initial Basic position as the reference; do not change EN. */
-body:has(#cms-language-switch button:first-child[aria-pressed="true"])
-.tetra-section-form:has(#tetra-product-sections button.is-active:not([data-section="basic"])) {
-  translate: 0 15px !important;
-}
