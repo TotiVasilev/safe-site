@@ -9,8 +9,11 @@
     {id:'settings',label:'Настройки',fields:['lockCollection','lockItems']}
   ];
   var labels = {
-    title:['Име на продукта'],urlSlug:['URL адрес (Slug)'],category:['Категория'],
-    subcategory:['Подкатегория (по избор)'],order:['Ред на показване'],
+    title:['Име на продукта', 'Product name'],
+    urlSlug:['URL адрес (Slug)', 'URL slug'],
+    category:['Категория', 'Category'],
+    subcategory:['Подкатегория (по избор)', 'Subcategory (optional)'],
+    order:['Ред на показване', 'Display order'],
     cardLabel:['Кратък надпис над името'],catalogDescription:['Кратко описание за каталога'],
     descriptionBlocks:['Секции на подробното описание (по избор)'],
     attachments:['Кликаеми думи и прикачени файлове'],image:['Основна снимка'],
