@@ -22,7 +22,6 @@
 /* Bulgarian product editor ONLY: align sections 2–5 with the initial section.
    BG is identified by the active BG language switch; EN is unaffected.
    Transform moves the complete left form (menu and fields) together. */
-body:has(#cms-language-switch button:first-child[aria-pressed="true"])
-  .tetra-section-form:has(#tetra-product-sections button.is-active:not([data-section="basic"])) {
+.tetra-section-form:has(#tetra-product-sections button.is-active:not([data-section="basic"])) {
   transform: translateY(20px) !important;
 }
