@@ -61,7 +61,8 @@ function localizeProduct(product: ProductFamily): ProductFamily {
       const translatedBlocks = (translated as Record<string, unknown>).descriptionBlocks;
       return {
         ...model,
-        ...(typeof translatedName === "string" && translatedName.trim() ? { name: translatedName.trim() } : {}),
+        // Model identity comes from the BG record; names also serve as stable model IDs.
+
         ...(typeof description === "string" ? { description } : {}),
         ...(Array.isArray(translatedBlocks) ? { descriptionBlocks: translatedBlocks as typeof model.descriptionBlocks } : {}),
       };
