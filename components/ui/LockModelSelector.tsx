@@ -3,11 +3,11 @@
 import { useState } from "react";
 import OptimizedProductImage from "@/components/ui/OptimizedProductImage";
 import ProductDescriptionBlocks from "@/components/ui/ProductDescriptionBlocks";
-import type { ProductModel } from "@/data/products";
+import type { ProductAttachment, ProductModel } from "@/data/products";
 
-type Props = { models: ProductModel[]; productName: string; locale?: "bg" | "en" };
+type Props = { models: ProductModel[]; productName: string; attachments?: ProductAttachment[]; locale?: "bg" | "en" };
 
-export default function LockModelSelector({ models, productName, locale = "bg" }: Props) {
+export default function LockModelSelector({ models, productName, attachments = [], locale = "bg" }: Props) {
   const [selected, setSelected] = useState(0);
   const model = models[selected];
   if (!model) return null;
@@ -41,11 +41,11 @@ export default function LockModelSelector({ models, productName, locale = "bg" }
           <div className="min-w-0">
             <h3 className="border-b border-black/10 pb-4 text-lg font-medium">{model.name}</h3>
             <div className="mt-5 break-words">
-              {model.descriptionBlocks?.length ? (
-                <ProductDescriptionBlocks description={model.description || ""} blocks={model.descriptionBlocks} locale={locale} />
+              {model.description || model.descriptionBlocks?.length ? (
+                <ProductDescriptionBlocks description={model.description || ""} blocks={model.descriptionBlocks} attachments={attachments} locale={locale} />
               ) : (
                 <div className="whitespace-pre-line text-sm leading-7 text-black/65">
-                  {model.description || t("Добавете информация за този модел в CMS.", "Add information about this model in the CMS.")}
+                  {t("Добавете информация за този модел в CMS.", "Add information about this model in the CMS.")}
                 </div>
               )}
             </div>
