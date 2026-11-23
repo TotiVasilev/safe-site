@@ -27,6 +27,7 @@ export type ProductModel = {
 
 export type ProductAttachment = {
   phrase: string;
+  phraseEn?: string;
   file: string;
 };
 

@@ -32,14 +32,23 @@ function localizeProduct(product: ProductFamily): ProductFamily {
     // Never show untranslated Bulgarian blocks on the English product page.
     // Until the translation workflow writes English blocks, show legacy English text.
     descriptionBlocks: parseDescriptionBlocks(entry.descriptionBlocks),
-    attachments: Array.isArray(entry.attachments)
-      ? entry.attachments.flatMap((item): {phrase: string;file: string}[] => {
-          if (!item || typeof item !== "object") return [];
-          const attachment = item as Record<string, unknown>;
-          return typeof attachment.phrase === "string" && typeof attachment.file === "string"
-            ? [{ phrase: attachment.phrase, file: attachment.file }] : [];
-        })
-      : product.attachments,
+    // Attachments are authored once in the BG product CMS. Each shared entry can
+    // optionally specify its English phrase, while keeping one shared target file.
+    // Legacy EN phrases continue to work until migrated into phraseEn.
+    attachments: (product.attachments ?? []).map((attachment) => {
+      const translatedEntries = Array.isArray(entry.attachments) ? entry.attachments : [];
+      const matching = translatedEntries.find((item) =>
+        item && typeof item === "object" &&
+        (item as Record<string, unknown>).file === attachment.file
+      );
+      const oldEnglishPhrase = matching && typeof matching === "object" &&
+        typeof (matching as Record<string, unknown>).phrase === "string"
+        ? (matching as Record<string, unknown>).phrase as string : "";
+      return {
+        phrase: attachment.phraseEn?.trim() || oldEnglishPhrase || attachment.phrase,
+        file: attachment.file,
+      };
+    }),
     catalogDescription: typeof entry.catalogDescription === "string" ? entry.catalogDescription : product.catalogDescription,
     cardLabel: typeof entry.cardLabel === "string" ? entry.cardLabel : product.cardLabel,
     // Use translated model descriptions from the English CMS content while
@@ -47,12 +56,12 @@ function localizeProduct(product: ProductFamily): ProductFamily {
     models: product.models.map((model, index) => {
       const translated = Array.isArray(entry.models) ? entry.models[index] : undefined;
       if (!translated || typeof translated !== "object") return model;
-      const translatedName = (translated as Record<string, unknown>).name;
       const description = (translated as Record<string, unknown>).description;
       const translatedBlocks = (translated as Record<string, unknown>).descriptionBlocks;
       return {
         ...model,
-        ...(typeof translatedName === "string" && translatedName.trim() ? { name: translatedName.trim() } : {}),
+        // Model identity comes from the BG record; names also serve as stable model IDs.
+
         ...(typeof description === "string" ? { description } : {}),
         ...(Array.isArray(translatedBlocks) ? { descriptionBlocks: translatedBlocks as typeof model.descriptionBlocks } : {}),
       };

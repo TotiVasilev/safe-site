@@ -865,3 +865,14 @@
     background-size: cover;
   }
 }
+
+
+/* Homepage catalog has no index column on either viewport. */
+.blue-site .b-range-list .b-range-item {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+@media (max-width: 767px) {
+  .blue-site .b-range-list .b-range-item {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
