@@ -22,8 +22,8 @@ JSON_FIELDS = {
     'site-footer.json': {'privacyLabel'},
     'privacy-policy.json': {'title', 'content'},
 }
-STRUCTURAL = {'image', 'images', 'url', 'mapsUrl', 'address', 'email', 'phone', 'href', 'link', 'primaryLink', 'secondaryLink', 'contactLink', 'heroBackground', 'lastUpdated', 'date', 'id', 'slug', 'order', 'category', 'subcategory', 'file', 'modelDrawing', 'dimensions', 'width', 'height', 'depth', 'weight', 'volume', 'resistance', 'internalDimensions', 'innerHeight', 'innerWidth', 'innerDepth', 'urlSlug', 'lockCollection', 'kind', 'homepageImage'}
-MD_TEXT = {'title', 'description', 'catalogDescription', 'cardLabel', 'name', 'phrase', 'text', 'items'}
+STRUCTURAL = {'image', 'images', 'url', 'mapsUrl', 'address', 'email', 'phone', 'href', 'link', 'primaryLink', 'secondaryLink', 'contactLink', 'heroBackground', 'lastUpdated', 'date', 'id', 'slug', 'order', 'category', 'subcategory', 'file', 'modelDrawing', 'dimensions', 'width', 'height', 'depth', 'weight', 'volume', 'resistance', 'internalDimensions', 'innerHeight', 'innerWidth', 'innerDepth', 'urlSlug', 'lockCollection', 'kind', 'homepageImage', 'phraseEn'}
+MD_TEXT = {'title', 'description', 'catalogDescription', 'cardLabel', 'name', 'phrase', 'phraseEn', 'text', 'items'}
 CYRILLIC = re.compile(r'[\u0400-\u04ff]')
 URL = re.compile(r'^(?:https?://|/|mailto:|tel:|#[\w-]+)')
 
