@@ -3,9 +3,9 @@
 import { useState } from "react";
 import Image from "next/image";
 import ProductDescriptionBlocks from "@/components/ui/ProductDescriptionBlocks";
-import type { ProductModel } from "@/data/products";
+import type { ProductAttachment, ProductModel } from "@/data/products";
 
-type Props = { models: ProductModel[]; drawing?: string; productName: string; locale?: "bg" | "en" };
+type Props = { models: ProductModel[]; drawing?: string; productName: string; attachments?: ProductAttachment[]; locale?: "bg" | "en" };
 
 function parseDimensions(value?: string) {
   if (!value) return ["", "", ""];
@@ -16,7 +16,7 @@ function parseDimensions(value?: string) {
 // Shared color for model headings and dimensions.
 const measurementLabelColor = "text-[#374151]";
 
-export default function ModelSelector({ models, drawing, productName, locale = "bg" }: Props) {
+export default function ModelSelector({ models, drawing, productName, attachments = [], locale = "bg" }: Props) {
   const en = locale === "en";
   const t = (bg: string, english: string) => en ? english : bg;
   const [selected, setSelected] = useState(0);
@@ -68,7 +68,7 @@ export default function ModelSelector({ models, drawing, productName, locale = "
             <h3 className="min-w-0 break-words text-lg font-medium">{t("Размери на", "Dimensions of")} {model.name}</h3>
             <span className="shrink-0 text-xs text-black/40">mm</span>
           </div>
-          {(model.description || Boolean(model.descriptionBlocks?.length)) && <div className="mt-4"><ProductDescriptionBlocks description={model.description || ""} blocks={model.descriptionBlocks} locale={locale} /></div>}
+          {(model.description || Boolean(model.descriptionBlocks?.length)) && <div className="mt-4"><ProductDescriptionBlocks description={model.description || ""} blocks={model.descriptionBlocks} attachments={attachments} locale={locale} /></div>}
           {hasMeasurements ? (
             <>
               <dl className="mt-4 grid grid-cols-3 gap-2">
