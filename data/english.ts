@@ -56,7 +56,6 @@ function localizeProduct(product: ProductFamily): ProductFamily {
     models: product.models.map((model, index) => {
       const translated = Array.isArray(entry.models) ? entry.models[index] : undefined;
       if (!translated || typeof translated !== "object") return model;
-      const translatedName = (translated as Record<string, unknown>).name;
       const description = (translated as Record<string, unknown>).description;
       const translatedBlocks = (translated as Record<string, unknown>).descriptionBlocks;
       return {
