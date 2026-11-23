@@ -166,7 +166,7 @@ export default async function ProductPage({
         </section>
 
         {models.length > 0 && (
-          category?.slug === "bravi" ? <LockModelSelector models={models} productName={product.name} /> : <ModelSelector models={models} drawing={product.modelDrawing} productName={product.name} />
+          category?.slug === "bravi" ? <LockModelSelector models={models} productName={product.name} attachments={product.attachments} /> : <ModelSelector models={models} drawing={product.modelDrawing} productName={product.name} attachments={product.attachments} />
         )}
 
         {category?.slug === "bravi" && (
