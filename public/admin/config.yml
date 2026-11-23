@@ -801,6 +801,7 @@ collections:
     - label: Име на модела
       name: name
       widget: string
+      hint: 'Идентификатор за съпоставяне с BG модел. Не го променяйте при превод.'
     - label: Описание на модела
       name: description
       widget: text
