@@ -866,19 +866,13 @@
   }
 }
 
-/* Catalog numbering: clearly legible and consistently aligned on desktop and mobile. */
-.blue-site .b-range-index {
-  display: inline-block;
-  min-width: 2.4ch;
-  font-size: 14px;
-  line-height: 1.2;
-  font-weight: 700;
-  letter-spacing: .08em;
-  font-variant-numeric: tabular-nums;
+
+/* Homepage catalog has no index column on either viewport. */
+.blue-site .b-range-list .b-range-item {
+  grid-template-columns: minmax(0, 1fr) auto;
 }
 @media (max-width: 767px) {
-  .blue-site .b-range-list .b-range-index {
-    font-size: 13px;
-    line-height: 1.2;
+  .blue-site .b-range-list .b-range-item {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
