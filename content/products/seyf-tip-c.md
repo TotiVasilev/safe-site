@@ -140,8 +140,6 @@ slug: seyf-tip-c
 attachments:
   - phrase: БНБ №8121з-444
     file: https://www.bnb.bg/bnbweb/groups/public/documents/bnb_law/regulations_organizationand_bg.pdf#page=13
-  - phrase: EN 1143-1
-    file: /products/uploads/employment-job-application-791x1024.png
 image: /products/uploads/fixed-typea-main.png
 images:
   - /products/uploads/tipb-5-.png
