@@ -87,7 +87,7 @@ function product(entry: Entry): ProductFamily {
           const item = raw as Record<string, unknown>;
           const phrase = text(item.phrase);
           const file = text(item.file);
-          return phrase && file ? [{ phrase, file }] : [];
+          return phrase && file ? [{ phrase, phraseEn: text(item.phraseEn) || undefined, file }] : [];
         })
       : [],
     image: text(entry.image) || undefined,
