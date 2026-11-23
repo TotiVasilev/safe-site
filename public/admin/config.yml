@@ -169,12 +169,17 @@ collections:
     required: false
     collapsed: true
     summary: '{{fields.phrase}}'
-    hint: Една обща настройка за двете описания. Думата става кликаема само там, където присъства, и може да добавяте много различни фрази и файлове.
+    hint: 'Общи за BG и EN, включително описанията на моделите. Попълнете българска и/или английска фраза за един и същ файл. Редактирайте ги тук независимо на кой език пишете описанието.'
     fields:
-    - label: Дума или фраза от описанието
+    - label: Кликаема фраза (BG)
       name: phrase
       widget: string
-      hint: Напишете точно текста, който трябва да стане кликаем (включително главни/малки букви).
+      hint: Напишете точно текста на български, който трябва да бъде кликаем.
+    - label: Кликаема фраза (EN, по избор)
+      name: phraseEn
+      widget: string
+      required: false
+      hint: Английската дума или фраза за същия файл. Може да е идентична с BG (напр. номер на стандарт).
     - label: Изображение или PDF файл
       name: file
       widget: file
@@ -845,43 +850,8 @@ collections:
       name: image
       widget: image
       required: false
-  - label: Кликаеми думи и прикачени файлове
-    name: attachments
-    widget: list
-    required: false
-    collapsed: true
-    summary: '{{fields.phrase}}'
-    hint: Една обща настройка за двете описания. Думата става кликаема само там, където присъства, и може да добавяте много
-      различни фрази и файлове.
-    fields:
-    - label: Дума или фраза от описанието
-      name: phrase
-      widget: string
-      hint: Напишете точно текста, който трябва да стане кликаем (включително главни/малки букви).
-    - label: Изображение или PDF файл
-      name: file
-      widget: file
-      media_folder: /public/products/uploads
-      public_folder: /products/uploads
-      hint: Изберете или качете PDF или изображение.
-  - label: Основна снимка
-    name: image
-    widget: image
-    required: false
-  - label: Допълнителни снимки
-    name: images
-    widget: list
-    required: false
-    hint: Добавете снимки за слайдшоуто. Можете да избирате съществуващи файлове или да качвате нови, както и да пренареждате
-      снимките.
-    field:
-      label: Снимка
-      name: image
-      widget: image
-  - label: Обща техническа схема за моделите (H, B, L)
-    name: modelDrawing
-    widget: image
-    required: false
+  # Shared images, attachments and model images are managed in the BG product.
+  # Only locale-dependent copy is edited here.
   - label: Модели и технически характеристики
     name: models
     widget: list
@@ -890,11 +860,6 @@ collections:
     - label: Име на модела
       name: name
       widget: string
-    - label: Снимка на модела (за ключалки)
-      name: image
-      widget: image
-      required: false
-      hint: Отделна снимка за този модел. Може да изберете една и съща снимка за няколко модела.
     - label: Описание на модела
       name: description
       widget: text
