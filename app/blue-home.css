@@ -865,3 +865,20 @@
     background-size: cover;
   }
 }
+
+/* Catalog numbering: clearly legible and consistently aligned on desktop and mobile. */
+.blue-site .b-range-index {
+  display: inline-block;
+  min-width: 2.4ch;
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: .08em;
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 767px) {
+  .blue-site .b-range-list .b-range-index {
+    font-size: 13px;
+    line-height: 1.2;
+  }
+}
