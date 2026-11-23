@@ -25,8 +25,10 @@ descriptionBlocks:
     items: []
 lockCollection: false
 attachments:
-  - phrase: опционално
+  - phrase: optional
     file: /products/uploads/employment-job-application-791x1024.png
+  - phrase: Class A
+    file: /products/uploads/door-metal-armored-type-bl-iv.png
 image: /products/uploads/code-locks.png
 images:
   - /products/uploads/la-gard-3330.png
