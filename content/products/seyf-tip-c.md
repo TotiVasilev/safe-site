@@ -142,8 +142,8 @@ attachments:
     file: https://www.bnb.bg/bnbweb/groups/public/documents/bnb_law/regulations_organizationand_bg.pdf#page=13
 image: /products/uploads/fixed-typea-main.png
 images:
-  - /products/uploads/tipb-5-.png
   - /products/uploads/tipb-2-.png
+  - /products/uploads/tipb-5-.png
   - /products/uploads/tipb-3-.png
   - /products/uploads/tipb-4-.png
   - /products/uploads/tipb-6-.png
