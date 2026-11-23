@@ -35,12 +35,12 @@ function localizeProduct(product: ProductFamily): ProductFamily {
     // Attachments are authored once in the BG product CMS. Each shared entry can
     // optionally specify its English phrase, while keeping one shared target file.
     // Legacy EN phrases continue to work until migrated into phraseEn.
-    attachments: (product.attachments ?? []).map((attachment, index) => {
+    attachments: (product.attachments ?? []).map((attachment) => {
       const translatedEntries = Array.isArray(entry.attachments) ? entry.attachments : [];
       const matching = translatedEntries.find((item) =>
         item && typeof item === "object" &&
         (item as Record<string, unknown>).file === attachment.file
-      ) ?? translatedEntries[index];
+      );
       const oldEnglishPhrase = matching && typeof matching === "object" &&
         typeof (matching as Record<string, unknown>).phrase === "string"
         ? (matching as Record<string, unknown>).phrase as string : "";
