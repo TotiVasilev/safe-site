@@ -24,6 +24,9 @@ descriptionBlocks:
     title: Сертификация и съответствие
     items: []
 lockCollection: false
+attachments:
+  - phrase: опционално
+    file: /products/uploads/employment-job-application-791x1024.png
 image: /products/uploads/code-locks.png
 images:
   - /products/uploads/la-gard-3330.png
