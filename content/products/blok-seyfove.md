@@ -24,7 +24,7 @@ descriptionBlocks:
       - По желание на клиента се разработнат и други варианти.
 models:
   - name: Блок сейфове
-    height: "111"
+    height: ""
 slug: blok-seyfove
 image: /products/uploads/main-blok-seyfove.png
 images:
