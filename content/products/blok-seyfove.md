@@ -5,7 +5,6 @@ category: bankovi-produkti
 order: 20
 catalogDescription: Лични сейфове за съхранение на ценности. Монтират се в
   специално изградени охраняеми банкови трезори.
-description: " "
 descriptionBlocks:
   - kind: paragraph
     text: "Блок сейфовете са лични сейфове за съхранение на ценности. Монтират се в
@@ -25,9 +24,11 @@ descriptionBlocks:
       - По желание на клиента се разработнат и други варианти.
 models:
   - name: Блок сейфове
+    height: "111"
 slug: blok-seyfove
 image: /products/uploads/main-blok-seyfove.png
 images:
   - /products/uploads/blok-seyfove.png
 modelDrawing: /products/uploads/fixed-blok-seyfove-skica.png
+description: " "
 ---
